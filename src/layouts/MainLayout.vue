@@ -3,24 +3,21 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen" />
-        <q-toolbar-title> Quasar 组件扩展 </q-toolbar-title>
-        <q-toolbar-title>Quasar Plus</q-toolbar-title>
-        version 0.0.1 - by
-        <q-item tag="a" href="mailto:ficitony@qq.com" style="padding: 14px 5px 14px 5px">
-          Fictiony
+        <q-toolbar-title>Quasar Plus - {{ component }}</q-toolbar-title>
+        Quasar 组件扩展 v0.0.1 &nbsp; &nbsp;
+        <q-btn flat dense size="sm" label="联系方式" icon="email" type="a" href="mailto:ficitony@qq.com">
           <q-tooltip>ficitony@qq.com</q-tooltip>
-        </q-item>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
-      <q-list>
-        <EssentialLink v-for="link in linkList" :key="link.title" v-bind="link" />
-        <q-separator />
-        <q-item-label header class="text-grey-8"> 扩展组件列表 </q-item-label>
-        <EssentialLink v-for="link in componentList" :key="link.title" v-bind="link" />
-      </q-list>
-    </q-drawer>
+    <my-drawer v-model="leftDrawerOpen" show-if-above bordered elevated content-class="bg-grey-1" :width="200" :limits="[150, 300]">
+      <MenuPanel />
+    </my-drawer>
+
+    <my-drawer v-model="rightDrawerOpen" side="right" show-if-above bordered elevated content-class="bg-grey-1" :width="300" :limits="[200, 500]">
+      <PropPanel />
+    </my-drawer>
 
     <q-page-container>
       <router-view />
@@ -29,34 +26,21 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
+import MyDrawer from 'components/MyDrawer.js'
+import MenuPanel from 'pages/MenuPanel.vue'
+import PropPanel from 'pages/PropPanel.vue'
 
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
+  components: {
+    MyDrawer,
+    MenuPanel,
+    PropPanel
+  },
   data: () => ({
     leftDrawerOpen: false,
-    linkList: [
-      {
-        title: '返回主页',
-        icon: 'home',
-        to: '/'
-      }
-    ],
-    componentList: [
-      {
-        title: '分隔条 - MySplitter',
-        caption: '<my-splitter>',
-        icon: 'vertical_align_center',
-        to: 'MySplitter'
-      },
-      {
-        title: '侧滑栏 - MyDrawer',
-        caption: '<my-drawer>',
-        icon: 'input',
-        to: 'MyDrawer'
-      }
-    ]
+    rightDrawerOpen: false,
+    component: 'MySplitter'
   })
 }
 </script>

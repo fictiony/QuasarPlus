@@ -5,8 +5,8 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
-      <q-item-label v-if="caption" caption>
+      <q-item-label lines="1">{{ title }}</q-item-label>
+      <q-item-label caption lines="1" v-if="caption">
         {{ caption }}
       </q-item-label>
     </q-item-section>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+// 【菜单链接】
 export default {
   name: 'EssentialLink',
   props: {
