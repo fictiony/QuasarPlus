@@ -10,7 +10,7 @@ export default {
     swapProp('width', 'realWidth')
   ],
   components: {
-    'my-drawer-resizer': QSplitter.extend({ // 把QSplitter定制成边缘拉伸组件
+    'my-drawer-resizer': QSplitter.extend({ // 把QSplitter定制成边缘拖拽条
       methods: {
         __pan(evt) {
           QSplitter.options.methods.__pan.call(this, evt)
@@ -22,7 +22,14 @@ export default {
 
   props: {
     // [ 最小宽度, 最大宽度 ]，可直接借用QSplitter的limits定义
-    limits: QSplitter.options.props.limits
+    limits: QSplitter.options.props.limits,
+
+    // 边缘拖拽条自定义样式
+    resizerClass: [Array, String, Object],
+    resizerStyle: {
+      type: [Array, String, Object],
+      default: 'width: 0px'
+    }
   },
 
   computed: {
@@ -36,7 +43,7 @@ export default {
     this.$injectSlot('default', 'splitter', nodes => { // 在默认插槽外层注入一个分隔条
       return [
         h('div', { // 多加一层div以防止出现横向滚动条
-          staticClass: 'fit overflow-hidden'
+          staticClass: 'fit no-scroll'
         }, [
           h('my-drawer-resizer', {
             staticClass: 'q-drawer__resizer fit',
@@ -45,7 +52,9 @@ export default {
               limits: this.limits,
               unit: 'px',
               reverse: this.side === 'right',
-              emitImmediately: true
+              emitImmediately: true,
+              separatorClass: this.resizerClass,
+              separatorStyle: this.resizerStyle
             },
             on: {
               input: value => {
@@ -53,7 +62,8 @@ export default {
               }
             },
             scopedSlots: { // 把原先的插槽内容，改放到分隔条的一侧插槽内
-              [this.side === 'right' ? 'after' : 'before']: () => nodes
+              [this.side === 'right' ? 'after' : 'before']: () => nodes,
+              separator: () => this.$getSlot('resizer')
             }
           })
         ])

@@ -13,7 +13,8 @@
 :::
 
 ## 范例
-<DemoExample caption="基本用法" file="MySplitterBasic" import="MySplitter">
+<DemoExample caption="基本用法" file="MySplitterBasic" import="MySplitter.js">
+<DemoExample caption="两侧固定" file="MySplitterSides" import="MySplitter.js">
 
 ## 更多
 参考教程：[Vue组件继承实践：扩展分隔条（MySplitter）组件](https://www.yuque.com/fictiony/cs6lwq/nzrxtl)

@@ -15,7 +15,7 @@
   .q-markdown--code {
     padding: 0.5em 0.75em 0.5em 0.75em;
     background-color: #fff;
-    background-image: linear-gradient(scale-color($primary, $lightness: 96%) 50%, #fff0 0%);
+    background-image: linear-gradient(scale-color($primary, $lightness: 96%) 50%, transparent 0%);
     background-size: 3em 3em;
     background-origin: content-box;
     border-width: 1px 1px 1px 0px;

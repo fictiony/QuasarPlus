@@ -1,5 +1,5 @@
 <template>
-  <q-list>
+  <q-list class="fit no-scroll">
     <EssentialLink v-for="(link, index) in linkList" :key="`link-${index}`" v-bind="link" />
 
     <q-separator />

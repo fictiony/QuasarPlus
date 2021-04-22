@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fit no-scroll">
     <q-item dense class="_header">
       <q-item-section>
         <q-item-label class="text-grey-5" :lines="1">{{ component }} 组件参数</q-item-label>

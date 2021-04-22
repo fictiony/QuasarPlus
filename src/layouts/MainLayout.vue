@@ -1,9 +1,9 @@
 <template>
-  <q-layout view="lHh LpR lFf">
+  <q-layout view="lHh LpR fff">
     <q-header elevated>
       <q-toolbar class="q-pr-sm">
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftOpen = !leftOpen" />
-        <q-toolbar-title>Quasar 组件扩展 <span class="text-subtitle1">v0.0.1</span></q-toolbar-title>
+        <q-toolbar-title>Quasar 组件扩展 <span class="text-subtitle1">v0.0.2</span></q-toolbar-title>
         <q-toolbar-title>{{ title }}</q-toolbar-title>
         <q-btn flat dense size="sm" label="联系作者" icon="email" type="a" href="mailto:ficitony@qq.com">
           <q-tooltip>ficitony@qq.com</q-tooltip>
@@ -17,7 +17,7 @@
       <MenuPanel />
     </my-drawer>
 
-    <my-drawer v-model="rightOpen" side="right" show-if-above bordered elevated :content-class="drawerBgColor" :width="300" :limits="[200, 500]">
+    <my-drawer v-model="rightOpen" side="right" :breakpoint="700" bordered :content-class="drawerBgColor" :width="300" :limits="[200, 500]">
       <PropPanel />
     </my-drawer>
 
