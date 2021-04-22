@@ -14,14 +14,23 @@
         </div>
       </q-tooltip>
     </td>
-    <td>{{ name }}</td>
+    <td>
+      {{ value }}
+      <q-popup-edit v-model="curValue" :validate="validate">
+        <q-input v-model="curValue" dense autofocus counter v-if="editor == 'String'" />
+        <q-input type="number" v-model.number="curValue" dense autofocus v-else-if="editor == 'Number'" />
+        <q-input v-model="curValue" dense autofocus v-else />
+      </q-popup-edit>
+    </td>
   </tr>
 </template>
 
 <script>
 // 【属性列表项】
 export default {
-  name: 'PropItem',
+  data: vm => ({
+    curValue: vm.stringify(vm.value)
+  }),
   props: {
     name: {
       type: String,
@@ -34,9 +43,17 @@ export default {
       type: String,
       default: 'String'
     },
+    validate: {
+      type: Function,
+      default: () => true
+    },
     description: {
       type: String,
       default: '参见 API 文档'
+    },
+    editor: {
+      type: String,
+      default: 'String'
     },
     isNew: {
       type: Boolean,
@@ -48,7 +65,30 @@ export default {
     }
   },
   computed: {
-    nameColor: vm => 'text-' + (vm.isNew ? 'green' : vm.isUpdate ? 'red' : 'primary')
+    nameColor() {
+      return `text-${this.isNew ? 'green' : this.isUpdate ? 'red' : 'primary'}`
+    }
+  },
+  watch: {},
+  methods: {
+    stringify(val) {
+      switch (this.editor) {
+        case 'String':
+          return val ? String(val) : ''
+        case 'Number':
+          return val.toString()
+      }
+      return JSON.stringify(val)
+    },
+    parse(val) {
+      switch (this.editor) {
+        case 'String':
+          return JSON.stringify(val)
+        case 'Number':
+          return val.toString()
+      }
+      return val
+    }
   }
 }
 </script>

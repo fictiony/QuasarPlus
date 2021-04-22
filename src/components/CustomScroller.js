@@ -2,7 +2,6 @@ import { QScrollArea } from 'quasar'
 
 // 【定制滚动器】
 export default {
-  name: 'CustomScroller',
   extends: QScrollArea,
   props: {
     barStyle: {

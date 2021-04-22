@@ -1,20 +1,19 @@
 <template>
   <q-page>
-    <div class="flex flex-center absolute-full">
-      <img alt="Quasar logo" src="~assets/quasar-logo-full.svg" style="margin-bottom: 160px" />
+    <div class="flex flex-center absolute-full" style="padding-bottom: 160px">
+      <img alt="Quasar logo" src="~assets/quasar-logo-full.svg" />
     </div>
     <div class="absolute-bottom">
-      <div class="bg-grey-2">
+      <div :class="$q.dark.isActive ? 'bg-grey-8' : 'bg-grey-2'">
         <q-separator />
         <div class="row">
-          <div class="flex flex-center" style="width: 180px">
-            <q-icon name="favorite" size="20px" />
-            <b>&nbsp; 推荐访问</b>
+          <div class="flex items-center justify-end q-pa-xl text-primary" style="width: 30%">
+            推荐链接 <q-icon name="navigate_next" size="20px" />
           </div>
           <q-separator vertical />
-          <div class="col-grow flex flex-center" style="height: 160px">
+          <div class="col-grow flex flex-center" style="height: 210px">
             <q-list class="col-grow">
-              <EssentialLink v-for="link in linkList" :key="link.title" v-bind="link" />
+              <EssentialLink v-for="link in linkList" :key="link.to" v-bind="link" />
             </q-list>
           </div>
         </div>
@@ -24,30 +23,32 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-
 export default {
-  name: 'PageIndex',
-  components: { EssentialLink },
   data: () => ({
     linkList: [
       {
         title: 'Quasar Plus 代码仓库',
-        caption: 'gitee.com/fictiony/quasar-plus',
+        caption: 'https://gitee.com/fictiony/quasar-plus',
         icon: 'code',
-        link: 'https://gitee.com/fictiony/quasar-plus'
+        url: 'https://gitee.com/fictiony/quasar-plus'
+      },
+      {
+        title: 'Quasar Framework 官网',
+        caption: 'https://quasar.dev',
+        icon: 'camera',
+        url: 'https://quasar.dev'
       },
       {
         title: 'Quasar Framework 中文网',
-        caption: 'www.quasarchs.com',
+        caption: 'http://www.quasarchs.com',
         icon: 'school',
-        link: 'http://www.quasarchs.com'
+        url: 'http://www.quasarchs.com'
       },
       {
         title: 'Quasar Framework 中文社区',
-        caption: 'forum.quasarchs.com',
+        caption: 'http://forum.quasarchs.com',
         icon: 'record_voice_over',
-        link: 'http://forum.quasarchs.com'
+        url: 'http://forum.quasarchs.com'
       }
     ]
   })

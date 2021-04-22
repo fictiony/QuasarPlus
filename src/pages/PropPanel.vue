@@ -1,5 +1,5 @@
 <template>
-  <q-list>
+  <div>
     <q-item dense class="_header">
       <q-item-section>
         <q-item-label class="text-grey-5" :lines="1">{{ component }} 组件参数</q-item-label>
@@ -20,23 +20,15 @@
           </tr>
         </thead>
         <tbody>
-          <PropItem v-for="(prop, index) in propList" :key="'P' + index" v-bind="prop" />
+          <PropItem v-for="(prop, index) in propList" :key="index" v-bind="prop" />
         </tbody>
       </q-markup-table>
     </CustomScroller>
-  </q-list>
+  </div>
 </template>
 
 <script>
-import CustomScroller from 'components/CustomScroller.js'
-import PropItem from 'components/PropItem.vue'
-
 export default {
-  name: 'PropPanel',
-  components: {
-    CustomScroller,
-    PropItem
-  },
   data: () => ({
     component: 'MySplitter',
     api: 'http://www.quasarchs.com/vue-components/splitter#QSplitter-API',

@@ -1,46 +1,71 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh LpR lFf">
     <q-header elevated>
-      <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen" />
-        <q-toolbar-title>Quasar Plus - {{ component }}</q-toolbar-title>
-        Quasar 组件扩展 v0.0.1 &nbsp; &nbsp;
-        <q-btn flat dense size="sm" label="联系方式" icon="email" type="a" href="mailto:ficitony@qq.com">
+      <q-toolbar class="q-pr-sm">
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftOpen = !leftOpen" />
+        <q-toolbar-title>Quasar 组件扩展 <span class="text-subtitle1">v0.0.1</span></q-toolbar-title>
+        <q-toolbar-title>{{ title }}</q-toolbar-title>
+        <q-btn flat dense size="sm" label="联系作者" icon="email" type="a" href="mailto:ficitony@qq.com">
           <q-tooltip>ficitony@qq.com</q-tooltip>
         </q-btn>
+        <div class="q-ml-md">Quasar v{{ $q.version }}</div>
+        <q-btn class="q-ml-sm" flat round @click="$q.dark.toggle()" :icon="darkIcon" />
       </q-toolbar>
     </q-header>
 
-    <my-drawer v-model="leftDrawerOpen" show-if-above bordered elevated content-class="bg-grey-1" :width="200" :limits="[150, 300]">
+    <my-drawer v-model="leftOpen" show-if-above bordered elevated :content-class="drawerBgColor" :width="200" :limits="[150, 300]">
       <MenuPanel />
     </my-drawer>
 
-    <my-drawer v-model="rightDrawerOpen" side="right" show-if-above bordered elevated content-class="bg-grey-1" :width="300" :limits="[200, 500]">
+    <my-drawer v-model="rightOpen" side="right" show-if-above bordered elevated :content-class="drawerBgColor" :width="300" :limits="[200, 500]">
       <PropPanel />
     </my-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view ref="page" />
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import MyDrawer from 'components/MyDrawer.js'
+import plusList from 'components/plus/list.js'
 import MenuPanel from 'pages/MenuPanel.vue'
 import PropPanel from 'pages/PropPanel.vue'
 
 export default {
-  name: 'MainLayout',
   components: {
-    MyDrawer,
     MenuPanel,
     PropPanel
   },
+
   data: () => ({
-    leftDrawerOpen: false,
-    rightDrawerOpen: false,
-    component: 'MySplitter'
-  })
+    leftOpen: false,
+    rightOpen: false,
+    title: ''
+  }),
+
+  computed: {
+    darkIcon() {
+      return this.$q.dark.isActive ? 'brightness_2' : 'brightness_5'
+    },
+    drawerBgColor() {
+      return this.$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-1'
+    }
+  },
+
+  methods: {
+    updateTitle(route) {
+      const plus = plusList.find(i => i.to === route.path)
+      this.title = plus ? `${plus.title}（${plus.caption}）` : ''
+    }
+  },
+
+  mounted() {
+    this.$router.beforeEach((to, from, next) => {
+      this.updateTitle(to)
+      next()
+    })
+    this.updateTitle(this.$route)
+  }
 }
 </script>

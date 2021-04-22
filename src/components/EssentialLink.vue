@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable :tag="tag" :target="target" :href="link" :to="to">
+  <q-item clickable v-bind="link">
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
@@ -16,7 +16,6 @@
 <script>
 // 【菜单链接】
 export default {
-  name: 'EssentialLink',
   props: {
     title: {
       type: String,
@@ -30,9 +29,9 @@ export default {
       type: String,
       default: ''
     },
-    link: {
+    url: {
       type: String,
-      default: '#'
+      default: ''
     },
     to: {
       type: String,
@@ -40,8 +39,16 @@ export default {
     }
   },
   computed: {
-    tag: vm => (vm.to ? 'label' : 'a'),
-    target: vm => (vm.to ? '' : '_blank')
+    link() {
+      if (this.to) {
+        return { to: this.to }
+      }
+      return {
+        tag: 'a',
+        target: '_blank',
+        href: this.url
+      }
+    }
   }
 }
 </script>
