@@ -1,36 +1,31 @@
-# QuasarPlus
+# Quasar Plus (Quasar extended components)
 
-#### Description
-Quasar组件扩展
+![](https://img.shields.io/badge/quasar--plus-0.0.2-orange) ![](https://img.shields.io/npm/v/quasar.svg?label=quasar)
 
-#### Software Architecture
-Software architecture description
+> A series of practical components that extend the functions of the built-in components of the Quasar framework, with relevant document examples.
 
-#### Installation
+![](./preview.png)
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Usage
 
-#### Instructions
+```bash
+# Installation
+yarn
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+# Test run
+quasar dev
 
-#### Contribution
+# Publish
+quasar build
+```
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+## Structure
 
+* [components](src/components/plus) - source codes of Quasar extended components
+* [examples](src/examples) - usage examples of the extended components
+* [documents](src/pages/doc) - documents of the extended components
+* [live demo](http://quasarplus.o666o.com:88/) - live demo of documents and examples
 
-#### Gitee Feature
+## License
 
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+[MIT](http://en.wikipedia.org/wiki/MIT_License) (c) 2021 Fictiony Chen <fictiony@qq.com>
