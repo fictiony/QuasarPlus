@@ -1,5 +1,5 @@
 <template>
-  <div class="fit no-scroll">
+  <div class="fit no-scroll column">
     <q-item dense class="_header">
       <q-item-section>
         <q-item-label class="text-grey-5" :lines="1">{{ component }} 组件参数</q-item-label>
@@ -11,7 +11,7 @@
       </q-item-section>
     </q-item>
 
-    <CustomScroller class="_proplist">
+    <CustomScroller class="q-space _proplist">
       <q-markup-table flat bordered dense>
         <thead>
           <tr>
@@ -57,8 +57,7 @@ export default {
   padding: 8px 8px 0px 10px;
 }
 ._proplist {
-  margin: 2px 5px 0px 5px;
-  height: calc(100vh - 92px);
+  padding: 4px 8px 6px 8px;
   table thead tr {
     height: 25px;
     th._prop {

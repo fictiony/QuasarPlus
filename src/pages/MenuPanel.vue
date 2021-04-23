@@ -1,5 +1,5 @@
 <template>
-  <q-list class="fit no-scroll">
+  <q-list class="fit no-scroll column">
     <EssentialLink v-for="(link, index) in linkList" :key="`link-${index}`" v-bind="link" />
 
     <q-separator />
@@ -9,7 +9,7 @@
       </q-item-section>
     </q-item>
 
-    <CustomScroller class="_pluslist">
+    <CustomScroller class="q-space">
       <EssentialLink v-for="(link, index) in plusList" :key="`plus-${index}`" v-bind="link" />
     </CustomScroller>
   </q-list>
@@ -31,9 +31,3 @@ export default {
   })
 }
 </script>
-
-<style lang="scss" scoped>
-._pluslist {
-  height: calc(100vh - 81px);
-}
-</style>
