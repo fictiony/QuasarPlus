@@ -25,7 +25,7 @@
           </div>
         </template>
         <template #resizer>
-          <q-btn flat dense icon="arrow_back" color="red-5" size="md" class="absolute-top hide-drawer" @click="drawer = false" />
+          <q-btn flat dense icon="arrow_back" color="red-5" size="md" class="absolute-top hide-drawer" @mousedown.stop @click="drawer = false" />
         </template>
       </my-drawer>
 

@@ -3,29 +3,28 @@
     <td class="bg-blue-1" :class="nameColor">
       {{ name }}
       <q-tooltip max-width="300px" anchor="top left" self="top right">
+        <span class="text-h6">{{ name }}</span>
+        <q-separator spaced="5px" color="grey" />
         <div>
           <q-badge class="q-mr-sm" color="accent" label="类型" />
           {{ type }}
         </div>
-        <q-separator spaced="5px" color="grey" />
+        <q-separator spaced="3px" color="transparent" />
         <div>
-          <q-badge class="q-mr-sm" color="accent" label="说明" />
           <span v-html="description" />
           <q-badge class="q-ml-sm" rounded color="green" label="新增" v-if="isNew" />
           <q-badge class="q-ml-sm" rounded color="red" label="更新" v-if="isUpdate" />
         </div>
-        <q-separator spaced="5px" color="grey" v-if="hasDefault" />
+        <q-separator spaced="3px" color="transparent" v-if="hasDefault" />
         <div v-if="hasDefault">
-          <q-badge class="q-mr-sm" color="accent" label="默认值" />
+          <q-badge class="q-mr-sm" color="secondary" label="默认值" />
           {{ this.default }}
         </div>
       </q-tooltip>
     </td>
     <td>
       <template v-if="value !== undefined">{{ value }}</template>
-      <template v-else-if="hasDefault">
-        <span class="text-grey-4">{{ this.default }}</span>
-      </template>
+      <span class="text-grey-4" v-else-if="hasDefault">{{ this.default }}</span>
       <!-- <q-popup-edit v-model="curValue" :validate="validator">
         <q-input v-model="curValue" dense autofocus counter v-if="editor == 'String'" />
         <q-input type="number" v-model.number="curValue" dense autofocus v-else-if="editor == 'Number'" />
@@ -52,7 +51,7 @@ export default {
     },
     type: {
       type: String,
-      default: '<未知>'
+      default: 'any'
     },
     validator: {
       type: Function,
@@ -63,7 +62,7 @@ export default {
     },
     description: {
       type: String,
-      default: '参见 API 文档'
+      default: '参见基类 API 文档'
     },
     isNew: {
       type: Boolean,

@@ -37,13 +37,13 @@ export default {
 
     // 选中组件时，刷新高亮范围框
     'state.selectingComponents'(val) {
-      if (!val) return
-      const rect = this.getBoundingRect(val[0].$el)
-      this.boundingRect = {
-        left: rect.x + 'px',
-        top: rect.y + 'px',
-        width: rect.width + 'px',
-        height: rect.height + 'px'
+      if (val) {
+        if (!this.refreshTimer) {
+          this.refreshTimer = setInterval(this.refreshBoundingRect, 20)
+        }
+      } else if (this.refreshTimer) {
+        clearInterval(this.refreshTimer)
+        this.refreshTimer = undefined
       }
     }
   },
@@ -176,6 +176,23 @@ export default {
     hitTest(el, pt) {
       const { x, y, width, height } = this.getBoundingRect(el)
       return pt.x >= x && pt.x < x + width && pt.y >= y && pt.y < y + height
+    },
+
+    // 刷新范围框
+    refreshBoundingRect() {
+      const rect = this.getBoundingRect(this.state.selectingComponents[0].$el)
+      this.boundingRect = {
+        left: rect.x + 'px',
+        top: rect.y + 'px',
+        width: rect.width + 'px',
+        height: rect.height + 'px'
+      }
+    }
+  },
+
+  beforeDestroy() {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer)
     }
   }
 }

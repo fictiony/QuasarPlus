@@ -11,6 +11,9 @@
 :::
 `width` 属性还支持 **同步绑定**：`v-bind:width.sync="someVar"`，能自动同步为当前实际宽度。
 :::
+:::
+边缘拖拽条可自定义样式，通过属性 `resizerClass` 和 `resizerStyle`，以及 `resizer` 插槽。
+:::
 
 ## 范例
 <DemoExample caption="基本用法" file="MyDrawerBasic" import="MyDrawer.js">
