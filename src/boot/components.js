@@ -9,6 +9,7 @@ import EssentialLink from 'components/EssentialLink.vue'
 import DemoExample from 'components/DemoExample.vue'
 import DemoPage from 'components/DemoPage.vue'
 import PropItem from 'components/PropItem.vue'
+import ComponentSelector from 'components/ComponentSelector.vue'
 
 // 注册组件
 const components = {
@@ -17,7 +18,8 @@ const components = {
   EssentialLink,
   DemoExample,
   DemoPage,
-  PropItem
+  PropItem,
+  ComponentSelector
 }
 Object.keys(components).forEach(name => {
   Vue.component(components[name].name || name, components[name])

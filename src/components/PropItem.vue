@@ -2,25 +2,35 @@
   <tr>
     <td class="bg-blue-1" :class="nameColor">
       {{ name }}
-      <q-tooltip max-width="200px" anchor="top left" self="top right">
-        <q-badge color="accent" label="类型" />
-        &nbsp;{{ type }}
+      <q-tooltip max-width="300px" anchor="top left" self="top right">
+        <div>
+          <q-badge class="q-mr-sm" color="accent" label="类型" />
+          {{ type }}
+        </div>
         <q-separator spaced="5px" color="grey" />
         <div>
-          <q-badge color="accent" label="说明" />
-          &nbsp;{{ description }} &nbsp;
-          <q-badge rounded color="green" label="新增" v-if="isNew" />
-          <q-badge rounded color="red" label="更新" v-if="isUpdate" />
+          <q-badge class="q-mr-sm" color="accent" label="说明" />
+          <span v-html="description" />
+          <q-badge class="q-ml-sm" rounded color="green" label="新增" v-if="isNew" />
+          <q-badge class="q-ml-sm" rounded color="red" label="更新" v-if="isUpdate" />
+        </div>
+        <q-separator spaced="5px" color="grey" v-if="hasDefault" />
+        <div v-if="hasDefault">
+          <q-badge class="q-mr-sm" color="accent" label="默认值" />
+          {{ this.default }}
         </div>
       </q-tooltip>
     </td>
     <td>
-      {{ value }}
-      <q-popup-edit v-model="curValue" :validate="validate">
+      <template v-if="value !== undefined">{{ value }}</template>
+      <template v-else-if="hasDefault">
+        <span class="text-grey-4">{{ this.default }}</span>
+      </template>
+      <!-- <q-popup-edit v-model="curValue" :validate="validator">
         <q-input v-model="curValue" dense autofocus counter v-if="editor == 'String'" />
         <q-input type="number" v-model.number="curValue" dense autofocus v-else-if="editor == 'Number'" />
         <q-input v-model="curValue" dense autofocus v-else />
-      </q-popup-edit>
+      </q-popup-edit> -->
     </td>
   </tr>
 </template>
@@ -31,6 +41,7 @@ export default {
   data: vm => ({
     curValue: vm.stringify(vm.value)
   }),
+
   props: {
     name: {
       type: String,
@@ -41,19 +52,18 @@ export default {
     },
     type: {
       type: String,
-      default: 'String'
+      default: '<未知>'
     },
-    validate: {
+    validator: {
       type: Function,
       default: () => true
+    },
+    default: {
+      type: String
     },
     description: {
       type: String,
       default: '参见 API 文档'
-    },
-    editor: {
-      type: String,
-      default: 'String'
     },
     isNew: {
       type: Boolean,
@@ -62,14 +72,23 @@ export default {
     isUpdate: {
       type: Boolean,
       default: false
+    },
+    editor: {
+      type: String,
+      default: 'String'
     }
   },
+
   computed: {
     nameColor() {
       return `text-${this.isNew ? 'green' : this.isUpdate ? 'red' : 'primary'}`
+    },
+
+    hasDefault() {
+      return this.default !== undefined
     }
   },
-  watch: {},
+
   methods: {
     stringify(val) {
       switch (this.editor) {
@@ -80,6 +99,7 @@ export default {
       }
       return JSON.stringify(val)
     },
+
     parse(val) {
       switch (this.editor) {
         case 'String':

@@ -1,4 +1,4 @@
-import plusList from 'components/plus/list.js'
+import plusList from 'components/plusList.js'
 import DemoPage from 'components/DemoPage.vue'
 
 const routes = [

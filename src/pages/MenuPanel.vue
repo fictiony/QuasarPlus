@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import plusList from 'components/plus/list.js'
+// 【菜单栏】
+import plusList from 'components/plusList.js'
 
 export default {
   data: () => ({

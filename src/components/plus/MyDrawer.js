@@ -4,7 +4,7 @@ import { swapProp } from './mixins'
 // 【扩展侧滑栏】
 // - 增加边缘可拖拽拉伸大小的功能，并可设置最大最小宽度
 export default {
-  name: 'my-drawer',
+  name: 'MyDrawer',
   extends: QDrawer,
   mixins: [
     swapProp('width', 'realWidth')

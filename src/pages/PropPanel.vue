@@ -1,17 +1,28 @@
 <template>
   <div class="fit no-scroll column">
-    <q-item dense class="_header">
+    <q-item dense class="full-width _header">
       <q-item-section>
-        <q-item-label class="text-grey-5" :lines="1">{{ component }} 组件参数</q-item-label>
+        <q-item-label class="text-grey-6" :lines="1">
+          <span v-if="component">{{ component }} 组件参数</span>
+          <span v-else>当前未选中任何组件</span>
+        </q-item-label>
       </q-item-section>
       <q-item-section side>
-        <q-btn flat dense size="sm" class="text-primary" label="API" icon="menu_book" type="a" target="_blank" :href="api">
-          <q-tooltip>查看 API 文档</q-tooltip>
+        <q-btn flat dense size="sm" class="text-primary" :icon="state.selecting ? 'my_location' : 'location_searching'" @click="selectClick">
+          <q-tooltip ref="selectTip">选择要查看的 QuasarPlus 组件</q-tooltip>
         </q-btn>
+      </q-item-section>
+      <q-item-section side style="padding-left: 5px" v-if="superName">
+        <q-btn flat dense size="sm" class="text-primary" icon="menu_book" type="a" target="_blank" :href="superApi">
+          <q-tooltip>查看基类 {{ superName }} 的 API</q-tooltip>
+        </q-btn>
+      </q-item-section>
+      <q-item-section side style="padding-left: 5px">
+        <q-btn flat dense size="sm" icon="close" @click="$emit('close')" />
       </q-item-section>
     </q-item>
 
-    <CustomScroller class="q-space _proplist">
+    <CustomScroller class="full-width q-space _proplist">
       <q-markup-table flat bordered dense>
         <thead>
           <tr>
@@ -20,7 +31,12 @@
           </tr>
         </thead>
         <tbody>
-          <PropItem v-for="(prop, index) in propList" :key="index" v-bind="prop" />
+          <template v-if="propList.length">
+            <PropItem v-for="(prop, index) in propList" :key="index" v-bind="prop" />
+          </template>
+          <tr v-else>
+            <td colspan="2" class="text-grey-5 text-center">没有可用属性</td>
+          </tr>
         </tbody>
       </q-markup-table>
     </CustomScroller>
@@ -28,27 +44,80 @@
 </template>
 
 <script>
+// 【属性栏】
+import plusList from 'components/plusList.js'
+
 export default {
   data: () => ({
-    component: 'MySplitter',
-    api: 'http://www.quasarchs.com/vue-components/splitter#QSplitter-API',
-    propList: [
-      {
-        name: 'horizontal',
-        value: true
-      },
-      {
-        name: 'limits',
-        value: [10, 200],
-        isUpdate: true
-      },
-      {
-        name: 'limits2',
-        value: [10, 200],
-        isNew: true
+    component: '',
+    superName: '',
+    superApi: '',
+    propList: []
+  }),
+
+  inject: ['state'],
+
+  watch: {
+    'state.editingComponent'(val) {
+      if (val) {
+        this.component = val.$options.name
+        this.superName = (val.$options.extends && val.$options.extends.options.name) || ''
+        const api = this.state.apiMap[this.component]
+        this.superApi = api.superApi
+        this.propList = Object.keys(val.$props)
+          .map(name => {
+            return this.makePropItem(val, name, api.props[name])
+          })
+          .sort((a, b) => {
+            if (a.isNew !== b.isNew) return a.isNew ? -1 : 1
+            if (a.isUpdate !== b.isUpdate) return a.isUpdate ? -1 : 1
+            return a.name < b.name ? -1 : 1
+          })
+      } else {
+        this.component = ''
+        this.superName = ''
+        this.superApi = ''
+        this.propList = []
       }
-    ]
-  })
+    }
+  },
+
+  methods: {
+    selectClick() {
+      this.$refs.selectTip.hide() // 解决按钮重绘时，QTooltip无法自动消失的bug
+      this.state.selecting = !this.state.selecting
+    },
+
+    makePropItem(component, name, api) {
+      const def = component.$options.props[name]
+      const superDef = component.$options.extends && component.$options.extends.options.props[name]
+      const extendProps = component.constructor.extendOptions.props
+      return {
+        name,
+        value: component.$options.propsData[name],
+        type: def.type instanceof Array ? def.type.map(i => i.name).join(' | ') : def.type.name,
+        validator: def.validator,
+        default: def.default === undefined ? undefined : def.default instanceof Function ? '<Function>' : String(def.default),
+        description: api,
+        isNew: !superDef,
+        isUpdate: !!(superDef && extendProps && extendProps[name])
+      }
+    }
+  },
+
+  created() {
+    // 加载API表数据
+    const apiMap = {}
+    Promise.all(
+      plusList.map(item =>
+        import('components/api/' + item.caption + '.json').then(module => {
+          apiMap[item.caption] = module.default
+        })
+      )
+    ).then(() => {
+      this.state.apiMap = apiMap
+    })
+  }
 }
 </script>
 

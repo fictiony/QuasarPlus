@@ -6,7 +6,7 @@ import { swapProp } from './mixins'
 // - 增加区域大小改变后的实时响应
 // - 重定义value属性，并新增position属性，以实现组件的封装性（即无需依赖v-model）
 export default {
-  name: 'my-splitter',
+  name: 'MySplitter',
   extends: QSplitter,
   mixins: [
     swapProp('position', 'value', 'input')

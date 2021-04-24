@@ -22,9 +22,10 @@ quasar build
 ## 目录指引
 
 * [扩展组件](src/components/plus) - Quasar 扩展组件源码
+* [组件API](src/components/api) - Quasar 扩展组件 API 接口说明
 * [范例](src/examples) - 扩展组件使用范例
 * [文档](src/pages/doc) - 扩展组件介绍文档
-* [在线演示](http://quasarplus.o666o.com:88/) - 在线文档及范例演示
+* [在线演示](https://fictiony.github.com/quasar-plus) - 在线文档及范例演示
 
 ## 授权
 

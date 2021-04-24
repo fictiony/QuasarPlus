@@ -22,9 +22,10 @@ quasar build
 ## Structure
 
 * [components](src/components/plus) - source codes of Quasar extended components
+* [api](src/components/api) - api descriptions of Quasar extended components
 * [examples](src/examples) - usage examples of the extended components
 * [documents](src/pages/doc) - documents of the extended components
-* [live demo](http://quasarplus.o666o.com:88/) - live demo of documents and examples
+* [live demo](https://fictiony.github.com/quasar-plus) - live demo of documents and examples
 
 ## License
 
