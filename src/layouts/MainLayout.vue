@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar class="q-pr-xs">
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftOpen = !leftOpen" />
-        <q-toolbar-title>{{ title }} <span class="text-subtitle1">v0.0.2</span></q-toolbar-title>
+        <q-toolbar-title>{{ title }} <span class="text-subtitle1">v0.0.3</span></q-toolbar-title>
         <q-toolbar-title>{{ pageTitle }}</q-toolbar-title>
         <q-btn flat dense size="sm" label="联系作者" icon="email" type="a" href="mailto:ficitony@qq.com">
           <q-tooltip>ficitony@qq.com</q-tooltip>

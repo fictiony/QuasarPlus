@@ -1,6 +1,6 @@
 # Quasar Plus (Quasar extended components)
 
-![](https://img.shields.io/badge/quasar--plus-0.0.2-orange) ![](https://img.shields.io/npm/v/quasar.svg?label=quasar)
+![](https://img.shields.io/badge/quasar--plus-0.0.3-orange) ![](https://img.shields.io/npm/v/quasar.svg?label=quasar)
 
 > A series of practical components that extend the functions of the built-in components of the Quasar framework, with relevant document examples.
 
@@ -25,7 +25,7 @@ quasar build
 * [api](src/components/api) - api descriptions of Quasar extended components
 * [examples](src/examples) - usage examples of the extended components
 * [documents](src/pages/doc) - documents of the extended components
-* [live demo](https://fictiony.github.com/quasar-plus) - live demo of documents and examples
+* [live demo](https://fictiony.github.io/quasar-plus) - live demo of documents and examples
 
 ## License
 
