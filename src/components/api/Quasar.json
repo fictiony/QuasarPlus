@@ -1,0 +1,11 @@
+{
+  "QBtn": {
+    "doc": "https://quasar.dev/vue-components/splitter#qsplitter-api"
+  },
+  "QDrawer": {
+    "doc": "https://quasar.dev/layout/drawer#qdrawer-api"
+  },
+  "QSplitter": {
+    "doc": "https://quasar.dev/vue-components/splitter#qsplitter-api"
+  }
+}

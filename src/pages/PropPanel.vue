@@ -3,7 +3,7 @@
     <q-item dense class="full-width _header">
       <q-item-section style="max-width: 24px">
         <q-btn flat dense size="sm" class="text-primary" :icon="state.selecting ? 'my_location' : 'location_searching'" @click="selectClick">
-          <q-tooltip ref="selectTip">选择要查看的 QuasarPlus 组件</q-tooltip>
+          <q-tooltip ref="selectTip">选择要查看的 Vue 组件</q-tooltip>
         </q-btn>
       </q-item-section>
       <q-item-section class="_toolbtn">
@@ -14,12 +14,17 @@
       </q-item-section>
       <q-item-section side class="_toolbtn" v-if="component">
         <q-btn flat dense size="sm" class="text-primary" :icon="filterProps ? 'text_rotation_none' : 'filter_alt'" @click="filterClick">
-          <q-tooltip ref="filterTip">{{ filterProps ? '显示所有参数' : '仅显示扩展或有值的参数' }}</q-tooltip>
+          <q-tooltip ref="filterTip">{{ filterProps ? '显示所有参数' : '仅显示有值的参数' }}</q-tooltip>
         </q-btn>
       </q-item-section>
-      <q-item-section side class="_toolbtn" v-if="superName">
-        <q-btn flat dense size="sm" class="text-primary" icon="menu_book" type="a" target="_blank" :href="superApi">
+      <q-item-section side class="_toolbtn" v-if="superName && superDoc">
+        <q-btn flat dense size="sm" class="text-primary" icon="menu_book" type="a" target="_blank" :href="superDoc">
           <q-tooltip>查看基类 {{ superName }} 的 API 文档</q-tooltip>
+        </q-btn>
+      </q-item-section>
+      <q-item-section side class="_toolbtn" v-if="apiDoc">
+        <q-btn flat dense size="sm" class="text-primary" icon="menu_book" type="a" target="_blank" :href="apiDoc">
+          <q-tooltip>查看 API 文档</q-tooltip>
         </q-btn>
       </q-item-section>
       <q-item-section side class="_toolbtn">
@@ -56,8 +61,9 @@ import plusList from 'components/plusList.js'
 export default {
   data: () => ({
     component: '',
+    apiDoc: '',
     superName: '',
-    superApi: '',
+    superDoc: '',
     propList: [],
     filterProps: true
   }),
@@ -66,7 +72,7 @@ export default {
 
   computed: {
     filteredPropList() {
-      return this.filterProps ? this.propList.filter(i => i.isNew || i.isUpdate || i.value !== undefined) : this.propList
+      return this.filterProps ? this.propList.filter(i => i.value !== undefined) : this.propList
     }
   },
 
@@ -74,13 +80,14 @@ export default {
     'state.editingComponent'(val) {
       this.propList.forEach(prop => prop.unwatch()) // 先取消原属性监视
       if (val) {
-        this.component = val.$options.name
-        this.superName = (val.$options.extends && val.$options.extends.options.name) || ''
-        const api = this.state.apiMap[this.component]
-        this.superApi = api.superApi
-        this.propList = Object.keys(val.$props)
+        this.component = this.$getName(val.$options)
+        const api = this.state.apiMap[this.component] || {}
+        this.apiDoc = api.doc
+        this.superName = (val.$options.extends && this.$getName(val.$options.extends.options)) || ''
+        this.superDoc = (this.state.apiMap[this.superName] || {}).doc
+        this.propList = Object.keys(val.$props || {})
           .map(name => {
-            return this.makePropInfo(val, name, api.props[name])
+            return this.makePropInfo(val, name, api.props && api.props[name])
           })
           .sort((a, b) => {
             if (a.isNew !== b.isNew) return a.isNew ? -1 : 1
@@ -90,7 +97,7 @@ export default {
       } else {
         this.component = ''
         this.superName = ''
-        this.superApi = ''
+        this.superDoc = ''
         this.propList = []
       }
     }
@@ -111,18 +118,22 @@ export default {
 
     // 生成一条属性信息
     makePropInfo(component, name, api) {
+      if (typeof api !== 'object') {
+        api = { desc: api }
+      }
       const def = component.$options.props[name]
-      const superDef = component.$options.extends && component.$options.extends.options.props[name]
+      const superOptions = component.$options.extends && component.$options.extends.options
+      const superProp = superOptions && superOptions.props && superOptions.props[name]
       const extendProps = component.constructor.extendOptions.props
       const propInfo = {
         name,
         value: name in component.$options.propsData ? component.$props[name] : undefined,
-        type: def.type instanceof Array ? def.type.map(i => i.name).join(' | ') : def.type.name,
+        type: def.type instanceof Array ? def.type.map(i => i.name).join(' | ') : def.type && def.type.name,
         validator: def.validator,
-        default: def.default === undefined ? undefined : def.default instanceof Function ? '<Function>' : String(def.default),
-        description: api,
-        isNew: !superDef,
-        isUpdate: !!(superDef && extendProps && extendProps[name]),
+        default: api.default !== undefined ? api.default : def.default === undefined ? undefined : this.formatDefault(def.default),
+        description: api.desc || (this.apiDoc ? '参见 API 文档' : this.superDoc ? '参见基类 API 文档' : undefined),
+        isNew: superOptions && !superProp,
+        isUpdate: superProp && extendProps && extendProps[name],
         unwatch: component.$watch(
           name,
           debounce(val => {
@@ -132,19 +143,29 @@ export default {
         )
       }
       return propInfo
+    },
+
+    // 格式化默认值
+    formatDefault(val) {
+      if (val instanceof Function) return '<Function>'
+      if (typeof val === 'object') return JSON.stringify(val)
+      return String(val)
     }
   },
 
   created() {
     // 加载API表数据
     const apiMap = {}
-    Promise.all(
-      plusList.map(item =>
+    Promise.all([
+      import('components/api/Quasar.json').then(module => {
+        Object.assign(apiMap, module.default)
+      }),
+      ...plusList.map(item =>
         import('components/api/' + item.caption + '.json').then(module => {
           apiMap[item.caption] = module.default
         })
       )
-    ).then(() => {
+    ]).then(() => {
       this.state.apiMap = apiMap
     })
   }

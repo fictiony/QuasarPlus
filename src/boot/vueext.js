@@ -26,7 +26,20 @@ PROP_TYPES.forEach(type => {
 })
 
 // 【工具方法】
+const VUE_FILENAME_FORMAT = /[^./\\]+(?=\.vue$)/
 Object.assign(Vue.prototype, {
+
+  // 获取组件名
+  // - @options 组件选项表（若未指定则取当前组件的选项表）
+  $getName(options) {
+    options ||= this.$options
+    const name = options.name || options._componentTag
+    if (name) return name
+    if (options.__file) {
+      return options.__file.match(VUE_FILENAME_FORMAT)[0] || '<Unknown Component>'
+    }
+    return '<Anonymous Component>'
+  },
 
   // 获取插槽内容
   // - @slot 插槽名

@@ -1,7 +1,6 @@
 {
-  "superApi": "https://quasar.dev/vue-components/splitter#qsplitter-api",
   "props": {
-    "position": "分隔条指定位置，取代原 <code>value</code> 属性",
-    "limits2": "两侧区域的最小像素范围，格式为：<br>[ 一区最小像素范围, 二区最小像素范围 ]<br>若设置则 <code>limits</code> 属性无效"
+    "position": "分隔条指定位置，取代原 `value` 属性",
+    "limits2": "两侧区域的最小像素范围，格式为：\n[ 一区最小像素范围, 二区最小像素范围 ]\n若设置则 `limits` 属性无效"
   }
 }

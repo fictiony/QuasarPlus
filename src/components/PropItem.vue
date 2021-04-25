@@ -3,18 +3,18 @@
     <td class="bg-blue-1" :class="nameColor">
       {{ name }}
       <q-tooltip max-width="300px" anchor="top left" self="top right">
-        <span class="text-h6">{{ name }}</span>
+        <div>
+          <span class="text-h6">{{ name }}</span>
+          <q-badge class="q-ml-md float-right" rounded color="green" label="新增" v-if="isNew" />
+          <q-badge class="q-ml-md float-right" rounded color="red" label="更新" v-if="isUpdate" />
+        </div>
         <q-separator spaced="5px" color="grey" />
         <div>
           <q-badge class="q-mr-sm" color="accent" label="类型" />
           {{ type }}
         </div>
         <q-separator spaced="3px" color="transparent" />
-        <div>
-          <span v-html="description" />
-          <q-badge class="q-ml-sm" rounded color="green" label="新增" v-if="isNew" />
-          <q-badge class="q-ml-sm" rounded color="red" label="更新" v-if="isUpdate" />
-        </div>
+        <q-markdown class="q-ma-none" :src="description" />
         <q-separator spaced="3px" color="transparent" v-if="hasDefault" />
         <div v-if="hasDefault">
           <q-badge class="q-mr-sm" color="secondary" label="默认值" />
@@ -62,7 +62,7 @@ export default {
     },
     description: {
       type: String,
-      default: '参见基类 API 文档'
+      default: '暂无说明'
     },
     isNew: {
       type: Boolean,

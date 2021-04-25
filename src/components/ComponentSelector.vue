@@ -2,15 +2,29 @@
   <div>
     <div class="_bounds" :style="boundingRect" v-if="state.selectingComponents" />
     <q-menu content-style="z-index: 100000000" auto-close touch-position ref="menu" @hide="listComponents = []">
-      <q-item clickable dense v-for="(component, index) in listComponents" :key="index" @mouseover="menuHover(index)" @click="menuSelected(index)">
-        <q-item-section>{{ component.$options.name }}</q-item-section>
-      </q-item>
+      <q-list dense>
+        <q-item clickable key="_" @mouseover="menuHover(0)" @click="menuSelected(0)" v-if="listComponents[0]">
+          <q-item-section>{{ $getName(listComponents[0].component.$options) }}</q-item-section>
+        </q-item>
+        <q-separator />
+        <q-item
+          clickable
+          v-for="(item, index) in [...listComponents].reverse()"
+          :key="index"
+          @mouseover="menuHover(listComponents.length - index - 1)"
+          @click="menuSelected(listComponents.length - index - 1)"
+        >
+          <q-item-section :style="{ paddingLeft: item.level * 12 + 'px' }">{{ $getName(item.component.$options) }}</q-item-section>
+        </q-item>
+      </q-list>
     </q-menu>
   </div>
 </template>
 
 <script>
 // 【组件选择器】
+const EMPTY_RECT = { x: 0, y: 0, width: 0, height: 0 }
+
 export default {
   data: () => ({
     mousePos: {},
@@ -73,10 +87,11 @@ export default {
           component = null
         } else {
           // 内外层遍历
-          component = [...this.findInnerComponents(component).reverse(), ...this.findOuterComponents(component)]
-          if (component.length === 0) {
-            component = null
-          }
+          const outer = this.findOuterComponents(component)
+          const middle = outer[0] || { component }
+          const inner = this.findInnerComponents(middle.component, middle.level)
+          const all = [...inner.reverse(), ...outer]
+          component = all.length > 0 ? this.normalizeLevels(all) : null
         }
       }
       this.state.selectingComponents = component
@@ -92,7 +107,7 @@ export default {
           this.$refs.menu.show(e)
           return
         } else {
-          this.state.editingComponent = this.state.selectingComponents[0]
+          this.state.editingComponent = this.state.selectingComponents[0].component
         }
       } else {
         this.state.editingComponent = null
@@ -107,7 +122,7 @@ export default {
 
     // 菜单选中
     menuSelected(index) {
-      this.state.editingComponent = this.listComponents[index]
+      this.state.editingComponent = this.listComponents[index].component
       this.listComponents = []
       this.state.selecting = false
     },
@@ -120,38 +135,49 @@ export default {
       return el && el.__vue__
     },
 
-    // 查找所有外层组件（仅限API表中已声明过的）
-    findOuterComponents(component) {
-      const components = []
+    // 查找所有外层组件（仅限内页中的组件）
+    findOuterComponents(component, level = 0) {
+      const outer = []
       while (component) {
-        if (component.$options.name in this.state.apiMap) {
-          if (this.hitTest(component.$el, this.mousePos)) {
-            components.push(component)
-          }
+        if (this.hitTest(component.$el, this.mousePos)) {
+          outer.push({ component, level })
         }
         component = component.$parent
+        if (component === this.$parent || !this.$parent.$el.contains(component.$el)) break
+        level--
       }
-      return components
+      return outer
     },
 
-    // 查找所有内层组件（仅限API表中已声明过的）
-    findInnerComponents(component) {
-      const components = []
+    // 查找所有内层组件
+    findInnerComponents(component, level = 0) {
+      const inner = []
       const childQueue = [...component.$children]
+      const levelQueue = component.$children.map(() => level + 1)
       while (childQueue.length > 0) {
         component = childQueue.pop()
-        if (component.$options.name in this.state.apiMap) {
-          if (this.hitTest(component.$el, this.mousePos)) {
-            components.push(component)
-          }
+        level = levelQueue.pop()
+        if (this.hitTest(component.$el, this.mousePos)) {
+          inner.push({ component, level })
         }
         childQueue.push(...component.$children)
+        levelQueue.push(...component.$children.map(() => level + 1))
       }
-      return components
+      return inner
+    },
+
+    // 矫正层级
+    normalizeLevels(list) {
+      const minLevel = list[list.length - 1].level
+      return list.map(i => ({
+        component: i.component,
+        level: i.level - minLevel
+      }))
     },
 
     // 获取元素范围框
     getBoundingRect(el) {
+      if (!el.getBoundingClientRect) return null
       const rect = el.getBoundingClientRect()
       if (rect.width > 0 && rect.height > 0) return rect
 
@@ -159,10 +185,12 @@ export default {
       let { left, top, right, bottom } = rect
       Array(...el.children).forEach(child => {
         const childRect = this.getBoundingRect(child)
-        left = Math.min(left, childRect.left)
-        top = Math.min(top, childRect.top)
-        right = Math.max(right, childRect.right)
-        bottom = Math.max(bottom, childRect.bottom)
+        if (childRect) {
+          left = Math.min(left, childRect.left)
+          top = Math.min(top, childRect.top)
+          right = Math.max(right, childRect.right)
+          bottom = Math.max(bottom, childRect.bottom)
+        }
       })
       return {
         x: left,
@@ -174,13 +202,13 @@ export default {
 
     // 判断坐标是否在元素内
     hitTest(el, pt) {
-      const { x, y, width, height } = this.getBoundingRect(el)
+      const { x, y, width, height } = this.getBoundingRect(el) || EMPTY_RECT
       return pt.x >= x && pt.x < x + width && pt.y >= y && pt.y < y + height
     },
 
     // 刷新范围框
     refreshBoundingRect() {
-      const rect = this.getBoundingRect(this.state.selectingComponents[0].$el)
+      const rect = this.getBoundingRect(this.state.selectingComponents[0].component.$el) || EMPTY_RECT
       this.boundingRect = {
         left: rect.x + 'px',
         top: rect.y + 'px',
