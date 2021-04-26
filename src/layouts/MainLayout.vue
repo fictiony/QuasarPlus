@@ -36,7 +36,7 @@
     </my-drawer>
 
     <my-drawer v-model="rightOpen" side="right" :breakpoint="700" bordered :content-class="drawerBgColor" :width="300" :limits="[200, 500]">
-      <PropPanel @close="closePropPanel" />
+      <PropPanel @close="propPanelClose" />
     </my-drawer>
 
     <q-page-container>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import plusList from 'components/plusList.js'
+import { pageList, plusList } from 'components/menu.js'
 import MenuPanel from 'pages/MenuPanel.vue'
 import PropPanel from 'pages/PropPanel.vue'
 
@@ -83,18 +83,35 @@ export default {
   },
 
   methods: {
+    // 更新标题
     updateTitle(route) {
-      const plus = plusList.find(i => i.to === route.path)
-      this.pageTitle = plus ? `${plus.title}（${plus.caption}）` : ''
-      document.title = `${plus ? plus.caption : '在线演示'} | ${this.title}`
+      if (route.path !== '/') {
+        const page = pageList.find(i => i.to === route.path)
+        if (page) {
+          this.pageTitle = page.title
+          document.title = `${page.title} | ${this.title}`
+          return
+        }
+        const plus = plusList.find(i => i.to === route.path)
+        if (plus) {
+          this.pageTitle = `${plus.title}（${plus.caption}）`
+          document.title = `${plus.caption} | ${this.title}`
+          return
+        }
+      }
+      this.pageTitle = ''
+      document.title = `在线演示 | ${this.title}`
     },
-    closePropPanel() {
+
+    // 属性栏关闭
+    propPanelClose() {
       this.rightOpen = false
       this.state.editingComponent = null
     }
   },
 
   mounted() {
+    // 路由切换时自动更新标题
     this.$router.beforeEach((to, from, next) => {
       this.updateTitle(to)
       next()

@@ -1,6 +1,6 @@
 <template>
   <q-list class="fit no-scroll column">
-    <EssentialLink v-for="(link, index) in linkList" :key="`link-${index}`" v-bind="link" />
+    <EssentialLink v-for="(link, index) in pageList" :key="`link-${index}`" v-bind="link" />
 
     <q-separator />
     <q-item dense>
@@ -17,17 +17,11 @@
 
 <script>
 // 【菜单栏】
-import plusList from 'components/plusList.js'
+import { pageList, plusList } from 'components/menu.js'
 
 export default {
   data: () => ({
-    linkList: [
-      {
-        title: '返回主页',
-        icon: 'home',
-        to: '/'
-      }
-    ],
+    pageList,
     plusList
   })
 }

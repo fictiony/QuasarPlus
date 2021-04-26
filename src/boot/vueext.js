@@ -36,7 +36,8 @@ Object.assign(Vue.prototype, {
     const name = options.name || options._componentTag
     if (name) return name
     if (options.__file) {
-      return options.__file.match(VUE_FILENAME_FORMAT)[0] || '<Unknown Component>'
+      const filename = options.__file.match(VUE_FILENAME_FORMAT)[0]
+      return filename ? `<${filename}.vue>` : '<Unknown Component>'
     }
     return '<Anonymous Component>'
   },

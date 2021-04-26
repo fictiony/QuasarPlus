@@ -35,14 +35,14 @@
     <CustomScroller class="full-width q-space _proplist">
       <q-markup-table flat bordered dense>
         <thead>
-          <tr>
+          <tr style="height: 25px">
             <th class="bg-primary text-white _prop">属性名</th>
             <th class="bg-blue-grey-5 text-white _value">属性值</th>
           </tr>
         </thead>
         <tbody>
           <template v-if="filteredPropList.length">
-            <PropItem v-for="(prop, index) in filteredPropList" :key="index" v-bind="prop" />
+            <PropItem v-for="prop in filteredPropList" :key="prop.name" v-bind="prop" />
           </template>
           <tr v-else>
             <td colspan="2" class="text-grey-5 text-center">没有可用属性</td>
@@ -56,7 +56,8 @@
 <script>
 // 【属性栏】
 import { debounce } from 'quasar'
-import plusList from 'components/plusList.js'
+import { plusList } from 'components/menu.js'
+import quasarApi from 'components/api/Quasar.json'
 
 export default {
   data: () => ({
@@ -65,7 +66,7 @@ export default {
     superName: '',
     superDoc: '',
     propList: [],
-    filterProps: true
+    filterProps: false
   }),
 
   inject: ['state'],
@@ -155,17 +156,14 @@ export default {
 
   created() {
     // 加载API表数据
-    const apiMap = {}
-    Promise.all([
-      import('components/api/Quasar.json').then(module => {
-        Object.assign(apiMap, module.default)
-      }),
-      ...plusList.map(item =>
+    const apiMap = { ...quasarApi }
+    Promise.all(
+      plusList.map(item =>
         import('components/api/' + item.caption + '.json').then(module => {
           apiMap[item.caption] = module.default
         })
       )
-    ]).then(() => {
+    ).then(() => {
       this.state.apiMap = apiMap
     })
   }
@@ -182,16 +180,23 @@ export default {
 }
 ._proplist {
   padding: 4px 8px 6px 8px;
-  table thead tr {
-    height: 25px;
-    th._prop {
-      min-width: 100px;
-      width: 30%;
-      padding: 0px;
-    }
-    th._value {
-      padding: 0px;
-    }
+  th._prop {
+    width: 30%;
+    min-width: 100px;
+    max-width: 160px;
+    padding: 2px 0 0 0 !important;
+  }
+  th._value {
+    max-width: 1px; // 能使最后一列填满剩余宽度的神奇设置
+    padding: 2px 0 0 0 !important;
+  }
+  tbody ::v-deep ._prop {
+    width: 30%;
+    min-width: 100px;
+    max-width: 160px;
+  }
+  tbody ::v-deep ._value {
+    max-width: 1px;
   }
 }
 </style>

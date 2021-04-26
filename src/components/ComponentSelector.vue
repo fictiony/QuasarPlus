@@ -14,7 +14,9 @@
           @mouseover="menuHover(listComponents.length - index - 1)"
           @click="menuSelected(listComponents.length - index - 1)"
         >
-          <q-item-section :style="{ paddingLeft: item.level * 12 + 'px' }">{{ $getName(item.component.$options) }}</q-item-section>
+          <q-item-section :style="{ paddingLeft: item.level * 12 + 'px' }">
+            {{ $getName(item.component.$options) }}
+          </q-item-section>
         </q-item>
       </q-list>
     </q-menu>

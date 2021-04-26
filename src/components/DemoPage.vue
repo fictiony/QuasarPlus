@@ -1,8 +1,8 @@
 <template>
   <q-page class="doc">
     <template v-for="(part, index) in docParts">
-      <q-markdown no-heading-anchor-links :src="part" :key="'M' + index" v-if="part.trim()" />
-      <component :is="components[index].tag" v-bind="components[index].attrs" :key="'C' + index" v-if="components[index]" />
+      <q-markdown no-heading-anchor-links :src="part" :key="`md-${index}`" v-if="part.trim()" />
+      <component :is="components[index].tag" v-bind="components[index].attrs" :key="`eg-${index}`" v-if="components[index]" />
     </template>
 
     <div class="q-pa-md">

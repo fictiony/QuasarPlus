@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td class="bg-blue-1" :class="nameColor">
+    <td class="bg-blue-1 _prop" :class="nameColor">
       {{ name }}
       <q-tooltip max-width="300px" anchor="top left" self="top right">
         <div>
@@ -22,9 +22,9 @@
         </div>
       </q-tooltip>
     </td>
-    <td>
-      <template v-if="value !== undefined">{{ value }}</template>
-      <span class="text-grey-4" v-else-if="hasDefault">{{ this.default }}</span>
+    <td class="_value">
+      <div class="ellipsis" v-if="value !== undefined">{{ value }}</div>
+      <div class="ellipsis text-grey-4" v-else-if="hasDefault">{{ this.default }}</div>
       <!-- <q-popup-edit v-model="curValue" :validate="validator">
         <q-input v-model="curValue" dense autofocus counter v-if="editor == 'String'" />
         <q-input type="number" v-model.number="curValue" dense autofocus v-else-if="editor == 'Number'" />

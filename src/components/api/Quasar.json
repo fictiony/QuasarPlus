@@ -1,11 +1,74 @@
 {
   "QBtn": {
-    "doc": "https://quasar.dev/vue-components/splitter#qsplitter-api"
+    "name": "按钮",
+    "doc": "https://quasar.dev/vue-components/button#qbtn-api",
+    "demos": [{
+      "color": "primary",
+      "label": "Button"
+    }, {
+      "rounded": true,
+      "push": true,
+      "color": "secondary",
+      "size": "md",
+      "icon": "bookmark",
+      "label": "Push"
+    }, {
+      "round": true,
+      "glossy": true,
+      "color": "accent",
+      "icon": "local_activity"
+    }],
+    "demoSlots": {}
   },
+
+  "QLayout": {
+    "name": "布局框架",
+    "doc": "https://quasar.dev/layout/layout#qlayout-api",
+    "frame": 150,
+    "demoProps": {
+      "view": "hHh LpR fff",
+      "container": true,
+      "style": "height: 150px"
+    },
+    "demoSlots": {
+      "default": "<div><q-header class='row items-center justify-between'><q-btn flat dense icon='menu' @click='left = !left'></q-btn>页眉<q-btn flat dense icon='menu' @click='right = !right'></q-btn></q-header><q-drawer elevated :breakpoint='400' :width='200' v-model='left'>左侧滑栏</q-drawer><q-drawer side='right' elevated :breakpoint='400' :width='200' v-model='right'>右侧滑栏</q-drawer><q-page-container><q-page padding>内页</q-page></q-page-container><q-footer class='text-center'>页脚</q-footer></div>"
+    },
+    "demoData": {
+      "default": {
+        "left": true,
+        "right": true
+      }
+    }
+  },
+
   "QDrawer": {
-    "doc": "https://quasar.dev/layout/drawer#qdrawer-api"
+    "name": "布局侧滑栏",
+    "doc": "https://quasar.dev/layout/drawer#qdrawer-api",
+    "frame": 100,
+    "frameClass": "QLayout",
+    "demoProps": {
+      "elevated": true,
+      "showIfAbove": true,
+      "breakpoint": 400
+    },
+    "demoFrameProps": {
+      "style": "height: 100px"
+    },
+    "demoFrameSlots": {
+      "default": [true, "<q-page-container><q-page padding>内页</q-page></q-page-container>"]
+    }
   },
+
   "QSplitter": {
-    "doc": "https://quasar.dev/vue-components/splitter#qsplitter-api"
+    "name": "分隔条",
+    "doc": "https://quasar.dev/vue-components/splitter#qsplitter-api",
+    "frame": 50,
+    "demoProps": {
+      "style": "height: 50px"
+    },
+    "demoSlots": {
+      "before": "<div class='text-center'>左区</div>",
+      "after": "<div class='text-center'>右区</div>"
+    }
   }
 }

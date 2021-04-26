@@ -1,4 +1,4 @@
-import plusList from 'components/plusList.js'
+import { plusList } from 'components/menu.js'
 import DemoPage from 'components/DemoPage.vue'
 
 const routes = [
@@ -7,6 +7,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '/', component: () => import('pages/Index.vue') },
+      { path: '/QuasarComponents', component: () => import('pages/QuasarComponents.vue') },
       ...plusList.map((item, index) => ({
         path: item.to,
         component: () => import(
