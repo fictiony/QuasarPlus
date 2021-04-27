@@ -3,17 +3,11 @@
     <div class="_bounds" :style="boundingRect" v-if="state.selectingComponents" />
     <q-menu content-style="z-index: 100000000" auto-close touch-position ref="menu" @hide="listComponents = []">
       <q-list dense>
-        <q-item clickable key="_" @mouseover="menuHover(0)" @click="menuSelected(0)" v-if="listComponents[0]">
-          <q-item-section>{{ $getName(listComponents[0].component.$options) }}</q-item-section>
+        <q-item clickable key="_" @mouseover="menuHover(0)" @click="menuSelected(listComponents.length - 1)" v-if="listComponents.length">
+          <q-item-section>{{ $getName(listComponents[listComponents.length - 1].component.$options) }}</q-item-section>
         </q-item>
         <q-separator />
-        <q-item
-          clickable
-          v-for="(item, index) in [...listComponents].reverse()"
-          :key="index"
-          @mouseover="menuHover(listComponents.length - index - 1)"
-          @click="menuSelected(listComponents.length - index - 1)"
-        >
+        <q-item clickable v-for="(item, index) in listComponents" :key="index" @mouseover="menuHover(index)" @click="menuSelected(index)">
           <q-item-section :style="{ paddingLeft: item.level * 12 + 'px' }">
             {{ $getName(item.component.$options) }}
           </q-item-section>
@@ -105,7 +99,7 @@ export default {
       this.cancelEvent(e)
       if (this.state.selectingComponents) {
         if (this.state.selectingComponents.length > 1) {
-          this.listComponents = this.state.selectingComponents
+          this.listComponents = this.state.selectingComponents.slice().reverse()
           this.$refs.menu.show(e)
           return
         } else {

@@ -1,16 +1,16 @@
 <template>
-  <q-page padding>
-    <q-markup-table class="_components">
+  <q-page style="padding: 70px 20px 50px 20px">
+    <q-markup-table class="_components" flat bordered>
       <thead :class="$q.dark.isActive ? 'bg-grey-8' : 'bg-grey-4'">
         <tr>
-          <th class="_name">组件</th>
+          <th class="_name">组件名</th>
           <th class="_classname">类名</th>
           <th class="_doc">API</th>
           <th class="_example">范例</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(info, index) in quasarComponents" :key="info.className">
+        <tr v-for="(info, index) in sortType ? sortedComponents : quasarComponents" :key="info.className" v-show="matchFilter(info)">
           <td class="_name">{{ info.name }}</td>
           <td class="_classname">
             <a>{{ info.className }}</a>
@@ -45,7 +45,11 @@
                 @click.stop="inspectDemo(index, demoIndex)"
                 :key="`demo-${index}-${demoIndex}`"
               >
-                <component :is="getComponent(info)" v-bind="makeParams(info, false, demo)" :ref="`demo-${index}`">
+                <component
+                  :is="getComponent(info, false, demo.demoClass)"
+                  v-bind="makeParams(info, false, demo.demoProps || demo)"
+                  :ref="`demo-${index}`"
+                >
                   <template v-for="slot in makeSlots(info, false, demo.demoSlots)" v-slot:[slot.name]>
                     <component v-for="content in slot.contents" :is="content" :key="content.name" />
                   </template>
@@ -56,6 +60,50 @@
         </tr>
       </tbody>
     </q-markup-table>
+
+    <q-page-sticky position="top" expand>
+      <q-toolbar class="shadow-3 q-py-sm" :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-white'">
+        <q-input
+          style="width: 240px"
+          dense
+          outlined
+          clearable
+          v-model="searchWord"
+          placeholder="输入组件名或类名搜索"
+          :debounce="0"
+          @input="searchMenu = !!searchWord"
+        >
+          <template #prepend>
+            <q-icon name="search" id="search" />
+          </template>
+        </q-input>
+        <q-menu no-focus auto-close target="#search" :offset="[12, 8]" v-model="searchMenu">
+          <q-list dense style="min-width: 240px">
+            <q-item clickable v-for="(info, index) in filteredComponents" :key="index" @click="searchWord = info.className">
+              <q-item-section>{{ info.className }}（{{ info.name }}）</q-item-section>
+            </q-item>
+            <q-item class="text-grey" key="_" v-if="!filteredComponents.length">
+              <q-item-section>没有匹配的组件</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+
+        <q-space />
+        <q-btn-dropdown glossy color="primary" :label="categoryOptions.find(i => i.value === category).label">
+          <q-list dense>
+            <q-item v-for="(option, index) in categoryOptions" :key="index" clickable v-close-popup @click="category = option.value">
+              <q-item-section>{{ option.label }}</q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+        <q-btn-toggle class="q-ml-sm" glossy toggle-color="primary" v-model="sortType" :options="sortTypeOptions" />
+      </q-toolbar>
+    </q-page-sticky>
+
+    <q-page-scroller position="bottom-right" :scroll-offset="400" :offset="[10, 10]" :duration="100">
+      <q-btn round color="primary" icon="arrow_upward" glossy />
+      <q-tooltip anchor="center left" self="center right">返回顶部</q-tooltip>
+    </q-page-scroller>
   </q-page>
 </template>
 
@@ -69,20 +117,82 @@ const toCamelCase = str => str.replace(/-\w/g, m => m[1].toUpperCase())
 
 export default {
   data: () => ({
-    quasarComponents: Object.keys(quasarApi)
-      .map(className => ({
-        className,
-        ...quasarApi[className]
-      }))
-      .filter(i => !i.isPart)
+    searchWord: null,
+    searchMenu: false,
+    categoryOptions: [
+      { label: '所有组件', value: '' },
+      { label: '基本组件', value: 'basic' },
+      { label: '容器组件', value: 'container' },
+      { label: '表单组件', value: 'form' },
+      { label: '工具组件', value: 'tool' },
+      { label: '其他组件', value: 'other' }
+    ],
+    category: 'basic',
+    sortTypeOptions: [
+      { label: '原顺序', value: '' },
+      { label: 'A~Z', value: 'alphabet' }
+    ],
+    sortType: '',
+    quasarComponents: Object.freeze(
+      Object.keys(quasarApi)
+        .filter(i => !quasarApi[i].isPart)
+        .map(i => ({
+          className: i,
+          ...quasarApi[i]
+        }))
+    )
   }),
 
   inject: ['state'],
 
+  computed: {
+    // 排序后的组件信息列表
+    sortedComponents() {
+      return Object.freeze(
+        this.quasarComponents.slice().sort((a, b) => {
+          return a.className < b.className ? -1 : 1
+        })
+      )
+    },
+
+    // 筛选后的组件信息列表
+    filteredComponents() {
+      return this.sortedComponents.filter(i => this.matchFilter(i))
+    },
+
+    // 处理后的实际搜索词
+    realSearchWord() {
+      return (this.searchWord || '').trim().toLowerCase()
+    }
+  },
+
   methods: {
+    // 判断是否满足筛选条件
+    matchFilter(info) {
+      if (this.category) {
+        if (this.category === 'other') {
+          if (info.category) return false
+        } else if (info.category instanceof Array) {
+          if (info.category.indexOf(this.category) < 0) return false
+        } else {
+          if (info.category !== this.category) return false
+        }
+      }
+      if (this.realSearchWord) {
+        if (info.className.toLowerCase().indexOf(this.realSearchWord) >= 0) return true
+        if (info.name.toLowerCase().indexOf(this.realSearchWord) >= 0) return true
+        return false
+      }
+      return true
+    },
+
     // 获取Quasar组件
-    getComponent(info, isFrame) {
-      return quasar[(isFrame ? info.frameClass : null) || info.className]
+    getComponent(info, isFrame, demoClass) {
+      const className = demoClass || (isFrame ? info.frameClass : null) || info.className
+      const component = quasar[className]
+      // if ()
+      // data: () => quasar.extend(true, {}, data[name])
+      return component
     },
 
     // 自动生成组件参数表
@@ -94,13 +204,13 @@ export default {
         info = this.quasarComponents.find(i => i.className === info.frameClass)
         if (!info) return {}
       }
-      const component = quasar[info.className]
-      const params = quasar.extend(true, {}, info.demoProps, frameProps, customProps ? customProps.demoProps || customProps : undefined)
+      const params = quasar.extend(true, {}, info.demoProps, frameProps, customProps)
 
       // 遍历属性定义表，查找必填属性，并自动设置初始值
-      Object.keys(component.options.props).forEach(name => {
+      const props = quasar[info.className].options.props || {}
+      Object.keys(props).forEach(name => {
         if (name in params) return
-        const prop = component.options.props[name]
+        const prop = props[name]
         if (!prop.required || prop.default !== undefined) return
         const types = prop.type instanceof Array ? prop.type : [prop.type || Number]
         if (types.includes(Boolean)) {

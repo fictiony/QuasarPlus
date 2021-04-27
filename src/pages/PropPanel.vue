@@ -122,16 +122,16 @@ export default {
       if (typeof api !== 'object') {
         api = { desc: api }
       }
-      const def = component.$options.props[name]
+      const prop = component.$options.props ? component.$options.props[name] : {}
       const superOptions = component.$options.extends && component.$options.extends.options
       const superProp = superOptions && superOptions.props && superOptions.props[name]
       const extendProps = component.constructor.extendOptions.props
       const propInfo = {
         name,
         value: name in component.$options.propsData ? component.$props[name] : undefined,
-        type: def.type instanceof Array ? def.type.map(i => i.name).join(' | ') : def.type && def.type.name,
-        validator: def.validator,
-        default: api.default !== undefined ? api.default : def.default === undefined ? undefined : this.formatDefault(def.default),
+        type: prop.type instanceof Array ? prop.type.map(i => i.name).join(' | ') : prop.type && prop.type.name,
+        validator: prop.validator,
+        default: api.default !== undefined ? api.default : prop.default === undefined ? undefined : this.formatDefault(prop.default),
         description: api.desc || (this.apiDoc ? '参见 API 文档' : this.superDoc ? '参见基类 API 文档' : undefined),
         isNew: superOptions && !superProp,
         isUpdate: superProp && extendProps && extendProps[name],
@@ -180,23 +180,20 @@ export default {
 }
 ._proplist {
   padding: 4px 8px 6px 8px;
-  th._prop {
-    width: 30%;
-    min-width: 100px;
-    max-width: 160px;
-    padding: 2px 0 0 0 !important;
-  }
+  th._prop,
   th._value {
-    max-width: 1px; // 能使最后一列填满剩余宽度的神奇设置
     padding: 2px 0 0 0 !important;
   }
+  th._prop,
   tbody ::v-deep ._prop {
     width: 30%;
     min-width: 100px;
     max-width: 160px;
   }
+  th._value,
   tbody ::v-deep ._value {
-    max-width: 1px;
+    min-width: 60px;
+    max-width: 1px; // 能使最后一列填满剩余宽度的神奇设置
   }
 }
 </style>

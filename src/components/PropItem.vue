@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td class="bg-blue-1 _prop" :class="nameColor">
+    <td class="_prop ellipsis bg-blue-1" :class="nameColor">
       {{ name }}
       <q-tooltip max-width="300px" anchor="top left" self="top right">
         <div>
