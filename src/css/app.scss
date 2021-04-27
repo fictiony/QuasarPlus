@@ -4,24 +4,30 @@
   margin: auto;
   max-width: 1000px;
   .q-markdown--heading {
-    &-h1, &-h2, &-h3, &-h4 {
+    &-h1,
+    &-h2,
+    &-h3,
+    &-h4 {
       color: $primary;
-    };
+    }
     &-h2 {
       margin-top: 30px;
       border-bottom: 1px solid #ccc;
-    };
-  };
+    }
+  }
   .q-markdown--code {
     padding: 0.5em 0.75em 0.5em 0.75em;
     background-color: #fff;
-    background-image: linear-gradient(scale-color($primary, $lightness: 96%) 50%, transparent 0%);
+    background-image: linear-gradient(
+      scale-color($primary, $lightness: 96%) 50%,
+      transparent 0%
+    );
     background-size: 3em 3em;
     background-origin: content-box;
     border-width: 1px 1px 1px 0px;
     border-style: solid;
     border-color: $grey-3;
-  };
+  }
   .q-markdown--line-numbers {
     padding: 0.5em 0.75em 0.5em 0.75em;
     border-width: 1px 0px 1px 3px;
@@ -33,5 +39,11 @@
     -moz-border-radius: $generic-border-radius;
     -ms-border-radius: $generic-border-radius;
     -o-border-radius: $generic-border-radius;
-};
-};
+  }
+}
+
+@media screen and (max-width: 720px){
+  .doc {
+    padding: 10px 20px;
+  }
+}

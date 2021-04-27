@@ -40,7 +40,7 @@
             </q-card>
             <div class="row items-center" v-else>
               <div
-                v-for="(demo, demoIndex) in info.demos || [undefined]"
+                v-for="(demo, demoIndex) in info.demos || [{}]"
                 :class="demoIndex > 0 ? 'q-ml-md' : ''"
                 @click.stop="inspectDemo(index, demoIndex)"
                 :key="`demo-${index}-${demoIndex}`"

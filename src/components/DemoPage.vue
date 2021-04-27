@@ -10,7 +10,7 @@
       <q-btn color="primary" :to="nextPage" class="q-ml-md">{{ nextPage == '/' ? '回主页' : '下一篇' }}</q-btn>
     </div>
 
-    <q-page-scroller position="bottom-right" :scroll-offset="20" :offset="[15, 15]" :duration="100">
+    <q-page-scroller position="bottom-right" :scroll-offset="400" :offset="[10, 10]" :duration="100">
       <q-btn round color="primary" icon="arrow_upward" glossy />
       <q-tooltip anchor="center left" self="center right">返回顶部</q-tooltip>
     </q-page-scroller>
