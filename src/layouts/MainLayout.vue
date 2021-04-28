@@ -6,7 +6,7 @@
 
         <q-toolbar-title v-show="subTitleShow || !pageTitle">
           {{ title }}
-          <span class="text-subtitle1">v0.0.4</span>
+          <span class="text-subtitle1">v0.0.5</span>
         </q-toolbar-title>
         <q-toolbar-title v-show="pageTitle">
           {{ pageTitle }}

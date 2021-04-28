@@ -6,11 +6,11 @@
       </q-ribbon>
 
       <div class="row">
-        <q-tabs v-model="curTab" dense active-color="primary" indicator-color="primary" class="text-grey self-end" v-show="showCode">
+        <q-tabs v-model="curTab" dense active-color="primary" indicator-color="primary" class="text-grey self-end" v-if="showCode">
           <q-tab v-for="tab in codeTabs" :name="tab" :label="tab" :key="`tab-${tab}`" />
         </q-tabs>
 
-        <q-btn flat round icon="content_copy" color="primary" class="self-end" v-show="showCode" @click="copyCode">
+        <q-btn flat round icon="content_copy" color="primary" class="self-end" v-if="showCode" @click="copyCode">
           <q-tooltip>复制代码</q-tooltip>
         </q-btn>
         <q-btn flat round :icon="showCode ? 'browser_not_supported' : 'code'" color="primary" class="self-end" @click="showCode = !showCode">
@@ -24,7 +24,7 @@
     <q-separator />
 
     <q-slide-transition>
-      <div v-show="showCode">
+      <div v-if="showCode">
         <q-tab-panels v-model="curTab" animated>
           <q-tab-panel class="q-pa-none overflow-hidden" v-for="tab in codeTabs" :name="tab" :key="`panel-${tab}`">
             <q-markdown class="fit" :src="'```html\n' + code[tab] + '\n```'" />
