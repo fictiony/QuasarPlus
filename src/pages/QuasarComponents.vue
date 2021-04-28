@@ -136,7 +136,6 @@ import quasarApi from 'components/api/Quasar.json'
 import * as quasar from 'quasar'
 
 const QUASAR_FORMAT = /<q(-[\w-]+)[^>]*>/g
-const toCamelCase = str => str.replace(/-\w/g, m => m[1].toUpperCase())
 
 export default {
   data: () => ({
@@ -337,7 +336,7 @@ export default {
     searchUsedComponents(template) {
       const components = {}
       Array(...template.matchAll(QUASAR_FORMAT)).forEach(block => {
-        const className = 'Q' + toCamelCase(block[1])
+        const className = 'Q' + this.$toCamelCase(block[1])
         components[className] = quasar[className]
       })
       return components

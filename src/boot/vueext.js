@@ -42,6 +42,11 @@ Object.assign(Vue.prototype, {
     return '<Anonymous Component>'
   },
 
+  // 转换驼峰命名
+  $toCamelCase(name) {
+    return name.replace(/-\w/g, m => m[1].toUpperCase())
+  },
+
   // 获取插槽内容
   // - @slot 插槽名
   // - @defaults 默认虚拟节点列表（插槽未指定时取）

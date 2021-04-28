@@ -55,7 +55,7 @@
 
 <script>
 // 【属性栏】
-import { debounce } from 'quasar'
+import { debounce, extend } from 'quasar'
 import { plusList } from 'components/menu.js'
 import quasarApi from 'components/api/Quasar.json'
 
@@ -118,9 +118,9 @@ export default {
     },
 
     // 生成一条属性信息
-    makePropInfo(component, name, api) {
-      if (typeof api !== 'object') {
-        api = { desc: api }
+    makePropInfo(component, name, apiProp) {
+      if (typeof apiProp !== 'object') {
+        apiProp = { desc: apiProp }
       }
       const prop = component.$options.props ? component.$options.props[name] : {}
       const superOptions = component.$options.extends && component.$options.extends.options
@@ -131,8 +131,8 @@ export default {
         value: name in component.$options.propsData ? component.$props[name] : undefined,
         type: prop.type instanceof Array ? prop.type.map(i => i.name).join(' | ') : prop.type && prop.type.name,
         validator: prop.validator,
-        default: api.default !== undefined ? api.default : prop.default === undefined ? undefined : this.formatDefault(prop.default),
-        description: api.desc || (this.apiDoc ? '参见 API 文档' : this.superDoc ? '参见基类 API 文档' : undefined),
+        default: apiProp.default !== undefined ? apiProp.default : prop.default === undefined ? undefined : this.formatDefault(prop.default),
+        description: this.getDescription(apiProp),
         isNew: superOptions && !superProp,
         isUpdate: superProp && extendProps && extendProps[name],
         unwatch: component.$watch(
@@ -151,20 +151,48 @@ export default {
       if (val instanceof Function) return '<Function>'
       if (typeof val === 'object') return JSON.stringify(val)
       return String(val)
+    },
+
+    // 获取属性说明
+    getDescription(apiProp) {
+      if (apiProp.desc) {
+        if (!apiProp.combinedDesc) {
+          const sections = [apiProp.desc]
+          if (apiProp.addedIn) {
+            sections.push('`' + apiProp.addedIn + ' 版新增`')
+          }
+          if (apiProp.sync) {
+            sections.push('需使用 `.sync` 修饰符来绑定')
+          }
+          apiProp.combinedDesc = sections.join('\n')
+        }
+        return apiProp.combinedDesc
+      }
+      return this.apiDoc ? '参见 API 文档' : this.superDoc ? '参见基类 API 文档' : undefined
     }
   },
 
   created() {
     // 加载API表数据
     const apiMap = { ...quasarApi }
-    Promise.all(
-      plusList.map(item =>
+    Promise.all([
+      ...plusList.map(item =>
         import('components/api/' + item.caption + '.json').then(module => {
           apiMap[item.caption] = module.default
         })
+      ),
+      ...Object.keys(quasarApi).map(className =>
+        import('quasar/dist/api/' + className + '.json').then(module => {
+          const api = module.default
+          const props = {}
+          Object.keys(api.props || {}).forEach(name => {
+            props[this.$toCamelCase(name)] = api.props[name] // 将文档中串式命名的属性名统一成驼峰命名
+          })
+          apiMap[className].props = extend(props, apiMap[className].props)
+        })
       )
-    ).then(() => {
-      this.state.apiMap = apiMap
+    ]).then(() => {
+      this.state.apiMap = Object.freeze(apiMap)
     })
   }
 }

@@ -5,7 +5,7 @@
 // - @dataProp 用来替换的data类属性名（默认为prop前加'_'）
 // - @updateEvent dataProp更改时要触发的事件名（默认为'update:'加prop，用于提供sync修饰符的支持，可设为'input'以便支持v-model）
 // - @return 一个mixin
-function swapProp(prop, dataProp, updateEvent) {
+export function swapProp(prop, dataProp, updateEvent) {
   dataProp = dataProp || '_' + prop
   updateEvent = updateEvent || 'update:' + prop
   return {
@@ -21,8 +21,4 @@ function swapProp(prop, dataProp, updateEvent) {
       }
     }
   }
-}
-
-export {
-  swapProp
 }

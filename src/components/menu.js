@@ -1,5 +1,5 @@
 // 主页链接列表
-const linkList = [
+export const linkList = [
   {
     title: 'Quasar Plus 代码仓库',
     caption: 'https://gitee.com/fictiony/quasar-plus',
@@ -27,7 +27,7 @@ const linkList = [
 ]
 
 // 页面列表
-const pageList = [
+export const pageList = [
   {
     title: '返回主页',
     icon: 'home',
@@ -41,7 +41,7 @@ const pageList = [
 ]
 
 // 扩展组件列表
-const plusList = [
+export const plusList = [
   {
     title: '扩展分隔条',
     caption: 'MySplitter',
@@ -55,5 +55,3 @@ const plusList = [
     to: '/MyDrawer'
   }
 ]
-
-export { linkList, pageList, plusList }
