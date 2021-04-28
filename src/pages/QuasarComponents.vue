@@ -345,7 +345,8 @@ export default {
 
     // 查看组件范例属性
     inspectDemo(info, index = 0) {
-      this.state.editingComponent = this.$refs[`demo-${info.className}`][index]
+      const demos = this.$refs[`demo-${info.className}`]
+      this.state.editingComponent = demos instanceof Array ? demos[index] : demos
     }
   }
 }

@@ -1,20 +1,34 @@
 <template>
   <tr>
-    <td class="_prop ellipsis bg-blue-1" :class="nameColor">
+    <td class="_prop ellipsis bg-blue-1" :class="nameColor" @click="clickPropName">
       {{ name }}
-      <q-tooltip max-width="300px" anchor="top left" self="top right">
+      <q-tooltip max-width="300px" anchor="top left" self="top right" :hide-delay="pinTooltip ? 99999999 : 0" ref="tooltip">
         <div>
           <span class="text-h6">{{ name }}</span>
+          <q-btn
+            flat
+            round
+            dense
+            class="float-right all-pointer-events"
+            style="margin-top: -8px; margin-right: -12px"
+            icon="close"
+            size="xs"
+            v-if="pinTooltip"
+            @click="closeTooltip"
+          />
           <q-badge class="q-ml-md float-right" rounded color="green" label="新增" v-if="isNew" />
           <q-badge class="q-ml-md float-right" rounded color="red" label="更新" v-if="isUpdate" />
         </div>
+
         <q-separator spaced="5px" color="grey" />
         <div>
           <q-badge class="q-mr-sm" color="accent" label="类型" />
           {{ type }}
         </div>
+
         <q-separator spaced="3px" color="transparent" />
         <q-markdown class="q-ma-none" :src="description" />
+
         <q-separator spaced="3px" color="transparent" v-if="hasDefault" />
         <div v-if="hasDefault">
           <q-badge class="q-mr-sm" color="secondary" label="默认值" />
@@ -22,6 +36,7 @@
         </div>
       </q-tooltip>
     </td>
+
     <td class="_value">
       <div class="ellipsis" v-if="value !== undefined">{{ value }}</div>
       <div class="ellipsis text-grey-4" v-else-if="hasDefault">{{ this.default }}</div>
@@ -38,7 +53,8 @@
 // 【属性列表项】
 export default {
   data: vm => ({
-    curValue: vm.stringify(vm.value)
+    curValue: vm.stringify(vm.value),
+    pinTooltip: false
   }),
 
   props: {
@@ -89,24 +105,36 @@ export default {
   },
 
   methods: {
+    // 属性值转字符串
     stringify(val) {
       switch (this.editor) {
         case 'String':
           return val ? String(val) : ''
-        case 'Number':
-          return val.toString()
       }
       return JSON.stringify(val)
     },
 
+    // 字符串转属性值
     parse(val) {
-      switch (this.editor) {
-        case 'String':
-          return JSON.stringify(val)
-        case 'Number':
-          return val.toString()
-      }
-      return val
+      try {
+        switch (this.editor) {
+          case 'String':
+            return val
+        }
+        return JSON.parse(val)
+      } catch (e) {}
+    },
+
+    // 点击属性名
+    clickPropName() {
+      this.pinTooltip = !this.pinTooltip
+      this.$refs.tooltip.show()
+    },
+
+    // 关闭工具提示
+    closeTooltip() {
+      this.pinTooltip = false
+      this.$refs.tooltip.hide()
     }
   }
 }
