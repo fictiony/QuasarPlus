@@ -70,12 +70,13 @@
       <template #body-cell-api="props">
         <q-td class="text-center" style="max-width: 40px; padding: 0px" v-bind="props">
           <q-btn round flat dense text-color="primary" icon="menu_book" type="a" target="_blank" :href="props.row.doc" v-if="props.row.doc" />
+          <template v-else>无</template>
         </q-td>
       </template>
 
       <template #body-cell-demos="props">
         <q-td style="width: 75%; min-width: 200px" v-bind="props" @click="inspectDemo(props.row)">
-          <q-card flat bordered :style="{ minHeight: props.row.frame + 'px' }" v-if="props.row.frame">
+          <q-card flat bordered :style="{ minHeight: props.row.frame + 'px' }" v-if="props.row.frame" v-show="showDemos">
             <component :is="getComponent(props.row, true)" v-bind="makeParams(props.row, true)" v-if="props.row.frameClass">
               <template v-for="slot in makeSlots(props.row, true)" v-slot:[slot.name]>
                 <template v-for="content in slot.contents">
@@ -100,10 +101,10 @@
               </template>
             </component>
           </q-card>
-          <div class="row items-center" v-else>
+          <div class="row items-center" v-show="!props.row.frame || !showDemos">
             <div
               v-for="(demo, index) in props.row.demos || [{}]"
-              class="q-mr-md"
+              :class="showDemos ? 'q-mr-md' : ''"
               @click.stop="inspectDemo(props.row, index)"
               :key="`demo-${props.row.className}-${index}`"
             >
@@ -111,11 +112,16 @@
                 :is="getComponent(props.row, false, demo.demoClass)"
                 v-bind="makeParams(props.row, false, demo.demoProps || demo)"
                 :ref="`demo-${props.row.className}`"
+                v-if="!props.row.frame"
+                v-show="showDemos"
               >
                 <template v-for="slot in makeSlots(props.row, false, demo.demoSlots)" v-slot:[slot.name]>
                   <component v-for="content in slot.contents" :is="content" :key="content.name" />
                 </template>
               </component>
+              <q-chip clickable icon="bubble_chart" v-show="!showDemos">
+                {{ demo.demoName || props.row.demoName || `范例 ${index + 1}` }}
+              </q-chip>
             </div>
           </div>
         </q-td>
