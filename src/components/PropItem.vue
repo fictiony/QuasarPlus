@@ -1,8 +1,8 @@
 <template>
   <tr>
-    <td class="_prop ellipsis bg-blue-1" :class="nameColor" @click="clickPropName">
+    <td class="_prop ellipsis" :class="nameColor" @dblclick="clickPropName">
       {{ name }}
-      <q-tooltip max-width="300px" anchor="top left" self="top right" :hide-delay="pinTooltip ? 99999999 : 0" ref="tooltip">
+      <q-tooltip max-width="400px" anchor="top left" self="top right" :hide-delay="pinTooltip ? 99999999 : 0" ref="tooltip">
         <div>
           <span class="text-h6">{{ name }}</span>
           <q-btn
@@ -27,23 +27,22 @@
         </div>
 
         <q-separator spaced="3px" color="transparent" />
-        <q-markdown class="q-ma-none" :src="description" />
+        <q-markdown class="q-ma-none all-pointer-events" :src="description" />
 
-        <q-separator spaced="3px" color="transparent" v-if="hasDefault" />
         <div v-if="hasDefault">
           <q-badge class="q-mr-sm" color="secondary" label="默认值" />
-          {{ this.default }}
+          {{ defaultDesc === undefined ? defaultStr : defaultDesc }}
         </div>
       </q-tooltip>
     </td>
 
     <td class="_value">
-      <div class="ellipsis" v-if="value !== undefined">{{ value }}</div>
-      <div class="ellipsis text-grey-4" v-else-if="hasDefault">{{ this.default }}</div>
-      <!-- <q-popup-edit v-model="curValue" :validate="validator">
-        <q-input v-model="curValue" dense autofocus counter v-if="editor == 'String'" />
-        <q-input type="number" v-model.number="curValue" dense autofocus v-else-if="editor == 'Number'" />
-        <q-input v-model="curValue" dense autofocus v-else />
+      <div class="ellipsis" v-if="value !== undefined">{{ valueStr }}</div>
+      <div class="ellipsis" :class="$q.dark.isActive ? 'text-grey-7' : 'text-grey-5'" v-else>{{ defaultStr }}</div>
+      <!-- <q-popup-edit v-model="editValue" :validate="validator">
+        <q-input v-model="editValue" dense autofocus counter v-if="editType == 'String'" />
+        <q-input type="number" v-model.number="editValue" dense autofocus v-else-if="editType == 'Number'" />
+        <q-input v-model="editValue" dense autofocus v-else />
       </q-popup-edit> -->
     </td>
   </tr>
@@ -53,11 +52,12 @@
 // 【属性列表项】
 export default {
   data: vm => ({
-    curValue: vm.stringify(vm.value),
+    editValue: vm.valueStr,
     pinTooltip: false
   }),
 
   props: {
+    component: {},
     name: {
       type: String,
       required: true
@@ -69,11 +69,16 @@ export default {
       type: String,
       default: 'any'
     },
+    editType: {
+      type: String,
+      default: 'String'
+    },
     validator: {
       type: Function,
       default: () => true
     },
-    default: {
+    default: {},
+    defaultDesc: {
       type: String
     },
     description: {
@@ -87,37 +92,54 @@ export default {
     isUpdate: {
       type: Boolean,
       default: false
-    },
-    editor: {
-      type: String,
-      default: 'String'
     }
   },
 
   computed: {
+    // 属性名颜色
     nameColor() {
-      return `text-${this.isNew ? 'green' : this.isUpdate ? 'red' : 'primary'}`
+      return [`text-${this.isNew ? 'green' : this.isUpdate ? 'red' : 'primary'}`, this.$q.dark.isActive ? 'bg-blue-grey-10' : 'bg-blue-1']
     },
 
+    // 属性值显示字符串
+    valueStr() {
+      return this.stringify(this.value)
+    },
+
+    // 是否有默认值
     hasDefault() {
-      return this.default !== undefined
+      return this.defaultDesc !== undefined || this.default !== undefined
+    },
+
+    // 默认值显示字符串
+    defaultStr() {
+      return this.stringify(this.default)
     }
   },
 
   methods: {
     // 属性值转字符串
-    stringify(val) {
-      switch (this.editor) {
+    stringify(val, editType) {
+      switch (editType) {
         case 'String':
-          return val ? String(val) : ''
+          return val != null ? String(val) : ''
       }
-      return JSON.stringify(val)
+      if (val === undefined) return ''
+      if (val instanceof Function) {
+        if (this.type.split(' | ').indexOf('Function') >= 0) return '<Function>'
+        val = val.call(this.component)
+        if (val instanceof Function) return '<Function>'
+      }
+      if (typeof val === 'object') {
+        return JSON.stringify(val, null, 1)
+      }
+      return String(val)
     },
 
     // 字符串转属性值
     parse(val) {
       try {
-        switch (this.editor) {
+        switch (this.editType) {
           case 'String':
             return val
         }

@@ -8,13 +8,13 @@
       </q-item-section>
       <q-item-section class="_toolbtn">
         <q-item-label class="text-grey-6" :lines="1">
-          <span v-if="component">{{ component }} 组件参数</span>
+          <span v-if="component">{{ component }} 组件属性</span>
           <span v-else>当前未选中任何组件</span>
         </q-item-label>
       </q-item-section>
       <q-item-section side class="_toolbtn" v-if="component">
         <q-btn flat dense size="sm" class="text-primary" :icon="filterProps ? 'text_rotation_none' : 'filter_alt'" @click="filterClick">
-          <q-tooltip ref="filterTip">{{ filterProps ? '显示所有参数' : '仅显示有值的参数' }}</q-tooltip>
+          <q-tooltip ref="filterTip">{{ filterProps ? '显示所有属性' : '仅显示有值的属性' }}</q-tooltip>
         </q-btn>
       </q-item-section>
       <q-item-section side class="_toolbtn" v-if="superName && superDoc">
@@ -85,10 +85,12 @@ export default {
         const api = this.state.apiMap[this.component] || {}
         this.apiDoc = api.doc
         this.superName = (val.$options.extends && this.$getName(val.$options.extends.options)) || ''
-        this.superDoc = (this.state.apiMap[this.superName] || {}).doc
+        const superApi = this.state.apiMap[this.superName] || {}
+        this.superDoc = superApi.doc
         this.propList = Object.keys(val.$props || {})
           .map(name => {
-            return this.makePropInfo(val, name, api.props && api.props[name])
+            const apiProp = (api.props && api.props[name]) || (superApi.props && superApi.props[name])
+            return this.makePropInfo(val, name, apiProp)
           })
           .sort((a, b) => {
             if (a.isNew !== b.isNew) return a.isNew ? -1 : 1
@@ -122,17 +124,20 @@ export default {
       if (typeof apiProp !== 'object') {
         apiProp = { desc: apiProp }
       }
-      const prop = component.$options.props ? component.$options.props[name] : {}
+      const prop = (component.$options.props && component.$options.props[name]) || {}
       const superOptions = component.$options.extends && component.$options.extends.options
       const superProp = superOptions && superOptions.props && superOptions.props[name]
       const extendProps = component.constructor.extendOptions.props
       const propInfo = {
+        component,
         name,
         value: name in component.$options.propsData ? component.$props[name] : undefined,
-        type: prop.type instanceof Array ? prop.type.map(i => i.name).join(' | ') : prop.type && prop.type.name,
+        type: this.getPropType(prop.type, apiProp),
+        editType: apiProp.editType,
         validator: prop.validator,
-        default: apiProp.default !== undefined ? apiProp.default : prop.default === undefined ? undefined : this.formatDefault(prop.default),
-        description: this.getDescription(apiProp),
+        default: prop.default,
+        defaultDesc: apiProp.default !== undefined ? String(apiProp.default) : undefined,
+        description: this.getPropDescription(apiProp),
         isNew: superOptions && !superProp,
         isUpdate: superProp && extendProps && extendProps[name],
         unwatch: component.$watch(
@@ -146,29 +151,80 @@ export default {
       return propInfo
     },
 
-    // 格式化默认值
-    formatDefault(val) {
-      if (val instanceof Function) return '<Function>'
-      if (typeof val === 'object') return JSON.stringify(val)
-      return String(val)
+    // 获取属性类型
+    getPropType(type, apiProp) {
+      if (type instanceof Array) return type.map(i => i.name).join(' | ')
+      if (type) return type.name
+      if (apiProp.type instanceof Array) return apiProp.type.join(' | ')
+      return apiProp.type
     },
 
     // 获取属性说明
-    getDescription(apiProp) {
+    getPropDescription(apiProp) {
       if (apiProp.desc) {
         if (!apiProp.combinedDesc) {
-          const sections = [apiProp.desc]
+          const sections = [apiProp.desc, '']
+          if (apiProp.type === 'Function') {
+            sections.push(this.makeFunctionDesc(apiProp))
+          }
+          if (apiProp.definition) {
+            sections.push(this.makeObjectDesc(apiProp.definition))
+          }
+          if (apiProp.values) {
+            sections.push('**可取值**：' + apiProp.values.join(' &nbsp; '))
+          }
+          sections.push('')
           if (apiProp.addedIn) {
-            sections.push('`' + apiProp.addedIn + ' 版新增`')
+            sections.push(`🆕 *${apiProp.addedIn}* 版新增`)
+          }
+          if (apiProp.required) {
+            sections.push('⚠️ 必需提供')
           }
           if (apiProp.sync) {
-            sections.push('需使用 `.sync` 修饰符来绑定')
+            sections.push('⚠️ 需使用 `.sync` 修饰符来绑定')
           }
-          apiProp.combinedDesc = sections.join('\n')
+          apiProp.combinedDesc = sections.join('\n').trim()
         }
         return apiProp.combinedDesc
       }
       return this.apiDoc ? '参见 API 文档' : this.superDoc ? '参见基类 API 文档' : undefined
+    },
+
+    // 生成参数说明
+    makeParamDesc(name, apiParam, level = 0) {
+      const indent = '  '.repeat(level) + '- '
+      const type = apiParam.type ? `(${apiParam.type instanceof Array ? apiParam.type.join(' | ') : apiParam.type}) ` : ''
+      const lines = [`${indent}${name} - ${type}${apiParam.desc || ''}`]
+      if (apiParam.type === 'Function') {
+        lines.push(this.makeFunctionDesc(apiParam, level + 1))
+      }
+      if (apiParam.definition) {
+        lines.push(this.makeObjectDesc(apiParam.definition, level + 1))
+      }
+      if (apiParam.values) {
+        lines.push('**可取值**：' + apiParam.values.join(' &nbsp; '))
+      }
+      return lines.join('\n')
+    },
+
+    // 生成对象说明
+    makeObjectDesc(apiObj, level = 0) {
+      const lines = ['**对象结构**：', ...Object.keys(apiObj).map(name => this.makeParamDesc('`' + name + '`', apiObj[name], level))]
+      return lines.join('\n')
+    },
+
+    // 生成函数说明
+    makeFunctionDesc(apiFunc, level = 0) {
+      const params = apiFunc.params ? Object.keys(apiFunc.params) : []
+      const returns = (apiFunc.returns && apiFunc.returns.type) || 'void'
+      const lines = [
+        `**函数格式**：(${params.join(', ')}) => ${returns}`,
+        ...params.map(name => this.makeParamDesc('`@' + name + '`', apiFunc.params[name], level))
+      ]
+      if (apiFunc.returns) {
+        lines.push(this.makeParamDesc('`@return`', apiFunc.returns, level))
+      }
+      return lines.join('\n')
     }
   },
 
