@@ -3,7 +3,13 @@
     <div class="_bounds" :style="boundingRect" v-if="state.selectingComponents" />
     <q-menu content-style="z-index: 100000000" auto-close touch-position ref="menu" @hide="listComponents = []">
       <q-list dense>
-        <q-item clickable key="_" @mouseover="menuHover(0)" @click="menuSelected(listComponents.length - 1)" v-if="listComponents.length">
+        <q-item
+          clickable
+          key="_"
+          @mouseover="menuHover(listComponents.length - 1)"
+          @click="menuSelected(listComponents.length - 1)"
+          v-if="listComponents.length"
+        >
           <q-item-section>{{ $getName(listComponents[listComponents.length - 1].component.$options) }}</q-item-section>
         </q-item>
         <q-separator />
