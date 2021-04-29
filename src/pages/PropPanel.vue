@@ -1,6 +1,6 @@
 <template>
   <div class="fit no-scroll column">
-    <q-item dense class="full-width _header">
+    <q-item dense class="_header full-width">
       <q-item-section style="max-width: 24px">
         <q-btn flat dense size="sm" class="text-primary" :icon="state.selecting ? 'my_location' : 'location_searching'" @click="selectClick">
           <q-tooltip ref="selectTip">选择要查看的 Vue 组件</q-tooltip>
@@ -32,12 +32,12 @@
       </q-item-section>
     </q-item>
 
-    <CustomScroller class="full-width q-space _proplist">
+    <CustomScroller class="_proplist full-width q-space">
       <q-markup-table flat bordered dense>
         <thead>
           <tr style="height: 25px">
-            <th class="bg-primary text-white _prop">属性名</th>
-            <th class="bg-blue-grey-5 text-white _value">属性值</th>
+            <th class="_prop bg-primary text-white">属性名</th>
+            <th class="_value bg-blue-grey-5 text-white">属性值</th>
           </tr>
         </thead>
         <tbody>
@@ -128,6 +128,10 @@ export default {
       const superOptions = component.$options.extends && component.$options.extends.options
       const superProp = superOptions && superOptions.props && superOptions.props[name]
       const extendProps = component.constructor.extendOptions.props
+      if (prop.required) {
+        apiProp.required = true
+      }
+
       const propInfo = {
         component,
         name,
@@ -203,6 +207,9 @@ export default {
       }
       if (apiParam.values) {
         lines.push('**可取值**：' + apiParam.values.join(' &nbsp; '))
+      }
+      if (apiParam.default !== undefined) {
+        lines.push('**默认值**：' + String(apiParam.default))
       }
       return lines.join('\n')
     },
