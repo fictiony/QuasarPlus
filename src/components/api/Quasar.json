@@ -16,7 +16,7 @@
       "style": "height: 150px"
     },
     "demoSlots": {
-      "default": "<div><q-header class='row items-center justify-between'><q-btn flat dense icon='menu' @click='drawerLeft = !drawerLeft'></q-btn>页眉<q-btn flat dense icon='menu' @click='drawerRight = !drawerRight'></q-btn></q-header><q-drawer elevated :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='drawerLeft'>左侧滑栏</q-drawer><q-drawer side='right' bordered :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='drawerRight'>右侧滑栏</q-drawer><q-page-container><q-page padding><p>内页</p><p v-for='i in 10'>第{{i}}行</p></q-page></q-page-container><q-footer class='bg-grey text-center'>页脚</q-footer></div>"
+      "default": " <q-header class='row items-center justify-between'><q-btn flat dense icon='menu' @click='drawerLeft = !drawerLeft'></q-btn>页眉<q-btn flat dense icon='menu' @click='drawerRight = !drawerRight'></q-btn></q-header><q-drawer elevated :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='drawerLeft'>左侧滑栏</q-drawer><q-drawer side='right' bordered :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='drawerRight'>右侧滑栏</q-drawer><q-page-container><q-page padding class='bg-grey-2'><p>内页</p><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container><q-footer class='bg-grey text-center'>页脚</q-footer>"
     }
   },
   "QHeader": {
@@ -24,14 +24,34 @@
     "doc": "https://quasar.dev/layout/header-and-footer#qheader-api",
     "category": "container",
     "isPart": "QLayout",
-    "demos": []
+    "frame": 50,
+    "frameClass": "QLayout",
+    "demoProps": {
+      "class": "text-center q-pa-xs"
+    },
+    "demoFrameProps": {
+      "style": "height: 60px"
+    },
+    "demoFrameSlots": {
+      "default": true
+    }
   },
   "QFooter": {
     "name": "布局页脚",
     "doc": "https://quasar.dev/layout/header-and-footer#qfooter-api",
     "category": "container",
     "isPart": "QLayout",
-    "demos": []
+    "frame": 50,
+    "frameClass": "QLayout",
+    "demoProps": {
+      "class": "bg-grey text-center"
+    },
+    "demoFrameProps": {
+      "style": "height: 50px"
+    },
+    "demoFrameSlots": {
+      "default": true
+    }
   },
   "QDrawer": {
     "name": "布局侧滑栏",
@@ -43,8 +63,9 @@
     "demoProps": {
       "elevated": true,
       "showIfAbove": true,
+      "width": 200,
       "breakpoint": 400,
-      "contentClass": "q-pa-sm",
+      "contentClass": "bg-grey-2 q-pa-sm",
       "value": false
     },
     "demoBinds": {
@@ -65,28 +86,74 @@
     "doc": "https://quasar.dev/layout/page#qpagecontainer-api",
     "category": "container",
     "isPart": "QLayout",
-    "demos": []
+    "frame": 100,
+    "frameClass": "QLayout",
+    "demoSlots": {
+      "default": " <template v-for='i in 3'><q-page padding><p>第{{i}}页</p>内容</q-page><q-separator/></template>"
+    },
+    "demoFrameProps": {
+      "style": "height: 100px"
+    },
+    "demoFrameSlots": {
+      "default": true
+    }
   },
   "QPage": {
     "name": "布局内页",
     "doc": "https://quasar.dev/layout/page#qpage-api",
     "category": "container",
     "isPart": "QPageContainer",
-    "demos": []
+    "frame": 100,
+    "frameClass": "QLayout",
+    "demoProps": {
+      "padding": true
+    },
+    "demoSlots": {
+      "default": " <div v-for='i in 9'>第{{i}}行</div>"
+    },
+    "demoFrameProps": {
+      "style": "height: 100px"
+    },
+    "demoFrameSlots": {
+      "default": true
+    }
   },
   "QPageSticky": {
     "name": "页面边缘吸附",
     "doc": "https://quasar.dev/layout/page-sticky#qpagesticky-api",
     "category": "container",
     "isPart": "QLayout",
-    "demos": []
+    "frame": 100,
+    "frameClass": "QLayout",
+    "demoProps": {
+      "class": "bg-blue-2 q-pa-sm"
+    },
+    "demoFrameProps": {
+      "style": "height: 100px"
+    },
+    "demoFrameSlots": {
+      "default": [" <q-page-container><q-page padding><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>", true]
+    }
   },
   "QPageScroller": {
     "name": "页面自动滚屏",
     "doc": "https://quasar.dev/layout/page-scroller#qpagescroller-api",
     "category": "container",
     "isPart": "QLayout",
-    "demos": []
+    "frame": 100,
+    "frameClass": "QLayout",
+    "demoProps": {
+      "scrollOffset": 10
+    },
+    "demoSlots": {
+      "default": "<q-btn rounded glossy color='primary' label='回到开头' />"
+    },
+    "demoFrameProps": {
+      "style": "height: 100px"
+    },
+    "demoFrameSlots": {
+      "default": [" <q-page-container><q-page padding><div v-for='i in 9'>请向下滚动</div></q-page></q-page-container>", true]
+    }
   },
 
   "QBanner": {
