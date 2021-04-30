@@ -244,8 +244,14 @@ export default {
           apiMap[item.caption] = module.default
         })
       ),
-      ...Object.keys(quasarApi).map(className =>
-        import('quasar/dist/api/' + className + '.json').then(module => {
+      ...Object.keys(quasarApi).map(className => {
+        let file
+        if (className === 'QMarkdown') {
+          file = import('@quasar/quasar-ui-qmarkdown/dist/api/QMarkdown.json')
+        } else {
+          file = import('quasar/dist/api/' + className + '.json')
+        }
+        return file.then(module => {
           const api = module.default
           const props = {}
           Object.keys(api.props || {}).forEach(name => {
@@ -253,7 +259,7 @@ export default {
           })
           apiMap[className].props = extend(props, apiMap[className].props)
         })
-      )
+      })
     ]).then(() => {
       this.state.apiMap = Object.freeze(apiMap)
     })

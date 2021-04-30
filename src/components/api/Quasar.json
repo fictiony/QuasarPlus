@@ -4,39 +4,89 @@
     "doc": "https://quasar.dev/layout/layout#qlayout-api",
     "category": "container",
     "frame": 150,
+    "demoData": {
+      "default": {
+        "drawerLeft": true,
+        "drawerRight": true
+      }
+    },
     "demoProps": {
-      "view": "hHh LpR fff",
+      "view": "hHh Lpr lFf",
       "container": true,
       "style": "height: 150px"
     },
     "demoSlots": {
-      "default": "<div><q-header class='row items-center justify-between'><q-btn flat dense icon='menu' @click='left = !left'></q-btn>页眉<q-btn flat dense icon='menu' @click='right = !right'></q-btn></q-header><q-drawer elevated :breakpoint='400' :width='200' v-model='left'>左侧滑栏</q-drawer><q-drawer side='right' elevated :breakpoint='400' :width='200' v-model='right'>右侧滑栏</q-drawer><q-page-container><q-page padding>内页</q-page></q-page-container><q-footer class='text-center'>页脚</q-footer></div>"
-    },
-    "demoData": {
-      "default": {
-        "left": true,
-        "right": true
-      }
+      "default": "<div><q-header class='row items-center justify-between'><q-btn flat dense icon='menu' @click='drawerLeft = !drawerLeft'></q-btn>页眉<q-btn flat dense icon='menu' @click='drawerRight = !drawerRight'></q-btn></q-header><q-drawer elevated :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='drawerLeft'>左侧滑栏</q-drawer><q-drawer side='right' bordered :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='drawerRight'>右侧滑栏</q-drawer><q-page-container><q-page padding><p>内页</p><p v-for='i in 10'>第{{i}}行</p></q-page></q-page-container><q-footer class='bg-grey text-center'>页脚</q-footer></div>"
     }
   },
-
+  "QHeader": {
+    "name": "布局页眉",
+    "doc": "https://quasar.dev/layout/header-and-footer#qheader-api",
+    "category": "container",
+    "isPart": "QLayout",
+    "demos": []
+  },
+  "QFooter": {
+    "name": "布局页脚",
+    "doc": "https://quasar.dev/layout/header-and-footer#qfooter-api",
+    "category": "container",
+    "isPart": "QLayout",
+    "demos": []
+  },
   "QDrawer": {
     "name": "布局侧滑栏",
     "doc": "https://quasar.dev/layout/drawer#qdrawer-api",
     "category": "container",
+    "isPart": "QLayout",
     "frame": 100,
     "frameClass": "QLayout",
     "demoProps": {
       "elevated": true,
       "showIfAbove": true,
-      "breakpoint": 400
+      "breakpoint": 400,
+      "contentClass": "q-pa-sm",
+      "value": false
+    },
+    "demoBinds": {
+      "value": "$parent.drawer"
+    },
+    "demoFrameData": {
+      "drawer": true
     },
     "demoFrameProps": {
       "style": "height: 100px"
     },
     "demoFrameSlots": {
-      "default": [true, "<q-page-container><q-page padding>内页</q-page></q-page-container>"]
+      "default": [true, "<q-page-container><q-page padding><q-toggle v-model='$parent.drawer' label='侧滑栏显示'/></q-page></q-page-container>"]
     }
+  },
+  "QPageContainer": {
+    "name": "布局内页容器",
+    "doc": "https://quasar.dev/layout/page#qpagecontainer-api",
+    "category": "container",
+    "isPart": "QLayout",
+    "demos": []
+  },
+  "QPage": {
+    "name": "布局内页",
+    "doc": "https://quasar.dev/layout/page#qpage-api",
+    "category": "container",
+    "isPart": "QPageContainer",
+    "demos": []
+  },
+  "QPageSticky": {
+    "name": "页面边缘吸附",
+    "doc": "https://quasar.dev/layout/page-sticky#qpagesticky-api",
+    "category": "container",
+    "isPart": "QLayout",
+    "demos": []
+  },
+  "QPageScroller": {
+    "name": "页面自动滚屏",
+    "doc": "https://quasar.dev/layout/page-scroller#qpagescroller-api",
+    "category": "container",
+    "isPart": "QLayout",
+    "demos": []
   },
 
   "QBanner": {
@@ -239,7 +289,8 @@
   "QFabAction": {
     "name": "浮动按钮操作",
     "doc": "https://quasar.dev/vue-components/floating-action-button#qfabaction-api",
-    "isPart": true
+    "category": "basic",
+    "isPart": "QFab"
   },
 
   "QBreadcrumbs": {
@@ -250,7 +301,8 @@
   "QBreadcrumbsEl": {
     "name": "面包屑小节",
     "doc": "https://quasar.dev/vue-components/breadcrumbs#qbreadcrumbsel-api",
-    "isPart": true
+    "category": "basic",
+    "isPart": "QBreadcrumbs"
   },
 
   "QForm": {
@@ -367,12 +419,14 @@
   "QCarouselControl": {
     "name": "轮播控制器",
     "doc": "https://quasar.dev/vue-components/carousel#qcarouselcontrol-api",
-    "isPart": true
+    "category": "tool",
+    "isPart": "QCarousel"
   },
   "QCarouselSlide": {
     "name": "轮播滑片",
     "doc": "https://quasar.dev/vue-components/carousel#qcarouselslide-api",
-    "isPart": true
+    "category": "tool",
+    "isPart": "QCarousel"
   },
 
   "QAjaxBar": {
@@ -393,7 +447,7 @@
   "QToolbarTitle": {
     "name": "工具栏标题",
     "doc": "https://quasar.dev/vue-components/toolbar#qtoolbartitle-api",
-    "isPart": true
+    "category": "container"
   },
 
   "QList": {
@@ -410,12 +464,14 @@
   "QItemSection": {
     "name": "列表项分段",
     "doc": "https://quasar.dev/vue-components/list-and-list-items#qitemsection-api",
-    "isPart": true
+    "category": "container",
+    "isPart": "QItem"
   },
   "QItemLabel": {
     "name": "列表项标签",
     "doc": "https://quasar.dev/vue-components/list-and-list-items#qitemlabel-api",
-    "isPart": true
+    "category": "container",
+    "isPart": "QItem"
   },
 
   "QSlideItem": {
@@ -456,12 +512,14 @@
   "QCardSection": {
     "name": "卡片分栏",
     "doc": "https://quasar.dev/vue-components/card#qcardsection-api",
-    "isPart": true
+    "category": "container",
+    "isPart": "QCard"
   },
   "QCardActions": {
     "name": "卡片操作",
     "doc": "https://quasar.dev/vue-components/card#qcardactions-api",
-    "isPart": true
+    "category": "container",
+    "isPart": "QCard"
   },
 
   "QDialog": {
@@ -549,20 +607,23 @@
     "doc": "https://quasar.dev/vue-components/table#qtable-api",
     "category": "basic"
   },
-  "QTh": {
-    "name": "表格标题格",
-    "doc": "https://quasar.dev/vue-components/table#qth-api",
-    "isPart": true
-  },
   "QTr": {
     "name": "表格行",
     "doc": "https://quasar.dev/vue-components/table#qtr-api",
-    "isPart": true
+    "category": "basic",
+    "isPart": "QTable / QMarkupTable"
+  },
+  "QTh": {
+    "name": "表格标题格",
+    "doc": "https://quasar.dev/vue-components/table#qth-api",
+    "category": "basic",
+    "demos": "QTr"
   },
   "QTd": {
     "name": "表格内容格",
     "doc": "https://quasar.dev/vue-components/table#qtd-api",
-    "isPart": true
+    "category": "basic",
+    "isPart": "QTr"
   },
 
   "QTabs": {
@@ -573,12 +634,14 @@
   "QTab": {
     "name": "切换标签",
     "doc": "https://quasar.dev/vue-components/tabs#qtab-api",
-    "isPart": true
+    "category": "container",
+    "isPart": "QTabs"
   },
   "QRouteTab": {
     "name": "路由标签",
     "doc": "https://quasar.dev/vue-components/tabs#qroutetab-api",
-    "isPart": true
+    "category": "container",
+    "isPart": "QTabs"
   },
 
   "QTabPanels": {
@@ -589,7 +652,8 @@
   "QTabPanel": {
     "name": "切换面板",
     "doc": "https://quasar.dev/vue-components/tab-panels#qtabpanel-api",
-    "isPart": true
+    "category": "container",
+    "isPart": "QTabPanels"
   },
 
   "QStepper": {
@@ -600,12 +664,14 @@
   "QStep": {
     "name": "步骤项",
     "doc": "https://quasar.dev/vue-components/stepper#qstep-api",
-    "isPart": true
+    "category": "container",
+    "isPart": "QStepper"
   },
   "QStepperNavigation": {
     "name": "步骤导航",
     "doc": "https://quasar.dev/vue-components/stepper#qsteppernavigation-api",
-    "isPart": true
+    "category": "container",
+    "isPart": "QStepper"
   },
 
   "QParallax": {
@@ -622,7 +688,8 @@
   "QTimelineEntry": {
     "name": "时间线节点",
     "doc": "https://quasar.dev/vue-components/timeline#qtimelineentry-api",
-    "isPart": true
+    "category": "tool",
+    "isPart": "QTimeline"
   },
 
   "QEditor": {
@@ -650,5 +717,11 @@
   "QNoSsr": {
     "name": "非SSR内容",
     "doc": "https://quasar.dev/vue-components/no-ssr#qnossr-api"
+  },
+
+  "QMarkdown": {
+    "name": "Markdown文档",
+    "doc": "https://quasarframework.github.io/quasar-ui-qmarkdown/docs#QMarkdown-API",
+    "category": "tool"
   }
 }

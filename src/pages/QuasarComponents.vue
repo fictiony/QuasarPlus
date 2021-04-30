@@ -59,9 +59,9 @@
       :filter-method="filterComponents"
     >
       <template #top>
-        <q-toolbar v-if="fullscreen">
+        <q-toolbar style="min-height: 32px" v-if="fullscreen">
           <q-toolbar-title class="text-center">Quasar 组件清单</q-toolbar-title>
-          <q-btn flat round icon="fullscreen_exit" color="primary" @click="fullscreen = false">
+          <q-btn flat round style="margin: -5px" icon="fullscreen_exit" color="primary" @click="fullscreen = false">
             <q-tooltip>退出全屏</q-tooltip>
           </q-btn>
         </q-toolbar>
@@ -76,7 +76,9 @@
 
       <template #body-cell-demos="props">
         <q-td style="width: 75%; min-width: 200px" v-bind="props" @click="inspectDemo(props.row)">
+          <!-- 需要加外框容器 -->
           <q-card flat bordered :style="{ minHeight: props.row.frame + 'px' }" v-if="props.row.frame" v-show="showDemos">
+            <!-- 若包含外层组件，则先创建外层组件 -->
             <component :is="getComponent(props.row, true)" v-bind="makeParams(props.row, true)" v-if="props.row.frameClass">
               <template v-for="slot in makeSlots(props.row, true)" v-slot:[slot.name]>
                 <template v-for="content in slot.contents">
@@ -85,22 +87,29 @@
                     v-bind="makeParams(props.row)"
                     :key="content"
                     :ref="`demo-${props.row.className}`"
-                    v-if="!content.name"
+                    v-if="typeof content === 'string'"
                   >
+                    <!-- 内容为字符串表示当前组件 -->
                     <template v-for="slot in makeSlots(props.row)" v-slot:[slot.name]>
                       <component v-for="content in slot.contents" :is="content" :key="content.name" />
                     </template>
                   </component>
+
+                  <!-- 否则为动态构造的辅助组件 -->
                   <component :is="content" :key="content.name" v-else />
                 </template>
               </template>
             </component>
+
+            <!-- 否则直接创建当前组件 -->
             <component :is="getComponent(props.row)" v-bind="makeParams(props.row)" :ref="`demo-${props.row.className}`" v-else>
               <template v-for="slot in makeSlots(props.row)" v-slot:[slot.name]>
                 <component v-for="content in slot.contents" :is="content" :key="content.name" />
               </template>
             </component>
           </q-card>
+
+          <!-- 无外框时可包含多个范例 -->
           <div class="row items-center" v-show="!props.row.frame || !showDemos">
             <div
               v-for="(demo, index) in props.row.demos || [{}]"
@@ -108,21 +117,29 @@
               @click.stop="inspectDemo(props.row, index)"
               :key="`demo-${props.row.className}-${index}`"
             >
+              <!-- 创建当前组件 -->
               <component
-                :is="getComponent(props.row, false, demo.demoClass)"
-                v-bind="makeParams(props.row, false, demo.demoProps || demo)"
+                :is="getComponent(props.row, false, demo.demoClass, index)"
+                v-bind="makeParams(props.row, false, demo.demoProps || demo, index)"
                 :ref="`demo-${props.row.className}`"
                 v-if="!props.row.frame"
                 v-show="showDemos"
               >
-                <template v-for="slot in makeSlots(props.row, false, demo.demoSlots)" v-slot:[slot.name]>
+                <template v-for="slot in makeSlots(props.row, false, demo.demoSlots, index)" v-slot:[slot.name]>
                   <component v-for="content in slot.contents" :is="content" :key="content.name" />
                 </template>
               </component>
+
+              <!-- 创建范例占位符，用于不看范例时显示 -->
               <q-chip clickable icon="bubble_chart" v-show="!showDemos">
                 {{ demo.demoName || props.row.demoName || `范例 ${index + 1}` }}
               </q-chip>
             </div>
+          </div>
+
+          <div class="row items-center" v-if="props.row.isPart">
+            <q-icon class="q-mr-xs" name="warning" color="warning" size="20px" />
+            本组件只能用于 {{ props.row.isPart }} 组件内部
           </div>
         </q-td>
       </template>
@@ -132,8 +149,9 @@
 
 <script>
 // 【Quasar 组件清单】
-import quasarApi from 'components/api/Quasar.json'
+import Vue from 'vue'
 import * as quasar from 'quasar'
+import quasarApi from 'components/api/Quasar.json'
 
 const QUASAR_FORMAT = /<q(-[\w-]+)[^>]*>/g
 
@@ -156,12 +174,10 @@ export default {
     fullscreen: false,
 
     quasarComponents: Object.freeze(
-      Object.keys(quasarApi)
-        .filter(i => !quasarApi[i].isPart)
-        .map(i => ({
-          className: i,
-          ...quasarApi[i]
-        }))
+      Object.keys(quasarApi).map(className => ({
+        className,
+        ...quasarApi[className]
+      }))
     ),
 
     tableColumns: [
@@ -189,7 +205,11 @@ export default {
         name: 'demos',
         label: '范例'
       }
-    ]
+    ],
+
+    cachedComponents: {},
+    cachedParams: {},
+    cachedSlots: {}
   }),
 
   inject: ['state'],
@@ -237,20 +257,71 @@ export default {
       return rows.filter(info => this.matchFilter(info))
     },
 
+    // 获取缓存名称
+    getCacheName(info, isFrame, index) {
+      return info.className + (isFrame ? '-frame' : '') + (index === undefined ? '' : '-' + index)
+    },
+
     // 获取Quasar组件
-    getComponent(info, isFrame, demoClass) {
-      const className = demoClass || (isFrame ? info.frameClass : null) || info.className
-      const component = quasar[className]
-      // if ()
-      // data: () => quasar.extend(true, {}, data[name])
+    getComponent(info, isFrame, demoClass, index) {
+      const cacheName = this.getCacheName(info, isFrame, index)
+      if (this.cachedComponents[cacheName]) {
+        return this.cachedComponents[cacheName]
+      }
+
+      // 若指定所属框架，则取框架组件信息
+      let frameData, frameBinds
+      if (isFrame) {
+        frameData = (info.demoFrameData && info.demoFrameData.$) || info.demoFrameData
+        frameBinds = info.demoFrameBinds
+        info = this.quasarComponents.find(i => i.className === info.frameClass)
+        if (!info) return {}
+      }
+      let component = quasar[demoClass || info.className]
+
+      // 若有数据或绑定，则动态构造一个扩展组件，并把数据和绑定带进去
+      const data = (info.demoData && info.demoData.$) || info.demoData
+      if (!this.$isEmpty(data) || !this.$isEmpty(frameData) || info.demoBinds || frameBinds) {
+        const binds = Object.assign({}, info.demoBinds, frameBinds)
+        const watch = {}
+        Object.keys(binds).forEach(name => {
+          watch[binds[name]] = {
+            immediate: true,
+            handler: val => {
+              this.cachedParams[cacheName][name] = val
+            }
+          }
+          // 反向绑定
+          watch[name] = function (val) {
+            const names = binds[name].split('.')
+            let obj = this
+            while (names.length > 1) {
+              obj = obj[names.shift()]
+            }
+            obj[names[0]] = val
+          }
+        })
+        component = {
+          extends: component,
+          data: () => quasar.extend(true, {}, data, frameData),
+          watch
+        }
+      }
+
+      this.cachedComponents[cacheName] = component
       return component
     },
 
     // 自动生成组件参数表
-    makeParams(info, isFrame, customProps) {
+    makeParams(info, isFrame, customProps, index) {
+      const cacheName = this.getCacheName(info, isFrame, index)
+      if (this.cachedParams[cacheName]) {
+        return this.cachedParams[cacheName]
+      }
+
+      // 若指定所属框架，则取框架组件信息
       let frameProps
-      if (isFrame && info.frameClass) {
-        // 若指定所属框架，则取框架组件信息
+      if (isFrame) {
         frameProps = info.demoFrameProps
         info = this.quasarComponents.find(i => i.className === info.frameClass)
         if (!info) return {}
@@ -273,25 +344,32 @@ export default {
         }
       })
 
-      return params
+      const reactiveParams = Vue.observable(params)
+      this.cachedParams[cacheName] = reactiveParams
+      return reactiveParams
     },
 
     // 自动生成插槽列表
-    makeSlots(info, isFrame, customSlots) {
+    makeSlots(info, isFrame, customSlots, index) {
+      const cacheName = this.getCacheName(info, isFrame, index)
+      if (this.cachedSlots[cacheName]) {
+        return this.cachedSlots[cacheName]
+      }
+
+      // 若指定所属框架，则取框架组件信息
       let frameSlots, frameData
-      if (isFrame && info.frameClass) {
-        // 若指定所属框架，则取框架组件信息
+      if (isFrame) {
         frameSlots = info.demoFrameSlots
         frameData = info.demoFrameData
         info = this.quasarComponents.find(i => i.className === info.frameClass)
         if (!info) return []
       }
+      const slotList = []
 
       // 若有指定插槽模板，则采用插槽模板生成插槽内容组件
       if (info.demoSlots || frameSlots || customSlots) {
-        const slots = quasar.extend({}, info.demoSlots, frameSlots, customSlots)
-        const data = quasar.extend({}, info.demoData, frameData)
-        const slotList = []
+        const slots = Object.assign({}, info.demoSlots, frameSlots, customSlots)
+        const data = Object.assign({}, info.demoData, frameData)
 
         Object.keys(slots).forEach(name => {
           let templates = slots[name]
@@ -315,12 +393,9 @@ export default {
           })
         })
 
-        return slotList
-      }
-
-      // 若无指定，则默认采用组件名称为插槽内容
-      return [
-        {
+        // 若无指定，则默认采用组件名称为插槽内容
+      } else {
+        slotList.push({
           name: 'default',
           contents: [
             {
@@ -328,8 +403,11 @@ export default {
               template: `<div>${info.name}</div>`
             }
           ]
-        }
-      ]
+        })
+      }
+
+      this.cachedSlots[cacheName] = slotList
+      return slotList
     },
 
     // 查找模板中用到的组件
