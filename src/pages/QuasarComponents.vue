@@ -1,9 +1,9 @@
 <template>
   <q-page padding class="column">
     <q-toolbar class="q-pa-none" style="padding-bottom: 10px">
-      <q-btn-dropdown class="q-mr-sm" glossy color="primary" :label="categoryOptions.find(i => i.value === category).label">
+      <q-btn-dropdown class="q-mr-sm" glossy auto-close color="primary" :label="categoryOptions.find(i => i.value === category).label">
         <q-list dense>
-          <q-item v-for="(option, index) in categoryOptions" :key="index" clickable v-close-popup @click="category = option.value">
+          <q-item v-for="(option, index) in categoryOptions" :key="index" clickable @click="category = option.value">
             <q-item-section>{{ option.label }}</q-item-section>
           </q-item>
         </q-list>
@@ -111,17 +111,15 @@
 
           <!-- 无外框时可包含多个范例 -->
           <div class="row items-center" v-show="!props.row.frame || !showDemos">
-            <div
-              v-for="(demo, index) in props.row.demos || [{}]"
-              :class="showDemos ? 'q-mr-md' : ''"
-              @click.stop="inspectDemo(props.row, index)"
-              :key="`demo-${props.row.className}-${index}`"
-            >
+            <template v-for="(demo, index) in props.row.demos || [{}]">
               <!-- 创建当前组件 -->
               <component
                 :is="getComponent(props.row, false, demo.demoClass, index)"
                 v-bind="makeParams(props.row, false, demo.demoProps || demo, index)"
                 :ref="`demo-${props.row.className}`"
+                class="q-mr-md"
+                @click.stop="inspectDemo(props.row, index)"
+                :key="`demo-${props.row.className}-${index}`"
                 v-if="!props.row.frame"
                 v-show="showDemos"
               >
@@ -131,10 +129,16 @@
               </component>
 
               <!-- 创建范例占位符，用于不看范例时显示 -->
-              <q-chip clickable icon="bubble_chart" v-show="!showDemos">
-                {{ demo.demoName || props.row.demoName || `范例 ${index + 1}` }}
+              <q-chip
+                clickable
+                icon="bubble_chart"
+                v-show="!showDemos"
+                @click.stop="inspectDemo(props.row, index)"
+                :key="`tip-${props.row.className}-${index}`"
+              >
+                {{ demo.demoName || props.row.demoName || `${props.row.className}范例${props.row.demos ? index + 1 : ''}` }}
               </q-chip>
-            </div>
+            </template>
           </div>
 
           <div class="row items-center" v-if="props.row.isPart">
@@ -272,7 +276,7 @@ export default {
       // 若指定所属框架，则取框架组件信息
       let frameData, frameBinds
       if (isFrame) {
-        frameData = (info.demoFrameData && info.demoFrameData.$) || info.demoFrameData
+        frameData = info.demoFrameData
         frameBinds = info.demoFrameBinds
         info = this.quasarComponents.find(i => i.className === info.frameClass)
         if (!info) return {}
@@ -280,8 +284,7 @@ export default {
       let component = quasar[demoClass || info.className]
 
       // 若有数据或绑定，则动态构造一个扩展组件，并把数据和绑定带进去
-      const data = (info.demoData && info.demoData.$) || info.demoData
-      if (!this.$isEmpty(data) || !this.$isEmpty(frameData) || info.demoBinds || frameBinds) {
+      if (!this.$isEmpty(info.demoData) || !this.$isEmpty(frameData) || info.demoBinds || frameBinds) {
         const binds = Object.assign({}, info.demoBinds, frameBinds)
         const watch = {}
         Object.keys(binds).forEach(name => {
@@ -303,7 +306,15 @@ export default {
         })
         component = {
           extends: component,
-          data: () => quasar.extend(true, {}, data, frameData),
+          data: () => quasar.extend(true, {}, info.demoData, frameData),
+          provide() {
+            return {
+              [isFrame ? '$frame' : '$self']: this
+            }
+          },
+          inject: {
+            $frame: { default: null }
+          },
           watch
         }
       }
@@ -320,18 +331,23 @@ export default {
       }
 
       // 若指定所属框架，则取框架组件信息
-      let frameProps
+      let frameProps, frameBinds
       if (isFrame) {
         frameProps = info.demoFrameProps
+        frameBinds = info.demoFrameBinds
         info = this.quasarComponents.find(i => i.className === info.frameClass)
         if (!info) return {}
       }
       const params = quasar.extend(true, {}, info.demoProps, frameProps, customProps)
+      const binds = Object.assign({}, info.demoBinds, frameBinds)
 
       // 遍历属性定义表，查找必填属性，并自动设置初始值
       const props = quasar[info.className].options.props || {}
       Object.keys(props).forEach(name => {
         if (name in params) return
+        if (name in binds) {
+          params[name] = undefined // 绑定属性自动加入参数表
+        }
         const prop = props[name]
         if (!prop.required || prop.default !== undefined) return
         const types = prop.type instanceof Array ? prop.type : [prop.type || Number]
@@ -357,10 +373,9 @@ export default {
       }
 
       // 若指定所属框架，则取框架组件信息
-      let frameSlots, frameData
+      let frameSlots
       if (isFrame) {
         frameSlots = info.demoFrameSlots
-        frameData = info.demoFrameData
         info = this.quasarComponents.find(i => i.className === info.frameClass)
         if (!info) return []
       }
@@ -369,7 +384,6 @@ export default {
       // 若有指定插槽模板，则采用插槽模板生成插槽内容组件
       if (info.demoSlots || frameSlots || customSlots) {
         const slots = Object.assign({}, info.demoSlots, frameSlots, customSlots)
-        const data = Object.assign({}, info.demoData, frameData)
 
         Object.keys(slots).forEach(name => {
           let templates = slots[name]
@@ -387,7 +401,10 @@ export default {
                 name: `${info.className}-${name}-${index}`,
                 template: template.charAt(0) === '<' ? template : `<div>${template}</div>`,
                 components: this.searchUsedComponents(template),
-                data: () => quasar.extend(true, {}, data[name])
+                inject: {
+                  $frame: { default: null },
+                  $self: { default: null }
+                }
               }
             })
           })

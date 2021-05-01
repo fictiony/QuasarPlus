@@ -17,14 +17,14 @@
           <q-tooltip ref="filterTip">{{ filterProps ? '显示所有属性' : '仅显示有值的属性' }}</q-tooltip>
         </q-btn>
       </q-item-section>
-      <q-item-section side class="_toolbtn" v-if="superName && superDoc">
-        <q-btn flat dense size="sm" class="text-primary" icon="menu_book" type="a" target="_blank" :href="superDoc">
-          <q-tooltip>查看基类 {{ superName }} 的 API 文档</q-tooltip>
-        </q-btn>
-      </q-item-section>
       <q-item-section side class="_toolbtn" v-if="apiDoc">
         <q-btn flat dense size="sm" class="text-primary" icon="menu_book" type="a" target="_blank" :href="apiDoc">
           <q-tooltip>查看 API 文档</q-tooltip>
+        </q-btn>
+      </q-item-section>
+      <q-item-section side class="_toolbtn" v-if="superName && superDoc">
+        <q-btn flat dense size="sm" class="text-primary" icon="menu_book" type="a" target="_blank" :href="superDoc">
+          <q-tooltip>查看基类 {{ superName }} 的 API 文档</q-tooltip>
         </q-btn>
       </q-item-section>
       <q-item-section side class="_toolbtn">
@@ -85,7 +85,7 @@ export default {
         const api = this.state.apiMap[this.component] || {}
         this.apiDoc = api.doc
         this.superName = (val.$options.extends && this.$getName(val.$options.extends.options)) || ''
-        const superApi = this.state.apiMap[this.superName] || {}
+        const superApi = (this.superName !== this.component && this.state.apiMap[this.superName]) || {}
         this.superDoc = superApi.doc
         this.propList = Object.keys(val.$props || {})
           .map(name => {

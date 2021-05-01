@@ -5,10 +5,8 @@
     "category": "container",
     "frame": 150,
     "demoData": {
-      "default": {
-        "drawerLeft": true,
-        "drawerRight": true
-      }
+      "drawerLeft": true,
+      "drawerRight": true
     },
     "demoProps": {
       "view": "hHh Lpr lFf",
@@ -16,7 +14,13 @@
       "style": "height: 150px"
     },
     "demoSlots": {
-      "default": " <q-header class='row items-center justify-between'><q-btn flat dense icon='menu' @click='drawerLeft = !drawerLeft'></q-btn>页眉<q-btn flat dense icon='menu' @click='drawerRight = !drawerRight'></q-btn></q-header><q-drawer elevated :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='drawerLeft'>左侧滑栏</q-drawer><q-drawer side='right' bordered :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='drawerRight'>右侧滑栏</q-drawer><q-page-container><q-page padding class='bg-grey-2'><p>内页</p><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container><q-footer class='bg-grey text-center'>页脚</q-footer>"
+      "default": [
+        "<q-header class='row items-center justify-between'><q-btn flat dense icon='menu' @click='$self.drawerLeft = !$self.drawerLeft'></q-btn>页眉<q-btn flat dense icon='menu' @click='$self.drawerRight = !$self.drawerRight'></q-btn></q-header>",
+        "<q-drawer elevated :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='$self.drawerLeft'>左侧滑栏</q-drawer>",
+        "<q-drawer side='right' bordered :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='$self.drawerRight'>右侧滑栏</q-drawer>",
+        "<q-page-container><q-page padding class='bg-grey-2'><p>内页</p><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>",
+        "<q-footer class='bg-grey text-center'>页脚</q-footer>"
+      ]
     }
   },
   "QHeader": {
@@ -65,11 +69,10 @@
       "showIfAbove": true,
       "width": 200,
       "breakpoint": 400,
-      "contentClass": "bg-grey-2 q-pa-sm",
-      "value": false
+      "contentClass": "bg-grey-2 q-pa-sm"
     },
     "demoBinds": {
-      "value": "$parent.drawer"
+      "value": "$frame.drawer"
     },
     "demoFrameData": {
       "drawer": true
@@ -78,7 +81,7 @@
       "style": "height: 100px"
     },
     "demoFrameSlots": {
-      "default": [true, "<q-page-container><q-page padding><q-toggle v-model='$parent.drawer' label='侧滑栏显示'/></q-page></q-page-container>"]
+      "default": [true, "<q-page-container><q-page padding><q-toggle v-model='$frame.drawer' label='侧滑栏显示'/></q-page></q-page-container>"]
     }
   },
   "QPageContainer": {
@@ -126,13 +129,13 @@
     "frame": 100,
     "frameClass": "QLayout",
     "demoProps": {
-      "class": "bg-blue-2 q-pa-sm"
+      "class": "bg-accent text-white q-pa-sm"
     },
     "demoFrameProps": {
       "style": "height: 100px"
     },
     "demoFrameSlots": {
-      "default": [" <q-page-container><q-page padding><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>", true]
+      "default": ["<q-page-container><q-page padding><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>", true]
     }
   },
   "QPageScroller": {
@@ -152,20 +155,45 @@
       "style": "height: 100px"
     },
     "demoFrameSlots": {
-      "default": [" <q-page-container><q-page padding><div v-for='i in 9'>请向下滚动</div></q-page></q-page-container>", true]
+      "default": ["<q-page-container><q-page padding><div v-for='i in 9'>请向下滚动</div></q-page></q-page-container>", true]
     }
   },
 
   "QBanner": {
     "name": "横幅",
     "doc": "https://quasar.dev/vue-components/banner#qbanner-api",
-    "category": "container"
+    "category": "container",
+    "demoProps": {
+      "class": "full-width bg-accent text-white",
+      "inline-actions": true
+    },
+    "demoSlots": {
+      "default": "<q-toolbar-title>您的工资到账了！</q-toolbar-title>",
+      "avatar": "<q-icon name='attach_money'/>",
+      "action": "<q-btn flat label='知道了'/>"
+    }
   },
 
   "QBar": {
     "name": "横栏",
     "doc": "https://quasar.dev/vue-components/bar#qbar-api",
-    "category": "container"
+    "category": "container",
+    "demoProps": {
+      "class": "full-width bg-secondary text-white"
+    },
+    "demoSlots": {
+      "default": [
+        "12:30",
+        "<q-icon name='alarm'/>",
+        "<q-space/>",
+        "150K/s",
+        "<q-icon name='signal_cellular_alt'/>",
+        "4G",
+        "<q-icon name='wifi'/>",
+        "100%",
+        "<q-icon name='battery_full'/>"
+      ]
+    }
   },
 
   "QBtn": {
@@ -199,13 +227,39 @@
   "QBtnGroup": {
     "name": "按钮组",
     "doc": "https://quasar.dev/vue-components/button-group#qbtngroup-api",
-    "category": "basic"
+    "category": "basic",
+    "demoProps": {
+      "rounded": true,
+      "glossy": true
+    },
+    "demoSlots": {
+      "default": [
+        "<q-btn icon='add' label='添加' color='primary'/>",
+        "<q-btn icon='edit' label='修改' color='primary'/>",
+        "<q-btn icon-right='delete' label='删除' color='negative'/>"
+      ]
+    }
   },
 
   "QBtnDropdown": {
     "name": "下拉按钮",
     "doc": "https://quasar.dev/vue-components/button-dropdown#qbtndropdown-api",
-    "category": "basic"
+    "category": "basic",
+    "demoData": {
+      "options": ["北京", "上海", "广州", "深圳"],
+      "selected": "请选择"
+    },
+    "demoProps": {
+      "glossy": true,
+      "autoClose": true,
+      "color": "primary"
+    },
+    "demoBinds": {
+      "label": "selected"
+    },
+    "demoSlots": {
+      "default": "<q-list dense><q-item v-for='option in $self.options' clickable @click='$self.selected = option' :key='option'><q-item-section>{{ option }}</q-item-section></q-item></q-list>"
+    }
   },
 
   "QTooltip": {
@@ -273,8 +327,7 @@
       "color": "primary",
       "size": "2em"
     },
-    "demos": [{
-    }, {
+    "demos": [{}, {
       "size": "3em",
       "thickness": 10
     }, {
