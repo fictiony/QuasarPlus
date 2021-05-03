@@ -106,16 +106,23 @@
           <!-- 范例占位符，用于不看范例时显示 -->
           <div class="row items-center" v-show="!showDemos">
             <q-chip
-              v-for="(demo, index) in props.row.demos || [{}]"
+              v-for="index in props.row.demos ? props.row.demos.length : 1"
               :key="index"
               clickable
               icon="bubble_chart"
-              @click.stop="inspectDemo(props.row, index)"
-            >
-              {{ demo.demoName || `${demo.demoClass || props.row.name}范例${props.row.demos ? index + 1 : ''}` }}
-            </q-chip>
+              :label="getDemoName(props.row, index - 1)"
+              @click.stop="inspectDemo(props.row, index - 1)"
+            />
           </div>
 
+          <!-- 范例提示 -->
+          <template v-if="props.row.demoTips">
+            <q-tooltip v-for="index in props.row.demos ? props.row.demos.length : 1" :key="index" :target="`#${props.row.className}-${index - 1}`">
+              {{ getDemoName(props.row, index - 1) }}
+            </q-tooltip>
+          </template>
+
+          <!-- 组件限制 -->
           <div class="row items-center" v-if="props.row.isPart">
             <q-icon class="q-mr-xs" name="warning" color="warning" size="20px" />
             本组件只能用于 {{ props.row.isPart }} 组件内部
@@ -252,6 +259,12 @@ export default {
     // 筛选组件列表
     filterComponents(rows) {
       return rows.filter(info => this.matchFilter(info))
+    },
+
+    // 获取范例名称
+    getDemoName(info, index) {
+      const demo = (info.demos && info.demos[index]) || {}
+      return demo.demoName || `${demo.demoClass || info.name}范例${info.demos ? index + 1 : ''}`
     },
 
     // 查看组件范例属性

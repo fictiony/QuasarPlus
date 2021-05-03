@@ -20,7 +20,7 @@
   </component>
 
   <!-- 范例组件 -->
-  <component :is="getComponent()" v-bind="makeParams()" @click="$emit('inspect', index)" ref="demo" v-else>
+  <component :is="getComponent()" v-bind="makeParams()" @click="$emit('inspect', index)" :id="getCacheName()" ref="demo" v-else>
     <template v-for="slot in makeSlots()" v-slot:[slot.name]>
       <component v-for="content in slot.contents" :is="content" :key="content.name" />
     </template>
@@ -77,25 +77,6 @@ export default {
 
       // 若有数据或绑定，则动态构造一个扩展组件，并把数据和绑定带进去
       if (!this.$isEmpty(info.demoData) || !this.$isEmpty(frameData) || info.demoBinds || frameBinds) {
-        const binds = Object.assign({}, info.demoBinds, frameBinds)
-        const watch = {}
-        Object.keys(binds).forEach(name => {
-          watch[binds[name]] = {
-            immediate: true,
-            handler: val => {
-              this.cachedParams[cacheName][name] = val
-            }
-          }
-          // 反向绑定
-          watch[name] = function (val) {
-            const names = binds[name].split('.')
-            let obj = this
-            while (names.length > 1) {
-              obj = obj[names.shift()]
-            }
-            obj[names[0]] = val
-          }
-        })
         component = {
           extends: component,
           data: () => quasar.extend(true, {}, info.demoData, frameData),
@@ -106,8 +87,47 @@ export default {
           },
           inject: {
             $frame: { default: null } // 注入外层组件依赖
-          },
-          watch
+          }
+        }
+
+        // 添加属性绑定
+        const binds = Object.assign({}, info.demoBinds, frameBinds)
+        const bindProps = Object.keys(binds)
+        if (bindProps.length > 0) {
+          component.watch = {}
+          const params = this.cachedParams
+          bindProps.forEach(name => {
+            component.watch[binds[name]] = {
+              immediate: true,
+              handler: val => {
+                params[cacheName][name] = val
+              }
+            }
+            // 反向绑定
+            component.watch[name] = function (val) {
+              const names = binds[name].split('.')
+              let obj = this
+              while (names.length > 1) {
+                obj = obj[names.shift()]
+              }
+              obj[names[0]] = val
+            }
+          })
+          // 添加事件处理
+          component.created = function () {
+            const modelName = (this.$options.model || {}).prop || 'value'
+            bindProps.forEach(name => {
+              let event
+              if (name === modelName) {
+                event = (this.$options.model || {}).event || 'input'
+              } else {
+                event = 'update:' + name
+              }
+              this.$on(event, val => {
+                params[cacheName][name] = val
+              })
+            })
+          }
         }
       }
 
