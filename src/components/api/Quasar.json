@@ -29,15 +29,12 @@
     "category": "container",
     "isPart": "QLayout",
     "frame": 50,
-    "frameClass": "QLayout",
+    "parent": "QLayout",
     "demoProps": {
       "class": "text-center q-pa-xs"
     },
     "demoFrameProps": {
       "style": "height: 60px"
-    },
-    "demoFrameSlots": {
-      "default": true
     }
   },
   "QFooter": {
@@ -46,15 +43,12 @@
     "category": "container",
     "isPart": "QLayout",
     "frame": 50,
-    "frameClass": "QLayout",
+    "parent": "QLayout",
     "demoProps": {
       "class": "bg-grey text-center"
     },
     "demoFrameProps": {
       "style": "height: 50px"
-    },
-    "demoFrameSlots": {
-      "default": true
     }
   },
   "QDrawer": {
@@ -63,7 +57,7 @@
     "category": "container",
     "isPart": "QLayout",
     "frame": 100,
-    "frameClass": "QLayout",
+    "parent": "QLayout",
     "demoProps": {
       "elevated": true,
       "showIfAbove": true,
@@ -81,7 +75,7 @@
       "style": "height: 100px"
     },
     "demoFrameSlots": {
-      "default": [true, "<q-page-container><q-page padding><q-toggle v-model='$frame.drawer' label='侧滑栏显示'/></q-page></q-page-container>"]
+      "default": [0, "<q-page-container><q-page padding><q-toggle v-model='$frame.drawer' label='侧滑栏显示'/></q-page></q-page-container>"]
     }
   },
   "QPageContainer": {
@@ -90,15 +84,12 @@
     "category": "container",
     "isPart": "QLayout",
     "frame": 100,
-    "frameClass": "QLayout",
+    "parent": "QLayout",
     "demoSlots": {
       "default": " <template v-for='i in 3'><q-page padding><p>第{{i}}页</p>内容</q-page><q-separator/></template>"
     },
     "demoFrameProps": {
       "style": "height: 100px"
-    },
-    "demoFrameSlots": {
-      "default": true
     }
   },
   "QPage": {
@@ -107,7 +98,7 @@
     "category": "container",
     "isPart": "QPageContainer",
     "frame": 100,
-    "frameClass": "QLayout",
+    "parent": "QLayout",
     "demoProps": {
       "padding": true
     },
@@ -116,9 +107,6 @@
     },
     "demoFrameProps": {
       "style": "height: 100px"
-    },
-    "demoFrameSlots": {
-      "default": true
     }
   },
   "QPageSticky": {
@@ -127,7 +115,7 @@
     "category": "container",
     "isPart": "QLayout",
     "frame": 100,
-    "frameClass": "QLayout",
+    "parent": "QLayout",
     "demoProps": {
       "class": "bg-accent text-white q-pa-sm"
     },
@@ -135,7 +123,7 @@
       "style": "height: 100px"
     },
     "demoFrameSlots": {
-      "default": ["<q-page-container><q-page padding><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>", true]
+      "default": ["<q-page-container><q-page padding><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>", 0]
     }
   },
   "QPageScroller": {
@@ -144,7 +132,7 @@
     "category": "container",
     "isPart": "QLayout",
     "frame": 100,
-    "frameClass": "QLayout",
+    "parent": "QLayout",
     "demoProps": {
       "scrollOffset": 10
     },
@@ -155,7 +143,7 @@
       "style": "height: 100px"
     },
     "demoFrameSlots": {
-      "default": ["<q-page-container><q-page padding><div v-for='i in 9'>请向下滚动</div></q-page></q-page-container>", true]
+      "default": ["<q-page-container><q-page padding><div v-for='i in 9'>请向下滚动</div></q-page></q-page-container>", 0]
     }
   },
 
@@ -164,7 +152,7 @@
     "doc": "https://quasar.dev/vue-components/banner#qbanner-api",
     "category": "container",
     "demoProps": {
-      "class": "full-width bg-accent text-white",
+      "class": "fit bg-accent text-white",
       "inline-actions": true
     },
     "demoSlots": {
@@ -179,7 +167,7 @@
     "doc": "https://quasar.dev/vue-components/bar#qbar-api",
     "category": "container",
     "demoProps": {
-      "class": "full-width bg-secondary text-white"
+      "class": "fit bg-secondary text-white"
     },
     "demoSlots": {
       "default": [
@@ -202,25 +190,25 @@
     "category": "basic",
     "demoSlots": {},
     "demos": [{
+      "demoName": "普通",
       "color": "primary",
-      "label": "Button",
-      "demoName": "普通按钮"
+      "label": "按钮"
     }, {
+      "demoName": "小胶囊型带图标",
       "rounded": true,
       "push": true,
       "glossy": true,
       "color": "secondary",
       "size": "sm",
       "icon": "bookmark",
-      "label": "Push",
-      "demoName": "胶囊型带图标小按钮"
+      "label": "Push"
     }, {
+      "demoName": "大圆型纯图标",
       "round": true,
       "glossy": true,
       "color": "accent",
       "size": "lg",
-      "icon": "local_activity",
-      "demoName": "圆型图标大按钮"
+      "icon": "local_activity"
     }]
   },
 
@@ -252,7 +240,7 @@
     "demoProps": {
       "glossy": true,
       "autoClose": true,
-      "color": "primary"
+      "color": "secondary"
     },
     "demoBinds": {
       "label": "selected"
@@ -265,7 +253,28 @@
   "QTooltip": {
     "name": "工具提示",
     "doc": "https://quasar.dev/vue-components/tooltip#qtooltip-api",
-    "category": "basic"
+    "category": "basic",
+    "parent": "QBtn",
+    "demoFrameProps": {
+      "outline": true,
+      "color": "primary",
+      "label": "鼠标悬停查看"
+    },
+    "demos": [{
+      "demoName": "基本"
+    }, {
+      "demoName": "指定样式",
+      "demoProps": {
+        "contentClass": "bg-red shadow-4"
+      },
+      "demoSlots": {
+        "default": " 带样式的工具提示"
+      },
+      "demoFrameProps": {
+        "color": "red",
+        "label": "指定样式"
+      }
+    }]
   },
 
   "QIcon": {

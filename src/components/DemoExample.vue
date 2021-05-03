@@ -7,7 +7,7 @@
 
       <div class="row">
         <q-tabs v-model="curTab" dense active-color="primary" indicator-color="primary" class="text-grey self-end" v-if="showCode">
-          <q-tab v-for="tab in codeTabs" :name="tab" :label="tab" :key="`tab-${tab}`" />
+          <q-tab v-for="tab in codeTabs" :name="tab" :label="tab" :key="tab" />
         </q-tabs>
 
         <q-btn flat round icon="content_copy" color="primary" class="self-end" v-if="showCode" @click="copyCode">
@@ -26,7 +26,7 @@
     <q-slide-transition>
       <div v-if="showCode">
         <q-tab-panels v-model="curTab" animated>
-          <q-tab-panel class="q-pa-none overflow-hidden" v-for="tab in codeTabs" :name="tab" :key="`panel-${tab}`">
+          <q-tab-panel class="q-pa-none overflow-hidden" v-for="tab in codeTabs" :name="tab" :key="tab">
             <q-markdown class="fit" :src="'```html\n' + code[tab] + '\n```'" />
           </q-tab-panel>
         </q-tab-panels>

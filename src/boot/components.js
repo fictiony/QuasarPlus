@@ -6,6 +6,7 @@ import Vue from 'vue'
 import MyDrawer from 'components/plus/MyDrawer.js'
 import CustomScroller from 'components/CustomScroller.js'
 import EssentialLink from 'components/EssentialLink.vue'
+import DemoComponent from 'components/DemoComponent.vue'
 import DemoExample from 'components/DemoExample.vue'
 import DemoPage from 'components/DemoPage.vue'
 import PropItem from 'components/PropItem.vue'
@@ -16,6 +17,7 @@ const components = {
   MyDrawer,
   CustomScroller,
   EssentialLink,
+  DemoComponent,
   DemoExample,
   DemoPage,
   PropItem,

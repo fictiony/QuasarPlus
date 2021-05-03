@@ -1,6 +1,6 @@
 <template>
   <q-list class="fit no-scroll column">
-    <EssentialLink v-for="(link, index) in pageList" :key="`link-${index}`" v-bind="link" />
+    <EssentialLink v-for="(link, index) in pageList" :key="index" v-bind="link" />
 
     <q-separator />
     <q-item dense>
@@ -10,7 +10,7 @@
     </q-item>
 
     <CustomScroller class="q-space">
-      <EssentialLink v-for="(link, index) in plusList" :key="`plus-${index}`" v-bind="link" />
+      <EssentialLink v-for="(link, index) in plusList" :key="index" v-bind="link" />
     </CustomScroller>
   </q-list>
 </template>
