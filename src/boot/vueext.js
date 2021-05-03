@@ -29,6 +29,11 @@ PROP_TYPES.forEach(type => {
 const VUE_FILENAME_FORMAT = /[^./\\]+(?=\.vue$)/
 Object.assign(Vue.prototype, {
 
+  // 输出日志（用于解决模板中无法使用console.log的缺陷）
+  $log(...args) {
+    console.log(...args)
+  },
+
   // 获取组件名
   // - @options 组件选项表（若未指定则取当前组件的选项表）
   $getName(options) {
@@ -49,7 +54,11 @@ Object.assign(Vue.prototype, {
 
   // 判断对象是否为空（含null）
   $isEmpty(obj) {
-    return !(obj && Object.keys(obj).length > 0)
+    if (typeof obj !== 'object') return true
+    for (const i in obj) {
+      if (i !== undefined) return false
+    }
+    return true
   },
 
   // 获取插槽内容

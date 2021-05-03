@@ -13,15 +13,13 @@
       "container": true,
       "style": "height: 150px"
     },
-    "demoSlots": {
-      "default": [
-        "<q-header class='row items-center justify-between'><q-btn flat dense icon='menu' @click='$self.drawerLeft = !$self.drawerLeft'></q-btn>页眉<q-btn flat dense icon='menu' @click='$self.drawerRight = !$self.drawerRight'></q-btn></q-header>",
-        "<q-drawer elevated :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='$self.drawerLeft'>左侧滑栏</q-drawer>",
-        "<q-drawer side='right' bordered :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='$self.drawerRight'>右侧滑栏</q-drawer>",
-        "<q-page-container><q-page padding class='bg-grey-2'><p>内页</p><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>",
-        "<q-footer class='bg-grey text-center'>页脚</q-footer>"
-      ]
-    }
+    "demoSlots": [
+      "<q-header class='row items-center justify-between'><q-btn flat dense icon='menu' @click='$self.drawerLeft = !$self.drawerLeft'></q-btn>页眉<q-btn flat dense icon='menu' @click='$self.drawerRight = !$self.drawerRight'></q-btn></q-header>",
+      "<q-drawer elevated :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='$self.drawerLeft'>左侧滑栏</q-drawer>",
+      "<q-drawer side='right' bordered :breakpoint='400' :width='150' content-class='q-pa-sm' v-model='$self.drawerRight'>右侧滑栏</q-drawer>",
+      "<q-page-container><q-page padding class='bg-grey-2'><p>内页</p><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>",
+      "<q-footer class='bg-grey text-center'>页脚</q-footer>"
+    ]
   },
   "QHeader": {
     "name": "布局页眉",
@@ -74,9 +72,7 @@
     "demoFrameProps": {
       "style": "height: 100px"
     },
-    "demoFrameSlots": {
-      "default": [0, "<q-page-container><q-page padding><q-toggle v-model='$frame.drawer' label='侧滑栏显示'/></q-page></q-page-container>"]
-    }
+    "demoFrameSlots": [0, "<q-page-container><q-page padding><q-toggle v-model='$frame.drawer' label='侧滑栏显示'/></q-page></q-page-container>"]
   },
   "QPageContainer": {
     "name": "布局内页容器",
@@ -85,9 +81,7 @@
     "isPart": "QLayout",
     "frame": 100,
     "parent": "QLayout",
-    "demoSlots": {
-      "default": " <template v-for='i in 3'><q-page padding><p>第{{i}}页</p>内容</q-page><q-separator/></template>"
-    },
+    "demoSlots": " <template v-for='i in 3'><q-page padding><p>第{{i}}页</p>内容</q-page><q-separator/></template>",
     "demoFrameProps": {
       "style": "height: 100px"
     }
@@ -102,9 +96,7 @@
     "demoProps": {
       "padding": true
     },
-    "demoSlots": {
-      "default": " <div v-for='i in 9'>第{{i}}行</div>"
-    },
+    "demoSlots": " <div v-for='i in 9'>第{{i}}行</div>",
     "demoFrameProps": {
       "style": "height: 100px"
     }
@@ -122,9 +114,7 @@
     "demoFrameProps": {
       "style": "height: 100px"
     },
-    "demoFrameSlots": {
-      "default": ["<q-page-container><q-page padding><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>", 0]
-    }
+    "demoFrameSlots": ["<q-page-container><q-page padding><div v-for='i in 9'>第{{i}}行</div></q-page></q-page-container>", 0]
   },
   "QPageScroller": {
     "name": "页面自动滚屏",
@@ -136,15 +126,11 @@
     "demoProps": {
       "scrollOffset": 10
     },
-    "demoSlots": {
-      "default": "<q-btn rounded glossy color='primary' label='回到开头' />"
-    },
+    "demoSlots": "<q-btn rounded glossy color='primary' label='回到开头' />",
     "demoFrameProps": {
       "style": "height: 100px"
     },
-    "demoFrameSlots": {
-      "default": ["<q-page-container><q-page padding><div v-for='i in 9'>请向下滚动</div></q-page></q-page-container>", 0]
-    }
+    "demoFrameSlots": ["<q-page-container><q-page padding><div v-for='i in 9'>请向下滚动</div></q-page></q-page-container>", 0]
   },
 
   "QBanner": {
@@ -169,19 +155,17 @@
     "demoProps": {
       "class": "fit bg-secondary text-white"
     },
-    "demoSlots": {
-      "default": [
-        "12:30",
-        "<q-icon name='alarm'/>",
-        "<q-space/>",
-        "150K/s",
-        "<q-icon name='signal_cellular_alt'/>",
-        "4G",
-        "<q-icon name='wifi'/>",
-        "100%",
-        "<q-icon name='battery_full'/>"
-      ]
-    }
+    "demoSlots": [
+      "12:30",
+      "<q-icon name='alarm'/>",
+      "<q-space/>",
+      "150K/s",
+      "<q-icon name='signal_cellular_alt'/>",
+      "4G",
+      "<q-icon name='wifi'/>",
+      "100%",
+      "<q-icon name='battery_full'/>"
+    ]
   },
 
   "QBtn": {
@@ -221,13 +205,11 @@
       "rounded": true,
       "glossy": true
     },
-    "demoSlots": {
-      "default": [
-        "<q-btn icon='add' label='添加' color='primary'/>",
-        "<q-btn icon='edit' label='修改' color='primary'/>",
-        "<q-btn icon-right='delete' label='删除' color='negative'/>"
-      ]
-    }
+    "demoSlots": [
+      "<q-btn icon='add' label='添加' color='primary'/>",
+      "<q-btn icon='edit' label='修改' color='primary'/>",
+      "<q-btn icon-right='delete' label='删除' color='negative'/>"
+    ]
   },
 
   "QBtnDropdown": {
@@ -246,9 +228,7 @@
     "demoBinds": {
       "label": "selected"
     },
-    "demoSlots": {
-      "default": "<q-list dense><q-item v-for='option in $self.options' clickable @click='$self.selected = option' :key='option'><q-item-section>{{ option }}</q-item-section></q-item></q-list>"
-    }
+    "demoSlots": "<q-list dense><q-item v-for='option in $self.options' clickable @click='$self.selected = option' :key='option'><q-item-section>{{ option }}</q-item-section></q-item></q-list>"
   },
 
   "QTooltip": {
@@ -268,9 +248,7 @@
       "demoProps": {
         "contentClass": "bg-red shadow-4"
       },
-      "demoSlots": {
-        "default": " 带样式的工具提示"
-      },
+      "demoSlots": " 带样式的工具提示",
       "demoFrameProps": {
         "color": "red",
         "label": "指定样式"
@@ -285,9 +263,7 @@
     "demoProps": {
       "size": "md"
     },
-    "demoSlots": {
-      "default": []
-    },
+    "demoSlots": {},
     "demos": [{
       "demoName": "基本",
       "name": "alarm"
@@ -322,9 +298,7 @@
     "demoBinds": {
       "src": "baseUrl"
     },
-    "demoSlots": {
-      "default": "<div class='absolute-bottom text-center' @click='$self.baseUrl = $self.baseUrl.split(\"=\")[0] + \"=\" + Math.random()'>点击换图</div>"
-    }
+    "demoSlots": "<div class='absolute-bottom text-center' @click='$self.baseUrl = $self.baseUrl.split(\"=\")[0] + \"=\" + Math.random()'>点击换图</div>"
   },
 
   "QAvatar": {
@@ -335,9 +309,7 @@
       "color": "secondary",
       "textColor": "white"
     },
-    "demoSlots": {
-      "default": []
-    },
+    "demoSlots": {},
     "demos": [{
       "demoName": "基本",
       "icon": "directions"
@@ -347,18 +319,14 @@
         "color": "orange",
         "size": "24px"
       },
-      "demoSlots": {
-        "default": "$"
-      }
+      "demoSlots": "$"
     }, {
       "demoName": "图片内容",
       "demoProps": {
         "size": "60px",
         "rounded": true
       },
-      "demoSlots": {
-        "default": "<img src='https://cdn.quasar.dev/img/avatar.png'>"
-      }
+      "demoSlots": "<img src='https://cdn.quasar.dev/img/avatar.png'>"
     }],
     "demoTips": true
   },
@@ -392,13 +360,77 @@
 
   "QChatMessage": {
     "name": "聊天消息",
-    "doc": "https://quasar.dev/vue-components/chat#qchatmessage-api"
+    "doc": "https://quasar.dev/vue-components/chat#qchatmessage-api",
+    "frame": 1,
+    "frameStyles": {
+      "width": "400px",
+      "padding": "5px 10px 5px 10px"
+    },
+    "parent": "div",
+    "demoSlots": "<q-spinner-dots/>",
+    "demoFrameSlots": [0, 1],
+    "demos": [{
+      "name": "我",
+      "avatar": "https://cdn.quasar.dev/img/avatar1.jpg",
+      "text": ["在吗？"],
+      "sent": true,
+      "stamp": "<br>42 分钟之前",
+      "demoSlots": "想你了😘"
+    }, {
+      "name": "女神",
+      "avatar": "https://cdn.quasar.dev/img/avatar2.jpg",
+      "text": ["刚刚去洗澡了"],
+      "stamp": "<br>刚刚"
+    }]
   },
 
   "QChip": {
     "name": "碎片",
     "doc": "https://quasar.dev/vue-components/chip#qchip-api",
-    "category": "basic"
+    "category": "basic",
+    "demoProps": {
+      "clickable": true
+    },
+    "demos": [{
+      "demoName": "基本",
+      "icon": "event"
+    }, {
+      "demoName": "定制样式",
+      "color": "red",
+      "textColor": "white",
+      "dense": true,
+      "outline": true,
+      "square": true,
+      "iconRight": "star"
+    }, {
+      "demoName": "嵌入头像",
+      "color": "secondary",
+      "textColor": "white",
+      "demoSlots": ["<q-avatar><img src='https://cdn.quasar.dev/img/boy-avatar.png'></q-avatar>", "嵌入头像"]
+    }, {
+      "demoName": "可选中可删除",
+      "parent": "div",
+      "demoProps": {
+        "icon": "flag",
+        "color": "orange",
+        "textColor": "white",
+        "removable": true
+      },
+      "demoData": {
+        "exist": true,
+        "done": false
+      },
+      "demoBinds": {
+        "value": "exist",
+        "selected": "done"
+      },
+      "demoFrameData": {
+        "noUse": 0
+      },
+      "demoFrameSlots": [0, 0, 0,
+        "<q-btn class='q-ml-md' label='重置' color='orange-8' @click='$frame.$children.forEach(c => { const demo = c.$refs.demo; if (!demo) return; demo.exist = true; demo.done = false })'/>"
+      ]
+    }]
   },
 
   "QBadge": {

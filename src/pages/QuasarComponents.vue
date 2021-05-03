@@ -77,7 +77,7 @@
       <template #body-cell-demos="props">
         <q-td style="width: 75%; min-width: 200px" v-bind="props" @click="inspectDemo(props.row)">
           <!-- 带外框容器 -->
-          <q-card flat bordered :style="{ minHeight: props.row.frame + 'px' }" v-if="props.row.frame" v-show="showDemos">
+          <q-card flat bordered :style="{ minHeight: props.row.frame + 'px', ...props.row.frameStyles }" v-if="props.row.frame" v-show="showDemos">
             <!-- 若含外层组件，则创建公共外层组件 -->
             <DemoComponent :info="props.row" @inspect="inspectDemo(props.row, $event)" v-if="props.row.parent" />
 
@@ -268,12 +268,12 @@ export default {
     },
 
     // 查看组件范例属性
-    inspectDemo(info, index) {
-      if (index === undefined && this.state.editingComponent) {
+    inspectDemo(info, demoIndex) {
+      if (demoIndex === undefined && this.state.editingComponent) {
         // 若当前已有选中的范例，则忽略选中默认范例的操作
-        if (this.demoMap[info.className].indexOf(this.state.editingComponent) >= 0) return
+        if (Object.values(this.demoMap[info.className]).indexOf(this.state.editingComponent) >= 0) return
       }
-      this.state.editingComponent = this.demoMap[info.className][index || 0]
+      this.state.editingComponent = this.demoMap[info.className][demoIndex || 0]
     }
   }
 }

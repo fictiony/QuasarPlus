@@ -1,28 +1,28 @@
 <template>
   <!-- 外层组件 -->
-  <component :is="getComponent(true)" v-bind="makeParams(true)" @click="$emit('inspect', index)" v-if="info.parent && !noParent">
+  <component :is="getComponent(true)" v-bind="makeParams(true)" @click="$emit('inspect', demoIndex)" v-if="parent && !noParent">
     <template v-for="slot in makeSlots(true)" v-slot:[slot.name]>
-      <template v-for="content in slot.contents">
+      <template v-for="(content, slotIndex) in slot.contents">
         <!-- 内容为序号表示第n个范例组件（若已指定index则优先取index） -->
         <DemoComponent
           no-parent
           :info="info"
           :index="index === undefined ? content : index"
           @inspect="$emit('inspect', $event)"
-          :key="index === undefined ? content : index"
+          :key="slotIndex"
           v-if="typeof content === 'number'"
         />
 
         <!-- 否则为动态构造的辅助组件 -->
-        <component :is="content" :key="content.name" v-else />
+        <component :is="content" :key="slotIndex" v-else />
       </template>
     </template>
   </component>
 
   <!-- 范例组件 -->
-  <component :is="getComponent()" v-bind="makeParams()" @click="$emit('inspect', index)" :id="getCacheName()" ref="demo" v-else>
+  <component :is="getComponent()" v-bind="makeParams()" @click="$emit('inspect', demoIndex)" :id="`${info.className}-${index}`" ref="demo" v-else>
     <template v-for="slot in makeSlots()" v-slot:[slot.name]>
-      <component v-for="content in slot.contents" :is="content" :key="content.name" />
+      <component v-for="(content, slotIndex) in slot.contents" :is="content" :key="slotIndex" />
     </template>
   </component>
 </template>
@@ -44,15 +44,26 @@ export default {
   inject: ['infoMap', 'demoMap', 'cachedComponents', 'cachedParams', 'cachedSlots'],
 
   computed: {
+    // 范例信息
     demo() {
       return (this.info.demos && this.info.demos[this.index]) || {}
+    },
+
+    // 外层组件
+    parent() {
+      return this.demo.parent || this.info.parent
+    },
+
+    // 范例编号
+    demoIndex() {
+      return this.index + '-' + this.$vnode.key
     }
   },
 
   methods: {
     // 获取缓存名称
     getCacheName(isFrame) {
-      return this.info.className + (isFrame ? '-frame' : '') + (this.index === undefined ? '' : '-' + this.index)
+      return this.info.className + (isFrame ? '-frame' : '') + (this.index === undefined ? '' : '-' + this.index) + '-' + this.$vnode.key
     },
 
     // 获取Quasar组件
@@ -64,22 +75,25 @@ export default {
 
       // 若指定所属框架，则取框架组件信息
       let info = this.info
-      let frameData, frameBinds, customClass
+      let frameData, frameBinds, customClass, customData, customBinds
       if (isFrame) {
         frameData = info.demoFrameData
         frameBinds = info.demoFrameBinds
-        info = this.infoMap[info.parent]
-        if (!info) return {}
+        info = this.infoMap[this.parent] || { className: this.parent }
+        customData = this.demo.demoFrameData
+        customBinds = this.demo.demoFrameBinds
       } else {
         customClass = this.demo.demoClass
+        customData = this.demo.demoData
+        customBinds = this.demo.demoBinds
       }
-      let component = quasar[customClass || info.className]
+      let component = quasar[customClass || info.className] || { template: `<${this.parent}><slot/></${this.parent}>` }
 
       // 若有数据或绑定，则动态构造一个扩展组件，并把数据和绑定带进去
-      if (!this.$isEmpty(info.demoData) || !this.$isEmpty(frameData) || info.demoBinds || frameBinds) {
+      if (!this.$isEmpty(info.demoData) || !this.$isEmpty(frameData) || !this.$isEmpty(customData) || info.demoBinds || frameBinds || customBinds) {
         component = {
           extends: component,
-          data: () => quasar.extend(true, {}, info.demoData, frameData),
+          data: () => quasar.extend(true, {}, info.demoData, frameData, customData),
           provide() {
             return {
               [isFrame ? '$frame' : '$self']: this // 提供依赖给子组件或插槽模板用
@@ -91,7 +105,7 @@ export default {
         }
 
         // 添加属性绑定
-        const binds = Object.assign({}, info.demoBinds, frameBinds)
+        const binds = Object.assign({}, info.demoBinds, frameBinds, customBinds)
         const bindProps = Object.keys(binds)
         if (bindProps.length > 0) {
           component.watch = {}
@@ -144,21 +158,22 @@ export default {
 
       // 若指定所属框架，则取框架组件信息
       let info = this.info
-      let frameProps, frameBinds, customProps
+      let frameProps, frameBinds, customProps, customBinds
       if (isFrame) {
         frameProps = info.demoFrameProps
         frameBinds = info.demoFrameBinds
-        info = this.infoMap[info.parent]
-        if (!info) return {}
+        info = this.infoMap[this.parent] || { className: this.parent }
         customProps = this.demo.demoFrameProps
+        customBinds = this.demo.demoFrameBinds
       } else {
         customProps = this.demo.demoProps || this.demo
+        customBinds = this.demo.demoBinds
       }
       const params = quasar.extend(true, {}, info.demoProps, frameProps, customProps)
-      const binds = Object.assign({}, info.demoBinds, frameBinds)
+      const binds = Object.assign({}, info.demoBinds, frameBinds, customBinds)
 
       // 遍历属性定义表，查找必填属性，并自动设置初始值
-      const props = quasar[info.className].options.props || {}
+      const props = (quasar[info.className] && quasar[info.className].options.props) || {}
       Object.keys(props).forEach(name => {
         if (name in params) return
         if (name in binds) {
@@ -193,18 +208,18 @@ export default {
       let info = this.info
       let frameSlots, customSlots
       if (isFrame) {
-        frameSlots = info.demoFrameSlots || { default: 0 }
-        info = this.infoMap[info.parent]
-        if (!info) return []
-        customSlots = this.demo.demoFrameSlots
+        frameSlots = this.normalizeDemoSlots(info.demoFrameSlots || 0)
+        info = this.infoMap[this.parent] || { className: this.parent }
+        customSlots = this.normalizeDemoSlots(this.demo.demoFrameSlots)
       } else {
-        customSlots = this.demo.demoSlots
+        customSlots = this.normalizeDemoSlots(this.demo.demoSlots)
       }
+      const demoSlots = this.normalizeDemoSlots(info.demoSlots)
       const slotList = []
 
       // 若有指定插槽模板，则采用插槽模板生成插槽内容组件
-      if (info.demoSlots || frameSlots || customSlots) {
-        const slots = Object.assign({}, info.demoSlots, frameSlots, customSlots)
+      if (demoSlots || frameSlots || customSlots) {
+        const slots = Object.assign({}, demoSlots, frameSlots, customSlots)
 
         Object.keys(slots).forEach(name => {
           let templates = slots[name]
@@ -238,7 +253,7 @@ export default {
           contents: [
             {
               name: `${info.className}-default`,
-              template: `<div>${info.name}</div>`
+              template: `<div>${this.demo.demoName || info.name}</div>`
             }
           ]
         })
@@ -246,6 +261,13 @@ export default {
 
       this.cachedSlots[cacheName] = slotList
       return slotList
+    },
+
+    // 矫正范例插槽定义
+    normalizeDemoSlots(slots) {
+      if (slots == null) return
+      if (typeof slots === 'object' && !(slots instanceof Array)) return slots
+      return { default: slots }
     },
 
     // 查找模板中用到的Quasar组件
@@ -264,9 +286,10 @@ export default {
     if (this.$refs.demo) {
       let demos = this.demoMap[this.info.className]
       if (!demos) {
-        this.demoMap[this.info.className] = demos = []
+        this.demoMap[this.info.className] = demos = {}
       }
       demos[this.index] = this.$refs.demo
+      demos[this.demoIndex] = this.$refs.demo
     }
   }
 }
