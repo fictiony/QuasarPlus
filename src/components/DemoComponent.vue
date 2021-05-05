@@ -119,10 +119,10 @@ export default {
           const params = this.cachedParams
           bindProps.forEach(name => {
             component.watch[binds[name]] = {
-              immediate: true,
               handler: val => {
                 params[cacheName][name] = val
-              }
+              },
+              immediate: true
             }
             // 反向绑定
             component.watch[name] = function (val) {
@@ -237,11 +237,15 @@ export default {
           slotList.push({
             name,
             contents: templates.map((template, index) => {
+              let tag = ''
               if (isFrame && typeof template === 'number') {
                 return template // 模板为序号表示插入第n个范例组件（仅用于框架插槽定义）
+              } else if (typeof template === 'object') {
+                tag = template.tag // 可手动指定插槽元素名称标记，以解决一些特殊需求
+                template = template.template
               }
               return {
-                name: `${info.className}-${name}-${index}`,
+                name: `${info.className}-${name}-${index}` + tag,
                 template: template.charAt(0) === '<' ? template : `<div>${template}</div>`,
                 components: this.searchUsedComponents(template),
                 inject: {

@@ -178,7 +178,7 @@
       "color": "primary",
       "label": "按钮"
     }, {
-      "demoName": "小胶囊型带图标",
+      "demoName": "小胶囊形带图标",
       "rounded": true,
       "push": true,
       "glossy": true,
@@ -187,7 +187,7 @@
       "icon": "bookmark",
       "label": "Push"
     }, {
-      "demoName": "大圆型纯图标",
+      "demoName": "大圆形纯图标",
       "round": true,
       "glossy": true,
       "color": "accent",
@@ -427,7 +427,7 @@
       "demoFrameData": {
         "noUse": 0
       },
-      "demoFrameSlots": [0, 0, 0,
+      "demoFrameSlots": [0, 0,
         "<q-btn class='q-ml-md' label='重置' color='orange-8' @click='$frame.$children.forEach(c => { const demo = c.$refs.demo; if (!demo) return; demo.exist = true; demo.done = false })'/>"
       ]
     }]
@@ -436,18 +436,92 @@
   "QBadge": {
     "name": "标记",
     "doc": "https://quasar.dev/vue-components/badge#qbadge-api",
-    "category": "basic"
+    "category": "basic",
+    "demos": [{
+      "demoName": "基本"
+    }, {
+      "demoName": "指定样式",
+      "outline": true,
+      "rounded": true,
+      "color": "secondary",
+      "label": "v1.0.0"
+    }, {
+      "demoName": "带图标",
+      "color": "orange",
+      "demoSlots": ["<q-icon name='error_outline' color='white' class='q-mr-xs'/>", "5"]
+    }, {
+      "demoName": "浮动标注",
+      "parent": "QBtn",
+      "demoProps": {
+        "floating": true,
+        "rounded": true,
+        "color": "red",
+        "label": "99+"
+      },
+      "demoFrameProps": {
+        "round": true,
+        "color": "accent",
+        "icon": "email"
+      }
+    }, {
+      "demoName": "指示器",
+      "parent": "div",
+      "demoProps": {
+        "rounded": true,
+        "color": "green"
+      },
+      "demoSlots": {},
+      "demoFrameProps": {
+        "class": "row items-center q-gutter-xs text-green"
+      },
+      "demoFrameSlots": [0, "状态正常"]
+    }],
+    "demoTips": true
   },
 
   "QSeparator": {
     "name": "分隔线",
     "doc": "https://quasar.dev/vue-components/separator#qseparator-api",
-    "category": "basic"
+    "category": "basic",
+    "frame": 1,
+    "parent": "QToolbar",
+    "demoFrameProps": {
+      "class": "bg-grey-2"
+    },
+    "demoFrameSlots": [
+      "<q-btn stretch flat label='A'/>", 0,
+      "<q-btn stretch flat label='B'/>", 1,
+      "<q-btn stretch flat label='C'/>"
+    ],
+    "demos": [{
+      "demoName": "不贴边",
+      "vertical": true,
+      "inset": true
+    }, {
+      "demoName": "指定颜色宽度间隔",
+      "vertical": true,
+      "color": "orange",
+      "size": "5px",
+      "spaced": "md"
+    }]
   },
 
   "QSpace": {
     "name": "填充间距",
-    "category": "basic"
+    "category": "basic",
+    "frame": 1,
+    "parent": "QToolbar",
+    "demoFrameProps": {
+      "class": "bg-primary text-white",
+      "style": "min-height: 40px"
+    },
+    "demoFrameSlots": [
+      "<q-btn dense flat label='左一'/>",
+      "<q-btn dense flat label='左二'/>", 0,
+      "<q-btn dense flat label='中'/>", 0,
+      "<q-btn dense flat label='右一'/>",
+      "<q-btn dense flat label='右二'/>"
+    ]
   },
 
   "QSpinner": {
@@ -505,55 +579,224 @@
       "demoClass": "QSpinnerRings"
     }, {
       "demoClass": "QSpinnerTail"
-    }]
+    }],
+    "demoTips": true
   },
 
   "QLinearProgress": {
     "name": "条形进度",
     "doc": "https://quasar.dev/vue-components/linear-progress#qlinearprogress-api",
-    "category": "basic"
+    "category": "basic",
+    "demoData": {
+      "progress": 0.45
+    },
+    "demoBinds": {
+      "value": "progress"
+    },
+    "demoSlots": {},
+    "demos": [{
+      "demoName": "基本"
+    }, {
+      "demoName": "指定样式",
+      "stripe": true,
+      "rounded": true,
+      "size": "20px",
+      "color": "red",
+      "trackColor": "red-4"
+    }, {
+      "demoName": "不确定",
+      "rounded": true,
+      "color": "warning",
+      "indeterminate": true
+    }, {
+      "demoName": "带文字标签",
+      "stripe": true,
+      "size": "20px",
+      "demoSlots": "<div class='absolute-center text-caption text-blue' style='mix-blend-mode: difference'>当前进度 {{ ($self.value * 100).toFixed(1) }}%</div>"
+    }],
+    "demoTips": true
   },
 
   "QCircularProgress": {
     "name": "圆形进度",
     "doc": "https://quasar.dev/vue-components/circular-progress#qcircularprogress-api",
-    "category": "basic"
-  },
-
-  "QColor": {
-    "name": "颜色选择器",
-    "doc": "https://quasar.dev/vue-components/color-picker#qcolor-api",
-    "category": "tool"
+    "category": "basic",
+    "demoData": {
+      "progress": 70
+    },
+    "demoBinds": {
+      "value": "progress"
+    },
+    "demoProps": {
+      "size": "40px",
+      "color": "primary",
+      "trackColor": "grey-3"
+    },
+    "demos": [{
+      "demoName": "基本"
+    }, {
+      "demoName": "指定样式",
+      "size": "50px",
+      "thickness": 0.5,
+      "color": "purple-3",
+      "trackColor": "purple-1",
+      "centerColor": "purple",
+      "angle": 180,
+      "max": 200
+    }, {
+      "demoName": "不确定",
+      "thickness": 1,
+      "color": "warning",
+      "indeterminate": true
+    }, {
+      "demoName": "显示内容",
+      "size": "60px",
+      "showValue": true,
+      "fontSize": "12px",
+      "class": "text-primary",
+      "demoSlots": ["<q-icon name='volume_up' size='16px'/>", "{{ $self.value }}"]
+    }],
+    "demoTips": true
   },
 
   "QKnob": {
     "name": "旋钮",
     "doc": "https://quasar.dev/vue-components/knob#qknob-api",
-    "category": "basic"
+    "category": "basic",
+    "demoData": {
+      "val": 70
+    },
+    "demoBinds": {
+      "value": "val"
+    },
+    "demoProps": {
+      "size": "40px",
+      "color": "primary",
+      "trackColor": "grey-3"
+    },
+    "demos": [{
+      "demoName": "基本"
+    }, {
+      "demoName": "指定样式",
+      "size": "50px",
+      "thickness": 0.5,
+      "color": "purple-3",
+      "trackColor": "purple-1",
+      "centerColor": "purple",
+      "angle": 180,
+      "max": 200
+    }, {
+      "demoName": "固定步进量",
+      "thickness": 1,
+      "color": "warning",
+      "instantFeedback": true,
+      "step": 10,
+      "showValue": true,
+      "demoSlots": "{{ $self.value }}"
+    }, {
+      "demoName": "显示内容",
+      "size": "60px",
+      "showValue": true,
+      "fontSize": "12px",
+      "class": "text-primary",
+      "demoSlots": ["<q-icon name='volume_up' size='16px'/>", "{{ $self.value }}"]
+    }],
+    "demoTips": true
   },
 
   "QFab": {
     "name": "浮动按钮",
     "doc": "https://quasar.dev/vue-components/floating-action-button#qfab-api",
-    "category": "basic"
+    "category": "basic",
+    "demoData": {
+      "noLabel": true
+    },
+    "demoProps": {
+      "color": "primary",
+      "glossy": true,
+      "label": "操作",
+      "labelPosition": "left",
+      "icon": "keyboard_arrow_right"
+    },
+    "demoBinds": {
+      "hideLabel": "noLabel"
+    },
+    "demoSlots": [
+      "<q-fab-action color='secondary' icon='phone' label='打电话' :hide-label='$self.noLabel'/>",
+      "<q-fab-action color='secondary' icon='email' label='发邮件' :hide-label='$self.noLabel'/>",
+      "<q-fab-action color='secondary' icon='chat' label='短消息' :hide-label='$self.noLabel'/>",
+      "<q-toggle v-model='$self.noLabel' label='隐藏标签'/>"
+    ]
   },
   "QFabAction": {
-    "name": "浮动按钮操作",
+    "name": "浮动操作按钮",
     "doc": "https://quasar.dev/vue-components/floating-action-button#qfabaction-api",
     "category": "basic",
-    "isPart": "QFab"
+    "demoSlots": {},
+    "demos": [{
+      "demoName": "仅图标",
+      "color": "primary",
+      "icon": "mail"
+    }, {
+      "demoName": "带标签",
+      "color": "secondary",
+      "glossy": true,
+      "icon": "alarm",
+      "label": "Alarm"
+    }, {
+      "demoName": "方形外部标签",
+      "color": "accent",
+      "icon": "room",
+      "label": "Map",
+      "labelPosition": "top",
+      "labelClass": "bg-purple-2 text-purple",
+      "labelStyle": "top: 10px",
+      "padding": "md",
+      "square": true,
+      "externalLabel": true
+    }],
+    "demoTips": true
   },
 
   "QBreadcrumbs": {
     "name": "面包屑",
     "doc": "https://quasar.dev/vue-components/breadcrumbs#qbreadcrumbs-api",
-    "category": "basic"
+    "category": "basic",
+    "demoProps": {
+      "separator": "┊",
+      "separatorColor": "grey-5"
+    },
+    "demoSlots": [{
+      "tag": "-QBreadcrumbsEl",
+      "template": "<q-breadcrumbs-el icon='home' to='/'/>"
+    }, {
+      "tag": "-QBreadcrumbsEl",
+      "template": "<q-breadcrumbs-el icon='widgets' label='Quasar 组件清单' to='/QuasarComponents'/>"
+    }, {
+      "tag": "-QBreadcrumbsEl",
+      "template": "<q-breadcrumbs-el label='所有组件'/>"
+    }]
   },
   "QBreadcrumbsEl": {
     "name": "面包屑小节",
     "doc": "https://quasar.dev/vue-components/breadcrumbs#qbreadcrumbsel-api",
     "category": "basic",
-    "isPart": "QBreadcrumbs"
+    "demoSlots": {},
+    "demos": [{
+      "demoName": "仅图标",
+      "icon": "home",
+      "to": "/"
+    }, {
+      "demoName": "图标+文字",
+      "icon": "widgets",
+      "label": "Quasar 组件清单",
+      "to": "/QuasarComponents"
+    }, {
+      "demoName": "仅文字",
+      "label": "基本组件",
+      "to": "/QuasarComponents/basic"
+    }],
+    "demoTips": true
   },
 
   "QForm": {
@@ -642,6 +885,12 @@
     "name": "文件选择框",
     "doc": "https://quasar.dev/vue-components/file-picker#qfile-api",
     "category": "form"
+  },
+
+  "QColor": {
+    "name": "颜色选择器",
+    "doc": "https://quasar.dev/vue-components/color-picker#qcolor-api",
+    "category": "tool"
   },
 
   "QDate": {
@@ -788,7 +1037,49 @@
   "QPagination": {
     "name": "页码导航",
     "doc": "https://quasar.dev/vue-components/pagination#qpagination-api",
-    "category": "basic"
+    "category": "basic",
+    "parent": "QBar",
+    "demoData": {
+      "currentPage": 1
+    },
+    "demoProps": {
+      "maxPages": 7
+    },
+    "demoBinds": {
+      "value": "currentPage"
+    },
+    "demoFrameProps": {
+      "class": "bg-grey-2 q-py-lg full-width flex-center"
+    },
+    "demos": [{
+      "demoName": "基本"
+    }, {
+      "demoName": "定制导航按钮",
+      "color": "green",
+      "unelevated": true,
+      "boundaryNumbers": false,
+      "boundaryLinks": true,
+      "directionLinks": true
+    }, {
+      "demoName": "定制样式",
+      "padding": "1px 10px",
+      "round": true,
+      "outline": true,
+      "color": "accent",
+      "activeColor": "orange",
+      "boundaryNumbers": false,
+      "boundaryLinks": true,
+      "directionLinks": true,
+      "iconFirst": "skip_previous",
+      "iconLast": "skip_next",
+      "iconPrev": "fast_rewind",
+      "iconNext": "fast_forward"
+    }, {
+      "demoName": "可输入页码",
+      "input": true,
+      "inputClass": "text-primary text-weight-bold"
+    }],
+    "demoTips": true
   },
 
   "QVideo": {

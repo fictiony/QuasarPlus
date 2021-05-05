@@ -7,7 +7,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '/', component: () => import('pages/Index.vue') },
-      { path: '/QuasarComponents', component: () => import('pages/QuasarComponents.vue') },
+      { path: '/QuasarComponents/:category?', component: () => import('pages/QuasarComponents.vue') },
       ...plusList.map((item, index) => ({
         path: item.to,
         component: () => import(

@@ -6,7 +6,7 @@
 
         <q-toolbar-title v-show="subTitleShow || !pageTitle">
           {{ title }}
-          <span class="text-subtitle1">v0.1.0</span>
+          <span class="text-subtitle1">v0.1.1</span>
         </q-toolbar-title>
         <q-toolbar-title v-show="pageTitle">
           {{ pageTitle }}
@@ -109,11 +109,20 @@ export default {
     }
   },
 
+  watch: {
+    $route: {
+      handler(val) {
+        this.updateTitle(val)
+      },
+      immediate: true
+    }
+  },
+
   methods: {
     // 更新标题
     updateTitle(route) {
       if (route.path !== '/') {
-        const page = pageList.find(i => i.to === route.path)
+        const page = pageList.find(i => i.to === '/' + route.path.split('/')[1])
         if (page) {
           this.pageTitle = page.title
           document.title = `${page.title} | ${this.title}`
@@ -139,13 +148,6 @@ export default {
 
   mounted() {
     this._computedWatchers.subTitleShow.update() // 强制重算
-
-    // 路由切换时自动更新标题
-    this.$router.beforeEach((to, from, next) => {
-      this.updateTitle(to)
-      next()
-    })
-    this.updateTitle(this.$route)
   }
 }
 </script>

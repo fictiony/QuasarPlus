@@ -3,7 +3,7 @@
     <q-toolbar class="q-pa-none" style="padding-bottom: 10px">
       <q-btn-dropdown class="q-mr-sm" glossy auto-close color="primary" :label="categoryOptions.find(i => i.value === category).label">
         <q-list dense>
-          <q-item v-for="(option, index) in categoryOptions" :key="index" clickable @click="category = option.value">
+          <q-item v-for="(option, index) in categoryOptions" :key="index" clickable @click="selectCategory(option.value)">
             <q-item-section>{{ option.label }}</q-item-section>
           </q-item>
         </q-list>
@@ -50,7 +50,7 @@
       :fullscreen="fullscreen"
       no-results-label="没有匹配的组件"
       rows-per-page-label="每页条数"
-      :rows-per-page-options="[10, 20, 30, 50, 0]"
+      :rows-per-page-options="[5, 10, 20, 30, 50, 0]"
       :pagination-label="(first, last, total) => `第 ${first} ~ ${last} 条 （共 ${total} 条）`"
       :pagination="{ rowsPerPage: 20 }"
       :columns="tableColumns"
@@ -75,7 +75,7 @@
       </template>
 
       <template #body-cell-demos="props">
-        <q-td style="width: 75%; min-width: 200px" v-bind="props" @click="inspectDemo(props.row)">
+        <q-td style="width: 75%; min-width: 200px" v-bind="props" @click="inspectDemo(props.row)" :key="props.row.className">
           <!-- 带外框容器 -->
           <q-card flat bordered :style="{ minHeight: props.row.frame + 'px', ...props.row.frameStyles }" v-if="props.row.frame" v-show="showDemos">
             <!-- 若含外层组件，则创建公共外层组件 -->
@@ -137,20 +137,22 @@
 // 【Quasar 组件清单】
 import quasarApi from 'components/api/Quasar.json'
 
+const CATEGORIES = [
+  { label: '所有组件', value: '' },
+  { label: '基本组件', value: 'basic' },
+  { label: '容器组件', value: 'container' },
+  { label: '表单组件', value: 'form' },
+  { label: '工具组件', value: 'tool' },
+  { label: '其他组件', value: 'other' }
+]
+
 export default {
-  data: () => ({
+  data: vm => ({
     searchWord: null,
     searchMenu: false,
 
-    categoryOptions: [
-      { label: '所有组件', value: '' },
-      { label: '基本组件', value: 'basic' },
-      { label: '容器组件', value: 'container' },
-      { label: '表单组件', value: 'form' },
-      { label: '工具组件', value: 'tool' },
-      { label: '其他组件', value: 'other' }
-    ],
-    category: '',
+    categoryOptions: CATEGORIES,
+    category: vm.getRouteCategory(),
 
     showDemos: true,
     fullscreen: false,
@@ -238,7 +240,27 @@ export default {
     }
   },
 
+  watch: {
+    $route() {
+      this.category = this.getRouteCategory()
+    }
+  },
+
   methods: {
+    // 获取当前路由分类
+    getRouteCategory() {
+      const category = CATEGORIES.find(i => i.value === this.$route.params.category)
+      return category ? category.value : ''
+    },
+
+    // 选择分类
+    selectCategory(category) {
+      this.category = category
+      if (category !== (this.$route.params.category || '')) {
+        this.$router.replace(`/QuasarComponents/${category}`)
+      }
+    },
+
     // 判断是否满足筛选条件
     matchFilter(info) {
       if (this.category) {
