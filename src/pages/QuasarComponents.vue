@@ -190,8 +190,9 @@ export default {
       }))
     ),
 
-    demoMap: {}, // 组件范例记录表：{ 类名: 组件范例或列表 }
+    demoMap: {}, // 组件范例记录表：{ 类名: { 范例序号[-插槽序号]: 范例 } }
     cachedComponents: {}, // 组件定义缓存：{ 类名[-frame][-范例序号]: 组件定义 }
+    cachedData: {}, // 组件数据缓存：{ 类名[-frame][-范例序号]: 组件数据 }
     cachedParams: {}, // 组件参数缓存：{ 类名[-frame][-范例序号]: 组件参数表 }
     cachedSlots: {} // 组件插槽缓存：{ 类名[-frame][-范例序号]: 组件插槽列表 }
   }),
@@ -201,6 +202,7 @@ export default {
       infoMap: this.infoMap,
       demoMap: this.demoMap,
       cachedComponents: this.cachedComponents,
+      cachedData: this.cachedData,
       cachedParams: this.cachedParams,
       cachedSlots: this.cachedSlots
     }

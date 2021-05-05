@@ -41,7 +41,7 @@ export default {
     noParent: Boolean
   },
 
-  inject: ['infoMap', 'demoMap', 'cachedComponents', 'cachedParams', 'cachedSlots'],
+  inject: ['infoMap', 'demoMap', 'cachedComponents', 'cachedData', 'cachedParams', 'cachedSlots'],
 
   computed: {
     // 范例信息
@@ -93,7 +93,14 @@ export default {
       if (!this.$isEmpty(info.demoData) || !this.$isEmpty(frameData) || !this.$isEmpty(customData) || info.demoBinds || frameBinds || customBinds) {
         component = {
           extends: component,
-          data: () => quasar.extend(true, {}, info.demoData, frameData, customData),
+          data: () => {
+            if (this.cachedData[cacheName]) {
+              return this.cachedData[cacheName]
+            }
+            const data = quasar.extend(true, {}, info.demoData, frameData, customData)
+            this.cachedData[cacheName] = data
+            return data
+          },
           provide() {
             return {
               [isFrame ? '$frame' : '$self']: this // 提供依赖给子组件或插槽模板用
