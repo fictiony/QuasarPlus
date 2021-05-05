@@ -1,6 +1,6 @@
 <template>
   <!-- 外层组件 -->
-  <component :is="getComponent(true)" v-bind="makeParams(true)" @click="$emit('inspect', index)" v-if="parent && !noParent">
+  <component :is="getComponent(true)" v-bind="makeParams(true)" @click.native="$emit('inspect', index)" v-if="parent && !noParent">
     <template v-for="slot in makeSlots(true)" v-slot:[slot.name]>
       <template v-for="(content, slotIndex) in slot.contents">
         <!-- 内容为序号表示第n个范例组件（若已指定index则优先取index） -->
@@ -20,7 +20,14 @@
   </component>
 
   <!-- 范例组件 -->
-  <component :is="getComponent()" v-bind="makeParams()" @click="$emit('inspect', demoIndex)" :id="`${info.className}-${index}`" ref="demo" v-else>
+  <component
+    :is="getComponent()"
+    v-bind="makeParams()"
+    @click.native="$emit('inspect', demoIndex)"
+    :id="`${info.className}-${index}`"
+    ref="demo"
+    v-else
+  >
     <template v-for="slot in makeSlots()" v-slot:[slot.name]>
       <component v-for="(content, slotIndex) in slot.contents" :is="content" :key="slotIndex" />
     </template>
