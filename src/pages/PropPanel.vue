@@ -59,6 +59,11 @@ import { debounce, extend } from 'quasar'
 import { plusList } from 'components/menu.js'
 import quasarApi from 'components/api/Quasar.json'
 
+const QUASAR_EXTRA_API = {
+  QRibbon: import('@quasar/quasar-ui-qribbon/dist/api/QRibbon.json'),
+  QMarkdown: import('@quasar/quasar-ui-qmarkdown/dist/api/QMarkdown.json')
+}
+
 export default {
   data: () => ({
     component: '',
@@ -135,9 +140,10 @@ export default {
       const propInfo = {
         component,
         name,
+        api: apiProp,
         value: name in component.$options.propsData ? component.$props[name] : undefined,
         type: this.getPropType(prop.type, apiProp),
-        editType: apiProp.editType,
+        editType: apiProp.editType || this.getEditType(prop.type),
         validator: prop.validator,
         default: prop.default,
         defaultDesc: apiProp.default !== undefined ? String(apiProp.default) : undefined,
@@ -161,6 +167,17 @@ export default {
       if (type) return type.name
       if (apiProp.type instanceof Array) return apiProp.type.join(' | ')
       return apiProp.type
+    },
+
+    // 获取编辑类型
+    getEditType(type) {
+      if (type instanceof Array) {
+        if (type.includes(String)) return 'String'
+        if (type.includes(Number)) return 'Number'
+        if (type.includes(Boolean)) return 'Boolean'
+        return type[0].name
+      }
+      return type ? type.name : ''
     },
 
     // 获取属性说明
@@ -245,12 +262,7 @@ export default {
         })
       ),
       ...Object.keys(quasarApi).map(className => {
-        let file
-        if (className === 'QMarkdown') {
-          file = import('@quasar/quasar-ui-qmarkdown/dist/api/QMarkdown.json')
-        } else {
-          file = import('quasar/dist/api/' + className + '.json')
-        }
+        const file = QUASAR_EXTRA_API[className] || import('quasar/dist/api/' + className + '.json')
         return file.then(module => {
           const api = module.default
           const props = {}

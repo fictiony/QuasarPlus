@@ -38,7 +38,13 @@
 // 【组件范例】
 import Vue from 'vue'
 import * as quasar from 'quasar'
+import { QRibbon } from '@quasar/quasar-ui-qribbon'
+import { QMarkdown } from '@quasar/quasar-ui-qmarkdown'
 
+const QUASAR_EXTRA = {
+  QRibbon,
+  QMarkdown
+}
 const QUASAR_FORMAT = /<q(-[\w-]+)[^>]*>/g
 
 export default {
@@ -74,6 +80,11 @@ export default {
     },
 
     // 获取Quasar组件
+    getQuasarComponent(className) {
+      return QUASAR_EXTRA[className] || quasar[className]
+    },
+
+    // 获取组件类
     getComponent(isFrame) {
       const cacheName = this.getCacheName(isFrame)
       if (this.cachedComponents[cacheName]) {
@@ -94,7 +105,7 @@ export default {
         customData = this.demo.demoData
         customBinds = this.demo.demoBinds
       }
-      let component = quasar[customClass || info.className] || { template: `<${this.parent}><slot/></${this.parent}>` }
+      let component = this.getQuasarComponent(customClass || info.className) || { template: `<${this.parent}><slot/></${this.parent}>` }
 
       // 若有数据或绑定，则动态构造一个扩展组件，并把数据和绑定带进去
       if (!this.$isEmpty(info.demoData) || !this.$isEmpty(frameData) || !this.$isEmpty(customData) || info.demoBinds || frameBinds || customBinds) {
@@ -187,15 +198,16 @@ export default {
       const binds = Object.assign({}, info.demoBinds, frameBinds, customBinds)
 
       // 遍历属性定义表，查找必填属性，并自动设置初始值
-      const props = (quasar[info.className] && quasar[info.className].options.props) || {}
+      const component = this.getQuasarComponent(info.className)
+      const props = (component instanceof Function ? component.options.props : component && component.props) || {}
       Object.keys(props).forEach(name => {
         if (name in params) return
         if (name in binds) {
           params[name] = undefined // 绑定属性自动加入参数表
         }
         const prop = props[name]
-        if (!prop.required || prop.default !== undefined) return
-        const types = prop.type instanceof Array ? prop.type : [prop.type || Number]
+        if (!prop.required || prop.default != null) return // 这里因为官方组件的default设了并不合法的null，因此要也要排除掉
+        const types = prop.type instanceof Array ? prop.type : [prop.type || String]
         if (types.includes(Boolean)) {
           params[name] = true
         } else if (types.includes(Number)) {
@@ -293,7 +305,7 @@ export default {
       const components = {}
       Array(...template.matchAll(QUASAR_FORMAT)).forEach(block => {
         const className = 'Q' + this.$toCamelCase(block[1])
-        components[className] = quasar[className]
+        components[className] = this.getQuasarComponent(className)
       })
       return components
     }

@@ -75,7 +75,12 @@
       </template>
 
       <template #body-cell-demos="props">
-        <q-td style="width: 75%; min-width: 200px" v-bind="props" @click="inspectDemo(props.row)" :key="props.row.className">
+        <q-td style="width: 75%; min-width: 200px; white-space: normal" v-bind="props" @click="inspectDemo(props.row)" :key="props.row.className">
+          <div class="row items-center q-mb-sm text-grey" v-if="props.row.incomplete">
+            <q-icon class="q-mr-xs" name="error" color="red" size="20px" />
+            本组件范例尚未完成
+          </div>
+
           <!-- 带外框容器 -->
           <q-card flat bordered :style="{ minHeight: props.row.frame + 'px', ...props.row.frameStyles }" v-if="props.row.frame" v-show="showDemos">
             <!-- 若含外层组件，则创建公共外层组件 -->
@@ -123,7 +128,7 @@
           </template>
 
           <!-- 组件限制 -->
-          <div class="row items-center" v-if="props.row.isPart">
+          <div class="row items-center q-mt-xs text-grey" v-if="props.row.isPart">
             <q-icon class="q-mr-xs" name="warning" color="warning" size="20px" />
             本组件只能用于 {{ props.row.isPart }} 组件内部
           </div>
@@ -267,7 +272,7 @@ export default {
         if (this.category === 'other') {
           if (info.category) return false
         } else if (info.category instanceof Array) {
-          if (info.category.indexOf(this.category) < 0) return false
+          if (!info.category.includes(this.category)) return false
         } else {
           if (info.category !== this.category) return false
         }
@@ -295,7 +300,7 @@ export default {
     inspectDemo(info, demoIndex) {
       if (demoIndex === undefined && this.state.editingComponent) {
         // 若当前已有选中的范例，则忽略选中默认范例的操作
-        if (Object.values(this.demoMap[info.className]).indexOf(this.state.editingComponent) >= 0) return
+        if (Object.values(this.demoMap[info.className]).includes(this.state.editingComponent)) return
       }
       this.state.editingComponent = this.demoMap[info.className][demoIndex || 0]
     }

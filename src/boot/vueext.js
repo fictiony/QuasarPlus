@@ -61,6 +61,27 @@ Object.assign(Vue.prototype, {
     return true
   },
 
+  // 强制设置属性（屏蔽Vue警告）
+  $forceSet(prop, value) {
+    if (process.env.NODE_ENV === 'production') {
+      this[prop] = value
+    } else {
+      const silent = Vue.config.silent
+      Vue.config.silent = true
+      try {
+        this[prop] = value
+      } finally {
+        Vue.config.silent = silent
+      }
+    }
+    // 同时触发更新事件，以模拟原单向数据流效果
+    if (prop === ((this.$options.model || {}).prop || 'value')) {
+      this.$emit((this.$options.model || {}).event || 'input', value)
+    } else {
+      this.$emit('update:' + prop, value)
+    }
+  },
+
   // 获取插槽内容
   // - @slot 插槽名
   // - @defaults 默认虚拟节点列表（插槽未指定时取）

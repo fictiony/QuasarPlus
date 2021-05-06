@@ -664,10 +664,10 @@
     "doc": "https://quasar.dev/vue-components/knob#qknob-api",
     "category": "basic",
     "demoData": {
-      "val": 70
+      "curVal": 70
     },
     "demoBinds": {
-      "value": "val"
+      "value": "curVal"
     },
     "demoProps": {
       "size": "40px",
@@ -802,50 +802,109 @@
   "QForm": {
     "name": "表单",
     "doc": "https://quasar.dev/vue-components/form#qform-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "form": {
+        "username": "jackychen",
+        "realName": "Jacky Chen",
+        "age": 30,
+        "sex": 1
+      },
+      "sexOptions": [{
+        "label": "男",
+        "value": 1
+      }, {
+        "label": "女",
+        "value": 2
+      }, {
+        "label": "保密",
+        "value": 0
+      }]
+    },
+    "demoProps": {
+      "class": "q-gutter-sm",
+      "style": "width: 300px"
+    },
+    "demoSlots": [
+      "<div class='row items-center'><div class='col-3 text-right q-pr-sm'>用户名：</div><q-field dense outlined class='col-9'><template #control>{{ $self.form.username }}</template></q-field></div>",
+      "<div class='row items-center'><div class='col-3 text-right q-pr-sm'>姓名：</div><q-input dense clearable class='col-9' v-model='$self.form.realName'/></div>",
+      "<div class='row items-center'><div class='col-3 text-right q-pr-sm'>年龄：</div><q-input dense filled class='col-9' type='number' v-model='$self.form.age'/></div>",
+      "<div class='row items-center'><div class='col-3 text-right q-pr-sm'>性别：</div><q-btn-toggle :options='$self.sexOptions' v-model='$self.form.sex'/></div>",
+      "<div class='flex flex-center q-pt-md q-pb-sm q-gutter-md'><q-btn type='submit' color='primary' label='提交'/><q-btn outline type='reset' color='primary' label='重置'/></div>"
+    ],
+    "incomplete": true
   },
 
   "QField": {
     "name": "字段包装器",
     "doc": "https://quasar.dev/vue-components/field#qfield-api",
-    "category": "form"
+    "category": "form",
+    "incomplete": true
   },
 
   "QInput": {
     "name": "输入框",
     "doc": "https://quasar.dev/vue-components/input#qinput-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "curVal": ""
+    },
+    "demoProps": {
+      "placeholder": "请输入"
+    },
+    "demoBinds": {
+      "value": "curVal"
+    },
+    "incomplete": true
   },
 
   "QSelect": {
     "name": "选择框",
     "doc": "https://quasar.dev/vue-components/select#qselect-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "curVal": "北京"
+    },
+    "demoProps": {
+      "options": ["北京", "上海", "广州", "深圳"]
+    },
+    "demoBinds": {
+      "value": "curVal"
+    },
+    "incomplete": true
   },
 
   "QRadio": {
     "name": "单选框",
     "doc": "https://quasar.dev/vue-components/radio#qradio-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "curVal": true
+    },
+    "demoBinds": {
+      "value": "curVal"
+    },
+    "incomplete": true
   },
 
   "QCheckbox": {
     "name": "复选框",
     "doc": "https://quasar.dev/vue-components/checkbox#qcheckbox-api",
     "category": "form",
-    "demoProps": {
-      "value": false
+    "demoData": {
+      "curVal": true
+    },
+    "demoBinds": {
+      "value": "curVal"
     },
     "demoSlots": {},
     "demos": [{
-      "value": true,
       "label": "Primary",
       "color": "primary"
     }, {
       "label": "Secondary",
       "color": "secondary"
     }, {
-      "value": true,
       "label": "Accent",
       "color": "accent"
     }]
@@ -854,37 +913,112 @@
   "QToggle": {
     "name": "开关",
     "doc": "https://quasar.dev/vue-components/toggle#qtoggle-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "curVal": true
+    },
+    "demoBinds": {
+      "value": "curVal"
+    }
   },
 
   "QOptionGroup": {
     "name": "选项组",
     "doc": "https://quasar.dev/vue-components/option-group#qoptiongroup-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "curVal": 1
+    },
+    "demoProps": {
+      "options": [{
+        "label": "北京",
+        "value": 1
+      }, {
+        "label": "上海",
+        "value": 2
+      }, {
+        "label": "广州",
+        "value": 3
+      }, {
+        "label": "深圳",
+        "value": 4
+      }],
+      "inline": true
+    },
+    "demoBinds": {
+      "value": "curVal"
+    }
   },
 
   "QBtnToggle": {
     "name": "切换按钮组",
     "doc": "https://quasar.dev/vue-components/button-toggle#qbtntoggle-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "curVal": 1
+    },
+    "demoProps": {
+      "options": [{
+        "label": "北京",
+        "value": 1
+      }, {
+        "label": "上海",
+        "value": 2
+      }, {
+        "label": "广州",
+        "value": 3
+      }, {
+        "label": "深圳",
+        "value": 4
+      }]
+    },
+    "demoBinds": {
+      "value": "curVal"
+    },
+    "demoSlots": {}
   },
 
   "QSlider": {
     "name": "滑杆",
     "doc": "https://quasar.dev/vue-components/slider#qslider-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "curVal": 50
+    },
+    "demoProps": {
+      "value": 50
+    },
+    "demoBinds": {
+      "value": "curVal"
+    }
   },
 
   "QRange": {
     "name": "范围滑杆",
     "doc": "https://quasar.dev/vue-components/range#qrange-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "curVal": {
+        "min": 20,
+        "max": 60
+      }
+    },
+    "demoBinds": {
+      "value": "curVal"
+    }
   },
 
   "QFile": {
     "name": "文件选择框",
     "doc": "https://quasar.dev/vue-components/file-picker#qfile-api",
-    "category": "form"
+    "category": "form",
+    "demoData": {
+      "curVal": null
+    },
+    "demoBinds": {
+      "value": "curVal"
+    },
+    "incomplete": true
   },
 
   "QColor": {
@@ -896,13 +1030,27 @@
   "QDate": {
     "name": "日期选择器",
     "doc": "https://quasar.dev/vue-components/date#qdate-api",
-    "category": "tool"
+    "category": "tool",
+    "demoData": {
+      "curVal": "2021/05/01"
+    },
+    "demoBinds": {
+      "value": "curVal"
+    },
+    "demoSlots": {}
   },
 
   "QTime": {
     "name": "时间选择器",
     "doc": "https://quasar.dev/vue-components/time#qtime-api",
-    "category": "tool"
+    "category": "tool",
+    "demoData": {
+      "curVal": "10:12"
+    },
+    "demoBinds": {
+      "value": "curVal"
+    },
+    "demoSlots": {}
   },
 
   "QUploader": {
@@ -914,124 +1062,148 @@
   "QCarousel": {
     "name": "轮播",
     "doc": "https://quasar.dev/vue-components/carousel#qcarousel-api",
-    "category": "tool"
+    "category": "tool",
+    "demoProps": {
+      "height": "150px"
+    },
+    "incomplete": true
   },
   "QCarouselControl": {
     "name": "轮播控制器",
     "doc": "https://quasar.dev/vue-components/carousel#qcarouselcontrol-api",
     "category": "tool",
-    "isPart": "QCarousel"
+    "parent": "QCarousel",
+    "incomplete": true
   },
   "QCarouselSlide": {
     "name": "轮播滑片",
     "doc": "https://quasar.dev/vue-components/carousel#qcarouselslide-api",
     "category": "tool",
-    "isPart": "QCarousel"
+    "parent": "QCarousel",
+    "incomplete": true
   },
 
   "QAjaxBar": {
     "name": "Ajax进度条",
-    "doc": "https://quasar.dev/vue-components/ajax-bar#qajaxbar-api"
+    "doc": "https://quasar.dev/vue-components/ajax-bar#qajaxbar-api",
+    "incomplete": true
   },
 
   "QInnerLoading": {
     "name": "内部加载层",
-    "doc": "https://quasar.dev/vue-components/inner-loading#qinnerloading-api"
+    "doc": "https://quasar.dev/vue-components/inner-loading#qinnerloading-api",
+    "incomplete": true
   },
 
   "QToolbar": {
     "name": "工具栏",
     "doc": "https://quasar.dev/vue-components/toolbar#qtoolbar-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
   "QToolbarTitle": {
     "name": "工具栏标题",
     "doc": "https://quasar.dev/vue-components/toolbar#qtoolbartitle-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QList": {
     "name": "列表",
     "doc": "https://quasar.dev/vue-components/list-and-list-items#qlist-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QItem": {
     "name": "列表项",
     "doc": "https://quasar.dev/vue-components/list-and-list-items#qitem-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
   "QItemSection": {
     "name": "列表项分段",
     "doc": "https://quasar.dev/vue-components/list-and-list-items#qitemsection-api",
     "category": "container",
-    "isPart": "QItem"
+    "parent": "QItem",
+    "incomplete": true
   },
   "QItemLabel": {
     "name": "列表项标签",
     "doc": "https://quasar.dev/vue-components/list-and-list-items#qitemlabel-api",
     "category": "container",
-    "isPart": "QItem"
+    "parent": "QItem",
+    "incomplete": true
   },
 
   "QSlideItem": {
     "name": "滑动项",
     "doc": "https://quasar.dev/vue-components/slide-item#qslideitem-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QExpansionItem": {
     "name": "展开项",
     "doc": "https://quasar.dev/vue-components/expansion-item#qexpansionitem-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QVirtualScroll": {
     "name": "虚拟滚动列表",
     "doc": "https://quasar.dev/vue-components/virtual-scroll#qvirtualscroll-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QScrollArea": {
     "name": "滚动区域",
     "doc": "https://quasar.dev/vue-components/scroll-area#qscrollarea-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QInfiniteScroll": {
     "name": "无限滚动",
     "doc": "https://quasar.dev/vue-components/infinite-scroll#qinfinitescroll-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QCard": {
     "name": "卡片",
     "doc": "https://quasar.dev/vue-components/card#qcard-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
   "QCardSection": {
     "name": "卡片分栏",
     "doc": "https://quasar.dev/vue-components/card#qcardsection-api",
     "category": "container",
-    "isPart": "QCard"
+    "parent": "QCard",
+    "incomplete": true
   },
   "QCardActions": {
     "name": "卡片操作",
     "doc": "https://quasar.dev/vue-components/card#qcardactions-api",
     "category": "container",
-    "isPart": "QCard"
+    "parent": "QCard",
+    "incomplete": true
   },
 
   "QDialog": {
     "name": "对话框",
     "doc": "https://quasar.dev/vue-components/dialog#qdialog-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QMenu": {
     "name": "菜单",
     "doc": "https://quasar.dev/vue-components/menu#qmenu-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QPagination": {
@@ -1049,7 +1221,8 @@
       "value": "currentPage"
     },
     "demoFrameProps": {
-      "class": "bg-grey-2 q-py-lg full-width flex-center"
+      "class": "bg-grey-2 q-py-lg q-space flex-center",
+      "style": "max-width: 500px"
     },
     "demos": [{
       "demoName": "基本"
@@ -1084,44 +1257,54 @@
 
   "QVideo": {
     "name": "嵌入视频",
-    "doc": "https://quasar.dev/vue-components/video#qvideo-api"
+    "doc": "https://quasar.dev/vue-components/video#qvideo-api",
+    "demoProps": {
+      "src": "https://cdn.quasar.dev/img/polina.mp4"
+    }
   },
 
   "QPopupEdit": {
     "name": "弹框编辑",
     "doc": "https://quasar.dev/vue-components/popup-edit#qpopupedit-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
 
   "QPopupProxy": {
     "name": "弹出代理",
-    "doc": "https://quasar.dev/vue-components/popup-proxy#qpopupproxy-api"
+    "doc": "https://quasar.dev/vue-components/popup-proxy#qpopupproxy-api",
+    "incomplete": true
   },
 
   "QResponsive": {
     "name": "宽高比限制",
-    "doc": "https://quasar.dev/vue-components/responsive#qresponsive-api"
+    "doc": "https://quasar.dev/vue-components/responsive#qresponsive-api",
+    "incomplete": true
   },
 
   "QSkeleton": {
     "name": "骨架占位",
     "doc": "https://quasar.dev/vue-components/skeleton#qskeleton-api",
-    "category": "basic"
+    "category": "basic",
+    "incomplete": true
   },
 
   "QSlideTransition": {
     "name": "滑动渐变",
-    "doc": "https://quasar.dev/vue-components/slide-transition#qslidetransition-api"
+    "doc": "https://quasar.dev/vue-components/slide-transition#qslidetransition-api",
+    "incomplete": true
   },
 
   "QIntersection": {
     "name": "视区交叉",
-    "doc": "https://quasar.dev/vue-components/intersection#qintersection-api"
+    "doc": "https://quasar.dev/vue-components/intersection#qintersection-api",
+    "incomplete": true
   },
 
   "QPullToRefresh": {
     "name": "拉动刷新",
-    "doc": "https://quasar.dev/vue-components/pull-to-refresh#qpulltorefresh-api"
+    "doc": "https://quasar.dev/vue-components/pull-to-refresh#qpulltorefresh-api",
+    "incomplete": true
   },
 
   "QSplitter": {
@@ -1129,8 +1312,14 @@
     "doc": "https://quasar.dev/vue-components/splitter#qsplitter-api",
     "category": "container",
     "frame": 50,
+    "demoData": {
+      "position": 50
+    },
     "demoProps": {
       "style": "height: 50px"
+    },
+    "demoBinds": {
+      "value": "position"
     },
     "demoSlots": {
       "before": "<div class='text-center'>左区</div>",
@@ -1141,97 +1330,124 @@
   "QMarkupTable": {
     "name": "简单表格",
     "doc": "https://quasar.dev/vue-components/markup-table#qmarkuptable-api",
-    "category": "basic"
+    "category": "basic",
+    "incomplete": true
   },
 
   "QTable": {
     "name": "表格",
     "doc": "https://quasar.dev/vue-components/table#qtable-api",
-    "category": "basic"
+    "category": "basic",
+    "incomplete": true
   },
   "QTr": {
     "name": "表格行",
     "doc": "https://quasar.dev/vue-components/table#qtr-api",
     "category": "basic",
-    "isPart": "QTable / QMarkupTable"
+    "isPart": "QTable / QMarkupTable",
+    "parent": "QTable",
+    "incomplete": true
   },
   "QTh": {
     "name": "表格标题格",
     "doc": "https://quasar.dev/vue-components/table#qth-api",
     "category": "basic",
-    "demos": "QTr"
+    "isPart": "QTr",
+    "parent": "QTable",
+    "incomplete": true
   },
   "QTd": {
     "name": "表格内容格",
     "doc": "https://quasar.dev/vue-components/table#qtd-api",
     "category": "basic",
-    "isPart": "QTr"
+    "isPart": "QTr",
+    "parent": "QTable",
+    "incomplete": true
   },
 
   "QTabs": {
     "name": "切换标签组",
     "doc": "https://quasar.dev/vue-components/tabs#qtabs-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
   "QTab": {
     "name": "切换标签",
     "doc": "https://quasar.dev/vue-components/tabs#qtab-api",
     "category": "container",
-    "isPart": "QTabs"
+    "isPart": "QTabs",
+    "parent": "QTabs",
+    "incomplete": true
   },
   "QRouteTab": {
     "name": "路由标签",
     "doc": "https://quasar.dev/vue-components/tabs#qroutetab-api",
     "category": "container",
-    "isPart": "QTabs"
+    "isPart": "QTabs",
+    "parent": "QTabs",
+    "incomplete": true
   },
 
   "QTabPanels": {
     "name": "切换面板组",
     "doc": "https://quasar.dev/vue-components/tab-panels#qtabpanels-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
   "QTabPanel": {
     "name": "切换面板",
     "doc": "https://quasar.dev/vue-components/tab-panels#qtabpanel-api",
     "category": "container",
-    "isPart": "QTabPanels"
+    "parent": "QTabPanels",
+    "incomplete": true
   },
 
   "QStepper": {
     "name": "分步容器",
     "doc": "https://quasar.dev/vue-components/stepper#qstepper-api",
-    "category": "container"
+    "category": "container",
+    "incomplete": true
   },
   "QStep": {
     "name": "步骤项",
     "doc": "https://quasar.dev/vue-components/stepper#qstep-api",
     "category": "container",
-    "isPart": "QStepper"
+    "isPart": "QStepper",
+    "parent": "QStepper",
+    "incomplete": true
   },
   "QStepperNavigation": {
     "name": "步骤导航",
     "doc": "https://quasar.dev/vue-components/stepper#qsteppernavigation-api",
     "category": "container",
-    "isPart": "QStepper"
+    "parent": "QStepper",
+    "incomplete": true
   },
 
   "QParallax": {
     "name": "视差容器",
     "doc": "https://quasar.dev/vue-components/parallax#qparallax-api",
-    "category": "container"
+    "category": "container",
+    "demoProps": {
+      "src": "https://cdn.quasar.dev/img/parallax2.jpg",
+      "style": "height: 150px"
+    },
+    "demoSlots": "<h3 class='text-white'>视差容器</h3>"
   },
 
   "QTimeline": {
     "name": "时间线",
     "doc": "https://quasar.dev/vue-components/timeline#qtimeline-api",
-    "category": "tool"
+    "category": "tool",
+    "incomplete": true
   },
   "QTimelineEntry": {
     "name": "时间线节点",
     "doc": "https://quasar.dev/vue-components/timeline#qtimelineentry-api",
     "category": "tool",
-    "isPart": "QTimeline"
+    "isPart": "QTimeline",
+    "parent": "QTimeline",
+    "incomplete": true
   },
 
   "QEditor": {
@@ -1243,27 +1459,58 @@
   "QTree": {
     "name": "分层树",
     "doc": "https://quasar.dev/vue-components/tree#qtree-api",
-    "category": "basic"
+    "category": "basic",
+    "demoProps": {
+      "nodes": [{
+        "label": "Relax Hotel",
+        "children": [{
+          "label": "Food",
+          "icon": "restaurant_menu"
+        }, {
+          "label": "Room service",
+          "icon": "room_service"
+        }, {
+          "label": "Room view",
+          "icon": "photo"
+        }]
+      }],
+      "nodeKey": "label"
+    },
+    "incomplete": true
   },
 
   "QResizeObserver": {
     "name": "缩放侦听器",
-    "doc": "https://quasar.dev/vue-components/resize-observer#qresizeobserver-api"
+    "doc": "https://quasar.dev/vue-components/resize-observer#qresizeobserver-api",
+    "incomplete": true
   },
 
   "QScrollObserver": {
     "name": "滚动侦听器",
-    "doc": "https://quasar.dev/vue-components/scroll-observer#qscrollobserver-api"
+    "doc": "https://quasar.dev/vue-components/scroll-observer#qscrollobserver-api",
+    "incomplete": true
   },
 
   "QNoSsr": {
     "name": "非SSR内容",
-    "doc": "https://quasar.dev/vue-components/no-ssr#qnossr-api"
+    "doc": "https://quasar.dev/vue-components/no-ssr#qnossr-api",
+    "incomplete": true
+  },
+
+  "QRibbon": {
+    "name": "丝带装饰",
+    "doc": "https://quasarframework.github.io/quasar-ui-qribbon/docs#QRibbon-API",
+    "incomplete": true
   },
 
   "QMarkdown": {
     "name": "Markdown文档",
     "doc": "https://quasarframework.github.io/quasar-ui-qmarkdown/docs#QMarkdown-API",
-    "category": "tool"
+    "category": "tool",
+    "demoProps": {
+      "noHeadingAnchorLinks": true,
+      "src": "# 标题\n正文\n- 列表项1\n- 列表项2\n  - 子列表项\n::: info\n提示文字\n> 引用内容\n:::\n```js\nconst some = { js: 'code' }\n```"
+    },
+    "demoSlots": {}
   }
 }

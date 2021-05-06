@@ -2,6 +2,7 @@
   <tr>
     <td class="_prop ellipsis" :class="nameColor" @dblclick="clickPropName">
       {{ name }}
+      <q-icon class="float-right" name="info_outline" v-if="api.required || api.sync" />
       <q-tooltip max-width="400px" anchor="top left" self="top right" :hide-delay="pinTooltip ? 99999999 : 0" ref="tooltip">
         <div>
           <span class="text-h6">{{ name }}</span>
@@ -39,7 +40,7 @@
     <td class="_value">
       <div class="ellipsis" v-if="value !== undefined">{{ valueStr }}</div>
       <div class="ellipsis" :class="$q.dark.isActive ? 'text-grey-7' : 'text-grey-5'" v-else>{{ defaultStr }}</div>
-      <!-- <q-popup-edit v-model="editValue" :validate="validator">
+      <!-- <q-popup-edit v-model="editValue" :validate="validator" v-if="editable">
         <q-input v-model="editValue" dense autofocus counter v-if="editType == 'String'" />
         <q-input type="number" v-model.number="editValue" dense autofocus v-else-if="editType == 'Number'" />
         <q-input v-model="editValue" dense autofocus v-else />
@@ -60,6 +61,9 @@ export default {
     component: {},
     name: {
       type: String,
+      required: true
+    },
+    api: {
       required: true
     },
     value: {
@@ -114,6 +118,17 @@ export default {
     // 默认值显示字符串
     defaultStr() {
       return this.stringify(this.default)
+    },
+
+    // 是否可编辑
+    editable() {
+      switch (this.editType) {
+        // case 'String':
+        // case 'Number':
+        case 'Boolean':
+          return true
+      }
+      return false
     }
   },
 
@@ -126,7 +141,7 @@ export default {
       }
       if (val === undefined) return ''
       if (val instanceof Function) {
-        if (this.type.split(' | ').indexOf('Function') >= 0) return '<Function>'
+        if (this.type.split(' | ').includes('Function')) return '<Function>'
         val = val.call(this.component)
         if (val instanceof Function) return '<Function>'
       }
