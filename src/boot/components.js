@@ -1,9 +1,10 @@
 import Vue from 'vue'
 
 // 第三方组件
+import { QEditableTd, QSelectableTd } from 'components/thirdparty/qmodeltd'
+import MyDrawer from 'components/plus/MyDrawer.js'
 
 // 功能组件
-import MyDrawer from 'components/plus/MyDrawer.js'
 import CustomScroller from 'components/CustomScroller.js'
 import EssentialLink from 'components/EssentialLink.vue'
 import DemoComponent from 'components/DemoComponent.vue'
@@ -14,6 +15,8 @@ import ComponentSelector from 'components/ComponentSelector.vue'
 
 // 注册组件
 const components = {
+  QEditableTd,
+  QSelectableTd,
   MyDrawer,
   CustomScroller,
   EssentialLink,

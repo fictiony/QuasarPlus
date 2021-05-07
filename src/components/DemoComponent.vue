@@ -49,9 +49,9 @@ const QUASAR_FORMAT = /<q(-[\w-]+)[^>]*>/g
 
 export default {
   props: {
-    info: Object,
-    index: Number,
-    noParent: Boolean
+    info: Object, // 范例信息
+    index: Number, // 范例序号
+    noParent: Boolean // 是否不创建外层组件
   },
 
   inject: ['infoMap', 'demoMap', 'cachedComponents', 'cachedData', 'cachedParams', 'cachedSlots'],

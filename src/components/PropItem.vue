@@ -37,28 +37,38 @@
       </q-tooltip>
     </td>
 
-    <td class="_value">
+    <component
+      :is="editorTd"
+      ref="editor"
+      class="_value"
+      :class="editable ? '' : $q.dark.isActive ? 'bg-brown-10' : 'bg-orange-1'"
+      mode="inline"
+      :disable="fobidEdit"
+      :validate="validator"
+      emit-value
+      popup-content-style="font-size: 13px"
+      v-model="editValue"
+      v-bind="editorParams"
+    >
       <div class="ellipsis" v-if="value !== undefined">{{ valueStr }}</div>
       <div class="ellipsis" :class="$q.dark.isActive ? 'text-grey-7' : 'text-grey-5'" v-else>{{ defaultStr }}</div>
-      <!-- <q-popup-edit v-model="editValue" :validate="validator" v-if="editable">
-        <q-input v-model="editValue" dense autofocus counter v-if="editType == 'String'" />
-        <q-input type="number" v-model.number="editValue" dense autofocus v-else-if="editType == 'Number'" />
-        <q-input v-model="editValue" dense autofocus v-else />
-      </q-popup-edit> -->
-    </td>
+    </component>
   </tr>
 </template>
 
 <script>
 // 【属性列表项】
+import { QTd } from 'quasar'
+import { QEditableTd, QSelectableTd } from 'components/thirdparty/qmodeltd'
+
 export default {
-  data: vm => ({
-    editValue: vm.valueStr,
-    pinTooltip: false
+  data: () => ({
+    pinTooltip: false,
+    fobidEdit: true // 初始禁用编辑（用于修复编辑组件初始会莫名其妙激活菜单的bug）
   }),
 
   props: {
-    component: {},
+    instance: {},
     name: {
       type: String,
       required: true
@@ -123,31 +133,68 @@ export default {
     // 是否可编辑
     editable() {
       switch (this.editType) {
-        // case 'String':
-        // case 'Number':
+        case 'String':
+        case 'Number':
         case 'Boolean':
           return true
       }
       return false
+    },
+
+    // 单元格编辑元件
+    editorTd() {
+      switch (this.editType) {
+        case 'String':
+        case 'Number':
+          if (this.api.values) return QSelectableTd
+          return QEditableTd
+        case 'Boolean':
+          return QSelectableTd
+      }
+      return QTd
+    },
+
+    // 编辑参数
+    editorParams() {
+      switch (this.editType) {
+        case 'String':
+        case 'Number':
+          if (!this.api.values) break
+          return {
+            options: this.api.values
+          }
+        case 'Boolean':
+          return {
+            options: ['true', 'false']
+          }
+      }
+      return {}
+    },
+
+    // 编辑值
+    editValue: {
+      get() {
+        return this.valueStr
+      },
+      set(val) {
+        this.instance.$forceSet(this.name, this.parse(val))
+      }
     }
   },
 
   methods: {
     // 属性值转字符串
-    stringify(val, editType) {
-      switch (editType) {
-        case 'String':
-          return val != null ? String(val) : ''
-      }
+    stringify(val) {
       if (val === undefined) return ''
-      if (val instanceof Function) {
-        if (this.type.split(' | ').includes('Function')) return '<Function>'
-        val = val.call(this.component)
-        if (val instanceof Function) return '<Function>'
+      switch (this.editType) {
+        case 'String':
+        case 'Number':
+          return String(val)
+        case 'Boolean':
+          return val === null ? 'null' : String(!!val)
       }
-      if (typeof val === 'object') {
-        return JSON.stringify(val, null, 1)
-      }
+      if (val instanceof Function) return '<Function>'
+      if (typeof val === 'object') return JSON.stringify(val, null, 1)
       return String(val)
     },
 
@@ -157,9 +204,15 @@ export default {
         switch (this.editType) {
           case 'String':
             return val
+          case 'Number':
+            return Number(val) || 0
+          case 'Boolean':
+            return val === 'true'
         }
         return JSON.parse(val)
-      } catch (e) {}
+      } catch (e) {
+        return null
+      }
     },
 
     // 点击属性名
@@ -173,6 +226,34 @@ export default {
       this.pinTooltip = false
       this.$refs.tooltip.hide()
     }
+  },
+
+  mounted() {
+    this.fobidEdit = false
   }
 }
 </script>
+
+<style lang="scss" scoped>
+$field-height: 27px;
+tr ::v-deep ._value .inline-edit-container {
+  margin: -4px -16px -4px -8px;
+  overflow: hidden;
+  .q-field--dense {
+    .q-field__control,
+    .q-field__native {
+      min-height: $field-height;
+    }
+    .q-field__control,
+    .q-field__marginal {
+      height: $field-height;
+    }
+  }
+  input.q-field__native {
+    margin: 0px 8px;
+  }
+  div.q-field__native {
+    margin: -1px 0px 0px 8px;
+  }
+}
+</style>

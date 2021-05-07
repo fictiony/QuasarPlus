@@ -85,6 +85,9 @@ export default {
   watch: {
     'state.editingComponent'(val) {
       this.propList.forEach(prop => prop.unwatch()) // 先取消原属性监视
+      if (window) {
+        window.$c = val // 方便在浏览器内调试
+      }
       if (val) {
         this.component = this.$getName(val.$options)
         const api = this.state.apiMap[this.component] || {}
@@ -125,32 +128,32 @@ export default {
     },
 
     // 生成一条属性信息
-    makePropInfo(component, name, apiProp) {
+    makePropInfo(instance, name, apiProp) {
       if (typeof apiProp !== 'object') {
         apiProp = { desc: apiProp }
       }
-      const prop = (component.$options.props && component.$options.props[name]) || {}
-      const superOptions = component.$options.extends && component.$options.extends.options
+      const prop = (instance.$options.props && instance.$options.props[name]) || {}
+      const superOptions = instance.$options.extends && instance.$options.extends.options
       const superProp = superOptions && superOptions.props && superOptions.props[name]
-      const extendProps = component.constructor.extendOptions.props
+      const extendProps = instance.constructor.extendOptions.props
       if (prop.required) {
         apiProp.required = true
       }
 
       const propInfo = {
-        component,
+        instance,
         name,
         api: apiProp,
-        value: name in component.$options.propsData ? component.$props[name] : undefined,
+        value: name in instance.$options.propsData || instance[name] !== this.getDefault(prop, instance) ? instance[name] : undefined,
         type: this.getPropType(prop.type, apiProp),
         editType: apiProp.editType || this.getEditType(prop.type),
         validator: prop.validator,
-        default: prop.default,
+        default: this.getDefault(prop, instance),
         defaultDesc: apiProp.default !== undefined ? String(apiProp.default) : undefined,
         description: this.getPropDescription(apiProp),
         isNew: superOptions && !superProp,
         isUpdate: superProp && extendProps && extendProps[name],
-        unwatch: component.$watch(
+        unwatch: instance.$watch(
           name,
           debounce(val => {
             propInfo.value = val
@@ -172,12 +175,25 @@ export default {
     // 获取编辑类型
     getEditType(type) {
       if (type instanceof Array) {
-        if (type.includes(String)) return 'String'
-        if (type.includes(Number)) return 'Number'
         if (type.includes(Boolean)) return 'Boolean'
+        if (type.includes(Number)) return 'Number'
+        if (type.includes(String)) return 'String'
         return type[0].name
       }
       return type ? type.name : ''
+    },
+
+    // 获取默认值
+    getDefault(prop, instance) {
+      let defVal = prop.default
+      if (defVal instanceof Function && !(prop.type instanceof Array ? prop.type : [prop.type]).includes(Function)) {
+        defVal = defVal.call(instance)
+      }
+      if (defVal !== undefined) return defVal
+      if (prop.type === Boolean) {
+        return false
+      }
+      return defVal
     },
 
     // 获取属性说明
@@ -269,7 +285,7 @@ export default {
           Object.keys(api.props || {}).forEach(name => {
             props[this.$toCamelCase(name)] = api.props[name] // 将文档中串式命名的属性名统一成驼峰命名
           })
-          apiMap[className].props = extend(props, apiMap[className].props)
+          apiMap[className].props = extend(true, props, apiMap[className].props)
         })
       })
     ]).then(() => {

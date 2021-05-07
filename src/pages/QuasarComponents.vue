@@ -298,11 +298,12 @@ export default {
 
     // 查看组件范例属性
     inspectDemo(info, demoIndex) {
+      const demos = this.demoMap[info.className] || {}
       if (demoIndex === undefined && this.state.editingComponent) {
         // 若当前已有选中的范例，则忽略选中默认范例的操作
-        if (Object.values(this.demoMap[info.className]).includes(this.state.editingComponent)) return
+        if (Object.values(demos).includes(this.state.editingComponent)) return
       }
-      this.state.editingComponent = this.demoMap[info.className][demoIndex || 0]
+      this.state.editingComponent = demos[demoIndex || 0]
     }
   }
 }
