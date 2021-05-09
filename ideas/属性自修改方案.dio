@@ -1,0 +1,149 @@
+<mxfile>
+    <diagram id="2o4jY-9pRoyAw8H5DcTc" name="第 1 页">
+        <mxGraphModel dx="1194" dy="789" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="14" value="MyDrawer组件" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#343A40;fontColor=#ffffff;whiteSpace=wrap;align=left;verticalAlign=bottom;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;labelPosition=center;verticalLabelPosition=top;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="160" width="520" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=3;entryPerimeter=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" target="8">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="320" y="121" as="sourcePoint"/>
+                        <mxPoint x="320" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value=":width.sync（必须）" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];fontColor=#FFFFFF;fontSize=14;labelBackgroundColor=none;" vertex="1" connectable="0" parent="5">
+                    <mxGeometry x="-0.3727" relative="1" as="geometry">
+                        <mxPoint x="70" y="14" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="8" value="属性&amp;nbsp;width" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#1CA5B8;fontColor=#FFFFFF;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="200" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#e51400;strokeColor=#B20000;strokeWidth=3;dashed=1;dashPattern=1 1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;exitX=-0.008;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="62" target="8">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="240" y="420" as="sourcePoint"/>
+                        <mxPoint x="292" y="240" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="120" y="380"/>
+                            <mxPoint x="120" y="220"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="不能直接修改" style="shape=umlDestroy;fillColor=none;strokeColor=#FF0000;strokeWidth=3;align=left;labelPosition=right;verticalLabelPosition=middle;verticalAlign=middle;fontColor=#FF0000;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="110" y="290" width="20" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;fontSize=14;align=left;labelPosition=right;verticalLabelPosition=middle;verticalAlign=middle;labelBackgroundColor=none;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="61">
+                    <mxGeometry x="-0.0127" y="10" relative="1" as="geometry">
+                        <mxPoint x="340" y="241" as="sourcePoint"/>
+                        <mxPoint x="320" y="320" as="targetPoint"/>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.006;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#00CC00;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="62" target="58">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="380" y="340" as="sourcePoint"/>
+                        <mxPoint x="400" y="100" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="560" y="380"/>
+                            <mxPoint x="560" y="100"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="$emit('update:width')" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];fontSize=14;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" connectable="0" parent="18">
+                    <mxGeometry x="-0.7032" y="-2" relative="1" as="geometry">
+                        <mxPoint x="-9" y="-2" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="58" value="传入 drawerWidth" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#1CA5B8;fontColor=#FFFFFF;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="80" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#2a2a2a;strokeColor=#00CC00;strokeWidth=3;fontSize=11;fontColor=#f0f0f0;align=center;" edge="1" parent="1" source="61" target="62">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="拖拽条 input 事件" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#1CA5B8;fontColor=#FFFFFF;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="360" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="拖拽条&amp;nbsp;value" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#1CA5B8;fontColor=#FFFFFF;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="280" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;fontSize=14;align=left;labelPosition=right;verticalLabelPosition=middle;verticalAlign=middle;labelBackgroundColor=none;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8" target="61">
+                    <mxGeometry x="-0.0127" y="10" relative="1" as="geometry">
+                        <mxPoint x="320" y="240" as="sourcePoint"/>
+                        <mxPoint x="320" y="320" as="targetPoint"/>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="66" value="MyDrawer组件" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#343A40;fontColor=#ffffff;whiteSpace=wrap;align=left;verticalAlign=bottom;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;labelPosition=center;verticalLabelPosition=top;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="600" width="520" height="360" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=3;entryPerimeter=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" target="69">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="320" y="561" as="sourcePoint"/>
+                        <mxPoint x="320" y="640" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="68" value=":width.sync（非必须）" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];fontColor=#FFFFFF;fontSize=14;labelBackgroundColor=none;" vertex="1" connectable="0" parent="67">
+                    <mxGeometry x="-0.3727" relative="1" as="geometry">
+                        <mxPoint x="75" y="14" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="89" value="&lt;span style=&quot;color: rgb(255, 255, 255); font-family: helvetica; font-size: 14px; font-style: normal; font-weight: 400; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; display: inline; float: none;&quot;&gt;加watch，更改后自动同步&lt;/span&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;strokeColor=#f0f0f0;strokeWidth=3;fontSize=11;fontColor=#f0f0f0;align=left;labelPosition=right;verticalLabelPosition=middle;verticalAlign=middle;" edge="1" parent="1" source="69" target="81">
+                    <mxGeometry y="10" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="69" value="属性&amp;nbsp;width" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#1CA5B8;fontColor=#FFFFFF;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="640" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.006;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#00CC00;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="77" target="75">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="380" y="780" as="sourcePoint"/>
+                        <mxPoint x="400" y="540" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="560" y="900"/>
+                            <mxPoint x="560" y="540"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="74" value="$emit('update:width')" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];fontSize=14;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" connectable="0" parent="73">
+                    <mxGeometry x="-0.7032" y="-2" relative="1" as="geometry">
+                        <mxPoint x="-21" y="-2" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="75" value="传入 drawerWidth" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#1CA5B8;fontColor=#FFFFFF;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="520" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#2a2a2a;strokeColor=#00CC00;strokeWidth=3;fontSize=11;fontColor=#f0f0f0;align=center;" edge="1" parent="1" source="78" target="77">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="93" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;strokeWidth=3;fontSize=14;fontColor=#FFFFFF;align=left;entryX=-0.012;entryY=0.55;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#3333FF;" edge="1" parent="1" source="77" target="81">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="120" y="900"/>
+                            <mxPoint x="120" y="742"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="95" value="可以直接修改" style="edgeLabel;html=1;align=left;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontColor=#FFFFFF;labelBackgroundColor=none;labelPosition=right;verticalLabelPosition=middle;" vertex="1" connectable="0" parent="93">
+                    <mxGeometry x="0.0654" y="2" relative="1" as="geometry">
+                        <mxPoint x="12" y="11" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="77" value="拖拽条 input 事件" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#1CA5B8;fontColor=#FFFFFF;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="880" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="拖拽条&amp;nbsp;value" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#1CA5B8;fontColor=#FFFFFF;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="800" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="90" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#2a2a2a;strokeColor=#f0f0f0;strokeWidth=3;fontSize=11;fontColor=#f0f0f0;align=center;" edge="1" parent="1" source="81" target="78">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="内部属性&amp;nbsp;realWidth" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fontColor=#FFFFFF;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;fillColor=#3333FF;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="720" width="160" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
