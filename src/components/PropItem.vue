@@ -42,11 +42,9 @@
       ref="editor"
       class="_value"
       :class="editable ? '' : $q.dark.isActive ? 'bg-brown-10' : 'bg-orange-1'"
-      mode="inline"
       :disable="fobidEdit"
-      :validate="validator"
-      emit-value
       popup-content-style="font-size: 13px"
+      auto-save
       v-model="editValue"
       v-bind="editorParams"
     >
@@ -159,13 +157,20 @@ export default {
       switch (this.editType) {
         case 'String':
         case 'Number':
-          if (!this.api.values) break
+          if (this.api.values) {
+            return {
+              options: this.api.values,
+              inline: true
+            }
+          }
           return {
-            options: this.api.values
+            placeholder: this.defaultStr,
+            inline: true
           }
         case 'Boolean':
           return {
-            options: ['true', 'false']
+            options: ['true', 'false'],
+            inline: true
           }
       }
       return {}

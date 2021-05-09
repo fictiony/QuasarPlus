@@ -1,22 +1,31 @@
 <template>
-  <q-model-td v-bind="$attrs" v-on="$listeners" :value="value" @input="onInput" :mode="mode" @edit-start="onEditStart">
+  <q-model-td
+    v-bind="$attrs"
+    v-on="{ ...$listeners, input: undefined }"
+    v-model="editValue"
+    :inline="inline"
+    :auto-save="autoSave"
+    @edit-start="onEditStart"
+    @edit-finish="onEditFinish"
+    @edit-cancel="onEditCancel"
+  >
     <template #default>
-      <slot></slot>
+      <slot />
     </template>
 
-    <template v-slot:model-view="props">
+    <template v-slot:model-view="{ input, save, cancel }">
       <q-select
         ref="select"
-        :value="value"
-        @input="val => onInput(val) || props.finishEdit()"
-        @blur="props.finishEdit"
-        @keyup.enter="props.finishEdit"
-        @click.native.stop
         autofocus
         dense
         options-dense
         v-bind="$attrs"
-      ></q-select>
+        :value="editValue"
+        @input="input($event) || (inline && save())"
+        @blur="inline && (autoSave ? save() : cancel())"
+        @keyup.enter="save"
+        @click.native.stop
+      />
     </template>
   </q-model-td>
 </template>
@@ -25,6 +34,7 @@
 import { QSelect } from 'quasar'
 import QModelTd from './QModelTd'
 import mixin from './mixin'
+import mixin2 from './mixin2'
 
 export default {
   name: 'QSelectableTd',
@@ -34,12 +44,12 @@ export default {
     QModelTd
   },
 
+  mixins: [mixin, mixin2],
+
   methods: {
     onEditStart() {
       setTimeout(() => this.$nextTick(this.$refs.select.showPopup))
     }
-  },
-
-  mixins: [mixin]
+  }
 }
 </script>

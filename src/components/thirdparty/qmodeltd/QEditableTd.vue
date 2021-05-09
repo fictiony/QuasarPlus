@@ -1,20 +1,29 @@
 <template>
-  <q-model-td v-bind="$attrs" v-on="$listeners" :value="value" @input="onInput" :mode="mode" @edit-start="onEditStart">
+  <q-model-td
+    v-bind="$attrs"
+    v-on="{ ...$listeners, input: undefined }"
+    v-model="editValue"
+    :inline="inline"
+    :auto-save="autoSave"
+    @edit-start="onEditStart"
+    @edit-finish="onEditFinish"
+    @edit-cancel="onEditCancel"
+  >
     <template #default>
-      <slot></slot>
+      <slot />
     </template>
 
-    <template v-slot:model-view="props">
+    <template v-slot:model-view="{ input, save, cancel }">
       <q-input
         ref="input"
-        :value="value"
-        @input="onInput"
-        @blur="props.finishEdit"
-        @keyup.enter="props.finishEdit"
         autofocus
         dense
         v-bind="$attrs"
-      ></q-input>
+        :value="editValue"
+        @input="input"
+        @blur="inline && (autoSave ? save() : cancel())"
+        @keyup.enter="save"
+      />
     </template>
   </q-model-td>
 </template>
@@ -23,6 +32,7 @@
 import { QInput } from 'quasar'
 import QModelTd from './QModelTd'
 import mixin from './mixin'
+import mixin2 from './mixin2'
 
 export default {
   name: 'QEditableTd',
@@ -32,11 +42,11 @@ export default {
     QModelTd
   },
 
-  mixins: [mixin],
+  mixins: [mixin, mixin2],
 
   methods: {
     onEditStart() {
-      if (this.mode === 'inline') {
+      if (this.inline) {
         this.$nextTick(this.$refs.input.focus)
       }
     }

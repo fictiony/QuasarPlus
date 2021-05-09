@@ -1,14 +1,10 @@
 export default {
   props: {
-    mode: {
-      type: String,
-      required: false,
-      default: 'popup',
-      validator: v => ['popup', 'inline'].includes(v)
-    },
     value: {
       required: true
-    }
+    },
+    inline: Boolean,
+    autoSave: Boolean
   },
 
   methods: {

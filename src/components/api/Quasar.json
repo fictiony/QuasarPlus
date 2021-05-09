@@ -1369,7 +1369,22 @@
     "name": "切换标签组",
     "doc": "https://quasar.dev/vue-components/tabs#qtabs-api",
     "category": "container",
-    "incomplete": true
+    "demoData": {
+      "tab": "mails"
+    },
+    "demoProps": {
+      "class": "fit bg-primary text-white shadow-2",
+      "inlineLabel": true,
+      "dense": true
+    },
+    "demoBinds": {
+      "value": "tab"
+    },
+    "demoSlots": [
+      "<q-tab name='mails' icon='mail' label='Mails'/>",
+      "<q-tab name='alarms' icon='alarm' label='Alarms'/>",
+      "<q-tab name='movies' icon='movie' label='Movies'/>"
+    ]
   },
   "QTab": {
     "name": "切换标签",
