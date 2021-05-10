@@ -13,8 +13,13 @@
         </q-item-label>
       </q-item-section>
       <q-item-section side class="_toolbtn" v-if="component">
-        <q-btn flat dense size="sm" class="text-primary" :icon="filterProps ? 'text_rotation_none' : 'filter_alt'" @click="filterClick">
-          <q-tooltip ref="filterTip">{{ filterProps ? '显示所有属性' : '仅显示有值的属性' }}</q-tooltip>
+        <q-btn flat dense size="sm" class="text-primary" :icon="filterProps ? 'text_rotation_none' : 'filter_alt'" @click="filterPropsClick">
+          <q-tooltip ref="filterPropsTip">{{ filterProps ? '显示所有属性' : '仅显示有值的属性' }}</q-tooltip>
+        </q-btn>
+      </q-item-section>
+      <q-item-section side class="_toolbtn" v-if="component">
+        <q-btn flat dense size="sm" class="text-primary" :icon="showOthers ? 'view_list' : 'api'" @click="showOthersClick">
+          <q-tooltip ref="showOthersTip">{{ showOthers ? '显示属性列表' : '显示其他接口列表' }}</q-tooltip>
         </q-btn>
       </q-item-section>
       <q-item-section side class="_toolbtn" v-if="apiDoc">
@@ -33,7 +38,7 @@
     </q-item>
 
     <CustomScroller class="_proplist full-width q-space">
-      <q-markup-table flat bordered dense>
+      <q-markup-table flat bordered dense v-if="!showOthers">
         <thead>
           <tr style="height: 25px">
             <th class="_prop bg-primary text-white">属性名</th>
@@ -46,6 +51,22 @@
           </template>
           <tr v-else>
             <td colspan="2" class="text-grey-5 text-center">没有可用属性</td>
+          </tr>
+        </tbody>
+      </q-markup-table>
+      <q-markup-table flat bordered dense v-else>
+        <thead>
+          <tr style="height: 25px">
+            <th class="_prop bg-primary text-white">类别</th>
+            <th class="_value bg-blue-grey-5 text-white">接口名</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-if="otherApiList.length">
+            <OtherApiItem v-for="apiOther in otherApiList" :key="apiOther.label" v-bind="apiOther" />
+          </template>
+          <tr v-else>
+            <td colspan="2" class="text-grey-5 text-center">没有其他接口</td>
           </tr>
         </tbody>
       </q-markup-table>
@@ -63,6 +84,7 @@ const QUASAR_EXTRA_API = {
   QRibbon: import('@quasar/quasar-ui-qribbon/dist/api/QRibbon.json'),
   QMarkdown: import('@quasar/quasar-ui-qmarkdown/dist/api/QMarkdown.json')
 }
+const CATEGORIES = ['methods', 'events', 'slots', 'scopedSlots']
 
 export default {
   data: () => ({
@@ -71,7 +93,9 @@ export default {
     superName: '',
     superDoc: '',
     propList: [],
-    filterProps: false
+    filterProps: false,
+    otherApiList: [],
+    showOthers: false
   }),
 
   inject: ['state'],
@@ -95,21 +119,14 @@ export default {
         this.superName = (val.$options.extends && this.$getName(val.$options.extends.options)) || ''
         const superApi = (this.superName !== this.component && this.state.apiMap[this.superName]) || {}
         this.superDoc = superApi.doc
-        this.propList = Object.keys(val.$props || {})
-          .map(name => {
-            const apiProp = (api.props && api.props[name]) || (superApi.props && superApi.props[name])
-            return this.makePropInfo(val, name, apiProp)
-          })
-          .sort((a, b) => {
-            if (a.isNew !== b.isNew) return a.isNew ? -1 : 1
-            if (a.isUpdate !== b.isUpdate) return a.isUpdate ? -1 : 1
-            return a.name < b.name ? -1 : 1
-          })
+        this.propList = this.makePropList(val, api.props, superApi.props)
+        this.otherApiList = CATEGORIES.flatMap(i => this.makeOtherApiList(i, api[i], superApi[i]))
       } else {
         this.component = ''
         this.superName = ''
         this.superDoc = ''
         this.propList = []
+        this.otherApiList = []
       }
     }
   },
@@ -122,9 +139,29 @@ export default {
     },
 
     // 筛选属性按钮点击
-    filterClick() {
-      this.$refs.filterTip.hide()
+    filterPropsClick() {
+      this.$refs.filterPropsTip.hide()
       this.filterProps = !this.filterProps
+    },
+
+    // 显示其他接口按钮点击
+    showOthersClick() {
+      this.$refs.showOthersTip.hide()
+      this.showOthers = !this.showOthers
+    },
+
+    // 生成属性列表
+    makePropList(instance, props, superProps) {
+      return Object.keys(instance.$props || {})
+        .map(name => {
+          const apiProp = (props && props[name]) || (superProps && superProps[name])
+          return this.makePropInfo(instance, name, apiProp)
+        })
+        .sort((a, b) => {
+          if (a.isNew !== b.isNew) return a.isNew ? -1 : 1
+          if (a.isUpdate !== b.isUpdate) return a.isUpdate ? -1 : 1
+          return a.name < b.name ? -1 : 1
+        })
     },
 
     // 生成一条属性信息
@@ -139,18 +176,18 @@ export default {
       if (prop.required) {
         apiProp.required = true
       }
-
+      const defVal = this.getPropDefault(prop, instance)
       const propInfo = {
         instance,
         name,
         api: apiProp,
-        value: name in instance.$options.propsData || instance[name] !== this.getDefault(prop, instance) ? instance[name] : undefined,
+        value: name in instance.$options.propsData || instance[name] !== defVal ? instance[name] : undefined,
         type: this.getPropType(prop.type, apiProp),
         editType: apiProp.editType || this.getEditType(prop.type),
         validator: prop.validator,
-        default: this.getDefault(prop, instance),
+        default: defVal,
         defaultDesc: apiProp.default !== undefined ? String(apiProp.default) : undefined,
-        description: this.getPropDescription(apiProp),
+        description: this.getDescription(apiProp),
         isNew: superOptions && !superProp,
         isUpdate: superProp && extendProps && extendProps[name],
         unwatch: instance.$watch(
@@ -162,6 +199,31 @@ export default {
         )
       }
       return propInfo
+    },
+
+    // 生成其他接口列表
+    makeOtherApiList(category, api, superApi) {
+      return Object.keys(Object.assign({}, api, superApi))
+        .map(name => {
+          const apiOther = (api && api[name]) || (superApi && superApi[name])
+          return this.makeOtherApiInfo(name, category, apiOther)
+        })
+        .sort((a, b) => {
+          return a.name < b.name ? -1 : 1
+        })
+    },
+
+    // 生成一条其他接口信息
+    makeOtherApiInfo(name, category, apiOther) {
+      if (typeof apiOther !== 'object') {
+        apiOther = { desc: apiOther }
+      }
+      return {
+        name,
+        category,
+        defaultDesc: apiOther.default !== undefined ? String(apiOther.default) : undefined,
+        description: this.getDescription(apiOther, category, name)
+      }
     },
 
     // 获取属性类型
@@ -183,8 +245,8 @@ export default {
       return type ? type.name : ''
     },
 
-    // 获取默认值
-    getDefault(prop, instance) {
+    // 获取属性默认值
+    getPropDefault(prop, instance) {
       let defVal = prop.default
       if (defVal instanceof Function && !(prop.type instanceof Array ? prop.type : [prop.type]).includes(Function)) {
         defVal = defVal.call(instance)
@@ -196,33 +258,37 @@ export default {
       return defVal
     },
 
-    // 获取属性说明
-    getPropDescription(apiProp) {
-      if (apiProp.desc) {
-        if (!apiProp.combinedDesc) {
-          const sections = [apiProp.desc, '']
-          if (apiProp.type === 'Function') {
-            sections.push(this.makeFunctionDesc(apiProp))
+    // 获取接口说明
+    getDescription(apiItem, category, name) {
+      if (apiItem.desc) {
+        if (!apiItem.combinedDesc) {
+          const lines = [apiItem.desc, '']
+          switch (category) {
+            case 'methods':
+              lines.push('**调用格式**：' + name + this.makeFunctionDesc(apiItem, 0, true))
+              break
+            case 'events':
+              lines.push('**回调格式**：function' + this.makeFunctionDesc(apiItem, 0, true))
+              break
+            case 'scopedSlots':
+              lines.push('**作用域参数**：\n' + this.makeObjectDesc(apiItem.scope))
+              break
+            default:
+              this.appendDetails(apiItem, lines, 0, true)
           }
-          if (apiProp.definition) {
-            sections.push(this.makeObjectDesc(apiProp.definition))
+          lines.push('')
+          if (apiItem.addedIn) {
+            lines.push(`🆕 *${apiItem.addedIn}* 版新增`)
           }
-          if (apiProp.values) {
-            sections.push('**可取值**：' + apiProp.values.join(' &nbsp; '))
+          if (apiItem.required) {
+            lines.push('⚠️ 必需提供')
           }
-          sections.push('')
-          if (apiProp.addedIn) {
-            sections.push(`🆕 *${apiProp.addedIn}* 版新增`)
+          if (apiItem.sync) {
+            lines.push('⚠️ 需使用 `.sync` 修饰符来绑定')
           }
-          if (apiProp.required) {
-            sections.push('⚠️ 必需提供')
-          }
-          if (apiProp.sync) {
-            sections.push('⚠️ 需使用 `.sync` 修饰符来绑定')
-          }
-          apiProp.combinedDesc = sections.join('\n').trim()
+          apiItem.combinedDesc = lines.join('\n').trim()
         }
-        return apiProp.combinedDesc
+        return apiItem.combinedDesc
       }
       return this.apiDoc ? '参见 API 文档' : this.superDoc ? '参见基类 API 文档' : undefined
     },
@@ -231,34 +297,42 @@ export default {
     makeParamDesc(name, apiParam, level = 0) {
       const indent = '  '.repeat(level) + '- '
       const type = apiParam.type ? `(${apiParam.type instanceof Array ? apiParam.type.join(' | ') : apiParam.type}) ` : ''
-      const lines = [`${indent}${name} - ${type}${apiParam.desc || ''}`]
-      if (apiParam.type === 'Function') {
-        lines.push(this.makeFunctionDesc(apiParam, level + 1))
-      }
-      if (apiParam.definition) {
-        lines.push(this.makeObjectDesc(apiParam.definition, level + 1))
-      }
-      if (apiParam.values) {
-        lines.push('**可取值**：' + apiParam.values.join(' &nbsp; '))
-      }
-      if (apiParam.default !== undefined) {
-        lines.push('**默认值**：' + String(apiParam.default))
-      }
+      const lines = [`${indent}${name} - ${type}${apiParam.desc || ''}${apiParam.required ? ' [必填]' : ''}`]
+      this.appendDetails(apiParam, lines, level + 1)
       return lines.join('\n')
+    },
+
+    // 添加单项详细信息
+    appendDetails(apiItem, lines, level = 0, ignoreDefault = false) {
+      if (apiItem.type === 'Function') {
+        lines.push('**函数格式**：' + this.makeFunctionDesc(apiItem, level))
+      }
+      if (apiItem.definition) {
+        lines.push('**对象结构**：\n' + this.makeObjectDesc(apiItem.definition, level))
+      }
+      if (apiItem.values) {
+        lines.push('**可取值**：' + apiItem.values.join(' &nbsp; '))
+      }
+      if (!ignoreDefault && apiItem.default !== undefined) {
+        lines.push('**默认值**：' + String(apiItem.default))
+      }
     },
 
     // 生成对象说明
     makeObjectDesc(apiObj, level = 0) {
-      const lines = ['**对象结构**：', ...Object.keys(apiObj).map(name => this.makeParamDesc('`' + name + '`', apiObj[name], level))]
-      return lines.join('\n')
+      return Object.keys(apiObj)
+        .map(name => this.makeParamDesc('`' + name + '`', apiObj[name], level))
+        .join('\n')
     },
 
     // 生成函数说明
-    makeFunctionDesc(apiFunc, level = 0) {
+    makeFunctionDesc(apiFunc, level = 0, noReturn = false) {
       const params = apiFunc.params ? Object.keys(apiFunc.params) : []
+      const n = params.findIndex(name => !apiFunc.params[name].required)
+      const paramsStr = n > 0 ? params.slice(0, n).join(', ') + '[' + (n > 0 ? ', ' : ' ') + params.slice(n).join(', ') + ' ]' : params.join(', ')
       const returns = (apiFunc.returns && apiFunc.returns.type) || 'void'
       const lines = [
-        `**函数格式**：(${params.join(', ')}) => ${returns}`,
+        `(${paramsStr})${apiFunc.returns || !noReturn ? ' => ' + returns : ''}`,
         ...params.map(name => this.makeParamDesc('`@' + name + '`', apiFunc.params[name], level))
       ]
       if (apiFunc.returns) {
@@ -285,7 +359,11 @@ export default {
           Object.keys(api.props || {}).forEach(name => {
             props[this.$toCamelCase(name)] = api.props[name] // 将文档中串式命名的属性名统一成驼峰命名
           })
-          apiMap[className].props = extend(true, props, apiMap[className].props)
+          const apiInfo = apiMap[className]
+          apiInfo.props = extend(true, props, apiInfo.props)
+          CATEGORIES.forEach(category => {
+            apiInfo[category] = extend(true, {}, api[category], apiInfo[category])
+          })
         })
       })
     ]).then(() => {
@@ -312,13 +390,15 @@ export default {
   th._prop,
   tbody ::v-deep ._prop {
     width: 30%;
-    min-width: 100px;
+    min-width: 80px;
     max-width: 160px;
+    padding: 0px 8px 0px 12px;
   }
   th._value,
   tbody ::v-deep ._value {
     min-width: 60px;
     max-width: 1px; // 能使最后一列填满剩余宽度的神奇设置
+    padding: 0px 8px;
   }
 }
 </style>

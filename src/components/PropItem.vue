@@ -242,7 +242,7 @@ export default {
 <style lang="scss" scoped>
 $field-height: 27px;
 tr ::v-deep ._value .inline-edit-container {
-  margin: -4px -16px -4px -8px;
+  margin: -4px -8px;
   overflow: hidden;
   .q-field--dense {
     .q-field__control,

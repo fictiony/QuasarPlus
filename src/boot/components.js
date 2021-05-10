@@ -11,6 +11,7 @@ import DemoComponent from 'components/DemoComponent.vue'
 import DemoExample from 'components/DemoExample.vue'
 import DemoPage from 'components/DemoPage.vue'
 import PropItem from 'components/PropItem.vue'
+import OtherApiItem from 'components/OtherApiItem.vue'
 import ComponentSelector from 'components/ComponentSelector.vue'
 
 // 注册组件
@@ -24,6 +25,7 @@ const components = {
   DemoExample,
   DemoPage,
   PropItem,
+  OtherApiItem,
   ComponentSelector
 }
 Object.keys(components).forEach(name => {
