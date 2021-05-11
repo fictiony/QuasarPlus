@@ -2,7 +2,7 @@
   <div class="fit no-scroll column">
     <q-item dense class="_header full-width">
       <q-item-section style="max-width: 24px">
-        <q-btn flat dense size="sm" class="text-primary" :icon="state.selecting ? 'my_location' : 'location_searching'" @click="selectClick">
+        <q-btn flat dense size="sm" class="text-primary" :icon="inspect.selecting ? 'my_location' : 'location_searching'" @click="selectClick">
           <q-tooltip ref="selectTip">选择要查看的 Vue 组件</q-tooltip>
         </q-btn>
       </q-item-section>
@@ -93,6 +93,7 @@ const NAME_SUFFIX = {
 
 export default {
   data: () => ({
+    apiMap: {},
     component: '',
     showName: '',
     apiDoc: '',
@@ -104,7 +105,7 @@ export default {
     showOthers: false
   }),
 
-  inject: ['state'],
+  inject: ['inspect'],
 
   computed: {
     filteredPropList() {
@@ -113,26 +114,27 @@ export default {
   },
 
   watch: {
-    'state.inspectTarget'(val) {
-      this.propList.forEach(prop => prop.unwatch()) // 先取消原属性监视
+    'inspect.target'(val) {
       if (window) {
         window.$c = val // 方便在浏览器内调试
       }
+      this.unwatchProps()
+
       if (val) {
         let api, superApi
         if (val.$options) {
           this.component = this.$getName(val.$options)
           this.showName = this.component + NAME_SUFFIX.component
           this.superName = (val.$options.extends && this.$getName(val.$options.extends.options)) || ''
-          api = this.state.apiMap[this.component] || {}
-          superApi = (this.superName !== this.component && this.state.apiMap[this.superName]) || {}
+          api = this.apiMap[this.component] || {}
+          superApi = (this.superName !== this.component && this.apiMap[this.superName]) || {}
           this.propList = this.makePropList(val, api.props, superApi.props)
         } else {
           this.component = ''
           this.showName = val.className + (NAME_SUFFIX[val.category] || NAME_SUFFIX.component)
           this.superName = val.extends || ''
-          api = this.state.apiMap[val.className] || {}
-          superApi = this.state.apiMap[this.superName] || {}
+          api = this.apiMap[val.className] || {}
+          superApi = this.apiMap[this.superName] || {}
           this.propList = []
         }
         this.apiDoc = api.doc || ''
@@ -154,7 +156,7 @@ export default {
     // 选择组件按钮点击
     selectClick() {
       this.$refs.selectTip.hide() // 解决按钮重绘时，QTooltip无法自动消失的bug
-      this.state.selecting = !this.state.selecting
+      this.inspect.selecting = !this.inspect.selecting
     },
 
     // 筛选属性按钮点击
@@ -219,6 +221,11 @@ export default {
         )
       }
       return propInfo
+    },
+
+    // 取消属性监视
+    unwatchProps() {
+      this.propList.forEach(prop => prop.unwatch())
     },
 
     // 生成其他接口列表
@@ -426,8 +433,12 @@ export default {
         })
       })
     ]).then(() => {
-      this.state.apiMap = Object.freeze(apiMap)
+      this.apiMap = Object.freeze(apiMap)
     })
+  },
+
+  beforeDestroy() {
+    this.unwatchProps()
   }
 }
 </script>

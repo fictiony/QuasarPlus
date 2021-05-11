@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="_bounds" :style="boundingRect" v-if="state.selectingComponents" />
+    <div class="_bounds" :style="boundingRect" v-if="selectingComponents" />
     <q-menu content-style="z-index: 100000000" auto-close touch-position ref="menu" @hide="listComponents = []">
       <q-list dense>
         <q-item
@@ -31,16 +31,17 @@ export default {
   data: () => ({
     mousePos: {},
     boundingRect: {},
+    selectingComponents: null,
     listComponents: []
   }),
 
-  inject: ['state'],
+  inject: ['inspect'],
 
   watch: {
     // 开启/关闭选择时，添加/删除鼠标事件
-    'state.selecting'(val) {
+    'inspect.selecting'(val) {
       if (!val) {
-        this.state.selectingComponents = null
+        this.selectingComponents = null
       }
       const method = `${val ? 'add' : 'remove'}EventListener`
       const ignoreEvents = ['mouseenter', 'mouseleave', 'mouseover', 'mouseout', 'mousedown', 'mouseup']
@@ -52,7 +53,7 @@ export default {
     },
 
     // 选中组件时，刷新高亮范围框
-    'state.selectingComponents'(val) {
+    selectingComponents(val) {
       if (val) {
         if (!this.refreshTimer) {
           this.refreshTimer = setInterval(this.refreshBoundingRect, 20)
@@ -96,37 +97,37 @@ export default {
           component = all.length > 0 ? this.normalizeLevels(all) : null
         }
       }
-      this.state.selectingComponents = component
+      this.selectingComponents = component
     },
 
     // 鼠标点击DOM元素
     elementClicked(e) {
       if (this.listComponents.length > 0) return
       this.cancelEvent(e)
-      if (this.state.selectingComponents) {
-        if (this.state.selectingComponents.length > 1) {
-          this.listComponents = this.state.selectingComponents.slice().reverse()
+      if (this.selectingComponents) {
+        if (this.selectingComponents.length > 1) {
+          this.listComponents = this.selectingComponents.slice().reverse()
           this.$refs.menu.show(e)
           return
         } else {
-          this.state.inspectTarget = this.state.selectingComponents[0].component
+          this.inspect.target = this.selectingComponents[0].component
         }
       } else {
-        this.state.inspectTarget = null
+        this.inspect.target = null
       }
-      this.state.selecting = false
+      this.inspect.selecting = false
     },
 
     // 菜单悬停
     menuHover(index) {
-      this.state.selectingComponents = [this.listComponents[index]]
+      this.selectingComponents = [this.listComponents[index]]
     },
 
     // 菜单选中
     menuSelected(index) {
-      this.state.inspectTarget = this.listComponents[index].component
+      this.inspect.target = this.listComponents[index].component
       this.listComponents = []
-      this.state.selecting = false
+      this.inspect.selecting = false
     },
 
     // 查找Vue组件
@@ -210,7 +211,7 @@ export default {
 
     // 刷新范围框
     refreshBoundingRect() {
-      const rect = this.getBoundingRect(this.state.selectingComponents[0].component.$el) || EMPTY_RECT
+      const rect = this.getBoundingRect(this.selectingComponents[0].component.$el) || EMPTY_RECT
       this.boundingRect = {
         left: rect.x + 'px',
         top: rect.y + 'px',

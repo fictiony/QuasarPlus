@@ -55,7 +55,7 @@
       <MenuPanel />
     </my-drawer>
 
-    <my-drawer v-model="rightOpen" side="right" show-if-above :breakpoint="720" bordered :width="300" :limits="[200, 500]">
+    <my-drawer ref="rightDrawer" v-model="rightOpen" side="right" show-if-above :breakpoint="720" bordered :width="300" :limits="[200, 500]">
       <PropPanel @close="propPanelClose" />
     </my-drawer>
 
@@ -83,12 +83,9 @@ export default {
     leftOpen: false,
     rightOpen: false,
     pageTitle: '',
-    state: {
-      apiMap: {},
+    inspect: {
       selecting: false,
-      selectingComponents: null,
-      inspectable: false,
-      inspectTarget: null
+      target: null
     }
   }),
 
@@ -106,7 +103,7 @@ export default {
 
   provide() {
     return {
-      state: this.state
+      inspect: this.inspect
     }
   },
 
@@ -118,8 +115,10 @@ export default {
       immediate: true
     },
 
-    rightOpen(val) {
-      this.state.inspectable = val
+    // 小屏下选择时自动隐藏属性栏
+    'inspect.selecting'(val) {
+      if (!this.$refs.rightDrawer.belowBreakpoint) return
+      this.rightOpen = !val
     }
   },
 
@@ -144,10 +143,10 @@ export default {
       document.title = `在线演示 | ${this.title}`
     },
 
-    // 属性栏关闭
+    // 手动关闭属性栏
     propPanelClose() {
       this.rightOpen = false
-      this.state.inspectTarget = null
+      this.inspect.target = null
     }
   },
 

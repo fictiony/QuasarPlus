@@ -228,7 +228,7 @@ export default {
     }
   },
 
-  inject: ['state'],
+  inject: ['inspect'],
 
   computed: {
     // 筛选后的组件信息列表
@@ -316,13 +316,12 @@ export default {
 
     // 查看组件范例属性
     inspectDemo(info, demoIndex) {
-      if (!this.state.inspectable) return
       const demos = this.demoMap[info.className] || {}
-      if (demoIndex === undefined && this.state.inspectTarget) {
+      if (demoIndex === undefined && this.inspect.target) {
         // 若当前已有选中的范例，则忽略选中默认范例的操作
-        if (Object.values(demos).includes(this.state.inspectTarget)) return
+        if (Object.values(demos).includes(this.inspect.target)) return
       }
-      this.state.inspectTarget = demos[demoIndex || 0] || info
+      this.inspect.target = demos[demoIndex || 0] || info
     }
   }
 }
