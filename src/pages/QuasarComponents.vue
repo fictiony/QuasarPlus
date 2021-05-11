@@ -15,7 +15,7 @@
         outlined
         clearable
         v-model="searchWord"
-        placeholder="输入组件名或类名搜索"
+        placeholder="输入名称或类名搜索"
         :debounce="0"
         @input="searchMenu = !!searchWord"
       >
@@ -76,62 +76,66 @@
 
       <template #body-cell-demos="props">
         <q-td style="width: 75%; min-width: 200px; white-space: normal" v-bind="props" @click="inspectDemo(props.row)" :key="props.row.className">
-          <div class="row items-center q-mb-sm text-grey" v-if="props.row.incomplete">
-            <q-icon class="q-mr-xs" name="error" color="red" size="20px" />
-            本组件范例尚未完成
-          </div>
+          <template v-if="['directive', 'plugin'].includes(props.row.category)"> 暂无 </template>
 
-          <!-- 带外框容器 -->
-          <q-card flat bordered :style="{ minHeight: props.row.frame + 'px', ...props.row.frameStyles }" v-if="props.row.frame" v-show="showDemos">
-            <!-- 若含外层组件，则创建公共外层组件 -->
-            <DemoComponent :info="props.row" @inspect="inspectDemo(props.row, $event)" v-if="props.row.parent" />
+          <template v-else>
+            <div class="row items-center q-mb-sm text-grey" v-if="props.row.incomplete">
+              <q-icon class="q-mr-xs" name="error" color="red" size="20px" />
+              本组件范例尚未完成
+            </div>
 
-            <!-- 否则直接创建范例组件（不含外层组件） -->
-            <DemoComponent
-              v-for="index in props.row.demos ? props.row.demos.length : 1"
-              :key="index"
-              :info="props.row"
-              :index="index - 1"
-              @inspect="inspectDemo(props.row, $event)"
-              v-else
-            />
-          </q-card>
+            <!-- 带外框容器 -->
+            <q-card flat bordered :style="{ minHeight: props.row.frame + 'px', ...props.row.frameStyles }" v-if="props.row.frame" v-show="showDemos">
+              <!-- 若含外层组件，则创建公共外层组件 -->
+              <DemoComponent :info="props.row" @inspect="inspectDemo(props.row, $event)" v-if="props.row.parent" />
 
-          <!-- 无外框，则依次创建带独立外层组件的范例组件，并加入间距 -->
-          <div class="row items-center q-gutter-md" v-else v-show="showDemos">
-            <DemoComponent
-              v-for="index in props.row.demos ? props.row.demos.length : 1"
-              :key="index"
-              :info="props.row"
-              :index="index - 1"
-              @inspect="inspectDemo(props.row, $event)"
-            />
-          </div>
+              <!-- 否则直接创建范例组件（不含外层组件） -->
+              <DemoComponent
+                v-for="index in props.row.demos ? props.row.demos.length : 1"
+                :key="index"
+                :info="props.row"
+                :index="index - 1"
+                @inspect="inspectDemo(props.row, $event)"
+                v-else
+              />
+            </q-card>
 
-          <!-- 范例占位符，用于不看范例时显示 -->
-          <div class="row items-center" v-show="!showDemos">
-            <q-chip
-              v-for="index in props.row.demos ? props.row.demos.length : 1"
-              :key="index"
-              clickable
-              icon="bubble_chart"
-              :label="getDemoName(props.row, index - 1)"
-              @click.stop="inspectDemo(props.row, index - 1)"
-            />
-          </div>
+            <!-- 无外框，则依次创建带独立外层组件的范例组件，并加入间距 -->
+            <div class="row items-center q-gutter-md" v-else v-show="showDemos">
+              <DemoComponent
+                v-for="index in props.row.demos ? props.row.demos.length : 1"
+                :key="index"
+                :info="props.row"
+                :index="index - 1"
+                @inspect="inspectDemo(props.row, $event)"
+              />
+            </div>
 
-          <!-- 范例提示 -->
-          <template v-if="props.row.demoTips">
-            <q-tooltip v-for="index in props.row.demos ? props.row.demos.length : 1" :key="index" :target="`#${props.row.className}-${index - 1}`">
-              {{ getDemoName(props.row, index - 1) }}
-            </q-tooltip>
+            <!-- 范例占位符，用于不看范例时显示 -->
+            <div class="row items-center" v-show="!showDemos">
+              <q-chip
+                v-for="index in props.row.demos ? props.row.demos.length : 1"
+                :key="index"
+                clickable
+                icon="bubble_chart"
+                :label="getDemoName(props.row, index - 1)"
+                @click.stop="inspectDemo(props.row, index - 1)"
+              />
+            </div>
+
+            <!-- 范例提示 -->
+            <template v-if="props.row.demoTips">
+              <q-tooltip v-for="index in props.row.demos ? props.row.demos.length : 1" :key="index" :target="`#${props.row.className}-${index - 1}`">
+                {{ getDemoName(props.row, index - 1) }}
+              </q-tooltip>
+            </template>
+
+            <!-- 组件限制 -->
+            <div class="row items-center q-mt-xs text-grey" v-if="props.row.isPart">
+              <q-icon class="q-mr-xs" name="warning" color="warning" size="20px" />
+              本组件只能用于 {{ props.row.isPart }} 组件内部
+            </div>
           </template>
-
-          <!-- 组件限制 -->
-          <div class="row items-center q-mt-xs text-grey" v-if="props.row.isPart">
-            <q-icon class="q-mr-xs" name="warning" color="warning" size="20px" />
-            本组件只能用于 {{ props.row.isPart }} 组件内部
-          </div>
         </q-td>
       </template>
     </q-table>
@@ -144,11 +148,13 @@ import quasarApi from 'components/api/Quasar.json'
 
 const CATEGORIES = [
   { label: '所有组件', value: '' },
-  { label: '基本组件', value: 'basic' },
-  { label: '容器组件', value: 'container' },
-  { label: '表单组件', value: 'form' },
-  { label: '工具组件', value: 'tool' },
-  { label: '其他组件', value: 'other' }
+  { label: '基本组件', name: '基本', value: 'basic' },
+  { label: '容器组件', name: '容器', value: 'container' },
+  { label: '表单组件', name: '表单', value: 'form' },
+  { label: '工具组件', name: '工具', value: 'tool' },
+  { label: '其他组件', name: '其他', value: 'other' },
+  { label: '扩展指令', name: '指令', value: 'directive' },
+  { label: '扩展插件', name: '插件', value: 'plugin' }
 ]
 
 export default {
@@ -164,8 +170,13 @@ export default {
 
     tableColumns: [
       {
+        name: 'category',
+        label: '分类',
+        field: row => vm.getCategoryName(row.category)
+      },
+      {
         name: 'name',
-        label: '组件名',
+        label: '名称',
         field: 'name',
         align: 'left',
         sortable: true,
@@ -191,10 +202,12 @@ export default {
 
     // Quasar组件信息列表
     quasarComponents: Object.freeze(
-      Object.keys(quasarApi).map(className => ({
-        className,
-        ...quasarApi[className]
-      }))
+      Object.keys(quasarApi).map(className =>
+        Object.freeze({
+          className,
+          ...quasarApi[className]
+        })
+      )
     ),
 
     demoMap: {}, // 组件范例记录表：{ 类名: { 范例序号[-插槽序号]: 范例 } }
@@ -236,12 +249,7 @@ export default {
 
     // 组件信息检索表
     infoMap() {
-      return Object.freeze(
-        this.quasarComponents.reduce((map, info) => {
-          map[info.className] = info
-          return map
-        }, {})
-      )
+      return Object.freeze(this.$arrToMap(this.quasarComponents, 'className'))
     }
   },
 
@@ -264,6 +272,16 @@ export default {
       if (category !== (this.$route.params.category || '')) {
         this.$router.replace(`/QuasarComponents/${category}`)
       }
+    },
+
+    // 获取分类名称
+    getCategoryName(category) {
+      if (!category) return '其他'
+      if (category instanceof Array) {
+        return category.map(this.getCategoryName).join('|')
+      }
+      category = CATEGORIES.find(i => i.value === category)
+      return (category && category.name) || '未知'
     },
 
     // 判断是否满足筛选条件
@@ -298,12 +316,13 @@ export default {
 
     // 查看组件范例属性
     inspectDemo(info, demoIndex) {
+      if (!this.state.inspectable) return
       const demos = this.demoMap[info.className] || {}
-      if (demoIndex === undefined && this.state.editingComponent) {
+      if (demoIndex === undefined && this.state.inspectTarget) {
         // 若当前已有选中的范例，则忽略选中默认范例的操作
-        if (Object.values(demos).includes(this.state.editingComponent)) return
+        if (Object.values(demos).includes(this.state.inspectTarget)) return
       }
-      this.state.editingComponent = demos[demoIndex || 0]
+      this.state.inspectTarget = demos[demoIndex || 0] || info
     }
   }
 }

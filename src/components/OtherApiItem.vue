@@ -23,9 +23,18 @@
         </div>
 
         <q-separator spaced="5px" color="grey" />
-        <q-markdown class="q-ma-none all-pointer-events" :src="description" />
 
-        <div v-if="defaultDesc !== undefined">
+        <template v-if="type">
+          <div>
+            <q-badge class="q-mr-sm" color="accent" label="类型" />
+            {{ type }}
+          </div>
+          <q-separator spaced="3px" color="transparent" />
+        </template>
+
+        <q-markdown class="q-ma-none all-pointer-events" :src="description || '暂无说明'" />
+
+        <div v-if="defaultDesc">
           <q-badge class="q-mr-sm" color="secondary" label="默认值" />
           {{ defaultDesc }}
         </div>
@@ -37,10 +46,16 @@
 <script>
 // 【其他接口列表项】
 const CATEGORY_NAME = {
+  props: '属性',
   methods: '方法',
   events: '事件',
   slots: '插槽',
-  scopedSlots: '作用域插槽'
+  scopedSlots: '作用域插槽',
+  value: '指令值',
+  arg: '指令参数',
+  modifiers: '修饰符',
+  injection: '注入项',
+  quasarConfOptions: '配置选项'
 }
 
 export default {
@@ -53,17 +68,16 @@ export default {
       type: String,
       required: true
     },
+    api: {
+      required: true
+    },
     category: {
       type: String,
       required: true
     },
-    defaultDesc: {
-      type: String
-    },
-    description: {
-      type: String,
-      default: '暂无说明'
-    }
+    type: String,
+    defaultDesc: String,
+    description: String
   },
 
   computed: {
@@ -82,6 +96,10 @@ export default {
         case 'slots':
         case 'scopedSlots':
           return '#' + this.name
+        case 'value':
+          return this.api.directive + '="?"'
+        case 'arg':
+          return this.api.directive + ':?'
       }
       return this.name
     },
@@ -89,9 +107,13 @@ export default {
     // 类别颜色
     categoryColor() {
       switch (this.category) {
-        case 'methods':
-          return ['text-primary', this.$q.dark.isActive ? 'bg-blue-grey-10' : 'bg-blue-1']
+        case 'props':
         case 'events':
+        case 'value':
+        case 'arg':
+          return ['text-primary', this.$q.dark.isActive ? 'bg-blue-grey-10' : 'bg-blue-1']
+        case 'methods':
+        case 'modifiers':
           return ['text-accent', this.$q.dark.isActive ? 'bg-brown-10' : 'bg-purple-1']
         default:
           return ['text-green', this.$q.dark.isActive ? 'bg-teal-10' : 'bg-green-1']
@@ -101,9 +123,13 @@ export default {
     // 接口颜色
     apiColor() {
       switch (this.category) {
-        case 'methods':
-          return 'text-primary'
+        case 'props':
         case 'events':
+        case 'value':
+        case 'arg':
+          return 'text-primary'
+        case 'methods':
+        case 'modifiers':
           return 'text-accent'
         default:
           return 'text-green'

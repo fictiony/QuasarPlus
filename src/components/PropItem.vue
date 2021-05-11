@@ -28,11 +28,11 @@
         </div>
 
         <q-separator spaced="3px" color="transparent" />
-        <q-markdown class="q-ma-none all-pointer-events" :src="description" />
+        <q-markdown class="q-ma-none all-pointer-events" :src="description || '暂无说明'" />
 
         <div v-if="hasDefault">
           <q-badge class="q-mr-sm" color="secondary" label="默认值" />
-          {{ defaultDesc === undefined ? defaultStr : defaultDesc }}
+          {{ defaultDesc || defaultStr }}
         </div>
       </q-tooltip>
     </td>
@@ -79,7 +79,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'any'
+      default: 'Any'
     },
     editType: {
       type: String,
@@ -90,13 +90,8 @@ export default {
       default: () => true
     },
     default: {},
-    defaultDesc: {
-      type: String
-    },
-    description: {
-      type: String,
-      default: '暂无说明'
-    },
+    defaultDesc: String,
+    description: String,
     isNew: {
       type: Boolean,
       default: false
@@ -120,7 +115,7 @@ export default {
 
     // 是否有默认值
     hasDefault() {
-      return this.defaultDesc !== undefined || this.default !== undefined
+      return this.defaultDesc || this.default !== undefined
     },
 
     // 默认值显示字符串

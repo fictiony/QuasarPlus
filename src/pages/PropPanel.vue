@@ -8,7 +8,7 @@
       </q-item-section>
       <q-item-section class="_toolbtn">
         <q-item-label class="text-grey-6" :lines="1">
-          <span v-if="component">{{ component }} 组件属性</span>
+          <span v-if="showName">{{ showName }}</span>
           <span v-else>当前未选中任何组件</span>
         </q-item-label>
       </q-item-section>
@@ -38,7 +38,7 @@
     </q-item>
 
     <CustomScroller class="_proplist full-width q-space">
-      <q-markup-table flat bordered dense v-if="!showOthers">
+      <q-markup-table flat bordered dense v-if="component && !showOthers">
         <thead>
           <tr style="height: 25px">
             <th class="_prop bg-primary text-white">属性名</th>
@@ -84,11 +84,17 @@ const QUASAR_EXTRA_API = {
   QRibbon: import('@quasar/quasar-ui-qribbon/dist/api/QRibbon.json'),
   QMarkdown: import('@quasar/quasar-ui-qmarkdown/dist/api/QMarkdown.json')
 }
-const CATEGORIES = ['methods', 'events', 'slots', 'scopedSlots']
+const CATEGORIES = ['injection', 'props', 'events', 'methods', 'slots', 'scopedSlots', 'value', 'arg', 'modifiers', 'quasarConfOptions']
+const NAME_SUFFIX = {
+  component: ' 组件',
+  directive: ' 指令',
+  plugin: ' 插件'
+}
 
 export default {
   data: () => ({
     component: '',
+    showName: '',
     apiDoc: '',
     superName: '',
     superDoc: '',
@@ -107,22 +113,35 @@ export default {
   },
 
   watch: {
-    'state.editingComponent'(val) {
+    'state.inspectTarget'(val) {
       this.propList.forEach(prop => prop.unwatch()) // 先取消原属性监视
       if (window) {
         window.$c = val // 方便在浏览器内调试
       }
       if (val) {
-        this.component = this.$getName(val.$options)
-        const api = this.state.apiMap[this.component] || {}
-        this.apiDoc = api.doc
-        this.superName = (val.$options.extends && this.$getName(val.$options.extends.options)) || ''
-        const superApi = (this.superName !== this.component && this.state.apiMap[this.superName]) || {}
-        this.superDoc = superApi.doc
-        this.propList = this.makePropList(val, api.props, superApi.props)
-        this.otherApiList = CATEGORIES.flatMap(i => this.makeOtherApiList(i, api[i], superApi[i]))
+        let api, superApi
+        if (val.$options) {
+          this.component = this.$getName(val.$options)
+          this.showName = this.component + NAME_SUFFIX.component
+          this.superName = (val.$options.extends && this.$getName(val.$options.extends.options)) || ''
+          api = this.state.apiMap[this.component] || {}
+          superApi = (this.superName !== this.component && this.state.apiMap[this.superName]) || {}
+          this.propList = this.makePropList(val, api.props, superApi.props)
+        } else {
+          this.component = ''
+          this.showName = val.className + (NAME_SUFFIX[val.category] || NAME_SUFFIX.component)
+          this.superName = val.extends || ''
+          api = this.state.apiMap[val.className] || {}
+          superApi = this.state.apiMap[this.superName] || {}
+          this.propList = []
+        }
+        this.apiDoc = api.doc || ''
+        this.superDoc = superApi.doc || ''
+        this.otherApiList = Object.freeze(CATEGORIES.flatMap(i => this.makeOtherApiList(i, api[i], superApi[i])))
       } else {
         this.component = ''
+        this.showName = ''
+        this.apiDoc = ''
         this.superName = ''
         this.superDoc = ''
         this.propList = []
@@ -173,21 +192,22 @@ export default {
       const superOptions = instance.$options.extends && instance.$options.extends.options
       const superProp = superOptions && superOptions.props && superOptions.props[name]
       const extendProps = instance.constructor.extendOptions.props
-      if (prop.required) {
+      if (prop.required && !apiProp.required) {
         apiProp.required = true
       }
       const defVal = this.getPropDefault(prop, instance)
+      const description = this.getDescription(apiProp)
       const propInfo = {
         instance,
         name,
-        api: apiProp,
+        api: Object.freeze(apiProp),
         value: name in instance.$options.propsData || instance[name] !== defVal ? instance[name] : undefined,
         type: this.getPropType(prop.type, apiProp),
         editType: apiProp.editType || this.getEditType(prop.type),
         validator: prop.validator,
         default: defVal,
         defaultDesc: apiProp.default !== undefined ? String(apiProp.default) : undefined,
-        description: this.getDescription(apiProp),
+        description,
         isNew: superOptions && !superProp,
         isUpdate: superProp && extendProps && extendProps[name],
         unwatch: instance.$watch(
@@ -203,6 +223,9 @@ export default {
 
     // 生成其他接口列表
     makeOtherApiList(category, api, superApi) {
+      if (category === 'props' && this.component) {
+        return [] // 组件属性不显示在其他接口里
+      }
       return Object.keys(Object.assign({}, api, superApi))
         .map(name => {
           const apiOther = (api && api[name]) || (superApi && superApi[name])
@@ -218,12 +241,15 @@ export default {
       if (typeof apiOther !== 'object') {
         apiOther = { desc: apiOther }
       }
-      return {
+      const description = this.getDescription(apiOther, category, name)
+      return Object.freeze({
         name,
+        api: Object.freeze(apiOther),
         category,
+        type: this.getPropType(null, apiOther),
         defaultDesc: apiOther.default !== undefined ? String(apiOther.default) : undefined,
-        description: this.getDescription(apiOther, category, name)
-      }
+        description
+      })
     },
 
     // 获取属性类型
@@ -260,37 +286,34 @@ export default {
 
     // 获取接口说明
     getDescription(apiItem, category, name) {
-      if (apiItem.desc) {
-        if (!apiItem.combinedDesc) {
-          const lines = [apiItem.desc, '']
-          switch (category) {
-            case 'methods':
-              lines.push('**调用格式**：' + name + this.makeFunctionDesc(apiItem, 0, true))
-              break
-            case 'events':
-              lines.push('**回调格式**：function' + this.makeFunctionDesc(apiItem, 0, true))
-              break
-            case 'scopedSlots':
-              lines.push('**作用域参数**：\n' + this.makeObjectDesc(apiItem.scope))
-              break
-            default:
-              this.appendDetails(apiItem, lines, 0, true)
-          }
-          lines.push('')
-          if (apiItem.addedIn) {
-            lines.push(`🆕 *${apiItem.addedIn}* 版新增`)
-          }
-          if (apiItem.required) {
-            lines.push('⚠️ 必需提供')
-          }
-          if (apiItem.sync) {
-            lines.push('⚠️ 需使用 `.sync` 修饰符来绑定')
-          }
-          apiItem.combinedDesc = lines.join('\n').trim()
+      if (apiItem.combinedDesc === undefined) {
+        const lines = [apiItem.desc || '', '']
+        switch (category) {
+          case 'methods':
+            lines.push('**调用格式**：' + name + this.makeFunctionDesc(apiItem, 0, true))
+            break
+          case 'events':
+            lines.push('**回调格式**：function' + this.makeFunctionDesc(apiItem, 0, true))
+            break
+          case 'scopedSlots':
+            lines.push('**作用域参数**：\n' + this.makeObjectDesc(apiItem.scope))
+            break
+          default:
+            this.appendDetails(apiItem, lines, 0, true)
         }
-        return apiItem.combinedDesc
+        lines.push('')
+        if (apiItem.addedIn) {
+          lines.push(`🆕 *${apiItem.addedIn}* 版新增`)
+        }
+        if (apiItem.required) {
+          lines.push('⚠️ 必需提供')
+        }
+        if (apiItem.sync) {
+          lines.push('⚠️ 需使用 `.sync` 修饰符来绑定')
+        }
+        apiItem.combinedDesc = lines.join('\n').trim() || (this.apiDoc ? '参见 API 文档' : this.superDoc ? '参见基类 API 文档' : '')
       }
-      return this.apiDoc ? '参见 API 文档' : this.superDoc ? '参见基类 API 文档' : undefined
+      return apiItem.combinedDesc
     },
 
     // 生成参数说明
@@ -344,11 +367,11 @@ export default {
 
   created() {
     // 加载API表数据
-    const apiMap = { ...quasarApi }
+    const apiMap = {}
     Promise.all([
       ...plusList.map(item =>
         import('components/api/' + item.caption + '.json').then(module => {
-          apiMap[item.caption] = module.default
+          apiMap[item.caption] = Object.freeze(module.default)
         })
       ),
       ...Object.keys(quasarApi).map(className => {
@@ -359,11 +382,47 @@ export default {
           Object.keys(api.props || {}).forEach(name => {
             props[this.$toCamelCase(name)] = api.props[name] // 将文档中串式命名的属性名统一成驼峰命名
           })
-          const apiInfo = apiMap[className]
+          const apiInfo = extend(true, {}, quasarApi[className])
           apiInfo.props = extend(true, props, apiInfo.props)
           CATEGORIES.forEach(category => {
+            if (!api[category] && !apiInfo[category]) return
+            switch (category) {
+              case 'props':
+                return // 属性前面已处理过
+              case 'injection':
+                apiInfo.injection = {
+                  [apiInfo.injection || api.injection]: {}
+                }
+                return
+              case 'quasarConfOptions':
+              case 'value':
+              case 'arg': {
+                const info = extend(true, {}, api[category], apiInfo[category])
+                if (category === 'quasarConfOptions') {
+                  info.desc = [
+                    '```js',
+                    '// quasar.conf.js',
+                    'return {',
+                    '  framework: {',
+                    '    config: {',
+                    `      ${info.propName}: { 详见下方说明 }`,
+                    '    }',
+                    '  }',
+                    '}',
+                    '```'
+                  ].join('\n')
+                } else {
+                  info.directive = 'v-' + this.$toKebabCase(className)
+                }
+                apiInfo[category] = {
+                  [info.propName || '']: info
+                }
+                return
+              }
+            }
             apiInfo[category] = extend(true, {}, api[category], apiInfo[category])
           })
+          apiMap[className] = Object.freeze(apiInfo)
         })
       })
     ]).then(() => {

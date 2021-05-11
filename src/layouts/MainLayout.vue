@@ -6,7 +6,7 @@
 
         <q-toolbar-title v-show="subTitleShow || !pageTitle">
           {{ title }}
-          <span class="text-subtitle1">v0.1.3</span>
+          <span class="text-subtitle1">v0.2.0</span>
         </q-toolbar-title>
         <q-toolbar-title v-show="pageTitle">
           {{ pageTitle }}
@@ -87,7 +87,8 @@ export default {
       apiMap: {},
       selecting: false,
       selectingComponents: null,
-      editingComponent: null
+      inspectable: false,
+      inspectTarget: null
     }
   }),
 
@@ -115,6 +116,10 @@ export default {
         this.updateTitle(val)
       },
       immediate: true
+    },
+
+    rightOpen(val) {
+      this.state.inspectable = val
     }
   },
 
@@ -142,7 +147,7 @@ export default {
     // 属性栏关闭
     propPanelClose() {
       this.rightOpen = false
-      this.state.editingComponent = null
+      this.state.inspectTarget = null
     }
   },
 

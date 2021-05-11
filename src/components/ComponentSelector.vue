@@ -109,10 +109,10 @@ export default {
           this.$refs.menu.show(e)
           return
         } else {
-          this.state.editingComponent = this.state.selectingComponents[0].component
+          this.state.inspectTarget = this.state.selectingComponents[0].component
         }
       } else {
-        this.state.editingComponent = null
+        this.state.inspectTarget = null
       }
       this.state.selecting = false
     },
@@ -124,7 +124,7 @@ export default {
 
     // 菜单选中
     menuSelected(index) {
-      this.state.editingComponent = this.listComponents[index].component
+      this.state.inspectTarget = this.listComponents[index].component
       this.listComponents = []
       this.state.selecting = false
     },

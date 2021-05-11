@@ -1515,17 +1515,163 @@
   "QRibbon": {
     "name": "丝带装饰",
     "doc": "https://quasarframework.github.io/quasar-ui-qribbon/docs#QRibbon-API",
+    "thirdparty": true,
     "incomplete": true
   },
 
   "QMarkdown": {
     "name": "Markdown文档",
     "doc": "https://quasarframework.github.io/quasar-ui-qmarkdown/docs#QMarkdown-API",
+    "thirdparty": true,
     "category": "tool",
     "demoProps": {
       "noHeadingAnchorLinks": true,
       "src": "# 标题\n正文\n- 列表项1\n- 列表项2\n  - 子列表项\n::: info\n提示文字\n> 引用内容\n:::\n```js\nconst some = { js: 'code' }\n```"
     },
     "demoSlots": {}
+  },
+
+  "ClosePopup": {
+    "name": "关闭弹出",
+    "doc": "https://quasar.dev/vue-directives/close-popup#closepopup-api",
+    "category": "directive"
+  },
+
+  "GoBack": {
+    "name": "返回上页",
+    "doc": "https://quasar.dev/vue-directives/go-back#goback-api",
+    "category": "directive"
+  },
+
+  "Ripple": {
+    "name": "点击波纹",
+    "doc": "https://quasar.dev/vue-directives/material-ripple#ripple-api",
+    "category": "directive"
+  },
+
+  "Morph": {
+    "name": "变形",
+    "doc": "https://quasar.dev/vue-directives/morph#morph-api",
+    "category": "directive"
+  },
+
+  "Mutation": {
+    "name": "变动检测",
+    "doc": "https://quasar.dev/vue-directives/mutation#mutation-api",
+    "category": "directive"
+  },
+
+  "Intersection": {
+    "name": "视区交叉检测",
+    "doc": "https://quasar.dev/vue-directives/intersection#intersection-api",
+    "category": "directive"
+  },
+
+  "Scroll": {
+    "name": "滚动检测",
+    "doc": "https://quasar.dev/vue-directives/scroll#scroll-api",
+    "category": "directive"
+  },
+
+  "ScrollFire": {
+    "name": "滚入触发",
+    "doc": "https://quasar.dev/vue-directives/scroll-fire#scrollfire-api",
+    "category": "directive"
+  },
+
+  "TouchHold": {
+    "name": "按住保持",
+    "doc": "https://quasar.dev/vue-directives/touch-hold#touchhold-api",
+    "category": "directive"
+  },
+
+  "TouchPan": {
+    "name": "按住拖拽",
+    "doc": "https://quasar.dev/vue-directives/touch-pan#touchpan-api",
+    "category": "directive"
+  },
+
+  "TouchRepeat": {
+    "name": "按住重复",
+    "doc": "https://quasar.dev/vue-directives/touch-repeat#touchrepeat-api",
+    "category": "directive"
+  },
+
+  "TouchSwipe": {
+    "name": "按住滑过",
+    "doc": "https://quasar.dev/vue-directives/touch-swipe#touchswipe-api",
+    "category": "directive"
+  },
+
+  "Dialog": {
+    "name": "对话框",
+    "doc": "https://quasar.dev/quasar-plugins/dialog#dialog-api",
+    "category": "plugin"
+  },
+
+  "Notify": {
+    "name": "通知",
+    "doc": "https://quasar.dev/quasar-plugins/notify#notify-api",
+    "category": "plugin"
+  },
+
+  "BottomSheet": {
+    "name": "底部滑出面板",
+    "doc": "https://quasar.dev/quasar-plugins/bottom-sheet#bottomsheet-api",
+    "category": "plugin"
+  },
+
+  "Dark": {
+    "name": "暗色",
+    "doc": "https://quasar.dev/quasar-plugins/dark#dark-api",
+    "category": "plugin"
+  },
+
+  "AddressbarColor": {
+    "name": "地址栏颜色",
+    "doc": "https://quasar.dev/quasar-plugins/addressbar-color#addressbarcolor-api",
+    "category": "plugin"
+  },
+
+  "AppFullscreen": {
+    "name": "全屏",
+    "doc": "https://quasar.dev/quasar-plugins/app-fullscreen#appfullscreen-api",
+    "category": "plugin"
+  },
+
+  "AppVisibility": {
+    "name": "应用可见性",
+    "doc": "https://quasar.dev/quasar-plugins/app-visibility#appvisibility-api",
+    "category": "plugin"
+  },
+
+  "Loading": {
+    "name": "全屏加载",
+    "doc": "https://quasar.dev/quasar-plugins/loading#loading-api",
+    "category": "plugin"
+  },
+
+  "LoadingBar": {
+    "name": "边缘加载条",
+    "doc": "https://quasar.dev/quasar-plugins/loading-bar#loadingbar-api",
+    "category": "plugin"
+  },
+
+  "LocalStorage": {
+    "name": "本地存储",
+    "doc": "https://quasar.dev/quasar-plugins/web-storage#localstorage-api",
+    "category": "plugin"
+  },
+
+  "SessionStorage": {
+    "name": "会话存储",
+    "doc": "https://quasar.dev/quasar-plugins/web-storage#sessionstorage-api",
+    "category": "plugin"
+  },
+
+  "Cookies": {
+    "name": "网页Cookies",
+    "doc": "https://quasar.dev/quasar-plugins/cookies#cookies-api",
+    "category": "plugin"
   }
 }

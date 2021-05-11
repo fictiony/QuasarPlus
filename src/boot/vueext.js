@@ -52,6 +52,11 @@ Object.assign(Vue.prototype, {
     return name.replace(/-\w/g, m => m[1].toUpperCase())
   },
 
+  // 转换中划线命名
+  $toKebabCase(name) {
+    return name.replace(/[A-Z]/g, m => '-' + m.toLowerCase()).replace(/^-/, '')
+  },
+
   // 判断对象是否为空（含null）
   $isEmpty(obj) {
     if (typeof obj !== 'object') return true
@@ -59,6 +64,15 @@ Object.assign(Vue.prototype, {
       if (i !== undefined) return false
     }
     return true
+  },
+
+  // 对象数组转映射表
+  $arrToMap(arr, keyName) {
+    const map = {}
+    arr.forEach(item => {
+      map[item[keyName]] = item
+    })
+    return map
   },
 
   // 强制设置属性（屏蔽Vue警告）
