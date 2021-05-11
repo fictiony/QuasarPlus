@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 // 第三方组件
 import { QEditableTd, QSelectableTd } from 'components/thirdparty/qmodeltd'
-import MyDrawer from 'components/plus/MyDrawer.js'
+import { MyDrawer } from 'components/plus'
 
 // 功能组件
 import CustomScroller from 'components/CustomScroller.js'
