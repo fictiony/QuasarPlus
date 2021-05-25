@@ -1,7 +1,7 @@
 {
   "name": "quasarplus",
-  "version": "0.0.1",
-  "description": "Quasar组件扩展",
+  "version": "0.2.1",
+  "description": "Quasar 组件扩展",
   "productName": "QuasarPlus",
   "author": "fictiony <fictiony@qq.com>",
   "private": true,

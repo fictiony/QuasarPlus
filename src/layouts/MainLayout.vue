@@ -1,19 +1,19 @@
 <template>
-  <q-layout view="lHh LpR fff" ref="layout">
+  <q-layout view="lHh LpR lfr" ref="layout">
     <q-header elevated>
       <q-toolbar class="q-pr-xs">
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftOpen = !leftOpen" />
 
         <q-toolbar-title v-show="subTitleShow || !pageTitle">
           {{ title }}
-          <span class="text-subtitle1">v0.2.0</span>
+          <span class="text-subtitle1">v{{ version }}</span>
         </q-toolbar-title>
         <q-toolbar-title v-show="pageTitle">
           {{ pageTitle }}
         </q-toolbar-title>
 
         <div class="row items-center" v-show="subTitleShow">
-          <q-btn flat dense size="sm" label="联系作者" icon="email" type="a" href="mailto:ficitony@qq.com">
+          <q-btn flat dense size="sm" label="联系站长" icon="email" type="a" href="mailto:ficitony@qq.com">
             <q-tooltip>ficitony@qq.com</q-tooltip>
           </q-btn>
           <div class="q-ml-md">Quasar v{{ $q.version }}</div>
@@ -39,7 +39,7 @@
                 <q-item-section avatar>
                   <q-icon name="email" />
                 </q-item-section>
-                <q-item-section>联系作者</q-item-section>
+                <q-item-section>联系站长</q-item-section>
               </q-item>
               <q-separator />
               <q-item dense disable>
@@ -50,6 +50,16 @@
         </q-btn>
       </q-toolbar>
     </q-header>
+
+    <q-footer class="q-pa-sm bg-transparent text-primary row justify-center" bordered>
+      {{ name }}
+      <div class="q-px-sm">|</div>
+      <q-btn flat dense size="sm" label="MIT LICENSE" type="a" href="https://gitee.com/fictiony/quasar-plus/blob/master/LICENSE" target="_blank" />
+      <div class="q-px-sm">|</div>
+      <q-btn flat dense size="sm" label="浙ICP备2021015824号-1" type="a" href="https://beian.miit.gov.cn/" target="_blank" />
+      <div class="q-px-sm">|</div>
+      <q-btn flat dense size="sm" label="联系站长" type="a" href="mailto:ficitony@qq.com" />
+    </q-footer>
 
     <my-drawer v-model="leftOpen" show-if-above bordered elevated :content-class="drawerBgColor" :width="200" :limits="[150, 300]">
       <MenuPanel />
@@ -71,6 +81,7 @@
 import { pageList, plusList } from 'components/menu.js'
 import MenuPanel from 'pages/MenuPanel.vue'
 import PropPanel from 'pages/PropPanel.vue'
+import cfg from '../../package.json'
 
 export default {
   components: {
@@ -79,7 +90,9 @@ export default {
   },
 
   data: () => ({
-    title: 'Quasar 组件扩展',
+    name: cfg.productName,
+    title: cfg.description,
+    version: cfg.version,
     leftOpen: false,
     rightOpen: false,
     pageTitle: '',
