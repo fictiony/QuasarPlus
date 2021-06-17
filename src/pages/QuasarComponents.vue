@@ -296,8 +296,8 @@ export default {
         }
       }
       if (this.realSearchWord) {
-        if (info.className.toLowerCase().indexOf(this.realSearchWord) >= 0) return true
-        if (info.name.toLowerCase().indexOf(this.realSearchWord) >= 0) return true
+        if (info.className.toLowerCase().includes(this.realSearchWord)) return true
+        if (info.name.toLowerCase().includes(this.realSearchWord)) return true
         return false
       }
       return true
