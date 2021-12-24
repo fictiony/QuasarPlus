@@ -42,7 +42,6 @@
       ref="editor"
       class="_value"
       :class="editable ? '' : $q.dark.isActive ? 'bg-brown-10' : 'bg-orange-1'"
-      :disable="fobidEdit"
       popup-content-style="font-size: 13px"
       auto-save
       v-model="editValue"
@@ -60,9 +59,10 @@ import { QTd } from 'quasar'
 import { QEditableTd, QSelectableTd } from 'components/thirdparty/qmodeltd'
 
 export default {
+  name: 'PropItem',
+
   data: () => ({
-    pinTooltip: false,
-    fobidEdit: true // 初始禁用编辑（用于修复编辑组件初始会莫名其妙激活菜单的bug）
+    pinTooltip: false
   }),
 
   props: {
@@ -226,10 +226,6 @@ export default {
       this.pinTooltip = false
       this.$refs.tooltip.hide()
     }
-  },
-
-  mounted() {
-    this.fobidEdit = false
   }
 }
 </script>

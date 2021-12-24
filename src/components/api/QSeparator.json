@@ -1,0 +1,68 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/separator"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "spaced": {
+            "type": [
+                "Boolean",
+                "String"
+            ],
+            "desc": "如果设置为真，则相应的方向边距将设置为8px；它还可以设置为CSS单位的大小，包括单位名称，或xs | sm | md | lg | xl预定义大小之一",
+            "default": "md",
+            "examples": [
+                "12px",
+                "sm",
+                "md"
+            ],
+            "category": "content"
+        },
+        "inset": {
+            "type": [
+                "Boolean",
+                "String"
+            ],
+            "desc": "如果设置为true，左右边距将设置为16px。如果设置为item，则左右边距将设置为72px。如果设置为item-thumbnail，则左边距设置为116px，右边距设置为0px",
+            "examples": [
+                "item",
+                "item-thumbnail"
+            ],
+            "category": "content"
+        },
+        "vertical": {
+            "type": "Boolean",
+            "desc": "如果设置为true，分隔符将是垂直的。",
+            "category": "content"
+        },
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "style",
+            "addedIn": "v1.12.0"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        }
+    }
+}

@@ -1,0 +1,93 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/scroll-observer"
+    },
+    "props": {
+        "debounce": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "去抖量（毫秒）",
+            "examples": [
+                "0",
+                "530"
+            ],
+            "category": "behavior"
+        },
+        "horizontal": {
+            "type": "Boolean",
+            "desc": "注册水平滚动而不是垂直滚动（默认设置）",
+            "category": "behavior"
+        },
+        "scroll-target": {
+            "type": [
+                "Element",
+                "String"
+            ],
+            "desc": "CSS选择器或DOM元素用作自定义滚动容器，而不是自动检测到的滚动容器",
+            "examples": [
+                ":scroll-target=\"$refs.scrollTarget\"",
+                "scroll-target=\".scroll-target-class\"",
+                "scroll-target=\"#scroll-target-id\"",
+                "scroll-target=\"body\""
+            ],
+            "category": "behavior",
+            "addedIn": "v1.8.0"
+        }
+    },
+    "events": {
+        "scroll": {
+            "desc": "当滚动位置改变时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "滚动详细信息",
+                    "definition": {
+                        "position": {
+                            "type": "Number",
+                            "desc": "滚动偏移（从顶部）",
+                            "examples": [
+                                822
+                            ]
+                        },
+                        "direction": {
+                            "type": "String",
+                            "desc": "滚动方向",
+                            "values": [
+                                "up",
+                                "down"
+                            ]
+                        },
+                        "directionChanged": {
+                            "type": "Boolean",
+                            "desc": "自上次发出事件以来，滚动方向是否已更改？"
+                        },
+                        "inflexionPosition": {
+                            "type": "Number",
+                            "desc": "滚动方向改变的最后一个滚动偏移量",
+                            "examples": [
+                                822
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "methods": {
+        "trigger": {
+            "desc": "发出“scroll”事件",
+            "params": {
+                "immediately": {
+                    "type": "Boolean",
+                    "desc": "跳过去盎司量"
+                }
+            }
+        },
+        "getPosition": {
+            "desc": "以对象的形式获取当前滚动详细信息：{position，direction，directionChanged，inflexionPosition}"
+        }
+    }
+}

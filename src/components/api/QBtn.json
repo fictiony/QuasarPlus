@@ -1,0 +1,295 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/button"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称或标准大小名称（xs | sm | md | lg | xl）",
+            "examples": [
+                "16px",
+                "2rem",
+                "xs",
+                "md"
+            ],
+            "category": "style"
+        },
+        "ripple": {
+            "type": [
+                "Boolean",
+                "Object"
+            ],
+            "desc": "配置material波动（通过将其设置为“false”或提供配置对象将其禁用）",
+            "default": true,
+            "examples": [
+                false,
+                "{ early: true, center: true, color: 'teal', keyCodes: [] }"
+            ],
+            "category": "style"
+        },
+        "type": {
+            "type": "String",
+            "desc": "定义按钮HTML DOM类型",
+            "default": "button",
+            "values": [
+                "a",
+                "submit",
+                "button",
+                "reset"
+            ],
+            "examples": [
+                "type=\"a\" href=\"http://some-site.net\" target=\"__blank\""
+            ],
+            "category": "general"
+        },
+        "to": {
+            "type": [
+                "String",
+                "Object"
+            ],
+            "desc": "相当于Vue Router <Router link>的“to”属性",
+            "examples": [
+                "/home/dashboard",
+                ":to=\"{ name: 'my-route-name' }\""
+            ],
+            "category": "router"
+        },
+        "replace": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“replace”属性",
+            "category": "router"
+        },
+        "append": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“append”属性",
+            "category": "router",
+            "addedIn": "v1.13.0"
+        },
+        "label": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "将显示在按钮上的文本",
+            "examples": [
+                "Button Label"
+            ],
+            "category": "content"
+        },
+        "icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "icon-right": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "outline": {
+            "type": "Boolean",
+            "desc": "使用“轮廓线”设计",
+            "category": "style"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "使用“扁平”设计",
+            "category": "style"
+        },
+        "unelevated": {
+            "type": "Boolean",
+            "desc": "移除阴影",
+            "category": "style"
+        },
+        "rounded": {
+            "type": "Boolean",
+            "desc": "为方形按钮应用更突出的border-radius",
+            "category": "style"
+        },
+        "push": {
+            "type": "Boolean",
+            "desc": "使用“推”设计",
+            "category": "style"
+        },
+        "glossy": {
+            "type": "Boolean",
+            "desc": "应用光泽效果",
+            "category": "style"
+        },
+        "fab": {
+            "type": "Boolean",
+            "desc": "使按钮大小和形状适合浮动操作按钮",
+            "category": "style"
+        },
+        "fab-mini": {
+            "type": "Boolean",
+            "desc": "使按钮的大小和形状适合一个小的浮动动作按钮",
+            "category": "style"
+        },
+        "padding": {
+            "type": "String",
+            "desc": "应用自定义填充（垂直[水平]）；以CSS单位表示的尺寸，包括单位名称或标准尺寸名称（none | xs | sm | md | lg | xl）；设置时也会删除最小宽度和高度",
+            "examples": [
+                "16px",
+                "10px 5px",
+                "2rem",
+                "xs",
+                "md lg",
+                "2px 2px 5px 7px"
+            ],
+            "category": "style",
+            "addedIn": "v1.11.0"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "no-caps": {
+            "type": "Boolean",
+            "desc": "避免将标签文本转换为大写（默认情况下会发生这种情况）",
+            "category": "content"
+        },
+        "no-wrap": {
+            "type": "Boolean",
+            "desc": "避免标签文本换行",
+            "category": "content"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "tabindex": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "Tabindex HTML属性值",
+            "examples": [
+                "0",
+                "100"
+            ],
+            "category": "general"
+        },
+        "align": {
+            "type": "String",
+            "desc": "标签或内容对齐",
+            "default": "center",
+            "values": [
+                "left",
+                "right",
+                "center",
+                "around",
+                "between",
+                "evenly"
+            ],
+            "category": "content"
+        },
+        "stack": {
+            "type": "Boolean",
+            "desc": "垂直堆叠图标和标签，而不是在同一行上（就像默认情况下一样）",
+            "category": "content"
+        },
+        "stretch": {
+            "type": "Boolean",
+            "desc": "当用于flexbox父元素时，按钮将拉伸到父元素的高度",
+            "category": "content"
+        },
+        "loading": {
+            "type": "Boolean",
+            "desc": "将按钮置于加载状态（显示一个QSpinner——可以通过使用“loading”插槽来重写）",
+            "category": "behavior|state"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "round": {
+            "type": "Boolean",
+            "desc": "做一个圆形按钮",
+            "category": "style"
+        },
+        "percentage": {
+            "type": "Number",
+            "desc": "百分比（0.0<x<100.0）；和“loading”属性一起使用；在背景上显示进度条",
+            "examples": [
+                23
+            ],
+            "category": "behavior"
+        },
+        "dark-percentage": {
+            "type": "Boolean",
+            "desc": "背景上的进度条应为深色；与“percentage”和“loading”属性一起使用",
+            "category": "behavior"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "用于自定义内容，而不是依赖“icon”和“label”道具"
+        },
+        "loading": {
+            "desc": "当处于“loading”状态时重写默认的QSpinner"
+        }
+    },
+    "events": {
+        "click": {
+            "desc": "单击组件时发出（激活）",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象；如果要同步取消导航，请将“evt.navigate”设置为false"
+                },
+                "navigateFn": {
+                    "type": "Function",
+                    "desc": "当您需要控制按钮触发路由导航的时间时，请将“evt.navigate”设置为false并调用此函数；如果在实际路由导航之前有异步工作要做，那么这将非常有用",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        }
+    },
+    "methods": {
+        "click": {
+            "desc": "模拟点击QBtn",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象"
+                }
+            }
+        }
+    }
+}

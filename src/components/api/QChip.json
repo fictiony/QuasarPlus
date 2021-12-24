@@ -1,0 +1,205 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/chip"
+    },
+    "props": {
+        "ripple": {
+            "type": [
+                "Boolean",
+                "Object"
+            ],
+            "desc": "配置material波动（通过将其设置为“false”或提供配置对象将其禁用）",
+            "default": true,
+            "examples": [
+                false,
+                "{ early: true, center: true, color: 'teal', keyCodes: [] }"
+            ],
+            "category": "style"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "size": {
+            "type": "String",
+            "desc": "QChip大小名称或包含单位名称的CSS单位",
+            "examples": [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+                "25px",
+                "2rem"
+            ],
+            "category": "style",
+            "addedIn": "v1.2.2"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style",
+            "addedIn": "v1.3.0"
+        },
+        "icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "icon-right": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "icon-remove": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "icon-selected": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v1.14.6"
+        },
+        "label": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "碎片内容为字符串；如果指定，则覆盖默认插槽",
+            "examples": [
+                "John Doe",
+                "Book"
+            ],
+            "category": "content"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "value": {
+            "type": "Boolean",
+            "desc": "确定QChip是否应渲染的的组件模型",
+            "default": true,
+            "category": "model"
+        },
+        "selected": {
+            "type": "Boolean",
+            "sync": true,
+            "desc": "确定是否选中的QChip的模型",
+            "category": "model"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "设置较低的“边界半径”（border radius）值，而不是默认值，使其接近正方形",
+            "category": "style"
+        },
+        "outline": {
+            "type": "Boolean",
+            "desc": "使用“轮廓线”设计显示",
+            "category": "style"
+        },
+        "clickable": {
+            "type": "Boolean",
+            "desc": "QChip是可点击的吗？如果是这样，那么它将添加悬停效果并发出“click”事件",
+            "category": "state"
+        },
+        "removable": {
+            "type": "Boolean",
+            "desc": "如果设置了，那么它会显示一个“删除”图标，当点击QChip时会发出“remove”事件",
+            "category": "state"
+        },
+        "tabindex": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "Tabindex HTML属性值",
+            "examples": [
+                "0",
+                "100"
+            ],
+            "category": "general"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "如果不使用“label”属性，这就是QChip内容的放置位置"
+        }
+    },
+    "events": {
+        "click": {
+            "desc": "如果设置了“clickable”属性，则在QChip点击后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "update:selected": {
+            "desc": "使用Vue的“selected.sync”属性用于更新其值",
+            "params": {
+                "state": {
+                    "type": "Boolean",
+                    "desc": "选定的状态"
+                }
+            }
+        },
+        "remove": {
+            "desc": "与“value”和“removable”属性一起使用。切换QChip的渲染状态时发出",
+            "params": {
+                "state": {
+                    "type": "Boolean",
+                    "desc": "渲染状态（渲染或不渲染）"
+                }
+            }
+        }
+    }
+}

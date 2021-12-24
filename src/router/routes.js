@@ -1,4 +1,4 @@
-import { plusList } from 'components/menu.js'
+import { PLUS_LIST } from 'boot/menu.js'
 import DemoPage from 'components/DemoPage.vue'
 
 const routes = [
@@ -8,7 +8,7 @@ const routes = [
     children: [
       { path: '/', component: () => import('pages/Index.vue') },
       { path: '/QuasarComponents/:category?', component: () => import('pages/QuasarComponents.vue') },
-      ...plusList.map((item, index) => ({
+      ...PLUS_LIST.map((item, index) => ({
         path: item.to,
         component: () => import(
           'pages/doc/' + item.caption + '.md'
@@ -21,11 +21,11 @@ const routes = [
             },
             prevPage: {
               type: String,
-              default: (plusList[index - 1] || {}).to || '/'
+              default: (PLUS_LIST[index - 1] || {}).to || '/'
             },
             nextPage: {
               type: String,
-              default: (plusList[index + 1] || {}).to || '/'
+              default: (PLUS_LIST[index + 1] || {}).to || '/'
             }
           }
         }))

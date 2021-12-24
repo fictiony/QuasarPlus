@@ -1,0 +1,38 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/card"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "align": {
+            "type": "String",
+            "desc": "指定如何对齐操作",
+            "default": "left (for horizontal mode) / stretch (for vertical mode)",
+            "values": [
+                "left",
+                "center",
+                "right",
+                "between",
+                "around",
+                "evenly",
+                "stretch"
+            ],
+            "category": "content"
+        },
+        "vertical": {
+            "type": "Boolean",
+            "desc": "一个接一个地显示操作",
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "建议：QBtn"
+        }
+    }
+}

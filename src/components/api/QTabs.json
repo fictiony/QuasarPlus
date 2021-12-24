@@ -1,0 +1,172 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/tabs"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "value": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "定义当前面板名称的组件模型；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "examples": [
+                "v-model=\"selectedTab\""
+            ],
+            "category": "model"
+        },
+        "vertical": {
+            "type": "Boolean",
+            "desc": "使用垂直设计（选项卡一个接一个，而不是水平排列）",
+            "category": "content"
+        },
+        "outside-arrows": {
+            "type": "Boolean",
+            "desc": "为箭头留出空间，以便将其放置在选项卡的每一侧（箭头在不活动时会褪色）",
+            "category": "content",
+            "addedIn": "v1.12.9"
+        },
+        "mobile-arrows": {
+            "type": "Boolean",
+            "desc": "在移动设备上强制显示箭头（如果需要）",
+            "category": "content",
+            "addedIn": "v1.12.9"
+        },
+        "align": {
+            "type": "String",
+            "desc": "水平对齐选项卡容器中的选项卡",
+            "default": "center",
+            "values": [
+                "left",
+                "center",
+                "right",
+                "justify"
+            ],
+            "examples": [
+                "right"
+            ],
+            "category": "content"
+        },
+        "breakpoint": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "选项卡容器宽度的断点（以像素为单位），选项卡在该断点处自动变为对齐",
+            "default": 600,
+            "examples": [
+                ":breakpoint=\"500\""
+            ],
+            "category": "content|behavior"
+        },
+        "active-color": {
+            "type": "String",
+            "desc": "作为活动选项卡属性的文本的颜色",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "active-bg-color": {
+            "type": "String",
+            "desc": "作为活动选项卡属性的背景的颜色",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "indicator-color": {
+            "type": "String",
+            "desc": "作为活动选项卡属性的指示符（下划线）的颜色",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "content-class": {
+            "type": "String",
+            "desc": "作为内容包装器属性的类的定义",
+            "examples": [
+                "my-special-class"
+            ],
+            "category": "style",
+            "addedIn": "v1.12.0"
+        },
+        "left-icon": {
+            "type": "String",
+            "desc": "当选项卡超出选项卡容器的宽度时，替换用于向左滚动选项卡的默认箭头的图标名称",
+            "examples": [
+                "arrow_left"
+            ],
+            "category": "content"
+        },
+        "right-icon": {
+            "type": "String",
+            "desc": "当选项卡超出选项卡容器的宽度时，替换用于向右滚动选项卡的默认箭头的图标名称",
+            "examples": [
+                "arrow_right"
+            ],
+            "category": "content"
+        },
+        "stretch": {
+            "type": "Boolean",
+            "desc": "在flexbox父级上使用时，选项卡将延伸到父级的高度",
+            "category": "content"
+        },
+        "shrink": {
+            "type": "Boolean",
+            "desc": "默认情况下，QTabs设置为增长到可用空间；不过，你可以用这个属性来扭转这种局面；在QToolbar中放置构件时非常有用（并且是必需的）",
+            "category": "content"
+        },
+        "switch-indicator": {
+            "type": "Boolean",
+            "desc": "切换指示器位置（垂直模式在选项卡左侧或默认水平模式在选项卡上方）",
+            "category": "content"
+        },
+        "narrow-indicator": {
+            "type": "Boolean",
+            "desc": "允许指示器与选项卡内容（文本或图标）的宽度相同，而不是选项卡的整个宽度",
+            "category": "content"
+        },
+        "inline-label": {
+            "type": "Boolean",
+            "desc": "如果使用图标，则允许文本与图标内联",
+            "category": "content"
+        },
+        "no-caps": {
+            "type": "Boolean",
+            "desc": "关闭选项卡中所有字母的大写（这是默认值）",
+            "category": "content"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        }
+    }
+}

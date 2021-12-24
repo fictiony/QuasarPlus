@@ -1,0 +1,115 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/option-group"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称或标准大小名称（xs | sm | md | lg | xl）",
+            "examples": [
+                "16px",
+                "2rem",
+                "xs",
+                "md"
+            ],
+            "category": "style",
+            "addedIn": "v1.8.0"
+        },
+        "value": {
+            "desc": "组件模型；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model",
+            "type": "Any",
+            "examples": [
+                "v-model=\"group\""
+            ]
+        },
+        "options": {
+            "type": "Array",
+            "desc": "具有值和标签属性的对象数组。将根据该数组创建二进制组件；QToggle、QCheckbox或QRadio中的属性也可以作为键/值对添加，以单独控制组件",
+            "examples": [
+                ":options=\"[ { label: 'Option 1', value: 'op1' }, { label: 'Option 2', value: 'op2' }, { label: 'Option 3', value: 'op3', disable: true } ]\""
+            ],
+            "category": "model"
+        },
+        "name": {
+            "type": "String",
+            "desc": "用于指定控件的名称；如果处理直接提交到URL的表单，则非常有用",
+            "examples": [
+                "car_id"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "type": {
+            "type": "String",
+            "desc": "要使用的输入组件的类型",
+            "values": [
+                "radio",
+                "checkbox",
+                "toggle"
+            ],
+            "default": "radio",
+            "examples": [
+                "checkbox"
+            ],
+            "category": "content"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "keep-color": {
+            "type": "Boolean",
+            "desc": "当输入组件被解开时，是否应该保留颜色（如有指定）？",
+            "category": "behavior"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "left-label": {
+            "type": "Boolean",
+            "desc": "标签（如有指定）应显示在输入组件的左侧",
+            "category": "content"
+        },
+        "inline": {
+            "type": "Boolean",
+            "desc": "将输入组件显示为内联块，而不是每个组件都有自己的行",
+            "category": "content"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/stepper"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "自定义导航的内容，QStep或QStepper的子元素（全局，通过“navigation”插槽）"
+        }
+    }
+}

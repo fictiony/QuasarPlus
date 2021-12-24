@@ -1,0 +1,325 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/stepper"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "value": {
+            "type": "Any",
+            "desc": "定义当前面板名称的组件的模型；如果使用数字，则它不定义面板的索引，而是定义面板的名称，也可以是整数；使用此属性（以及“input”事件的侦听器）或使用v-model指令。",
+            "examples": [
+                "v-model=\"panelName\""
+            ],
+            "category": "model"
+        },
+        "keep-alive": {
+            "type": "Boolean",
+            "desc": "相当于在内容上使用Vue的原生<keep alive>组件",
+            "category": "behavior"
+        },
+        "keep-alive-include": {
+            "type": [
+                "String",
+                "Array",
+                "RegExp"
+            ],
+            "desc": "相当于为<keep alive>使用Vue的原生include属性；值必须是有效的Vue组件名称",
+            "examples": [
+                "a,b",
+                "/a|b/",
+                "['a', 'b']"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.15.0"
+        },
+        "keep-alive-exclude": {
+            "type": [
+                "String",
+                "Array",
+                "RegExp"
+            ],
+            "desc": "相当于对<keep alive>使用Vue的原生exclude属性；值必须是有效的Vue组件名称",
+            "examples": [
+                "a,b",
+                "/a|b/",
+                "['a', 'b']"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.15.0"
+        },
+        "keep-alive-max": {
+            "type": "Number",
+            "desc": "相当于对<keep alive>使用Vue的原生max属性",
+            "examples": [
+                "2"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.15.0"
+        },
+        "animated": {
+            "type": "Boolean",
+            "desc": "启用面板之间的转换（另请参阅“transition-prev”和“'transition-next”属性）",
+            "category": "behavior"
+        },
+        "infinite": {
+            "type": "Boolean",
+            "desc": "使组件显示为无限大（当到达最后一个面板时，下一个将成为第一个）",
+            "category": "behavior"
+        },
+        "swipeable": {
+            "type": "Boolean",
+            "desc": "启用swipe事件（可能会干扰内容的触摸/鼠标事件）",
+            "category": "behavior"
+        },
+        "vertical": {
+            "type": "Boolean",
+            "desc": "将步进器置于垂直模式（而不是默认水平模式）",
+            "category": "behavior"
+        },
+        "transition-prev": {
+            "type": "String",
+            "desc": "Quasar的一个嵌入式过渡动画（只有设置了“animated”属性才有效）",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "slide-right/slide-down"
+        },
+        "transition-next": {
+            "type": "String",
+            "desc": "uasar的一个嵌入式过渡动画（只有设置了“animated”属性才有效）",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "slide-left/slide-up"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "应用“平面”设计（无默认阴影）",
+            "category": "style"
+        },
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于组件",
+            "category": "style"
+        },
+        "alternative-labels": {
+            "type": "Boolean",
+            "desc": "使用替代标签-将图标堆叠在标签顶部（仅适用于水平步进器）",
+            "category": "header"
+        },
+        "header-nav": {
+            "type": "Boolean",
+            "desc": "允许通过标题导航",
+            "category": "behavior"
+        },
+        "contracted": {
+            "type": "Boolean",
+            "desc": "在窄窗口上隐藏标题标签",
+            "category": "header|behavior"
+        },
+        "inactive-icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "header"
+        },
+        "inactive-color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "header"
+        },
+        "done-icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "header"
+        },
+        "done-color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "header"
+        },
+        "active-icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "header"
+        },
+        "active-color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "header"
+        },
+        "error-icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "header"
+        },
+        "error-color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "header"
+        },
+        "header-class": {
+            "type": "String",
+            "desc": "作为头部属性的类的定义",
+            "examples": [
+                "my-special-class"
+            ],
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "建议：QStep"
+        },
+        "navigation": {
+            "desc": "全局导航专用插槽；建议：QStepperNavigation"
+        },
+        "message": {
+            "desc": "用于将消息放在每个步骤顶部（如果是水平步进）或步骤上方（如果是垂直）的特定插槽；建议：QBanner，div.q-pa-lg"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "组件更改模型时发出；如果模型在外部更改，则不会触发此事件；也用于v-model",
+            "params": {
+                "value": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "新建当前面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                }
+            }
+        },
+        "before-transition": {
+            "desc": "在转换到新面板之前发出",
+            "params": {
+                "newVal": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "转换到的面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                },
+                "oldVal": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "发生转换的面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                }
+            }
+        },
+        "transition": {
+            "desc": "在组件转换到新面板后发出",
+            "params": {
+                "newVal": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "转换到的面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                },
+                "oldVal": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "发生转换的面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                }
+            }
+        }
+    },
+    "methods": {
+        "next": {
+            "desc": "转到下一个面板"
+        },
+        "previous": {
+            "desc": "转到上一个面板"
+        },
+        "goTo": {
+            "desc": "转到特定面板",
+            "params": {
+                "panelName": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "面板名称，可以是字符串或数字；数字不是指面板索引，而是指其名称，名称可以是整数",
+                    "required": true,
+                    "examples": [
+                        "dashboard"
+                    ]
+                }
+            }
+        }
+    }
+}

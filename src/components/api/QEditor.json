@@ -1,0 +1,389 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/editor"
+    },
+    "props": {
+        "fullscreen": {
+            "type": "Boolean",
+            "sync": true,
+            "desc": "全屏模式",
+            "examples": [
+                ":fullscreen.sync=\"isFullscreen\""
+            ],
+            "category": "behavior"
+        },
+        "no-route-fullscreen-exit": {
+            "type": "Boolean",
+            "desc": "更改路由应用程序不会退出全屏",
+            "category": "behavior",
+            "addedIn": "v1.1.7"
+        },
+        "value": {
+            "type": "String",
+            "desc": "组件型号；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "required": true,
+            "examples": [
+                "v-model=\"content\""
+            ],
+            "category": "model"
+        },
+        "readonly": {
+            "type": "Boolean",
+            "desc": "将组件置于只读模式",
+            "category": "state"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "删除border-radius，使边框为正方形",
+            "category": "style"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "应用“平面”设计（无边框）",
+            "category": "style"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；工具栏按钮仅显示在一行上",
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style",
+            "addedIn": "v1.3.0"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "min-height": {
+            "type": "String",
+            "desc": "可编辑区域最小高度的CSS单位",
+            "default": "10rem",
+            "examples": [
+                "15rem",
+                "50vh"
+            ],
+            "category": "style"
+        },
+        "max-height": {
+            "type": "String",
+            "desc": "输入区域最大高度的CSS单位",
+            "examples": [
+                "1000px",
+                "90vh"
+            ],
+            "category": "style"
+        },
+        "height": {
+            "type": "String",
+            "desc": "设置可编辑区域的高度的CSS值",
+            "examples": [
+                "100px",
+                "50vh"
+            ],
+            "category": "style"
+        },
+        "definitions": {
+            "type": "Object",
+            "desc": "“toolbar”属性中包含的命令及其按钮的定义",
+            "examples": [
+                ":definitions=\"{ save: { tip: 'Save your work', icon: 'save', label: 'Save', handler: saveWork }, upload: { tip: 'Upload to cloud', icon: 'cloud_upload', label: 'Upload', handler: uploadIt } }\""
+            ],
+            "definition": {
+                "label": {
+                    "type": "String",
+                    "desc": "按钮的标签",
+                    "examples": [
+                        "Addresses"
+                    ]
+                },
+                "tip": {
+                    "type": "String",
+                    "desc": "悬停时显示为工具提示的文本",
+                    "examples": [
+                        "Add a contact from the Address Book"
+                    ]
+                },
+                "htmlTip": {
+                    "type": "String",
+                    "desc": "悬停时在工具提示中显示的HTML格式文本",
+                    "examples": [
+                        "Add a <span class=\"red\">user</span> from the address book"
+                    ]
+                },
+                "icon": {
+                    "type": "String",
+                    "desc": "按钮图标",
+                    "examples": [
+                        "fas fa-address-book"
+                    ]
+                },
+                "key": {
+                    "type": "Number",
+                    "desc": "要与<ctrl>键一起用作触发此元素的快捷键的键代码",
+                    "examples": [
+                        "12",
+                        "36"
+                    ]
+                },
+                "handler": {
+                    "type": "Function",
+                    "desc": "必须输入this或“cmd”。按钮被点击/轻按时的函数。",
+                    "params": null,
+                    "returns": null,
+                    "examples": [
+                        "() => this.uploadFile()"
+                    ]
+                },
+                "cmd": {
+                    "type": "String",
+                    "desc": "需要这个或“handler”。根据designMode API，这必须是有效的execCommand方法。",
+                    "examples": [
+                        "insertHTML",
+                        "justifyFull"
+                    ]
+                },
+                "param": {
+                    "type": "String",
+                    "desc": "仅在使用“cmd”时设置参数。这通常是要注入的文本或HTML，但高度依赖于所调用的特定命令。",
+                    "examples": [
+                        "<img src=\"://uploads/001.jpg\" alt=\"nice pic\" />"
+                    ]
+                },
+                "disable": {
+                    "type": [
+                        "Boolean",
+                        "Function"
+                    ],
+                    "desc": "按钮是否已禁用？如果指定函数，则返回布尔值。",
+                    "examples": [
+                        "() => this.userIsActive()"
+                    ]
+                },
+                "type": {
+                    "type": "String",
+                    "desc": "如果按钮不应具有“active”状态，则传递值“no-state”",
+                    "values": [
+                        null,
+                        "no-state"
+                    ],
+                    "examples": [
+                        "no-state"
+                    ]
+                },
+                "fixedLabel": {
+                    "type": "Boolean",
+                    "desc": "锁定按钮标签，使其不会根据选定的子选项更改。"
+                },
+                "fixedIcon": {
+                    "type": "Boolean",
+                    "desc": "锁定按钮图标，使其不会根据所选的子选项更改。"
+                },
+                "highlight": {
+                    "type": "Boolean",
+                    "desc": "选中子选项后，高亮显示工具栏按钮。"
+                }
+            },
+            "category": "toolbar"
+        },
+        "fonts": {
+            "type": "Object",
+            "desc": "具有字体定义的对象",
+            "examples": [
+                ":fonts=\"{ arial: 'Arial', arial_black: 'Arial Black', comic_sans: 'Comic Sans MS' }\""
+            ],
+            "category": "toolbar"
+        },
+        "toolbar": {
+            "type": "Array",
+            "desc": "对象/字符串数组，用于定义工具栏中可用元素和命令的结构",
+            "default": [
+                [
+                    "left",
+                    "center",
+                    "right",
+                    "justify"
+                ],
+                [
+                    "bold",
+                    "italic",
+                    "underline",
+                    "strike"
+                ],
+                [
+                    "undo",
+                    "redo"
+                ]
+            ],
+            "examples": [
+                [
+                    "left",
+                    "center",
+                    "right",
+                    "justify"
+                ]
+            ],
+            "category": "toolbar"
+        },
+        "toolbar-color": {
+            "type": "String",
+            "desc": "工具栏中按钮和文本的字体颜色（来自Quasar调色板）",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "toolbar"
+        },
+        "toolbar-text-color": {
+            "type": "String",
+            "desc": "工具栏命令的文本颜色（来自Quasar调色板）",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "toolbar"
+        },
+        "toolbar-toggle-color": {
+            "type": "String",
+            "desc": "选择工具栏命令按钮的激活的颜色（从Quasar调色板）",
+            "default": "primary",
+            "examples": [
+                "secondary",
+                "blue-3"
+            ],
+            "category": "toolbar"
+        },
+        "toolbar-bg": {
+            "type": "String",
+            "desc": "工具栏背景色（来自Quasar调色板）",
+            "default": "grey-3",
+            "examples": [
+                "secondary",
+                "blue-3"
+            ],
+            "category": "toolbar"
+        },
+        "toolbar-outline": {
+            "type": "Boolean",
+            "desc": "工具栏按钮呈现“轮廓线”",
+            "category": "toolbar|style"
+        },
+        "toolbar-push": {
+            "type": "Boolean",
+            "desc": "工具栏按钮呈现为“按钮”类型",
+            "category": "toolbar|style"
+        },
+        "toolbar-rounded": {
+            "type": "Boolean",
+            "desc": "工具栏按钮呈现为“圆形”",
+            "category": "toolbar|style"
+        },
+        "paragraph-tag": {
+            "type": "String",
+            "desc": "要使用的段落标记",
+            "values": [
+                "div",
+                "p"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.14.4"
+        },
+        "content-style": {
+            "type": "Object",
+            "desc": "具有CSS属性和值的对象，用于设置QEditor容器的样式",
+            "examples": [
+                ":content-style=\"{ backgroundColor: '#C0C0C0' }\""
+            ],
+            "category": "style"
+        },
+        "content-class": {
+            "type": [
+                "Object",
+                "Array",
+                "String"
+            ],
+            "desc": "输入区域的CSS类",
+            "examples": [
+                "my-special-class",
+                ":content-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "placeholder": {
+            "type": "String",
+            "desc": "显示为占位符的文本",
+            "examples": [
+                "Type your story here ..."
+            ],
+            "category": "content",
+            "addedIn": "v1.9.12"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "String",
+                    "desc": "内容的纯HTML",
+                    "required": true
+                }
+            }
+        }
+    },
+    "methods": {
+        "toggleFullscreen": {
+            "desc": "将视图切换为全屏或非全屏"
+        },
+        "setFullscreen": {
+            "desc": "进入全屏视图"
+        },
+        "exitFullscreen": {
+            "desc": "离开全屏视图"
+        },
+        "runCmd": {
+            "desc": "在插入符号的位置和范围运行contentEditable命令",
+            "params": {
+                "cmd": {
+                    "type": "String",
+                    "desc": "根据designMode API，必须是有效的execCommand方法",
+                    "examples": [
+                        "copy",
+                        "cut",
+                        "paste"
+                    ],
+                    "required": true
+                },
+                "param": {
+                    "type": "String",
+                    "desc": "传递给命令的参数",
+                    "examples": [
+                        "<small>Small Text</small>"
+                    ]
+                },
+                "update": {
+                    "type": "Boolean",
+                    "desc": "刷新工具栏",
+                    "default": true
+                }
+            }
+        },
+        "refreshToolbar": {
+            "desc": "隐藏链接编辑器（如果可见），并强制实例重新渲染"
+        },
+        "focus": {
+            "desc": "将焦点放在保存的光标位置的可编辑内容上"
+        },
+        "getContentEl": {
+            "desc": "检索编辑器的内容",
+            "returns": {
+                "type": "Element",
+                "desc": "在可编辑区域内提供纯HTML"
+            }
+        }
+    }
+}

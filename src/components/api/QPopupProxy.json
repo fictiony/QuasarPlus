@@ -1,0 +1,147 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/popup-proxy"
+    },
+    "props": {
+        "target": {
+            "type": [
+                "Boolean",
+                "String",
+                "Element"
+            ],
+            "desc": "配置目标元素以触发组件切换；'“true”表示启用父DOM元素，“false”表示禁用将事件附加到任何DOM元素；通过使用字符串（CSS选择器）或DOM元素，它将事件附加到指定的DOM元素（如果存在）",
+            "default": true,
+            "values": [
+                "(Boolean) true",
+                "(Boolean) false",
+                "(CSS selector)",
+                "(DOM Element)"
+            ],
+            "examples": [
+                ":target=\"false\"",
+                ":target=\"$refs.target\"",
+                "target=\".my-parent\"",
+                "target=\"#target-id\""
+            ],
+            "category": "behavior"
+        },
+        "no-parent-event": {
+            "type": "Boolean",
+            "desc": "不将事件附加到目标DOM元素（触发元素显示）",
+            "category": "behavior"
+        },
+        "context-menu": {
+            "type": "Boolean",
+            "desc": "允许组件的行为类似于上下文菜单，通过鼠标右键单击（或在移动设备上长按）打开",
+            "category": "behavior"
+        },
+        "value": {
+            "type": "Boolean",
+            "desc": "定义组件的状态（显示/隐藏）；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model"
+        },
+        "breakpoint": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "窗口宽度/高度（以较小者为准）的断点（以像素为单位），从中可以使用菜单而不是对话框",
+            "default": 450,
+            "examples": [
+                992,
+                ":breakpoint=\"1024\""
+            ],
+            "category": "behavior"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        },
+        "before-show": {
+            "desc": "在组件触发show()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "show": {
+            "desc": "在组件触发show()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "before-hide": {
+            "desc": "在组件触发hide()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "hide": {
+            "desc": "在组件触发hide()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        }
+    },
+    "methods": {
+        "show": {
+            "desc": "触发组件显示",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "hide": {
+            "desc": "触发组件隐藏",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "toggle": {
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            },
+            "desc": "触发组件在显示/隐藏之间切换"
+        }
+    }
+}

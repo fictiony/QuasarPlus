@@ -1,0 +1,291 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/time"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "name": {
+            "type": "String",
+            "desc": "用于指定控件的名称；如果处理直接提交到URL的表单，则非常有用",
+            "examples": [
+                "car_id"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "value": {
+            "desc": "组件的时间；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model",
+            "type": "String",
+            "required": true,
+            "examples": [
+                "v-model=\"currentTime\""
+            ]
+        },
+        "landscape": {
+            "type": "Boolean",
+            "desc": "以横向模式显示组件",
+            "category": "behavior"
+        },
+        "mask": {
+            "type": "String",
+            "desc": "用于解析和格式化值的掩码（格式化字符串）",
+            "category": "model",
+            "default": "HH:mm",
+            "examples": [
+                "HH:mm:ss",
+                "YYYY-MM-DD HH:mm:ss",
+                "HH:mm MMMM Do, YYYY"
+            ]
+        },
+        "locale": {
+            "type": "Object",
+            "desc": "区域设置格式选项",
+            "examples": [
+                ":locale=\"{ monthsShort: ['Ian', 'Feb', 'Mar', '...'] }\""
+            ],
+            "definition": {
+                "days": {
+                    "type": "Array",
+                    "desc": "星期几的长名称列表（DDDD），从星期天开始",
+                    "examples": [
+                        "['Duminica', 'Luni', 'Marti', '...']"
+                    ]
+                },
+                "daysShort": {
+                    "type": "Array",
+                    "desc": "星期几的短名称列表（DDD），从星期天开始",
+                    "examples": [
+                        "['Dum', 'Lun', 'Mar', '...']"
+                    ]
+                },
+                "months": {
+                    "type": "Array",
+                    "desc": "月份的长名称列表（mm），从一月开始",
+                    "examples": [
+                        "['Ianuarie', 'Februarie', 'Martie', '...']"
+                    ]
+                },
+                "monthsShort": {
+                    "type": "Array",
+                    "desc": "月份的短名称列表（MMM），从一月开始",
+                    "examples": [
+                        "['Ian', 'Feb', 'Mar', '...']"
+                    ]
+                }
+            },
+            "category": "model"
+        },
+        "calendar": {
+            "type": "String",
+            "desc": "指定日历类型",
+            "default": "gregorian",
+            "values": [
+                "gregorian",
+                "persian"
+            ],
+            "category": "model"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "删除border-radius，使边界为正方形",
+            "category": "style",
+            "addedIn": "v1.1.5"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "应用“平面”设计（无默认阴影）",
+            "category": "style",
+            "addedIn": "v1.1.5"
+        },
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于组件",
+            "category": "style",
+            "addedIn": "v1.1.5"
+        },
+        "readonly": {
+            "type": "Boolean",
+            "desc": "将组件置于只读模式",
+            "category": "state"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "format24h": {
+            "type": "Boolean",
+            "desc": "强制24小时显示时间，而不是AM/PM系统",
+            "default": "(based on Quasar lang language being used)",
+            "category": "behavior"
+        },
+        "default-date": {
+            "type": "String",
+            "desc": "模型未填充（undefined或null）时要使用的默认日期（YYYY/MM/DD格式）",
+            "default": "current day",
+            "examples": [
+                "1995/02/23"
+            ],
+            "category": "model",
+            "addedIn": "v1.9.0"
+        },
+        "options": {
+            "type": "Function",
+            "desc": "可选择配置允许用户设置的时间；由“'hour-options”、“minute-options”和“second-options”覆盖（如果已设置）；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "hr": {
+                    "type": "Number",
+                    "desc": "小时",
+                    "examples": [
+                        15
+                    ]
+                },
+                "min": {
+                    "type": "Number",
+                    "desc": "分钟",
+                    "examples": [
+                        38
+                    ]
+                },
+                "sec": {
+                    "type": "Number",
+                    "desc": "秒",
+                    "examples": [
+                        12
+                    ]
+                }
+            },
+            "returns": null,
+            "examples": [
+                ":options=\"(hr, min, sec) => hr <= 6\""
+            ],
+            "category": "behavior"
+        },
+        "hour-options": {
+            "type": "Array",
+            "desc": "可选择配置允许用户设置的小时数；覆盖“options”属性（如果已设置）",
+            "examples": [
+                ":hour-options=\"[ 3, 6, 9 ]\""
+            ],
+            "category": "behavior"
+        },
+        "minute-options": {
+            "type": "Array",
+            "desc": "可选择配置允许用户设置的分钟数；覆盖“options”属性（如果已设置）",
+            "examples": [
+                ":minute-options=\"[0, 15, 30, 45]\""
+            ],
+            "category": "behavior"
+        },
+        "second-options": {
+            "type": "Array",
+            "desc": "可选择配置允许用户设置的秒数；覆盖“options”属性（如果已设置）",
+            "examples": [
+                ":second-options=\"[0, 7, 10, 23]\""
+            ],
+            "category": "behavior"
+        },
+        "with-seconds": {
+            "type": "Boolean",
+            "desc": "允许时间设置为秒",
+            "category": "model|behavior"
+        },
+        "now-btn": {
+            "type": "Boolean",
+            "desc": "显示选择当前时间的按钮",
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "这是额外的按钮的所在位置",
+            "addedIn": "v1.2.8"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "String",
+                    "desc": "新模型值",
+                    "required": true
+                },
+                "details": {
+                    "type": "Object",
+                    "desc": "新模型的属性对象",
+                    "definition": {
+                        "year": {
+                            "type": "Number",
+                            "desc": "年度"
+                        },
+                        "month": {
+                            "type": "Number",
+                            "desc": "月份"
+                        },
+                        "day": {
+                            "type": "Number",
+                            "desc": "每月的某一天"
+                        },
+                        "hour": {
+                            "type": "Number",
+                            "desc": "小时"
+                        },
+                        "minute": {
+                            "type": "Number",
+                            "desc": "分钟"
+                        },
+                        "second": {
+                            "type": "Number",
+                            "desc": "秒"
+                        },
+                        "millisecond": {
+                            "type": "Number",
+                            "desc": "毫秒"
+                        },
+                        "changed": {
+                            "type": "Boolean",
+                            "desc": "模型变了吗？",
+                            "addedIn": "v1.1.1"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "methods": {
+        "setNow": {
+            "desc": "将模型更改为当前时刻",
+            "addedIn": "v1.1.7"
+        }
+    }
+}

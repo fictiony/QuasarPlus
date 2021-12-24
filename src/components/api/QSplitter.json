@@ -1,0 +1,148 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/splitter"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "value": {
+            "type": "Number",
+            "desc": "以指定的单位定义第一个面板（或第二个面板，如果使用reverse）大小的组件模型（对于“%”，它是拆分比率百分比 - 0.0<x<100.0；对于‘px’，它是以px为单位的大小）；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "examples": [
+                "v-model=\"ratio\""
+            ],
+            "category": "model"
+        },
+        "reverse": {
+            "type": "Boolean",
+            "desc": "将模型大小应用于第二个面板（默认情况下，它应用于第一个面板）",
+            "category": "model",
+            "addedIn": "v1.2.6"
+        },
+        "unit": {
+            "type": "String",
+            "desc": "模型的CSS单位",
+            "default": "%",
+            "values": [
+                "%",
+                "px"
+            ],
+            "category": "model",
+            "addedIn": "v1.2.6"
+        },
+        "emit-immediately": {
+            "type": "Boolean",
+            "desc": "当用户在分隔条上平移时发出模型",
+            "category": "model"
+        },
+        "horizontal": {
+            "type": "Boolean",
+            "desc": "允许拆分器水平拆分其两个面板，而不是垂直拆分",
+            "category": "content"
+        },
+        "limits": {
+            "type": "Array",
+            "desc": "两个值的数组，表示两个面板的最小和最大拆分大小；当“px”单位被设置时，您可以使用无穷大作为第二个值，使它在另一侧解除绑定",
+            "default": "For '%' unit: [10, 90]; For 'px' unit: [50, Infinity]",
+            "examples": [
+                ":limits=\"[30, 70]\"",
+                ":limits=\"[0, Infinity]\""
+            ],
+            "category": "content|model"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "before-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为“before”面板属性的类的定义",
+            "examples": [
+                "bg-deep-orange",
+                ":before-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "after-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为“after”面板属性的类的定义",
+            "examples": [
+                "bg-deep-orange",
+                ":after-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "separator-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为拆分器分隔条属性的类的定义",
+            "examples": [
+                "bg-deep-orange",
+                ":separator-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "separator-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为拆分器分隔条属性的样式定义",
+            "examples": [
+                "background-color: #ff0000",
+                ":separator-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "在分隔条上应用默认的较浅颜色；当背景较暗时使用；避免在通过separator-class或separator-style属性重写时使用",
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽；建议：QTooltip、QMenu"
+        },
+        "before": {
+            "desc": "左侧/顶部面板的内容"
+        },
+        "after": {
+            "desc": "右侧/底部面板的内容"
+        },
+        "separator": {
+            "desc": "放置在拆分器内的内容物；默认情况下，它居中"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "组件的模型值更改时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Number",
+                    "desc": "定义面板之间比率的新模型值（0.0<x<100.0）",
+                    "examples": [
+                        0.22
+                    ]
+                }
+            }
+        }
+    }
+}

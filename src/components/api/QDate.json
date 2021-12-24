@@ -1,0 +1,580 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/date"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "name": {
+            "type": "String",
+            "desc": "用于指定控件的名称；如果处理直接提交到URL的表单，则非常有用",
+            "examples": [
+                "car_id"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "value": {
+            "desc": "组件日期；如果使用“multiple”属性，则必须是数组；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model",
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "required": true,
+            "examples": [
+                "v-model=\"myDate\"",
+                "v-model=\"[myDate1, myDate2]\"",
+                "v-model=\"[{ from: myDateFrom, to: myDateTo }]\"",
+                "v-model=\"[myDate1, { from: myDateFrom, to: myDateTo }, myDate2]\""
+            ]
+        },
+        "landscape": {
+            "type": "Boolean",
+            "desc": "以横向模式显示组件",
+            "category": "behavior"
+        },
+        "mask": {
+            "type": "String",
+            "desc": "用于解析和格式化值的掩码（格式化字符串）",
+            "category": "model",
+            "default": "YYYY/MM/DD",
+            "examples": [
+                "YYYY-MM-DD",
+                "MMMM Do, YYYY",
+                "YYYY-MM-DD HH:mm:ss"
+            ]
+        },
+        "locale": {
+            "type": "Object",
+            "desc": "区域设置格式选项",
+            "examples": [
+                ":locale=\"{ monthsShort: ['Ian', 'Feb', 'Mar', '...'] }\""
+            ],
+            "definition": {
+                "days": {
+                    "type": "Array",
+                    "desc": "日期名称列表（DDDD），从星期天开始",
+                    "examples": [
+                        "['Duminica', 'Luni', 'Marti', '...']"
+                    ]
+                },
+                "daysShort": {
+                    "type": "Array",
+                    "desc": "日期简称列表（DDD），从星期天开始",
+                    "examples": [
+                        "['Dum', 'Lun', 'Mar', '...']"
+                    ]
+                },
+                "months": {
+                    "type": "Array",
+                    "desc": "月份全称列表（mm），从一月开始",
+                    "examples": [
+                        "['Ianuarie', 'Februarie', 'Martie', '...']"
+                    ]
+                },
+                "monthsShort": {
+                    "type": "Array",
+                    "desc": "月份简称列表（MMM），从一月开始",
+                    "examples": [
+                        "['Ian', 'Feb', 'Mar', '...']"
+                    ]
+                }
+            },
+            "category": "model"
+        },
+        "calendar": {
+            "type": "String",
+            "desc": "指定日历类型",
+            "default": "gregorian",
+            "values": [
+                "gregorian",
+                "persian"
+            ],
+            "category": "model"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "删除border-radius，使边界为正方形",
+            "category": "style",
+            "addedIn": "v1.1.5"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "应用“平面”设计（无默认阴影）",
+            "category": "style",
+            "addedIn": "v1.1.5"
+        },
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于组件",
+            "category": "style",
+            "addedIn": "v1.1.5"
+        },
+        "readonly": {
+            "type": "Boolean",
+            "desc": "将组件置于只读模式",
+            "category": "state"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "title": {
+            "type": "String",
+            "desc": "指定时，它将覆盖默认的头部标题；不处于“最小”模式时有意义",
+            "examples": [
+                "Birthday"
+            ],
+            "category": "content"
+        },
+        "subtitle": {
+            "type": "String",
+            "desc": "当指定时，它会覆盖默认的头部副标题；不处于“最小”模式时有意义",
+            "examples": [
+                "John Doe"
+            ],
+            "category": "content"
+        },
+        "default-year-month": {
+            "type": "String",
+            "desc": "模型未设置（undefined或null）时要显示的默认年份和月份（YYYY/MM格式）；请确保在年月的最小/最大导航内（如果使用）",
+            "examples": [
+                "1986/02"
+            ],
+            "category": "model"
+        },
+        "default-view": {
+            "type": "String",
+            "desc": "默认情况下显示的视图",
+            "default": "Calendar",
+            "values": [
+                "Calendar",
+                "Months",
+                "Years"
+            ],
+            "category": "model"
+        },
+        "years-in-month-view": {
+            "type": "Boolean",
+            "desc": "在月视图中显示年选择器",
+            "category": "behavior",
+            "addedIn": "v1.11.2"
+        },
+        "events": {
+            "type": [
+                "Array",
+                "Function"
+            ],
+            "desc": "日历上要突出显示的事件列表；如果使用函数，它将以字符串形式接收日期，并且必须返回布尔值（匹配与否）；如果使用函数，那么为了获得最佳性能，请从您的范围引用它，而不要内联定义它",
+            "examples": [
+                ":events=\"['2018/11/05', '2018/11/06', '2018/11/09', '2018/11/23']\"",
+                ":events=\"date => date[9] % 3 === 0\""
+            ],
+            "category": "model"
+        },
+        "event-color": {
+            "type": [
+                "String",
+                "Function"
+            ],
+            "desc": "颜色名称（来自Quasar调色板）；如果使用函数，它将接收作为字符串的日期，并且必须返回字符串（颜色表示接收的日期）；如果使用函数，那么为了获得最佳性能，请从您的范围引用它，而不要内联定义它",
+            "examples": [
+                "teal-10",
+                ":event-color=\"(date) => date[9] % 2 === 0 ? 'teal' : 'orange'\""
+            ],
+            "category": "style"
+        },
+        "options": {
+            "type": [
+                "Array",
+                "Function"
+            ],
+            "desc": "可选择地配置能够选择的天数；如果使用函数，它将以字符串形式接收日期，并且必须返回布尔值（日期是否可接受）；如果使用一个函数，那么为了获得最佳性能，请从您的范围引用它，不要内联定义它；与“range”属性不兼容",
+            "examples": [
+                ":options=\"['2018/11/05', '2018/11/12', '2018/11/19', '2018/11/26' ]\"",
+                ":options=\"date => date[9] % 3 === 0\"",
+                ":options=\"date => date >= '2018/11/03' && date <= '2018/11/15'\""
+            ],
+            "category": "model"
+        },
+        "navigation-min-year-month": {
+            "type": "String",
+            "desc": "锁定用户在特定年+月（YYYY/MM格式）以下导航；此属性不用于修正模型；您可能还需要使用“default-year-month”属性",
+            "examples": [
+                "2020/07"
+            ],
+            "category": "selection",
+            "addedIn": "v1.13.0"
+        },
+        "navigation-max-year-month": {
+            "type": "String",
+            "desc": "锁定用户在特定年+月（YYYY/MM格式）以上导航；此属性不用于修正模型；您可能还需要使用“default-year-month”属性",
+            "examples": [
+                "2020/10"
+            ],
+            "category": "selection",
+            "addedIn": "v1.13.0"
+        },
+        "no-unset": {
+            "type": "Boolean",
+            "desc": "取消不选择日期的功能；它不适用于选择已选定日期的范围",
+            "category": "selection",
+            "addedIn": "v1.13.2"
+        },
+        "first-day-of-week": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "设置一个星期的哪天被视为第一天（0-星期日，1-星期一，…）；这一天将显示在日历最左边的一栏中",
+            "default": "(based on configured Quasar lang language)",
+            "examples": [
+                "first-day-of-week=\"1\"",
+                ":first-day-of-week=\"selectedFirstDayOfTheWeek\""
+            ],
+            "category": "model"
+        },
+        "today-btn": {
+            "type": "Boolean",
+            "desc": "显示选择当前日期的按钮",
+            "category": "content"
+        },
+        "minimal": {
+            "type": "Boolean",
+            "desc": "不显示头部",
+            "category": "content"
+        },
+        "multiple": {
+            "type": "Boolean",
+            "desc": "允许多选；模型必须是数组",
+            "category": "model|selection",
+            "addedIn": "v1.13.0"
+        },
+        "range": {
+            "type": "Boolean",
+            "desc": "允许范围选择；与“options”属性部分兼容：选定的范围可能还包括“不能选择”的天",
+            "category": "model|selection",
+            "addedIn": "v1.13.0"
+        },
+        "emit-immediately": {
+            "type": "Boolean",
+            "desc": "用户浏览月份和年份时也会发出模型；仅用于单选（非多个，非范围）",
+            "category": "model"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "这是额外的按钮放置的位置",
+            "addedIn": "v1.2.8"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": [
+                        "String",
+                        "Array",
+                        "Object"
+                    ],
+                    "desc": "新模型值",
+                    "required": true
+                },
+                "reason": {
+                    "type": "String",
+                    "desc": "用户交互的原因（所选内容）",
+                    "values": [
+                        "add-day",
+                        "remove-day",
+                        "add-range",
+                        "remove-range",
+                        "mask",
+                        "locale",
+                        "year",
+                        "month"
+                    ]
+                },
+                "details": {
+                    "type": "Object",
+                    "desc": "新模型的属性对象",
+                    "definition": {
+                        "year": {
+                            "type": "Number",
+                            "desc": "用户单击/点击日期的年份"
+                        },
+                        "month": {
+                            "type": "Number",
+                            "desc": "用户单击/点击日期的月份"
+                        },
+                        "day": {
+                            "type": "Number",
+                            "desc": "用户单击/点击的月份的哪一天"
+                        },
+                        "from": {
+                            "type": "Object",
+                            "desc": "范围起点的属性对象（仅当范围选择)",
+                            "definition": {
+                                "year": {
+                                    "type": "Number",
+                                    "desc": "年度"
+                                },
+                                "month": {
+                                    "type": "Number",
+                                    "desc": "月份"
+                                },
+                                "day": {
+                                    "type": "Number",
+                                    "desc": "月份的哪天"
+                                }
+                            },
+                            "addedIn": "v1.13.0"
+                        },
+                        "to": {
+                            "type": "Object",
+                            "desc": "范围终点的属性对象（仅当范围选择)",
+                            "definition": {
+                                "year": {
+                                    "type": "Number",
+                                    "desc": "年度"
+                                },
+                                "month": {
+                                    "type": "Number",
+                                    "desc": "月份"
+                                },
+                                "day": {
+                                    "type": "Number",
+                                    "desc": "月份的哪天"
+                                }
+                            },
+                            "addedIn": "v1.13.0"
+                        },
+                        "changed": {
+                            "type": "Boolean",
+                            "desc": "（已从v1.13中弃用）模型是否更改？",
+                            "addedIn": "v1.1.1"
+                        }
+                    }
+                }
+            }
+        },
+        "navigation": {
+            "desc": "当用户导航到不同的月份或年份时发出（甚至当模型从外部源更改时）",
+            "params": {
+                "view": {
+                    "type": "Object",
+                    "desc": "当前视图的定义（年、月）",
+                    "definition": {
+                        "year": {
+                            "type": "Number",
+                            "desc": "年度"
+                        },
+                        "month": {
+                            "type": "Number",
+                            "desc": "月份"
+                        }
+                    }
+                }
+            },
+            "addedIn": "v1.13.0"
+        },
+        "range-start": {
+            "desc": "用户已开始范围选择",
+            "params": {
+                "from": {
+                    "type": "Object",
+                    "desc": "范围起始日期的定义",
+                    "definition": {
+                        "year": {
+                            "type": "Number",
+                            "desc": "年度"
+                        },
+                        "month": {
+                            "type": "Number",
+                            "desc": "月份"
+                        },
+                        "day": {
+                            "type": "Number",
+                            "desc": "月份的哪天"
+                        }
+                    }
+                }
+            },
+            "addedIn": "v1.13.0"
+        },
+        "range-end": {
+            "desc": "用户已结束范围选择",
+            "params": {
+                "range": {
+                    "type": "Object",
+                    "desc": "范围的定义",
+                    "definition": {
+                        "from": {
+                            "type": "Object",
+                            "desc": "范围起始日期的定义",
+                            "definition": {
+                                "year": {
+                                    "type": "Number",
+                                    "desc": "年度"
+                                },
+                                "month": {
+                                    "type": "Number",
+                                    "desc": "月份"
+                                },
+                                "day": {
+                                    "type": "Number",
+                                    "desc": "月份的哪天"
+                                }
+                            }
+                        },
+                        "to": {
+                            "type": "Object",
+                            "desc": "范围结束日期的定义",
+                            "definition": {
+                                "year": {
+                                    "type": "Number",
+                                    "desc": "年度"
+                                },
+                                "month": {
+                                    "type": "Number",
+                                    "desc": "月份"
+                                },
+                                "day": {
+                                    "type": "Number",
+                                    "desc": "月份的哪天"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "addedIn": "v1.13.0"
+        }
+    },
+    "methods": {
+        "setToday": {
+            "desc": "将模型更改为今天",
+            "addedIn": "v1.1.7"
+        },
+        "setView": {
+            "desc": "更改当前视图",
+            "params": {
+                "view": {
+                    "type": "String",
+                    "desc": "QDate视图名称",
+                    "required": true,
+                    "values": [
+                        "Calendar",
+                        "Months",
+                        "Years"
+                    ]
+                }
+            },
+            "addedIn": "v1.1.7"
+        },
+        "offsetCalendar": {
+            "desc": "递增或递减日历视图的月份或年份",
+            "params": {
+                "type": {
+                    "type": "String",
+                    "required": true,
+                    "desc": "增加/减少什么",
+                    "values": [
+                        "month",
+                        "year"
+                    ]
+                },
+                "descending": {
+                    "type": "Boolean",
+                    "desc": "递减？"
+                }
+            },
+            "addedIn": "v1.1.7"
+        },
+        "setCalendarTo": {
+            "desc": "更改日历视图的当前年份和月份；如果使用navigation-min/max-year-month并将当前视图设置为Calendar，则会得到更正",
+            "params": {
+                "year": {
+                    "type": "Number",
+                    "desc": "年度"
+                },
+                "month": {
+                    "type": "Number",
+                    "desc": "月份"
+                }
+            },
+            "addedIn": "v1.13.0"
+        },
+        "setEditingRange": {
+            "desc": "配置当前编辑范围",
+            "params": {
+                "from": {
+                    "type": "Object",
+                    "desc": "范围起始日期的定义",
+                    "definition": {
+                        "year": {
+                            "type": "Number",
+                            "desc": "年度"
+                        },
+                        "month": {
+                            "type": "Number",
+                            "desc": "月份"
+                        },
+                        "day": {
+                            "type": "Number",
+                            "desc": "月份的哪天"
+                        }
+                    }
+                },
+                "to": {
+                    "type": "Object",
+                    "desc": "范围结束日期的定义",
+                    "definition": {
+                        "year": {
+                            "type": "Number",
+                            "desc": "年度"
+                        },
+                        "month": {
+                            "type": "Number",
+                            "desc": "月份"
+                        },
+                        "day": {
+                            "type": "Number",
+                            "desc": "月份的哪天"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

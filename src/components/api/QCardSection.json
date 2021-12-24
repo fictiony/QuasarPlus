@@ -1,0 +1,35 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/card"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "tag": {
+            "type": "String",
+            "desc": "要呈现的HTML标记",
+            "default": "div",
+            "category": "content",
+            "examples": [
+                "div",
+                "form"
+            ],
+            "addedIn": "v1.8.4"
+        },
+        "horizontal": {
+            "type": "Boolean",
+            "desc": "显示水平部分（没有填充，可以包含其他QCardSection）",
+            "category": "content",
+            "addedIn": "v1.7.0"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}

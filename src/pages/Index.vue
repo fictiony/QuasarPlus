@@ -13,7 +13,7 @@
           </div>
           <div class="col-grow flex flex-center" style="height: 210px">
             <q-list class="col-grow">
-              <EssentialLink v-for="(link, index) in linkList" :key="index" v-bind="link" />
+              <EssentialLink v-for="(link, index) in LINK_LIST" :key="index" v-bind="link" />
             </q-list>
           </div>
         </div>
@@ -24,11 +24,11 @@
 
 <script>
 // 【主页】
-import { linkList } from 'components/menu.js'
+import { LINK_LIST } from 'boot/menu.js'
 
 export default {
   data: () => ({
-    linkList
+    LINK_LIST
   })
 }
 </script>

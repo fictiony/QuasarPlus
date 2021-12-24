@@ -1,0 +1,127 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/list-and-list-items"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "tag": {
+            "type": "String",
+            "desc": "要呈现的HTML标记；建议：在封装QCheckbox/QRadio/QToggle时使用“label”，这样当用户单击/轻触整个列表项时，它将触发所述组件的模型更改",
+            "default": "div",
+            "category": "content",
+            "examples": [
+                "a",
+                "label",
+                "div"
+            ]
+        },
+        "to": {
+            "type": [
+                "String",
+                "Object"
+            ],
+            "desc": "相当于Vue Router <Router link>的“to”属性",
+            "examples": [
+                "/home/dashboard",
+                ":to=\"{ name: 'my-route-name' }\""
+            ],
+            "category": "behavior"
+        },
+        "exact": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“exact”属性",
+            "category": "behavior"
+        },
+        "append": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“append”属性",
+            "category": "behavior"
+        },
+        "replace": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“replace”属性",
+            "category": "behavior"
+        },
+        "active-class": {
+            "type": "String",
+            "desc": "等效于Vue Router <Router link>的“active-class”属性",
+            "examples": [
+                "my-active-class"
+            ],
+            "category": "behavior"
+        },
+        "exact-active-class": {
+            "type": "String",
+            "desc": "等效于Vue Router <Router link>的“exact-active-class”属性",
+            "examples": [
+                "my-exact-active-class"
+            ],
+            "category": "behavior"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "active": {
+            "type": "Boolean",
+            "desc": "将列表项置于“激活”状态",
+            "category": "state"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "clickable": {
+            "type": "Boolean",
+            "desc": "QItem是否可单击？如果是这样，那么它将添加悬停效果并发出“click”事件",
+            "category": "state"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "inset-level": {
+            "type": "Number",
+            "desc": "应用插入空间；如果缺少头像/左侧，但您希望将内容与具有左侧的其他列表项对齐，或者您正在构建菜单时，此功能非常有用",
+            "examples": [
+                ":inset-level=\"1\""
+            ],
+            "category": "content"
+        },
+        "tabindex": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "Tabindex HTML属性值",
+            "examples": [
+                "0",
+                "100"
+            ],
+            "category": "general"
+        },
+        "manual-focus": {
+            "type": "Boolean",
+            "desc": "将列表项置于手动聚焦状态；启用“focused”属性，该属性将确定列表项是否聚焦，而不是依赖于原生悬停/聚焦状态",
+            "category": "state"
+        },
+        "focused": {
+            "type": "Boolean",
+            "desc": "仅当“manual-focus”启用/设置为true时，才确定对焦状态",
+            "category": "state"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "这就是QItem的内容所在位置"
+        }
+    }
+}

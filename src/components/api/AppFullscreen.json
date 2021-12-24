@@ -1,0 +1,72 @@
+{
+    "type": "plugin",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/quasar-plugins/app-fullscreen"
+    },
+    "injection": "$q.fullscreen",
+    "props": {
+        "isCapable": {
+            "type": "Boolean",
+            "desc": "浏览器支持吗？"
+        },
+        "isActive": {
+            "type": "Boolean",
+            "desc": "是否激活全屏吗？"
+        },
+        "activeEl": {
+            "type": "Object",
+            "desc": "用作全屏的根元素的DOM元素，如不是DOM元素则为“null”",
+            "addedIn": "v1.12.5"
+        }
+    },
+    "methods": {
+        "request": {
+            "desc": "请求进入全屏（带有可选的目标元素）",
+            "params": {
+                "target": {
+                    "type": "Element",
+                    "desc": "要请求全屏显示的目标的可选元素",
+                    "examples": [
+                        "document.getElementById('example')"
+                    ]
+                }
+            },
+            "returns": {
+                "type": "Promise<any>",
+                "desc": "带有结果的Promise（true->验证成功，false->检测到无效模型）",
+                "examples": [
+                    "request().then(response => { ... }).catch(err => { ... })"
+                ]
+            }
+        },
+        "exit": {
+            "desc": "请求退出全屏模式",
+            "returns": {
+                "type": "Promise<any>",
+                "desc": "带有结果的Promise（true->验证成功，false->检测到无效模型）",
+                "examples": [
+                    "exit().then(response => { ... }).catch(err => { ... })"
+                ]
+            }
+        },
+        "toggle": {
+            "desc": "请求切换全屏模式（如果请求仅进入全屏模式，则具有可选的目标元素）",
+            "params": {
+                "target": {
+                    "type": "Element",
+                    "desc": "要请求全屏显示的目标的可选元素",
+                    "examples": [
+                        "document.getElementById('example')"
+                    ]
+                }
+            },
+            "returns": {
+                "type": "Promise<any>",
+                "desc": "带有结果的Promise（true->验证成功，false->检测到无效模型）",
+                "examples": [
+                    "toggle().then(response => { ... }).catch(err => { ... })"
+                ]
+            }
+        }
+    }
+}

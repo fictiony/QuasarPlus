@@ -1,0 +1,108 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/layout/layout"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "view": {
+            "type": "String",
+            "desc": "定义布局组件（页眉/页脚/侧滑菜单）在屏幕上的放置方式；参见文档示例",
+            "default": "hhh lpr fff",
+            "examples": [
+                "hHh lpR fFf"
+            ],
+            "category": "content"
+        },
+        "container": {
+            "type": "Boolean",
+            "desc": "将布局容器化，这意味着它改变了扩展到整个窗口的默认行为；在QDialog上使用时非常有用（但不限于）",
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "建议：QHeader、QFooter、QDrawer、QPageContainer"
+        }
+    },
+    "events": {
+        "resize": {
+            "desc": "布局大小（高度、宽度）更改时发出",
+            "params": {
+                "size": {
+                    "type": "Object",
+                    "desc": "新尺寸",
+                    "definition": {
+                        "height": {
+                            "type": "Number",
+                            "desc": "布局高度",
+                            "examples": [
+                                575
+                            ]
+                        },
+                        "width": {
+                            "type": "Number",
+                            "desc": "布局宽度",
+                            "examples": [
+                                575
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "scroll": {
+            "desc": "当用户在布局中滚动时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "滚动详细信息",
+                    "definition": {
+                        "position": {
+                            "type": "Number",
+                            "desc": "滚动偏移（从顶部）",
+                            "examples": [
+                                575
+                            ]
+                        },
+                        "direction": {
+                            "type": "String",
+                            "desc": "滚动方向",
+                            "values": [
+                                "up",
+                                "down"
+                            ]
+                        },
+                        "directionChanged": {
+                            "type": "Boolean",
+                            "desc": "自上次发出事件以来，滚动方向是否已更改？"
+                        },
+                        "inflexionPosition": {
+                            "type": "Number",
+                            "desc": "滚动方向改变位置的最后的滚动偏移量",
+                            "examples": [
+                                575
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "scroll-height": {
+            "desc": "布局的滚动尺寸更改时发出",
+            "params": {
+                "height": {
+                    "type": "Number",
+                    "desc": "布局的新滚动高度",
+                    "examples": [
+                        1442
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,94 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/pull-to-refresh"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "color": {
+            "type": "String",
+            "desc": "图标的Quasar调色板中颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "bg-color": {
+            "type": "String",
+            "desc": "图标容器背景的Quasar调色板中颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "addedIn": "v1.9.5"
+        },
+        "icon": {
+            "type": "String",
+            "desc": "刷新内容时显示的图标",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "no-mouse": {
+            "type": "Boolean",
+            "desc": "不监听鼠标事件",
+            "category": "behavior"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "scroll-target": {
+            "type": [
+                "Element",
+                "String"
+            ],
+            "desc": "CSS选择器或DOM元素用作自定义滚动容器，而不是自动检测到的滚动容器",
+            "examples": [
+                ":scroll-target=\"$refs.scrollTarget\"",
+                "scroll-target=\".scroll-target-class\"",
+                "scroll-target=\"#scroll-target-id\"",
+                "scroll-target=\"body\""
+            ],
+            "category": "behavior",
+            "addedIn": "v1.8.0"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "此处显示内容（由组件控制的区域）"
+        }
+    },
+    "events": {
+        "refresh": {
+            "desc": "每当触发刷新时调用；此时，函数应该加载更多数据",
+            "params": {
+                "done": {
+                    "type": "Function",
+                    "desc": "数据刷新后调用done()函数",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        }
+    },
+    "methods": {
+        "trigger": {
+            "desc": "触发刷新"
+        },
+        "updateScrollTarget": {
+            "desc": "更新滚动目标；当父元素发生更改，滚动目标也发生更改时，此选项非常有用"
+        }
+    }
+}

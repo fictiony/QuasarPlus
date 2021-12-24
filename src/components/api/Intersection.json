@@ -1,0 +1,280 @@
+{
+    "type": "directive",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-directives/intersection"
+    },
+    "addedIn": "v1.3.0",
+    "value": {
+        "type": [
+            "Object",
+            "Function"
+        ],
+        "desc": "发生滚动时要调用的函数（与对象形式的“handler”属性的描述相同）；如果使用对象形式，强烈建议从vue组件范围引用它，否则指令更新周期将持续重新创建观察者将严重影响性能",
+        "examples": [
+            "v-intersection=\"myFunction\"",
+            "v-intersection=\"{ handler: myFunction, cfg: { root: myScrollingParentEl, rootMargin: '10px 20px 30px 40px', threshold: [0, 0.25, 0.5, 0.75, 1] } }\""
+        ],
+        "definition": {
+            "handler": {
+                "type": "Function",
+                "desc": "要调用的处理程序函数",
+                "returns": {
+                    "type": "Boolean",
+                    "desc": "如果从处理程序返回Boolean false，观察者将停止"
+                },
+                "params": {
+                    "entry": {
+                        "type": "Object",
+                        "desc": "IntersectionObserverEntry对象",
+                        "definition": {
+                            "boundingClientRect": {
+                                "type": "Object",
+                                "desc": "包含客户端矩形信息的对象",
+                                "definition": {
+                                    "bottom": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的底部",
+                                        "examples": [
+                                            "1770"
+                                        ]
+                                    },
+                                    "height": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的高度",
+                                        "examples": [
+                                            "50"
+                                        ]
+                                    },
+                                    "left": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的左侧",
+                                        "examples": [
+                                            "49"
+                                        ]
+                                    },
+                                    "right": {
+                                        "type": "Number",
+                                        "desc": "客户矩形的右侧",
+                                        "examples": [
+                                            "384"
+                                        ]
+                                    },
+                                    "top": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的顶部",
+                                        "examples": [
+                                            "1720"
+                                        ]
+                                    },
+                                    "width": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的宽度",
+                                        "examples": [
+                                            "335"
+                                        ]
+                                    },
+                                    "x": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的x位置",
+                                        "examples": [
+                                            "49"
+                                        ]
+                                    },
+                                    "y": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的y位置",
+                                        "examples": [
+                                            "1720"
+                                        ]
+                                    }
+                                }
+                            },
+                            "intersectionRatio": {
+                                "type": "Number",
+                                "desc": "观察对象的可见性比率",
+                                "examples": [
+                                    "0.5"
+                                ]
+                            },
+                            "intersectionRect": {
+                                "type": "Object",
+                                "desc": "包含客户端矩形信息的对象",
+                                "definition": {
+                                    "bottom": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的底部",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "height": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的高度",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "left": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的左侧",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "right": {
+                                        "type": "Number",
+                                        "desc": "客户矩形的右侧",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "top": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的顶部",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "width": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的宽度",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "x": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的x位置",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "y": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的y位置",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    }
+                                }
+                            },
+                            "isIntersecting": {
+                                "type": "Boolean",
+                                "desc": "如果与可滚动区域相交，则为Boolean true"
+                            },
+                            "rootBounds": {
+                                "type": "Object",
+                                "desc": "包含客户端矩形信息的对象",
+                                "definition": {
+                                    "bottom": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的底部",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "height": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的高度",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "left": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的左侧",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "right": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的右侧",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "top": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的顶部",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "width": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的宽度",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "x": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的x位置",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    },
+                                    "y": {
+                                        "type": "Number",
+                                        "desc": "客户端矩形的y位置",
+                                        "examples": [
+                                            "0"
+                                        ]
+                                    }
+                                }
+                            },
+                            "target": {
+                                "type": "Element",
+                                "desc": "目标元素"
+                            },
+                            "time": {
+                                "type": "Number",
+                                "desc": "事件的时间戳",
+                                "examples": [
+                                    "6316.879999998491"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "cfg": {
+                "type": "Object",
+                "desc": "交叉观察者选项（可以省略，其所有属性都是可选的）",
+                "definition": {
+                    "root": {
+                        "type": "Element",
+                        "desc": "允许您定义可替代视区的元素作为根元素（通过其DOM元素）；必须记住，根元素必须是被观察元素的祖先",
+                        "examples": [
+                            "myScrollingParentEl"
+                        ]
+                    },
+                    "rootMargin": {
+                        "type": "String",
+                        "desc": "允许您指定根元素的边距，有效地允许您扩大或缩小用于交叉的区域",
+                        "examples": [
+                            "10px 20px 30px 40px"
+                        ]
+                    },
+                    "threshold": {
+                        "type": "Array",
+                        "desc": "触发回调的阈值，指定为观察元素的（可见面积/总面积）的比率或比率列表",
+                        "examples": [
+                            "[ 0, 0.25, 0.5, 0.75, 1 ]"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "modifiers": {
+        "once": {
+            "type": "Boolean",
+            "desc": "仅在第一次满足条件时调用处理程序一次",
+            "examples": [
+                "v-intersection.once"
+            ]
+        }
+    }
+}

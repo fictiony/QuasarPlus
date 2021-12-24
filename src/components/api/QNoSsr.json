@@ -1,0 +1,40 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/no-ssr"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "tag": {
+            "type": "String",
+            "desc": "要呈现的HTML标记",
+            "default": "div",
+            "category": "content",
+            "examples": [
+                "div",
+                "span",
+                "blockquote"
+            ]
+        },
+        "placeholder": {
+            "type": "String",
+            "desc": "要在服务器端渲染上显示的文本（除非使用“placeholder”槽）",
+            "examples": [
+                "This is server-side only"
+            ],
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "默认槽用于在客户端呈现内容"
+        },
+        "placeholder": {
+            "desc": "在服务器端渲染中用作占位符的插槽，将被客户端的默认插槽替换；覆盖“placeholder”属性"
+        }
+    }
+}

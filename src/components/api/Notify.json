@@ -1,0 +1,1123 @@
+{
+    "type": "plugin",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/quasar-plugins/notify"
+    },
+    "injection": "$q.notify",
+    "quasarConfOptions": {
+        "propName": "notify",
+        "definition": {
+            "type": {
+                "type": "String",
+                "desc": "可选类型（以前注册过）或现成类型之一（“positive”、“negative”、“warning”、“info”、“ongoing”）",
+                "examples": [
+                    "negative",
+                    "custom-type"
+                ],
+                "addedIn": "v1.9.0"
+            },
+            "color": {
+                "type": "String",
+                "desc": "组件的来自Quasar调色板的颜色名称",
+                "examples": [
+                    "primary",
+                    "teal-10"
+                ],
+                "category": "style"
+            },
+            "textColor": {
+                "type": "String",
+                "desc": "文本的来自Quasar调色板的颜色名称",
+                "examples": [
+                    "primary",
+                    "teal-10"
+                ],
+                "category": "style"
+            },
+            "message": {
+                "type": "String",
+                "desc": "消息的内容",
+                "examples": [
+                    "John Doe pinged you"
+                ]
+            },
+            "caption": {
+                "type": "String",
+                "desc": "可选标题的内容",
+                "examples": [
+                    "5 minutes ago"
+                ],
+                "addedIn": "v1.5.5"
+            },
+            "html": {
+                "type": "Boolean",
+                "desc": "以HTML格式呈现消息；这可能会导致XSS攻击，因此请确保先安全处理消息"
+            },
+            "icon": {
+                "type": "String",
+                "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+                "examples": [
+                    "map",
+                    "ion-add",
+                    "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                    "img:statics/path/to/some_image.png"
+                ],
+                "category": "content"
+            },
+            "avatar": {
+                "type": "String",
+                "desc": "头像/图像的URL；建议：使用statics文件夹",
+                "examples": [
+                    "(statics folder) statics/img/something.png",
+                    "(relative path format) require('./my_img.jpg')",
+                    "(URL) https://some-site.net/some-img.gif"
+                ]
+            },
+            "spinner": {
+                "type": "Boolean",
+                "desc": "用于更新通知；显示默认的Quasar旋转器，而不是头像或图标",
+                "addedIn": "v1.14.0"
+            },
+            "position": {
+                "type": "String",
+                "desc": "要粘贴的窗口的边/角",
+                "default": "bottom",
+                "values": [
+                    "top-left",
+                    "top-right",
+                    "bottom-left",
+                    "bottom-right",
+                    "top",
+                    "bottom",
+                    "left",
+                    "right",
+                    "center"
+                ],
+                "examples": [
+                    "top-right"
+                ]
+            },
+            "group": {
+                "type": [
+                    "Boolean",
+                    "String",
+                    "Number"
+                ],
+                "desc": "用自定义组覆盖自动生成的组；无法更新分组通知；字符串或数字值说明这是一个特定组的一部分，不管它的选项是什么；当使用相同的组名触发新通知时，它将替换旧通知，并显示一个标记，显示触发通知的次数",
+                "default": "(message + caption + multiline + actions labels + position)",
+                "examples": [
+                    "my-group"
+                ],
+                "addedIn": "v1.9.0"
+            },
+            "badgeColor": {
+                "type": "String",
+                "desc": "标记的来自Quasar调色板的颜色名称",
+                "examples": [
+                    "primary",
+                    "teal-10"
+                ],
+                "category": "style",
+                "addedIn": "v1.9.0"
+            },
+            "badgeTextColor": {
+                "type": "String",
+                "desc": "标记文本的来自Quasar调色板的颜色名称",
+                "examples": [
+                    "primary",
+                    "teal-10"
+                ],
+                "category": "style",
+                "addedIn": "v1.9.0"
+            },
+            "badgePosition": {
+                "type": "String",
+                "desc": "贴标记的通知弹窗的角；如果通知弹窗在左侧，则默认值为右上角，否则为左上角",
+                "default": "(top-left/top-right)",
+                "values": [
+                    "top-left",
+                    "top-right",
+                    "bottom-left",
+                    "bottom-right"
+                ],
+                "examples": [
+                    "bottom-right"
+                ],
+                "addedIn": "v1.9.5"
+            },
+            "badgeStyle": {
+                "type": "String",
+                "desc": "用于标记属性的样式的定义",
+                "examples": [
+                    "background-color: #ff0000"
+                ],
+                "addedIn": "v1.9.0"
+            },
+            "badgeClass": {
+                "type": "String",
+                "desc": "用于标记属性的类的定义",
+                "examples": [
+                    "my-special-class"
+                ],
+                "addedIn": "v1.9.0"
+            },
+            "progress": {
+                "type": "Boolean",
+                "desc": "显示进度条以详细说明通知弹窗何时自动消失（除非超时为0）",
+                "addedIn": "v1.9.0"
+            },
+            "progressClass": {
+                "type": "String",
+                "desc": "用于进度条属性的类定义",
+                "examples": [
+                    "my-special-class"
+                ],
+                "addedIn": "v1.9.0"
+            },
+            "classes": {
+                "type": "String",
+                "desc": "将CSS类添加到通知弹窗中以便于自定义",
+                "examples": [
+                    "my-notif-class"
+                ]
+            },
+            "attrs": {
+                "type": "Object",
+                "desc": "设置通知弹窗属性的键值",
+                "examples": [
+                    "{ role: 'alertdialog' }"
+                ],
+                "addedIn": "v1.13.0"
+            },
+            "timeout": {
+                "type": "Number",
+                "desc": "显示的时间量（毫秒）",
+                "default": 5000,
+                "examples": [
+                    2500
+                ]
+            },
+            "closeBtn": {
+                "type": [
+                    "Boolean",
+                    "String"
+                ],
+                "desc": "添加带有特定标签的取消按钮的便捷方法，无需使用复杂的“actions”属性",
+                "examples": [
+                    "Close me"
+                ]
+            },
+            "multiLine": {
+                "type": "Boolean",
+                "desc": "将通知弹窗设置为多行模式；如果未使用此属性并且指定了多个“action”，则默认情况下通知弹窗将进入多行模式"
+            }
+        }
+    },
+    "methods": {
+        "create": {
+            "tsInjectionPoint": true,
+            "desc": "创建通知弹窗；与调用$q.notify（…）相同",
+            "params": {
+                "opts": {
+                    "type": [
+                        "Object",
+                        "String"
+                    ],
+                    "desc": "通知弹窗选项",
+                    "definition": {
+                        "type": {
+                            "type": "String",
+                            "desc": "可选类型（以前注册过）或现成类型之一（“positive”、“negative”、“warning”、“info”、“ongoing”）",
+                            "examples": [
+                                "negative",
+                                "custom-type"
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "color": {
+                            "type": "String",
+                            "desc": "组件的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "textColor": {
+                            "type": "String",
+                            "desc": "文本的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "message": {
+                            "type": "String",
+                            "desc": "消息的内容",
+                            "examples": [
+                                "John Doe pinged you"
+                            ]
+                        },
+                        "caption": {
+                            "type": "String",
+                            "desc": "可选标题的内容",
+                            "examples": [
+                                "5 minutes ago"
+                            ],
+                            "addedIn": "v1.5.5"
+                        },
+                        "html": {
+                            "type": "Boolean",
+                            "desc": "以HTML格式呈现消息；这可能会导致XSS攻击，因此请确保先安全处理消息"
+                        },
+                        "icon": {
+                            "type": "String",
+                            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+                            "examples": [
+                                "map",
+                                "ion-add",
+                                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                                "img:statics/path/to/some_image.png"
+                            ],
+                            "category": "content"
+                        },
+                        "avatar": {
+                            "type": "String",
+                            "desc": "头像/图像的URL；建议：使用statics文件夹",
+                            "examples": [
+                                "(statics folder) statics/img/something.png",
+                                "(relative path format) require('./my_img.jpg')",
+                                "(URL) https://some-site.net/some-img.gif"
+                            ]
+                        },
+                        "spinner": {
+                            "type": [
+                                "Boolean",
+                                "Component"
+                            ],
+                            "desc": "用于更新通知；显示Quasar旋转器而不是头像或图标；如果值为布尔值“true”，则显示默认的QSpinner",
+                            "addedIn": "v1.14.0"
+                        },
+                        "position": {
+                            "type": "String",
+                            "desc": "要粘贴的窗口的边/角",
+                            "default": "bottom",
+                            "values": [
+                                "top-left",
+                                "top-right",
+                                "bottom-left",
+                                "bottom-right",
+                                "top",
+                                "bottom",
+                                "left",
+                                "right",
+                                "center"
+                            ],
+                            "examples": [
+                                "top-right"
+                            ]
+                        },
+                        "group": {
+                            "type": [
+                                "Boolean",
+                                "String",
+                                "Number"
+                            ],
+                            "desc": "用自定义组覆盖自动生成的组；无法更新分组通知；字符串或数字值说明这是一个特定组的一部分，不管它的选项是什么；当使用相同的组名触发新通知时，它将替换旧通知，并显示一个标记，显示触发通知的次数",
+                            "default": "(message + caption + multiline + actions labels + position)",
+                            "examples": [
+                                "my-group"
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgeColor": {
+                            "type": "String",
+                            "desc": "标记的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style",
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgeTextColor": {
+                            "type": "String",
+                            "desc": "标记文本的来自Quasar调色板中颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style",
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgePosition": {
+                            "type": "String",
+                            "desc": "贴标记的通知弹窗的角；如果通知弹窗在左侧，则默认值为右上角，否则为左上角",
+                            "default": "(top-left/top-right)",
+                            "values": [
+                                "top-left",
+                                "top-right",
+                                "bottom-left",
+                                "bottom-right"
+                            ],
+                            "examples": [
+                                "bottom-right"
+                            ],
+                            "addedIn": "v1.9.5"
+                        },
+                        "badgeStyle": {
+                            "type": [
+                                "Array",
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "用于标记属性的样式的定义",
+                            "examples": [
+                                "background-color: #ff0000",
+                                ":content-style=\"{ backgroundColor: '#ff0000' }\""
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgeClass": {
+                            "type": [
+                                "Array",
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "用于标记属性的类的定义",
+                            "examples": [
+                                "my-special-class",
+                                ":content-class=\"{ 'my-special-class': <condition> }\""
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "progress": {
+                            "type": "Boolean",
+                            "desc": "显示进度条以详细说明通知弹窗何时自动消失（除非超时为0）",
+                            "addedIn": "v1.9.0"
+                        },
+                        "progressClass": {
+                            "type": [
+                                "Array",
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "用于进度条属性的类的定义",
+                            "examples": [
+                                "my-special-class",
+                                ":content-class=\"{ 'my-special-class': <condition> }\""
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "classes": {
+                            "type": "String",
+                            "desc": "将CSS类添加到通知弹窗中以便于自定义",
+                            "examples": [
+                                "my-notif-class"
+                            ]
+                        },
+                        "attrs": {
+                            "type": "Object",
+                            "desc": "设置通知弹窗属性的键值",
+                            "examples": [
+                                "{ role: 'alertdialog' }"
+                            ],
+                            "addedIn": "v1.13.0"
+                        },
+                        "timeout": {
+                            "type": "Number",
+                            "desc": "显示的时间量（毫秒）",
+                            "default": 5000,
+                            "examples": [
+                                2500
+                            ]
+                        },
+                        "actions": {
+                            "type": "Array",
+                            "desc": "通知弹窗的操作（按钮）；不管指定或不指定“handler”，单击/点击按钮也将关闭通知弹窗；同时查看便利的“closeBtn”属性",
+                            "examples": [
+                                "[ { label: 'Show', handler: (Function), attrs: { 'aria-label': 'Button label' } }, { icon: 'map', handler: (Function), color: 'yellow' }, { label: 'Learn more', noDismiss: true, handler: (Function) } ]"
+                            ]
+                        },
+                        "onDismiss": {
+                            "type": "Function",
+                            "desc": "在取消通知弹窗时调用的函数",
+                            "params": null,
+                            "returns": null,
+                            "examples": [
+                                "() => { console.log('Dismissed') }"
+                            ]
+                        },
+                        "closeBtn": {
+                            "type": [
+                                "Boolean",
+                                "String"
+                            ],
+                            "desc": "添加带有特定标签的取消按钮的便捷方式，无需使用“actions”属性；如果设置为true，它将使用符合当前Quasar语言的标签",
+                            "examples": [
+                                "Close me"
+                            ]
+                        },
+                        "multiLine": {
+                            "type": "Boolean",
+                            "desc": "将通知弹窗设置为多行模式；如果未使用此属性并且指定了多个“action”，则默认情况下通知弹窗将进入多行模式"
+                        },
+                        "ignoreDefaults": {
+                            "type": "Boolean",
+                            "desc": "仅忽略此实例的默认配置（由setDefaults()设置）",
+                            "addedIn": "v1.1.0"
+                        }
+                    },
+                    "required": true
+                }
+            },
+            "returns": {
+                "type": "Function",
+                "desc": "不带参数调用此函数会隐藏通知弹窗；当使用一个对象参数调用时（原始通知弹窗不能分组），它会更新通知弹窗（指定的属性与以前的属性合并；请注意，更新时不能更改组和位置，因此将忽略它们）",
+                "params": {
+                    "props": {
+                        "type": "Object",
+                        "desc": "通知弹窗属性，这些属性将合并到以前的属性以更新未分组的通知弹窗",
+                        "definition": {
+                            "type": {
+                                "type": "String",
+                                "desc": "可选类型（以前注册过）或现成类型之一（“positive”、“negative”、“warning”、“info”、“ongoing”）",
+                                "examples": [
+                                    "negative",
+                                    "custom-type"
+                                ]
+                            },
+                            "color": {
+                                "type": "String",
+                                "desc": "组件的来自Quasar调色板的颜色名称",
+                                "examples": [
+                                    "primary",
+                                    "teal-10"
+                                ],
+                                "category": "style"
+                            },
+                            "textColor": {
+                                "type": "String",
+                                "desc": "文本的来自Quasar调色板的颜色名称",
+                                "examples": [
+                                    "primary",
+                                    "teal-10"
+                                ],
+                                "category": "style"
+                            },
+                            "message": {
+                                "type": "String",
+                                "desc": "消息的内容",
+                                "examples": [
+                                    "John Doe pinged you"
+                                ]
+                            },
+                            "caption": {
+                                "type": "String",
+                                "desc": "可选标题的内容",
+                                "examples": [
+                                    "5 minutes ago"
+                                ],
+                                "addedIn": "v1.5.5"
+                            },
+                            "html": {
+                                "type": "Boolean",
+                                "desc": "以HTML格式呈现消息；这可能会导致XSS攻击，因此请确保先安全处理消息"
+                            },
+                            "icon": {
+                                "type": "String",
+                                "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+                                "examples": [
+                                    "map",
+                                    "ion-add",
+                                    "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                                    "img:statics/path/to/some_image.png"
+                                ],
+                                "category": "content"
+                            },
+                            "avatar": {
+                                "type": "String",
+                                "desc": "头像/图像的URL；建议：使用statics文件夹",
+                                "examples": [
+                                    "(statics folder) statics/img/something.png",
+                                    "(relative path format) require('./my_img.jpg')",
+                                    "(URL) https://some-site.net/some-img.gif"
+                                ]
+                            },
+                            "spinner": {
+                                "type": [
+                                    "Boolean",
+                                    "Component"
+                                ],
+                                "desc": "用于更新通知弹窗；显示Quasar旋转器而不是头像或图标；如果值为布尔值“true”，则显示默认的QSpinner",
+                                "addedIn": "v1.14.0"
+                            },
+                            "progress": {
+                                "type": "Boolean",
+                                "desc": "显示进度条以详细说明通知弹窗何时自动消失（除非超时为0）",
+                                "addedIn": "v1.9.0"
+                            },
+                            "progressClass": {
+                                "type": [
+                                    "Array",
+                                    "String",
+                                    "Object"
+                                ],
+                                "desc": "用于进度条属性的类定义",
+                                "examples": [
+                                    "my-special-class",
+                                    ":content-class=\"{ 'my-special-class': <condition> }\""
+                                ],
+                                "addedIn": "v1.9.0"
+                            },
+                            "classes": {
+                                "type": "String",
+                                "desc": "将CSS类添加到通知弹窗中以便于自定义",
+                                "examples": [
+                                    "my-notif-class"
+                                ]
+                            },
+                            "attrs": {
+                                "type": "Object",
+                                "desc": "设置通知弹窗属性的键值",
+                                "examples": [
+                                    "{ role: 'alertdialog' }"
+                                ],
+                                "addedIn": "v1.13.0"
+                            },
+                            "timeout": {
+                                "type": "Number",
+                                "desc": "显示的时间量（毫秒）",
+                                "default": 5000,
+                                "examples": [
+                                    2500
+                                ]
+                            },
+                            "actions": {
+                                "type": "Array",
+                                "desc": "通知弹窗操作（按钮）；不管指定或不指定“handler”，单击/点击按钮也将关闭通知；同时查看便利的“closeBtn”属性",
+                                "examples": [
+                                    "[ { label: 'Show', handler: (Function), attrs: { 'aria-label': 'Button label' } }, { icon: 'map', handler: (Function), color: 'yellow' }, { label: 'Learn more', noDismiss: true, handler: (Function) } ]"
+                                ]
+                            },
+                            "onDismiss": {
+                                "type": "Function",
+                                "desc": "在取消通知弹窗时调用的函数",
+                                "params": null,
+                                "returns": null,
+                                "examples": [
+                                    "() => { console.log('Dismissed') }"
+                                ]
+                            },
+                            "closeBtn": {
+                                "type": [
+                                    "Boolean",
+                                    "String"
+                                ],
+                                "desc": "添加带有特定标签的取消按钮的便捷方式，无需使用“actions”属性；如果设置为true，它将使用符合当前Quasar语言的标签",
+                                "examples": [
+                                    "Close me"
+                                ]
+                            },
+                            "multiLine": {
+                                "type": "Boolean",
+                                "desc": "将通知弹窗设置为多行模式；如果未使用此属性并且指定了多个“action”，则默认情况下通知弹窗将进入多行模式"
+                            },
+                            "ignoreDefaults": {
+                                "type": "Boolean",
+                                "desc": "仅忽略此实例的默认配置（由setDefaults()设置）",
+                                "addedIn": "v1.1.0"
+                            }
+                        },
+                        "addedIn": "v1.14.0"
+                    }
+                },
+                "returns": null
+            }
+        },
+        "setDefaults": {
+            "desc": "将选项合并到默认选项中",
+            "params": {
+                "opts": {
+                    "type": "Object",
+                    "desc": "通知弹窗选项",
+                    "definition": {
+                        "type": {
+                            "type": "String",
+                            "desc": "可选类型（以前注册过）或现成类型之一（“positive”、“negative”、“warning”、“info”、“ongoing”）",
+                            "examples": [
+                                "negative",
+                                "custom-type"
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "color": {
+                            "type": "String",
+                            "desc": "组件的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "textColor": {
+                            "type": "String",
+                            "desc": "文本的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "message": {
+                            "type": "String",
+                            "desc": "消息的内容",
+                            "examples": [
+                                "John Doe pinged you"
+                            ]
+                        },
+                        "caption": {
+                            "type": "String",
+                            "desc": "可选标题的内容",
+                            "examples": [
+                                "5 minutes ago"
+                            ],
+                            "addedIn": "v1.5.5"
+                        },
+                        "html": {
+                            "type": "Boolean",
+                            "desc": "以HTML格式呈现消息；这可能会导致XSS攻击，因此请确保先安全处理消息"
+                        },
+                        "icon": {
+                            "type": "String",
+                            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+                            "examples": [
+                                "map",
+                                "ion-add",
+                                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                                "img:statics/path/to/some_image.png"
+                            ],
+                            "category": "content"
+                        },
+                        "avatar": {
+                            "type": "String",
+                            "desc": "头像/图像的URL；建议：使用statics文件夹",
+                            "examples": [
+                                "(statics folder) statics/img/something.png",
+                                "(relative path format) require('./my_img.jpg')",
+                                "(URL) https://some-site.net/some-img.gif"
+                            ]
+                        },
+                        "spinner": {
+                            "type": [
+                                "Boolean",
+                                "Component"
+                            ],
+                            "desc": "用于更新通知弹窗；显示Quasar旋转器而不是头像或图标；如果值为布尔值“true”，则显示默认的QSpinner",
+                            "addedIn": "v1.14.0"
+                        },
+                        "position": {
+                            "type": "String",
+                            "desc": "要粘贴的窗口的边/角",
+                            "default": "bottom",
+                            "values": [
+                                "top-left",
+                                "top-right",
+                                "bottom-left",
+                                "bottom-right",
+                                "top",
+                                "bottom",
+                                "left",
+                                "right",
+                                "center"
+                            ],
+                            "examples": [
+                                "top-right"
+                            ]
+                        },
+                        "badgeColor": {
+                            "type": "String",
+                            "desc": "标记的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style",
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgeTextColor": {
+                            "type": "String",
+                            "desc": "标记文本的Quasar调色板中颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style",
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgePosition": {
+                            "type": "String",
+                            "desc": "贴标记的通知弹窗的角；如果通知弹窗在左侧，则默认值为右上角，否则为左上角",
+                            "default": "(top-left/top-right)",
+                            "values": [
+                                "top-left",
+                                "top-right",
+                                "bottom-left",
+                                "bottom-right"
+                            ],
+                            "examples": [
+                                "bottom-right"
+                            ],
+                            "addedIn": "v1.9.5"
+                        },
+                        "badgeStyle": {
+                            "type": [
+                                "Array",
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "用于标记属性的样式的定义",
+                            "examples": [
+                                "background-color: #ff0000",
+                                ":content-style=\"{ backgroundColor: '#ff0000' }\""
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgeClass": {
+                            "type": [
+                                "Array",
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "用于标记属笥的类的定义",
+                            "examples": [
+                                "my-special-class",
+                                ":content-class=\"{ 'my-special-class': <condition> }\""
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "progress": {
+                            "type": "Boolean",
+                            "desc": "显示进度条以详细说明通知弹窗何时自动消失（除非超时为0）",
+                            "addedIn": "v1.9.0"
+                        },
+                        "progressClass": {
+                            "type": [
+                                "Array",
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "用于进度条属性的类的定义",
+                            "examples": [
+                                "my-special-class",
+                                ":content-class=\"{ 'my-special-class': <condition> }\""
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "classes": {
+                            "type": "String",
+                            "desc": "将CSS类添加到通知弹窗中以便于自定义",
+                            "examples": [
+                                "my-notif-class"
+                            ]
+                        },
+                        "attrs": {
+                            "type": "Object",
+                            "desc": "设置通知弹窗属性的键值",
+                            "examples": [
+                                "{ role: 'alertdialog' }"
+                            ],
+                            "addedIn": "v1.13.0"
+                        },
+                        "timeout": {
+                            "type": "Number",
+                            "desc": "显示的时间量（毫秒）",
+                            "default": 5000,
+                            "examples": [
+                                2500
+                            ]
+                        },
+                        "actions": {
+                            "type": "Array",
+                            "desc": "通知弹窗的操作（按钮）；不管指定或不指定“handler”，单击/点击按钮也将关闭通知；同时查看便利的“closeBtn”属性",
+                            "examples": [
+                                "[ { label: 'Show', handler: (Function), attrs: { 'aria-label': 'Button label' } }, { icon: 'map', handler: (Function), color: 'yellow' } ]"
+                            ]
+                        },
+                        "onDismiss": {
+                            "type": "Function",
+                            "desc": "在取消通知弹窗时调用的函数",
+                            "params": null,
+                            "returns": null,
+                            "examples": [
+                                "() => { console.log('Dismissed') }"
+                            ]
+                        },
+                        "closeBtn": {
+                            "type": [
+                                "Boolean",
+                                "String"
+                            ],
+                            "desc": "添加带有特定标签的取消按钮的便捷方式，无需使用“actions”属性；如果设置为true，它将使用符合当前Quasar语言的标签",
+                            "examples": [
+                                "Close me"
+                            ]
+                        },
+                        "multiLine": {
+                            "type": "Boolean",
+                            "desc": "将通知弹窗设置为多行模式；如果未使用此属性并且指定了多个“action”，则默认情况下通知弹窗将进入多行模式"
+                        }
+                    },
+                    "required": true
+                }
+            }
+        },
+        "registerType": {
+            "addedIn": "v1.9.0",
+            "desc": "注册新类型的通知弹窗（或覆盖现有通知弹窗）",
+            "params": {
+                "typeName": {
+                    "type": "String",
+                    "desc": "类型的名称（稍后用作“type”属性）",
+                    "required": true,
+                    "examples": [
+                        "my-type"
+                    ]
+                },
+                "typeOpts": {
+                    "type": "Object",
+                    "desc": "通知弹窗选项",
+                    "definition": {
+                        "type": {
+                            "type": "String",
+                            "desc": "可选类型（以前注册过）或现成类型之一（“positive”、“negative”、“warning”、“info”、“ongoing”）",
+                            "examples": [
+                                "negative",
+                                "custom-type"
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "color": {
+                            "type": "String",
+                            "desc": "组件的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "textColor": {
+                            "type": "String",
+                            "desc": "文本的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "message": {
+                            "type": "String",
+                            "desc": "消息的内容",
+                            "examples": [
+                                "John Doe pinged you"
+                            ]
+                        },
+                        "caption": {
+                            "type": "String",
+                            "desc": "可选标题的内容",
+                            "examples": [
+                                "5 minutes ago"
+                            ],
+                            "addedIn": "v1.5.5"
+                        },
+                        "html": {
+                            "type": "Boolean",
+                            "desc": "以HTML格式呈现消息；这可能会导致XSS攻击，因此请确保先安全处理消息"
+                        },
+                        "icon": {
+                            "type": "String",
+                            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+                            "examples": [
+                                "map",
+                                "ion-add",
+                                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                                "img:statics/path/to/some_image.png"
+                            ],
+                            "category": "content"
+                        },
+                        "avatar": {
+                            "type": "String",
+                            "desc": "头像/图像的URL；建议：使用statics文件夹",
+                            "examples": [
+                                "(statics folder) statics/img/something.png",
+                                "(relative path format) require('./my_img.jpg')",
+                                "(URL) https://some-site.net/some-img.gif"
+                            ]
+                        },
+                        "spinner": {
+                            "type": [
+                                "Boolean",
+                                "Component"
+                            ],
+                            "desc": "用于更新通知弹窗；显示Quasar旋转器而不是头像或图标；如果值为布尔值“true”，则显示默认的QSpinner",
+                            "addedIn": "v1.14.0"
+                        },
+                        "position": {
+                            "type": "String",
+                            "desc": "要粘贴的窗口的边/角",
+                            "default": "bottom",
+                            "values": [
+                                "top-left",
+                                "top-right",
+                                "bottom-left",
+                                "bottom-right",
+                                "top",
+                                "bottom",
+                                "left",
+                                "right",
+                                "center"
+                            ],
+                            "examples": [
+                                "top-right"
+                            ]
+                        },
+                        "badgeColor": {
+                            "type": "String",
+                            "desc": "标记的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style",
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgeTextColor": {
+                            "type": "String",
+                            "desc": "标记文本的Quasar调色板中颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style",
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgePosition": {
+                            "type": "String",
+                            "desc": "贴标记的通知弹窗的角；如果通知弹窗在左侧，则默认值为右上角，否则为左上角",
+                            "default": "(top-left/top-right)",
+                            "values": [
+                                "top-left",
+                                "top-right",
+                                "bottom-left",
+                                "bottom-right"
+                            ],
+                            "examples": [
+                                "bottom-right"
+                            ],
+                            "addedIn": "v1.9.5"
+                        },
+                        "badgeStyle": {
+                            "type": [
+                                "Array",
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "用于标记属民的样式的定义",
+                            "examples": [
+                                "background-color: #ff0000",
+                                ":content-style=\"{ backgroundColor: '#ff0000' }\""
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "badgeClass": {
+                            "type": [
+                                "Array",
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "用于标记属性的类的定义",
+                            "examples": [
+                                "my-special-class",
+                                ":content-class=\"{ 'my-special-class': <condition> }\""
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "progress": {
+                            "type": "Boolean",
+                            "desc": "显示进度条以详细说明通知弹窗何时自动消失（除非超时为0）",
+                            "addedIn": "v1.9.0"
+                        },
+                        "progressClass": {
+                            "type": [
+                                "Array",
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "用于进度条属性的类的定义",
+                            "examples": [
+                                "my-special-class",
+                                ":content-class=\"{ 'my-special-class': <condition> }\""
+                            ],
+                            "addedIn": "v1.9.0"
+                        },
+                        "classes": {
+                            "type": "String",
+                            "desc": "将CSS类添加到通知弹窗中以便于自定义",
+                            "examples": [
+                                "my-notif-class"
+                            ]
+                        },
+                        "attrs": {
+                            "type": "Object",
+                            "desc": "设置通知弹窗属性的键值",
+                            "examples": [
+                                "{ role: 'alertdialog' }"
+                            ],
+                            "addedIn": "v1.13.0"
+                        },
+                        "timeout": {
+                            "type": "Number",
+                            "desc": "显示的时间量（毫秒）",
+                            "default": 5000,
+                            "examples": [
+                                2500
+                            ]
+                        },
+                        "actions": {
+                            "type": "Array",
+                            "desc": "通知弹窗的操作（按钮）；不管指定或不指定“handler”，单击/点击按钮也将关闭通知；同时查看便利的“closeBtn”属性",
+                            "examples": [
+                                "[ { label: 'Show', handler: (Function), attrs: { 'aria-label': 'Button label' } }, { icon: 'map', handler: (Function), color: 'yellow' } ]"
+                            ]
+                        },
+                        "onDismiss": {
+                            "type": "Function",
+                            "desc": "在取消通知时调用的函数",
+                            "params": null,
+                            "returns": null,
+                            "examples": [
+                                "() => { console.log('Dismissed') }"
+                            ]
+                        },
+                        "closeBtn": {
+                            "type": [
+                                "Boolean",
+                                "String"
+                            ],
+                            "desc": "添加带有特定标签的取消按钮的便捷方式，无需使用“actions”属性；如果设置为true，它将使用符合当前Quasar语言的标签",
+                            "examples": [
+                                "Close me"
+                            ]
+                        },
+                        "multiLine": {
+                            "type": "Boolean",
+                            "desc": "将通知弹窗设置为多行模式；如果未使用此属性并且指定了多个“action”，则默认情况下通知弹窗将进入多行模式"
+                        }
+                    },
+                    "required": true
+                }
+            }
+        }
+    }
+}

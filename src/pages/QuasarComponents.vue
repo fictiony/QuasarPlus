@@ -145,6 +145,7 @@
 <script>
 // 【Quasar 组件清单】
 import quasarApi from 'components/api/Quasar.json'
+import { inspect } from 'components/thirdparty/inspect'
 
 const CATEGORIES = [
   { label: '所有组件', value: '' },
@@ -228,18 +229,10 @@ export default {
     }
   },
 
-  inject: ['inspect'],
-
   computed: {
     // 筛选后的组件信息列表
     filteredComponents() {
-      return Object.freeze(
-        this.quasarComponents
-          .filter(info => this.matchFilter(info))
-          .sort((a, b) => {
-            return a.className < b.className ? -1 : 1
-          })
-      )
+      return Object.freeze(this.quasarComponents.filter(info => this.matchFilter(info)).sortBy('className'))
     },
 
     // 处理后的实际搜索词
@@ -249,7 +242,7 @@ export default {
 
     // 组件信息检索表
     infoMap() {
-      return Object.freeze(this.$arrToMap(this.quasarComponents, 'className'))
+      return Object.freeze(this.quasarComponents.toMap('className'))
     }
   },
 
@@ -317,11 +310,11 @@ export default {
     // 查看组件范例属性
     inspectDemo(info, demoIndex) {
       const demos = this.demoMap[info.className] || {}
-      if (demoIndex === undefined && this.inspect.target) {
+      if (demoIndex === undefined && inspect.target) {
         // 若当前已有选中的范例，则忽略选中默认范例的操作
-        if (Object.values(demos).includes(this.inspect.target)) return
+        if (Object.values(demos).includes(inspect.target)) return
       }
-      this.inspect.target = demos[demoIndex || 0] || info
+      inspect.target = demos[demoIndex || 0] || info
     }
   }
 }

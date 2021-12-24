@@ -1,0 +1,91 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/ajax-bar"
+    },
+    "props": {
+        "position": {
+            "type": "String",
+            "desc": "窗口中应显示QAjaxBar的位置",
+            "default": "top",
+            "values": [
+                "top",
+                "right",
+                "bottom",
+                "left"
+            ],
+            "examples": [
+                "bottom"
+            ],
+            "category": "content"
+        },
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "style",
+            "default": "2px"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "skip-hijack": {
+            "type": "Boolean",
+            "desc": "跳过Ajax劫持（不是被动的属性）",
+            "category": "behavior"
+        },
+        "reverse": {
+            "type": "Boolean",
+            "desc": "逆转进度方向",
+            "category": "behavior"
+        }
+    },
+    "events": {
+        "start": {
+            "desc": "Ajax栏被触发显示时发出"
+        },
+        "stop": {
+            "desc": "当Ajax栏完成它的工作时发出"
+        }
+    },
+    "methods": {
+        "start": {
+            "desc": "通知ajax栏您正在等待新进程完成",
+            "params": {
+                "speed": {
+                    "type": "Number",
+                    "default": 300,
+                    "desc": "进度自动递增之间的延迟（毫秒）；如果延迟为0，则禁用自动递增",
+                    "examples": [
+                        400,
+                        0
+                    ]
+                }
+            }
+        },
+        "increment": {
+            "desc": "手动触发条形进度递增",
+            "params": {
+                "amount": {
+                    "type": "Number",
+                    "desc": "增加的数量（0<x<=100）",
+                    "examples": [
+                        1
+                    ]
+                }
+            }
+        },
+        "stop": {
+            "desc": "通知ajax栏您等待的进程已完成"
+        }
+    }
+}

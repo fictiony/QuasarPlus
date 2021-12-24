@@ -1,0 +1,77 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/avatar"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称或标准大小名称（xs | sm | md | lg | xl）",
+            "examples": [
+                "16px",
+                "2rem",
+                "xs",
+                "md"
+            ],
+            "category": "style"
+        },
+        "font-size": {
+            "type": "String",
+            "desc": "内容（图标、文本）的大小（CSS单位），包括单位名称",
+            "examples": [
+                "18px",
+                "2rem"
+            ],
+            "category": "style"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "删除border-radius，使边框为正方形",
+            "category": "style"
+        },
+        "rounded": {
+            "type": "Boolean",
+            "desc": "为组件的方形应用较小的标准border-radius",
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "可选；建议：一个字符串，<img>标记"
+        }
+    }
+}

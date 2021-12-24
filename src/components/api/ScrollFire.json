@@ -1,0 +1,21 @@
+{
+    "type": "directive",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-directives/scroll-fire"
+    },
+    "value": {
+        "type": "Function",
+        "desc": "当滚动和元素进入视口时调用的函数（如果为非函数则表示禁用）",
+        "params": {
+            "el": {
+                "type": "Object",
+                "desc": "应用滚动触发的DOM元素"
+            }
+        },
+        "returns": null,
+        "examples": [
+            "v-scroll-fire=\"fnToCall\"",
+            "v-scroll-fire=\"void 0\""
+        ]
+    }
+}

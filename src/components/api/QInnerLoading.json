@@ -1,0 +1,69 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/inner-loading"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称，或内部微调器的标准大小名称（xs | sm | md | lg | xl）（除非使用默认插槽）",
+            "examples": [
+                "16px",
+                "2rem",
+                "xs",
+                "md"
+            ],
+            "category": "style",
+            "default": "42px"
+        },
+        "showing": {
+            "type": "Boolean",
+            "desc": "是否状态加载",
+            "category": "state"
+        },
+        "color": {
+            "type": "String",
+            "desc": "来自内部旋转器的Quasar调色板的组件的颜色名称（除非使用默认插槽）",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "transition-show": {
+            "type": "String",
+            "desc": "Quasar的嵌入式过滤动画之一",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "fade"
+        },
+        "transition-hide": {
+            "type": "String",
+            "desc": "Quasar的嵌入式过滤动画之一",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "fade"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "默认插槽用于替换默认旋转器；建议：旋转器或文本"
+        }
+    }
+}

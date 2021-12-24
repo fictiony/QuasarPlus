@@ -1,0 +1,123 @@
+{
+    "type": "directive",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-directives/mutation"
+    },
+    "addedIn": "v1.3.0",
+    "value": {
+        "type": [
+            "Function"
+        ],
+        "desc": "发生变动时调用的函数；强烈建议从vue组件范围引用它，否则指令更新周期将持续重新创建观察者严重影响性能",
+        "examples": [
+            "v-intersection=\"myHandler\""
+        ],
+        "returns": {
+            "type": "Boolean",
+            "desc": "如果从处理程序返回Boolean false，观察者将停止"
+        },
+        "params": {
+            "mutationList": {
+                "type": "Array",
+                "desc": "MutationRecord项数组",
+                "definition": {
+                    "type": {
+                        "type": "String",
+                        "desc": "变动类型",
+                        "values": [
+                            "childList",
+                            "attributes",
+                            "characterData"
+                        ]
+                    },
+                    "target": {
+                        "type": "Object",
+                        "desc": "变动影响的DOM元素，取决于变动类型"
+                    },
+                    "addedNodes": {
+                        "type": "Array",
+                        "desc": "已添加节点的NodeList"
+                    },
+                    "removedNodes": {
+                        "type": "Array",
+                        "desc": "已删除节点的NodeList"
+                    },
+                    "previousSibling": {
+                        "type": "Object",
+                        "desc": "添加或删除的节点的上一个同级节点，或为null"
+                    },
+                    "nextSibling": {
+                        "type": "Object",
+                        "desc": "添加或删除的节点的下一个同级节点，或为null"
+                    },
+                    "attributeName": {
+                        "type": "String",
+                        "desc": "已更改属性的本地名称，或null",
+                        "examples": [
+                            "some-attribute"
+                        ]
+                    },
+                    "attributeNamespace": {
+                        "type": "String",
+                        "desc": "已更改属性的命名空间，或为null"
+                    },
+                    "oldValue": {
+                        "type": "String",
+                        "desc": "值取决于变动类型；对于属性，它是更改前更改的属性的值；对于characterData，它是更改前更改节点的数据；childList为空；请注意，要使其按预期工作，必须设置attributeOldValue或characterDataOldValue"
+                    }
+                }
+            }
+        }
+    },
+    "modifiers": {
+        "once": {
+            "type": "Boolean",
+            "desc": "只调用处理程序一次，当触发第一个变动时停止监视",
+            "examples": [
+                "v-mutation.once"
+            ]
+        },
+        "childList": {
+            "type": "Boolean",
+            "desc": "监视目标节点（如果还设置了“subtree”，则监视其子节点）以添加新的子节点或删除现有的子节点",
+            "examples": [
+                "v-mutation.childList"
+            ]
+        },
+        "subtree": {
+            "type": "Boolean",
+            "desc": "将监视扩展到作为根的目标节点的整个子树",
+            "examples": [
+                "v-mutation.subtree"
+            ]
+        },
+        "attributes": {
+            "type": "Boolean",
+            "desc": "观察被监视节点上属性值的更改",
+            "examples": [
+                "v-mutation.attributes"
+            ]
+        },
+        "characterData": {
+            "type": "Boolean",
+            "desc": "监视指定的目标节点或子树中包含的字符数据的更改",
+            "examples": [
+                "v-mutation.characterData"
+            ]
+        },
+        "attributeOldValue": {
+            "type": "Boolean",
+            "desc": "记录在监视一个或多个节点的属性更改时更改的任何属性的上一个值",
+            "examples": [
+                "v-mutation.attributeOldValue"
+            ]
+        },
+        "characterDataOldValue": {
+            "type": "Boolean",
+            "desc": "每当被监视的节点上的文本发生更改时，记录节点文本的上一个值",
+            "examples": [
+                "v-mutation.characterDataOldValue"
+            ]
+        }
+    }
+}

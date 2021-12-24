@@ -1,0 +1,31 @@
+{
+    "type": "directive",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-directives/scroll"
+    },
+    "value": {
+        "type": "Function",
+        "desc": "发生滚动时要调用的函数（如果为非函数则表示禁用）",
+        "params": {
+            "verticalScrollPosition": {
+                "type": "Number",
+                "desc": "从顶部滚动偏移",
+                "examples": [
+                    350
+                ]
+            },
+            "horizontalScrollPosition": {
+                "type": "Number",
+                "desc": "向左滚动偏移",
+                "examples": [
+                    350
+                ]
+            }
+        },
+        "returns": null,
+        "examples": [
+            "v-scroll=\"fnToCall\"",
+            "v-scroll=\"void 0\""
+        ]
+    }
+}

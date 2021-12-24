@@ -1,0 +1,108 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/skeleton"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "addedIn": "v1.6.0",
+    "props": {
+        "tag": {
+            "type": "String",
+            "desc": "要呈现的HTML标记",
+            "default": "div",
+            "category": "content",
+            "examples": [
+                "div",
+                "span"
+            ]
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "type": {
+            "type": "String",
+            "desc": "骨架占位符的类型",
+            "values": [
+                "text",
+                "rect",
+                "circle",
+                "QBtn",
+                "QBadge",
+                "QChip",
+                "QToolbar",
+                "QCheckbox",
+                "QRadio",
+                "QToggle",
+                "QSlider",
+                "QRange",
+                "QInput",
+                "QAvatar"
+            ],
+            "default": "rect",
+            "category": "content"
+        },
+        "animation": {
+            "type": "String",
+            "desc": "骨架占位符的动画效果",
+            "values": [
+                "wave",
+                "pulse",
+                "pulse-x",
+                "pulse-y",
+                "fade",
+                "blink",
+                "none"
+            ],
+            "default": "wave",
+            "category": "style"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "删除border-radius，使边界为正方形",
+            "category": "style"
+        },
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于零部件",
+            "category": "style"
+        },
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称；覆盖“height”和“width”属性，并将值同时应用于height和width",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "style"
+        },
+        "width": {
+            "type": "String",
+            "desc": "CSS单位宽度，包括单位名称；应用自定义宽度；使用此属性或通过CSS；如果使用了“size”属性，则被它覆盖",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "style"
+        },
+        "height": {
+            "type": "String",
+            "desc": "以CSS单位表示的高度，包括单位名称；应用自定义高度；使用此属性或通过CSS；如果使用了“size”属性，则被它覆盖",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}

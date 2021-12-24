@@ -1,0 +1,43 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/list-and-list-items"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "avatar": {
+            "type": "Boolean",
+            "desc": "渲染一个头像列表项侧面（不需要设置“side”属性）",
+            "category": "content"
+        },
+        "thumbnail": {
+            "type": "Boolean",
+            "desc": "渲染一个缩略图列表项侧面（不需要设置“side”属性）",
+            "category": "content"
+        },
+        "side": {
+            "type": "Boolean",
+            "desc": "作为列表项的一个侧面渲染",
+            "category": "content"
+        },
+        "top": {
+            "type": "Boolean",
+            "desc": "将内容顶部对齐（对多行列表项有用）",
+            "category": "content"
+        },
+        "no-wrap": {
+            "type": "Boolean",
+            "desc": "不包装文本（对列表项的主要内容有用）",
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "列表项部分的实际内容"
+        }
+    }
+}

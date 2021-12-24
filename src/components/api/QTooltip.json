@@ -1,0 +1,289 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/tooltip"
+    },
+    "props": {
+        "content-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为内容属性的类的定义",
+            "examples": [
+                "my-special-class",
+                ":content-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "content-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为内容属性的样式定义",
+            "examples": [
+                "background-color: #ff0000",
+                ":content-style=\"{ color: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "value": {
+            "type": "Boolean",
+            "desc": "定义显示/隐藏状态的组件模型；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model"
+        },
+        "max-height": {
+            "type": "String",
+            "desc": "工具提示的最大高度；以CSS单位表示的大小，包括单位名称",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "content"
+        },
+        "max-width": {
+            "type": "String",
+            "desc": "工具提示的最大宽度；以CSS单位表示的大小，包括单位名称",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "content"
+        },
+        "transition-show": {
+            "type": "String",
+            "desc": "Quasar的嵌入式过渡动画之一",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "jump-down"
+        },
+        "transition-hide": {
+            "type": "String",
+            "desc": "Quasar的嵌入式过渡动画之一",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "jump-up"
+        },
+        "anchor": {
+            "type": "String",
+            "desc": "设置工具提示相对于其目标的起始位置或定位点的两个值",
+            "values": [
+                "top left",
+                "top middle",
+                "top right",
+                "top start",
+                "top end",
+                "center left",
+                "center middle",
+                "center right",
+                "center start",
+                "center end",
+                "bottom left",
+                "bottom middle",
+                "bottom right",
+                "bottom start",
+                "bottom end"
+            ],
+            "default": "bottom middle",
+            "examples": [
+                "top left",
+                "bottom right"
+            ],
+            "category": "position"
+        },
+        "self": {
+            "type": "String",
+            "desc": "两个值设置工具提示自身相对于其目标的位置",
+            "values": [
+                "top left",
+                "top middle",
+                "top right",
+                "top start",
+                "top end",
+                "center left",
+                "center middle",
+                "center right",
+                "center start",
+                "center end",
+                "bottom left",
+                "bottom middle",
+                "bottom right",
+                "bottom start",
+                "bottom end"
+            ],
+            "default": "top middle",
+            "examples": [
+                "top left",
+                "bottom right"
+            ],
+            "category": "position"
+        },
+        "offset": {
+            "type": "Array",
+            "desc": "以像素为单位水平和垂直偏移工具提示的两个数字的数组",
+            "default": "[14, 14]",
+            "examples": [
+                "[8, 8]",
+                "[5, 10]"
+            ],
+            "category": "position"
+        },
+        "scroll-target": {
+            "type": [
+                "Element",
+                "String"
+            ],
+            "desc": "CSS选择器或DOM元素用作自定义滚动容器，而不是自动检测到的滚动容器",
+            "examples": [
+                ":scroll-target=\"$refs.scrollTarget\"",
+                "scroll-target=\".scroll-target-class\"",
+                "scroll-target=\"#scroll-target-id\"",
+                "scroll-target=\"body\""
+            ],
+            "category": "behavior",
+            "addedIn": "v1.8.0"
+        },
+        "target": {
+            "type": [
+                "Boolean",
+                "String"
+            ],
+            "desc": "配置目标元素以触发工具提示切换；'“true”表示启用父DOM元素，“false”表示禁用将事件附加到任何DOM元素；通过使用字符串（CSS选择器），它将事件附加到指定的DOM元素（如果存在）",
+            "default": true,
+            "values": [
+                "(Boolean) true",
+                "(Boolean) false",
+                "(CSS selector)"
+            ],
+            "examples": [
+                ":target=\"false\"",
+                "target=\".my-parent\""
+            ],
+            "category": "behavior"
+        },
+        "no-parent-event": {
+            "type": "Boolean",
+            "desc": "取消将事件附加到目标DOM元素（触发元素显示的事件）",
+            "category": "behavior"
+        },
+        "delay": {
+            "type": "Number",
+            "desc": "将工具提示配置为延迟显示",
+            "default": 0,
+            "examples": [
+                ":delay=\"550\""
+            ],
+            "category": "behavior"
+        },
+        "hide-delay": {
+            "type": "Number",
+            "desc": "将工具提示配置为延迟消失",
+            "default": 0,
+            "examples": [
+                ":hide-delay=\"650\""
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.5"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "显示/隐藏状态更改时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Boolean",
+                    "desc": "新状态（显示/隐藏）"
+                }
+            }
+        },
+        "show": {
+            "desc": "在组件触发show()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "before-show": {
+            "desc": "在组件触发show()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "hide": {
+            "desc": "在组件触发hide()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "before-hide": {
+            "desc": "在组件触发hide()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        }
+    },
+    "methods": {
+        "show": {
+            "desc": "触发组件显示",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "hide": {
+            "desc": "触发组件隐藏",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "toggle": {
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            },
+            "desc": "触发组件在显示/隐藏之间切换"
+        },
+        "updatePosition": {
+            "desc": "有一些自定义场景，Quasar无法在没有明显性能缺陷的情况下自动重新定位工具提示，因此最佳解决方案是在需要时调用此方法"
+        }
+    }
+}

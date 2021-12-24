@@ -1,0 +1,210 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/scroll-area"
+    },
+    "props": {
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style",
+            "addedIn": "v1.9.0"
+        },
+        "bar-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "具有CSS属性和值的对象，用于设置自定义滚动条的滑轨样式",
+            "examples": [
+                ":bar-style=\"{ right: '4px', borderRadius: '5px', background: 'red', width: '10px', opacity: 1 }\""
+            ],
+            "category": "style",
+            "addedIn": "v1.5.0"
+        },
+        "thumb-style": {
+            "type": "Object",
+            "desc": "具有CSS属性和值的对象，用于设置自定义滚动条的滑块样式",
+            "examples": [
+                ":thumb-style=\"{ right: '4px', borderRadius: '5px', background: 'red', width: '10px', opacity: 1 }\""
+            ],
+            "category": "style"
+        },
+        "content-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "具有CSS属性和值的对象，用于设置QScrollArea容器的样式",
+            "examples": [
+                ":content-style=\"{ backgroundColor: '#C0C0C0' }\""
+            ],
+            "category": "style"
+        },
+        "content-active-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "具有CSS属性和值的对象，用于在滚动区域变为激活状态时设置QScrollArea容器的样式（鼠标悬停时）",
+            "examples": [
+                ":content-active-style=\"{ backgroundColor: 'white' }\""
+            ],
+            "category": "style"
+        },
+        "visible": {
+            "type": "Boolean",
+            "desc": "手动控制滚动条的可见性；覆盖默认的鼠标悬停/离开行为",
+            "category": "behavior",
+            "addedIn": "v1.3.0"
+        },
+        "delay": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "当内容改变时，滚动条出现；定义滚动条再次消失之前的时间量（毫秒）（如果组件未悬停）",
+            "default": 1000,
+            "examples": [
+                500,
+                ":delay=\"550\""
+            ],
+            "category": "behavior"
+        },
+        "horizontal": {
+            "type": "Boolean",
+            "desc": "注册水平滚动而不是垂直滚动（默认设置）",
+            "category": "behavior"
+        },
+        "tabindex": {
+          "type": [
+            "Number",
+            "String"
+          ],
+          "desc": "Tabindex HTML属性值",
+          "examples": [
+            "0",
+            "100"
+          ],
+          "category": "general",
+          "addedIn": "v1.15.15"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    },
+    "events": {
+        "scroll": {
+            "desc": "当滚动信息更改（并且配置了侦听器）时发出",
+            "params": {
+                "info": {
+                    "type": "Object",
+                    "definition": {
+                        "ref": {
+                            "type": "Object",
+                            "desc": "Vue对触发事件的QScrollArea的引用"
+                        },
+                        "verticalPosition": {
+                            "type": "Number",
+                            "desc": "垂直滚动位置（像素）；仅当QScrollArea未处于水平模式时可用"
+                        },
+                        "verticalPercentage": {
+                            "type": "Number",
+                            "desc": "垂直滚动百分比（0.0<x<1.0）；仅当QScrollArea未处于水平模式时可用"
+                        },
+                        "verticalSize": {
+                            "type": "Number",
+                            "desc": "垂直滚动轴尺寸（像素）；仅当QScrollArea未处于水平模式时可用"
+                        },
+                        "verticalContainerSize": {
+                            "type": "Number",
+                            "desc": "容器高度（px）；仅当QScrollArea未处于水平模式时可用"
+                        },
+                        "horizontalPosition": {
+                            "type": "Number",
+                            "desc": "水平滚动位置（像素）；仅当QScrollArea处于水平模式时可用"
+                        },
+                        "horizontalPercentage": {
+                            "type": "Number",
+                            "desc": "水平滚动百分比（0.0<x<1.0）；仅当QScrollArea处于水平模式时可用"
+                        },
+                        "horizontalSize": {
+                            "type": "Number",
+                            "desc": "水平滚动尺寸（像素）；仅当QScrollArea处于水平模式时可用"
+                        },
+                        "horizontalContainerSize": {
+                            "type": "Number",
+                            "desc": "容器宽度（px）；仅当QScrollArea处于水平模式时可用"
+                        }
+                    }
+                }
+            },
+            "addedIn": "v1.9.3"
+        }
+    },
+    "methods": {
+        "getScrollTarget": {
+            "desc": "获取滚动DOM元素目标",
+            "returns": {
+                "type": "Object",
+                "desc": "发生滚动的DOM元素"
+            }
+        },
+        "getScrollPosition": {
+            "desc": "获取当前滚动位置",
+            "returns": {
+                "type": "Number",
+                "desc": "从顶部开始的滚动位置偏移（像素）",
+                "examples": [
+                    110
+                ]
+            }
+        },
+        "setScrollPosition": {
+            "desc": "将滚动位置设置为偏移；如果指定了持续时间（以毫秒为单位），则滚动将设置动画",
+            "params": {
+                "offset": {
+                    "type": "Number",
+                    "desc": "从顶部开始的滚动位置偏移（像素）",
+                    "required": true,
+                    "examples": [
+                        220
+                    ]
+                },
+                "duration": {
+                    "type": "Number",
+                    "desc": "启用动画滚动的持续时间（毫秒）",
+                    "examples": [
+                        300
+                    ]
+                }
+            }
+        },
+        "setScrollPercentage": {
+            "desc": "将滚动位置设置为总滚动大小的百分比（0.0<x<1.0）；如果指定了持续时间（以毫秒为单位），则滚动将设置动画",
+            "params": {
+                "offset": {
+                    "type": "Number",
+                    "desc": "总滚动大小的滚动百分比（0.0<x<1.0）",
+                    "required": true,
+                    "examples": [
+                        220
+                    ]
+                },
+                "duration": {
+                    "type": "Number",
+                    "desc": "启用动画滚动的持续时间（毫秒）",
+                    "examples": [
+                        300
+                    ]
+                }
+            },
+            "addedIn": "v1.13.2"
+        }
+    }
+}

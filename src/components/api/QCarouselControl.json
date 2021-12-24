@@ -1,0 +1,47 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/carousel"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "position": {
+            "type": "String",
+            "desc": "要粘贴的边/角",
+            "default": "bottom-right",
+            "values": [
+                "top-right",
+                "top-left",
+                "bottom-right",
+                "bottom-left",
+                "top",
+                "right",
+                "bottom",
+                "left"
+            ],
+            "examples": [
+                "top-right"
+            ],
+            "category": "position"
+        },
+        "offset": {
+            "type": "Array",
+            "desc": "两个数字组成的数组，用于水平和垂直偏移组件（以像素为单位）",
+            "default": "[18, 18]",
+            "examples": [
+                "[8, 8]",
+                "[5, 10]"
+            ],
+            "category": "position"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}

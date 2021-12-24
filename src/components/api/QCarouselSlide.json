@@ -1,0 +1,49 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/carousel"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "name": {
+            "type": "Any",
+            "desc": "幻灯片名称",
+            "required": true,
+            "examples": [
+                "accounts",
+                "firstPanel",
+                ":name=\"1\"",
+                "accounts",
+                "firstSlide",
+                ":name=\"1\""
+            ],
+            "category": "model"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "img-src": {
+            "type": "String",
+            "desc": "指向幻灯片背景图像的URL（使用statics文件夹）",
+            "transformAssetUrls": true,
+            "examples": [
+                "(statics folder) src=\"statics/img/my-bg.png\"",
+                "(assets folder) src=\"~assets/my-img.png\"",
+                "(relative path format) :src=\"require('./my_img.jpg')\"",
+                "(URL) src=\"https://placeimg.com/500/300/nature\""
+            ],
+            "category": "model"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}

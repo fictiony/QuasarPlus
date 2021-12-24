@@ -1,0 +1,45 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/banner"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "inline-actions": {
+            "type": "Boolean",
+            "desc": "在与内容所在的相同行上显示操作",
+            "category": "content"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "rounded": {
+            "type": "Boolean",
+            "desc": "为组件的方形应用较小的标准border-radius",
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style",
+            "addedIn": "v1.3.0"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "这就是横幅内容的所在位置"
+        },
+        "avatar": {
+            "desc": "用于显示头像的插槽（建议：QIcon、QAvatar）"
+        },
+        "action": {
+            "desc": "横幅操作槽（建议：QBtn）"
+        }
+    }
+}

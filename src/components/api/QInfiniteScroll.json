@@ -1,0 +1,129 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/infinite-scroll"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "offset": {
+            "type": "Number",
+            "desc": "到无限滚动容器底部的偏移量（像素），组件应从该容器开始提前加载更多内容",
+            "default": 500,
+            "examples": [
+                ":offset=\"250\""
+            ],
+            "category": "behavior"
+        },
+        "debounce": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "去抖量（毫秒）",
+            "default": 100,
+            "examples": [
+                "0",
+                "530"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.1.0"
+        },
+        "initial-index": {
+            "type": "Number",
+            "desc": "初始化分页索引（用于@load事件）",
+            "default": 0,
+            "examples": [
+                2,
+                3
+            ],
+            "category": "behavior",
+            "addedIn": "v1.13.0"
+        },
+        "scroll-target": {
+            "type": [
+                "Element",
+                "String"
+            ],
+            "desc": "用作自定义滚动容器的CSS选择器或DOM元素，而不是自动检测到的滚动容器",
+            "examples": [
+                ":scroll-target=\"$refs.scrollTarget\"",
+                "scroll-target=\".scroll-target-class\"",
+                "scroll-target=\"#scroll-target-id\"",
+                "scroll-target=\"body\""
+            ],
+            "category": "behavior",
+            "addedIn": "v1.8.0"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "reverse": {
+            "type": "Boolean",
+            "desc": "滚动区域应该像信使一样-开始滚动到底部，到达顶部时加载",
+            "category": "behavior"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        },
+        "loading": {
+            "desc": "加载内容时显示某些东西的插槽；示例：QSpinner"
+        }
+    },
+    "events": {
+        "load": {
+            "desc": "当无限滚动需要加载更多数据时发出",
+            "params": {
+                "index": {
+                    "type": "Number",
+                    "desc": "index参数可用于对加载的内容进行某种分页。它接受从1开始并随着每次调用而递增的数值",
+                    "examples": [
+                        12
+                    ]
+                },
+                "done": {
+                    "type": "Function",
+                    "desc": "进行所有必要更新时调用的函数。不要忘记调用它，否则您的加载消息将继续显示",
+                    "params": {
+                        "stop": {
+                            "type": "Boolean",
+                            "desc": "如果是布尔值“true”，则停止QInfiniteScroll；指定它，以防没有更多的加载"
+                        }
+                    },
+                    "returns": null
+                }
+            }
+        }
+    },
+    "methods": {
+        "poll": {
+            "desc": "检查滚动位置，必要时加载更多内容"
+        },
+        "trigger": {
+            "desc": "告诉无限滚动加载更多内容，不管滚动位置如何"
+        },
+        "reset": {
+            "desc": "将调用索引重置为0"
+        },
+        "stop": {
+            "desc": "停止工作，无论滚动位置如何"
+        },
+        "resume": {
+            "desc": "开始工作。在调用时检查滚动位置，如果触发，则加载更多内容"
+        },
+        "setIndex": {
+            "desc": "覆盖当前分页索引",
+            "addedIn": "v1.13.0"
+        },
+        "updateScrollTarget": {
+            "desc": "更新滚动目标；当父元素发生更改，滚动目标也发生更改时，此选项非常有用"
+        }
+    }
+}

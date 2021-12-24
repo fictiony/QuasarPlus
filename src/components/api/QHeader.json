@@ -1,0 +1,75 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/layout/header-and-footer"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "value": {
+            "type": "Boolean",
+            "desc": "组件的模型，定义是否向用户显示或隐藏；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "default": true,
+            "examples": [
+                "v-model=\"headerState\""
+            ],
+            "category": "model"
+        },
+        "reveal": {
+            "type": "Boolean",
+            "desc": "启用“显示”模式；考虑用户滚动以临时显示/隐藏标题",
+            "category": "behavior"
+        },
+        "reveal-offset": {
+            "type": "Number",
+            "desc": "触发“显示”状态更改的滚动量（像素）",
+            "default": 250,
+            "examples": [
+                ":reveal-offset=\"500\""
+            ],
+            "category": "behavior"
+        },
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于组件",
+            "category": "style"
+        },
+        "elevated": {
+            "type": "Boolean",
+            "desc": "向页眉添加默认阴影",
+            "category": "style"
+        },
+        "height-hint": {
+            "type": [
+                "Number",
+                "String "
+            ],
+            "desc": "当使用SSR时，您可以选择提示QHeader的高度（以像素为单位）",
+            "default": 50,
+            "examples": [
+                "150"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.1.0"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽；建议：QToolbar"
+        }
+    },
+    "events": {
+        "reveal": {
+            "desc": "“显示”状态更改时发出",
+            "params": {
+                "value": {
+                    "type": "Boolean",
+                    "desc": "新的“显示”状态"
+                }
+            }
+        }
+    }
+}

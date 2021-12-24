@@ -1,0 +1,63 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/markup-table"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "应用“平面”设计（无默认阴影）",
+            "category": "style"
+        },
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于组件",
+            "category": "style"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "删除border-radius，使边界为正方形",
+            "category": "style"
+        },
+        "separator": {
+            "type": "String",
+            "desc": "在行、列或所有单元格之间使用分隔符/边框",
+            "default": "horizontal",
+            "values": [
+                "horizontal",
+                "vertical",
+                "cell",
+                "none"
+            ],
+            "examples": [
+                "cell"
+            ],
+            "category": "content"
+        },
+        "wrap-cells": {
+            "type": "Boolean",
+            "desc": "在表格单元格中换行文本",
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}

@@ -1,0 +1,2737 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/table"
+    },
+    "props": {
+        "fullscreen": {
+            "type": "Boolean",
+            "sync": true,
+            "desc": "全屏模式",
+            "examples": [
+                ":fullscreen.sync=\"isFullscreen\""
+            ],
+            "category": "behavior"
+        },
+        "no-route-fullscreen-exit": {
+            "type": "Boolean",
+            "desc": "更改路由应用不会全屏退出",
+            "category": "behavior",
+            "addedIn": "v1.1.7"
+        },
+        "data": {
+            "type": "Array",
+            "desc": "要显示的数据行",
+            "examples": [
+                ":data=\"myData\""
+            ],
+            "category": "general"
+        },
+        "row-key": {
+            "type": [
+                "String",
+                "Function"
+            ],
+            "desc": "每行的属性，定义每行的唯一键（结果必须是原始数据，而不是对象、数组等）；属性值必须是string或一个函数，该函数取一行并在该行中返回所需的（嵌套的）键；如果提供一个函数，那么为了获得最佳性能，请从您的范围引用它，不要内联定义它",
+            "default": "id",
+            "examples": [
+                "row-key=\"name\"",
+                ":row-key=\"row => row.name\""
+            ],
+            "category": "general"
+        },
+        "virtual-scroll": {
+            "type": "Boolean",
+            "desc": "使用QVirtualScroll显示数据（仅适用于非网格模式）",
+            "category": "virtual-scroll",
+            "addedIn": "v1.2.0"
+        },
+        "virtual-scroll-slice-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "要在虚拟列表中渲染的最小行数",
+            "default": "30",
+            "examples": [
+                "virtual-scroll-slice-size=\"60\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.2.0"
+        },
+        "virtual-scroll-slice-ratio-before": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "可见区域中的行数与其之前渲染的行数之比",
+            "default": "1",
+            "examples": [
+                "virtual-scroll-slice-ratio-before=\"0.3\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.14.7"
+        },
+        "virtual-scroll-slice-ratio-after": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "可见区域中的行数与之后渲染的行数之比",
+            "default": "1",
+            "examples": [
+                "virtual-scroll-slice-ratio-after=\"2\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.14.7"
+        },
+        "virtual-scroll-item-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "行的默认像素大小；此值用于渲染初始表格；尝试使用接近行的最小大小的值",
+            "default": "48 (24 if dense)",
+            "examples": [
+                "virtual-scroll-item-size=\"48\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.2.0"
+        },
+        "virtual-scroll-sticky-size-start": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "粘性头部的像素大小（如果使用）；正确的值将提高滚动精度",
+            "default": "0",
+            "examples": [
+                "virtual-scroll-sticky-size-start=\"48\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.2.0"
+        },
+        "virtual-scroll-sticky-size-end": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "粘性底部的像素大小（如果使用）；正确的值将提高滚动精度",
+            "default": "0",
+            "examples": [
+                "virtual-scroll-sticky-size-end=\"48\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.2.0"
+        },
+        "table-colspan": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "表中的列数（如果使用table-layout: fixed，则需要此值）",
+            "examples": [
+                "table-colspan=\"12\""
+            ],
+            "category": "virtual-scroll|content",
+            "addedIn": "v1.13.0"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "default": "grey-8"
+        },
+        "icon-first-page": {
+            "type": "String",
+            "desc": "图标名称遵循Quasar的惯例，以进入第一页；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v1.12.0"
+        },
+        "icon-prev-page": {
+            "type": "String",
+            "desc": "图标名称遵循Quasar的惯例，用于跳转到上一页；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v1.12.0"
+        },
+        "icon-next-page": {
+            "type": "String",
+            "desc": "图标名称遵循Quasar的惯例，以便进入下一页；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v1.12.0"
+        },
+        "icon-last-page": {
+            "type": "String",
+            "desc": "图标名称遵循Quasar的惯例，以进入最后一页；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v1.12.0"
+        },
+        "grid": {
+            "type": "Boolean",
+            "desc": "将数据显示为网格而不是默认表格",
+            "category": "behavior"
+        },
+        "grid-header": {
+            "type": "Boolean",
+            "desc": "同时显示网格模式的头部",
+            "category": "behavior|content"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；连接$q.screen以获得响应行为",
+            "category": "style"
+        },
+        "columns": {
+            "type": "Array",
+            "desc": "列定义（对象数组）",
+            "examples": [
+                ":columns=\"tableColumns\""
+            ],
+            "category": "column",
+            "definition": {
+                "name": {
+                    "type": "String",
+                    "desc": "唯一id，标识列（由pagination.sortBy使用，'body cell-[name]'插槽，…）",
+                    "required": true,
+                    "examples": [
+                        "desc"
+                    ]
+                },
+                "label": {
+                    "type": "String",
+                    "desc": "头部标签",
+                    "required": true,
+                    "examples": [
+                        "Dessert (100g serving)"
+                    ]
+                },
+                "field": {
+                    "type": [
+                        "String",
+                        "Function"
+                    ],
+                    "desc": "行对象属性来确定映射到所需属性的列或函数的值",
+                    "required": true,
+                    "examples": [
+                        "name",
+                        "row => row.some.nested.prop"
+                    ]
+                },
+                "required": {
+                    "type": "Boolean",
+                    "desc": "如果使用可见列，则此列将始终可见",
+                    "default": false
+                },
+                "align": {
+                    "type": "String",
+                    "desc": "此列中单元格的水平对齐方式",
+                    "default": "right",
+                    "examples": [
+                        "left",
+                        "right",
+                        "center"
+                    ]
+                },
+                "sortable": {
+                    "type": "Boolean",
+                    "desc": "告诉QTable您希望此列可排序",
+                    "default": false
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "如果您有一些自定义数据或需要比较两行的特定方法，请使用Compare函数",
+                    "examples": [
+                        "(a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10)"
+                    ],
+                    "params": {
+                        "a": {
+                            "type": "Any",
+                            "desc": "第一个比较项的值",
+                            "examples": [
+                                123,
+                                "abc"
+                            ]
+                        },
+                        "b": {
+                            "type": "Any",
+                            "desc": "第二个比较项的值",
+                            "examples": [
+                                123,
+                                "abc"
+                            ]
+                        },
+                        "rowA": {
+                            "type": "Object",
+                            "desc": "包含第一项的整行对象",
+                            "examples": [
+                                "{ name: 'Potassium', value: 'K' }"
+                            ]
+                        },
+                        "rowB": {
+                            "type": "Object",
+                            "desc": "包含第二项的整行对象",
+                            "examples": [
+                                "{ name: 'Fluorine', value: 'F' }"
+                            ]
+                        }
+                    },
+                    "returns": {
+                        "type": "Number",
+                        "desc": "比较项“a”与比较项“b”的比较结果。“a”应排在第一位时小于0；如果“b”应排在第一位则大于0；如果它们的位置不能相互改变，则等于0",
+                        "examples": [
+                            "-1",
+                            "0",
+                            "1"
+                        ]
+                    }
+                },
+                "sortOrder": {
+                    "type": "String",
+                    "desc": "设置列排序顺序：“ad”（升序-降序）或“da”（升序-降序）；覆盖“column-sort-order”属性",
+                    "values": [
+                      "ad",
+                      "da"
+                    ],
+                    "default": "ad",
+                    "addedIn": "v1.15.11"
+                  },
+                "format": {
+                    "type": "Function",
+                    "desc": "可以应用于格式化数据的函数",
+                    "examples": [
+                        "(val, row) => `${val}%`",
+                        "val => val ? /* Unicode checkmark checked */ '☑' : /* Unicode checkmark unchecked */ '☐'"
+                    ],
+                    "params": {
+                        "val": {
+                            "type": "Any",
+                            "desc": "单元格的值",
+                            "examples": [
+                                123,
+                                "abc"
+                            ]
+                        },
+                        "row": {
+                            "type": "Object",
+                            "desc": "包含单元格的整行对象",
+                            "examples": [
+                                "{ name: 'Potassium', value: 'K' }"
+                            ]
+                        }
+                    },
+                    "returns": {
+                        "type": "Any",
+                        "desc": "生成的格式化值",
+                        "examples": [
+                            "20%"
+                        ]
+                    }
+                },
+                "style": {
+                    "type": [
+                      "String",
+                      "Function"
+                    ],
+                    "desc": "要应用于列的正常单元格的样式；函数格式需要v1.15.15+",
+                    "examples": [
+                      "width: 500px",
+                      "row => (row.calories % 2 === 0 ? 'width:10px' : 'font-size:2em')"
+                    ]
+                  },
+                  "classes": {
+                    "type": [
+                      "String",
+                      "Function"
+                    ],
+                    "desc": "要添加到列的普通单元格上的类；函数格式需要 v1.15.15+",
+                    "examples": [
+                      "my-special-class",
+                      "row => (row.calories % 2 === 0 ? 'bg-green' : 'bg-yellow')"
+                    ]
+                },
+                "headerStyle": {
+                    "type": "String",
+                    "desc": "应用于列头部单元格的样式",
+                    "examples": [
+                        "width: 500px"
+                    ],
+                    "addedIn": "v1.3.0"
+                },
+                "headerClasses": {
+                    "type": "String",
+                    "desc": "要添加到列头部单元格的类",
+                    "examples": [
+                        "my-special-class"
+                    ],
+                    "addedIn": "v1.3.0"
+                }
+            }
+        },
+        "visible-columns": {
+            "type": "Array",
+            "desc": "定义列名的字符串数组（“columns”属性定义中每列的“name”属性）；标记为“required”的列不受此属性的影响",
+            "examples": [
+                ":visible-columns=\"myCols\"",
+                "[ 'desc', 'carbs', 'protein' ]"
+            ],
+            "category": "column"
+        },
+        "loading": {
+            "type": "Boolean",
+            "desc": "将表置于“loading”状态；通知用户遮盖层后面发生了什么",
+            "category": "behavior|content"
+        },
+        "title": {
+            "type": "String",
+            "desc": "表格标题",
+            "examples": [
+                "Device list"
+            ],
+            "category": "content"
+        },
+        "hide-header": {
+            "type": "Boolean",
+            "desc": "隐藏表格头部层",
+            "category": "content"
+        },
+        "hide-bottom": {
+            "type": "Boolean",
+            "desc": "隐藏表格底部层，不管它必须显示什么",
+            "category": "content"
+        },
+        "hide-selected-banner": {
+            "type": "Boolean",
+            "desc": "隐藏所选行横幅（如果有）",
+            "category": "content",
+            "addedIn": "v1.12.0"
+        },
+        "hide-no-data": {
+            "type": "Boolean",
+            "desc": "隐藏默认的无数据底层",
+            "category": "content",
+            "addedIn": "v1.12.0"
+        },
+        "hide-pagination": {
+            "type": "Boolean",
+            "desc": "隐藏底部的分页控件",
+            "category": "content",
+            "addedIn": "v1.12.0"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "应用“平面”设计（无默认阴影）",
+            "category": "style"
+        },
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于组件",
+            "category": "style"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "删除border-radius，使边界为正方形",
+            "category": "style"
+        },
+        "separator": {
+            "type": "String",
+            "desc": "在行、列或所有单元格之间使用分隔条/边框",
+            "default": "horizontal",
+            "values": [
+                "horizontal",
+                "vertical",
+                "cell",
+                "none"
+            ],
+            "examples": [
+                "cell"
+            ],
+            "category": "content"
+        },
+        "wrap-cells": {
+            "type": "Boolean",
+            "desc": "在表格单元格中换行文本",
+            "category": "content"
+        },
+        "binary-state-sort": {
+            "type": "Boolean",
+            "desc": "当用户切换列排序方向时，跳过第三种状态（未排序）",
+            "category": "sorting"
+        },
+        "column-sort-order": {
+            "type": "String",
+            "desc": "设置列排序顺序：“ad”（升序-降序）或“da”（升序-降序）；除非列在“columns”定义中指定了自己的排序器，否则它将应用于所有列",
+            "values": [
+              "ad",
+              "da"
+            ],
+            "default": "ad",
+            "category": "sorting",
+            "addedIn": "v1.15.11"
+        },
+        "no-data-label": {
+            "type": "String",
+            "desc": "替代没有可用数据时显示的默认文本",
+            "examples": [
+                "No devices available"
+            ],
+            "category": "content"
+        },
+        "no-results-label": {
+            "type": "String",
+            "desc": "替代默认文本以在用户筛选表时显示，但找不到匹配的结果",
+            "examples": [
+                "No matched records"
+            ],
+            "category": "content"
+        },
+        "loading-label": {
+            "type": "String",
+            "desc": "替代表格处于加载状态时显示的默认文本（请参阅“loading”属性）",
+            "examples": [
+                "Loading devices..."
+            ],
+            "category": "content"
+        },
+        "selected-rows-label": {
+            "type": "Function",
+            "desc": "当用户选择至少一行时要显示的文本；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "numberOfRows": {
+                    "type": "Number",
+                    "desc": "可用行数",
+                    "examples": [
+                        12
+                    ]
+                }
+            },
+            "returns": {
+                "type": "String",
+                "desc": "要显示的标签",
+                "examples": [
+                    "5 rows are selected"
+                ]
+            },
+            "examples": [
+                ":selected-rows-label=\"getSelectedString\""
+            ],
+            "category": "selection"
+        },
+        "rows-per-page-label": {
+            "type": "String",
+            "desc": "替代表底部每页默认行标签的文本",
+            "examples": [
+                "Records per page:"
+            ],
+            "category": "pagination"
+        },
+        "pagination-label": {
+            "type": "Function",
+            "desc": "覆盖表格底部默认分页标签的文本（除非使用“pagination”范围的槽）；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "firstRowIndex": {
+                    "type": "Number",
+                    "desc": "显示的第一行的索引",
+                    "examples": [
+                        1
+                    ]
+                },
+                "endRowIndex": {
+                    "type": "Number",
+                    "desc": "最后显示行的索引",
+                    "examples": [
+                        10
+                    ]
+                },
+                "totalRowsNumber": {
+                    "type": "Number",
+                    "desc": "数据中可用的总行数",
+                    "examples": [
+                        132
+                    ]
+                }
+            },
+            "returns": {
+                "type": "String",
+                "desc": "要显示的标签",
+                "examples": [
+                    "1-10 of 132"
+                ]
+            },
+            "examples": [
+                ":pagination-label=\"getPaginationLabel\""
+            ],
+            "category": "pagination"
+        },
+        "table-style": {
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "desc": "应用于原生HTML<table>元素包装器（DIV）的CSS样式",
+            "examples": [
+                "background-color: #ff0000",
+                ":table-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "table-class": {
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "desc": "应用于原生HTML<table>元素的包装器（DIV）的CSS类",
+            "examples": [
+                "my-special-class",
+                ":table-class=\"{ 'my-special-class': [Boolean condition] }\""
+            ],
+            "category": "style"
+        },
+        "table-header-style": {
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "desc": "应用于原生HTML<table>的头部（即TR）的CSS样式",
+            "examples": [
+                "background-color: #ff0000",
+                ":table-header-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "table-header-class": {
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "desc": "应用于本机HTML<table>的头部（即TR）的CSS类",
+            "examples": [
+                "my-special-class",
+                ":table-header-class=\"{ 'my-special-class': [Boolean condition] }\""
+            ],
+            "category": "style"
+        },
+        "card-container-style": {
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "desc": "应用于卡片容器的CSS样式（在网格模式下）",
+            "examples": [
+                "background-color: #ff0000",
+                ":card-container-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style",
+            "addedIn": "v1.4.0"
+        },
+        "card-container-class": {
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "desc": "应用于卡片容器的CSS类（在网格模式下）",
+            "examples": [
+                "my-special-class",
+                "justify-center",
+                ":card-container-class=\"{ 'my-special-class': [Boolean condition] }\""
+            ],
+            "category": "style",
+            "addedIn": "v1.4.0"
+        },
+        "card-style": {
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "desc": "应用于卡片（当处于网格模式时）或容器卡片（当不处于网格模式时）的CSS样式",
+            "examples": [
+                "background-color: #ff0000",
+                ":card-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "card-class": {
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "desc": "应用于卡片（当处于网格模式时）或容器卡片（当不处于网格模式时）的CSS类",
+            "examples": [
+                "my-special-class",
+                ":card-class=\"{ 'my-special-class': [Boolean condition] }\""
+            ],
+            "category": "style"
+        },
+        "title-class": {
+            "type": [
+                "String",
+                "Array",
+                "Object"
+            ],
+            "desc": "应用于标题的CSS类（如果使用“title”属性）",
+            "examples": [
+                "my-special-class",
+                "text-h1",
+                ":title-class=\"{ 'text-h1': [Boolean condition] }\""
+            ],
+            "category": "style",
+            "addedIn": "v1.13.2"
+        },
+        "filter": {
+            "type": [
+                "String",
+                "Object"
+            ],
+            "desc": "用于筛选表的字符串/对象；使用对象时，需要指定“filter-method”，因为它将是一个自定义筛选",
+            "examples": [
+                ":filter=\"myFilterInput\""
+            ],
+            "category": "filter"
+        },
+        "filter-method": {
+            "type": "Function",
+            "desc": "实际的过滤机制；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "rows": {
+                    "type": "Array",
+                    "desc": "行的数组",
+                    "required": true
+                },
+                "terms": {
+                    "type": [
+                        "String",
+                        "Object"
+                    ],
+                    "desc": "过滤条件（本质上是“过滤器”属性值）",
+                    "required": true
+                },
+                "cols": {
+                    "type": "Array",
+                    "desc": "可选列定义"
+                },
+                "getCellValue": {
+                    "type": "Function",
+                    "desc": "获取单元格值的可选函数",
+                    "params": {
+                        "col": {
+                            "type": "Object",
+                            "desc": "列定义中的列名"
+                        },
+                        "row": {
+                            "type": "Object",
+                            "desc": "行对象"
+                        }
+                    },
+                    "returns": {
+                        "type": "Any",
+                        "desc": "已分析/处理的单元格值",
+                        "examples": [
+                            "Ice Cream Sandwich"
+                        ]
+                    }
+                }
+            },
+            "returns": {
+                "type": "Array",
+                "desc": "筛选的行"
+            },
+            "default": "(see source code)",
+            "examples": [
+                "(see source code)"
+            ],
+            "category": "filter"
+        },
+        "pagination": {
+            "type": "Object",
+            "desc": "分页对象；如果您想访问组件中的当前分页，可以对其使用“.sync”修饰符；当不使用.sync修饰符时，它只是在第一次渲染时初始化分页",
+            "definition": {
+                "sortBy": {
+                    "type": "String",
+                    "desc": "列名（来自列定义）",
+                    "examples": [
+                        "calories"
+                    ]
+                },
+                "descending": {
+                    "type": "Boolean",
+                    "desc": "排序是按降序排列的吗？"
+                },
+                "page": {
+                    "type": "Number",
+                    "desc": "页码（基于1）",
+                    "examples": [
+                        3
+                    ]
+                },
+                "rowsPerPage": {
+                    "type": "Number",
+                    "desc": "每页多少行？0表示无限",
+                    "examples": [
+                        10
+                    ]
+                },
+                "rowsNumber": {
+                    "type": "Number",
+                    "desc": "仅用于服务器端获取。要添加到表中的数据库行总数。如果设置，则当需要数据时，使QTable发出@request。",
+                    "examples": [
+                        100,
+                        200
+                    ]
+                }
+            },
+            "examples": [
+                ":pagination.sync=\"myPagination\""
+            ],
+            "category": "pagination"
+        },
+        "rows-per-page-options": {
+            "type": "Array",
+            "desc": "供用户选择的选项（数字）；数字0表示“在一页中显示所有行”",
+            "default": "[ 3, 5, 7, 10, 15, 20, 25, 50, 0 ]",
+            "examples": [
+                ":rows-per-page-options=\"[10, 20]\""
+            ],
+            "category": "pagination"
+        },
+        "selection": {
+            "type": "String",
+            "desc": "选择类型",
+            "default": "none",
+            "values": [
+                "single",
+                "multiple",
+                "none"
+            ],
+            "examples": [
+                "multiple"
+            ],
+            "category": "selection"
+        },
+        "selected": {
+            "type": "Array",
+            "desc": "保留用户选择数组",
+            "sync": true,
+            "default": "[]",
+            "examples": [
+                ":selected.sync=\"selection\""
+            ],
+            "category": "selection"
+        },
+        "expanded": {
+            "type": "Array",
+            "desc": "使用展开的行键保留数组",
+            "sync": true,
+            "default": "[]",
+            "examples": [
+                ":expanded.sync=\"expanded\""
+            ],
+            "category": "expansion",
+            "addedIn": "v1.8.3"
+        },
+        "sort-method": {
+            "type": "Function",
+            "desc": "实际的排序机制。函数 (rows, sortBy, descending) => sorted rows；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "rows": {
+                    "type": "Array",
+                    "desc": "带行数组"
+                },
+                "sortBy": {
+                    "type": "String",
+                    "desc": "列名（来自列定义）",
+                    "examples": [
+                        "calories"
+                    ]
+                },
+                "descending": {
+                    "type": "Boolean",
+                    "desc": "排序是按降序排列的吗？"
+                }
+            },
+            "returns": {
+                "type": "Array",
+                "desc": "排序的行"
+            },
+            "default": "(see source code)",
+            "examples": [
+                "(see source code)"
+            ],
+            "category": "sorting"
+        }
+    },
+    "slots": {
+        "loading": {
+            "desc": "表处于加载状态时覆盖默认效果；建议：QinerLoading",
+            "addedIn": "v1.8.0"
+        }
+    },
+    "scopedSlots": {
+        "item": {
+            "desc": "在“grid”模式下用于定义项的槽；建议：QCard",
+            "scope": {
+                "key": {
+                    "type": "Any",
+                    "desc": "行/项的键"
+                },
+                "row": {
+                    "type": "Object",
+                    "desc": "行/项对象"
+                },
+                "rowIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表格中的行/项索引（基于0）"
+                },
+                "pageIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表格的当前页中的行/项索引（基于0）"
+                },
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义"
+                },
+                "colsMap": {
+                    "type": "Object",
+                    "desc": "列映射（键是列名，值是列对象）"
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "触发表格排序",
+                    "params": {
+                        "col": {
+                            "type": [
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "列名或列定义对象",
+                            "required": true,
+                            "examples": [
+                                "calories"
+                            ]
+                        }
+                    },
+                    "returns": null,
+                    "addedIn": "v1.14.0"
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "（仅当使用选择时）是否选中了行/项？可以直接指定新的布尔值来改变选择状态",
+                    "reactive": true
+                },
+                "expand": {
+                    "type": "Boolean",
+                    "desc": "行/项是否展开？可以直接分配新的布尔值，从而改变展开状态",
+                    "reactive": true
+                },
+                "color": {
+                    "type": "String",
+                    "desc": "组件的来自Quasar调色板的颜色名称",
+                    "examples": [
+                        "primary",
+                        "teal-10"
+                    ],
+                    "category": "style",
+                    "default": "grey-8",
+                    "addedIn": "v1.14.0"
+                },
+                "dark": {
+                    "type": "Boolean",
+                    "desc": "通知组件背景为深色",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                },
+                "dense": {
+                    "type": "Boolean",
+                    "desc": "密集模式；占用更少的空间",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                }
+            }
+        },
+        "body": {
+            "desc": "用于定义主体行显示成什么样的插槽；建议：QTr+Td",
+            "scope": {
+                "key": {
+                    "type": "Any",
+                    "desc": "行的键"
+                },
+                "row": {
+                    "type": "Object",
+                    "desc": "行对象"
+                },
+                "rowIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表格中的行索引（基于0）"
+                },
+                "pageIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表格的当前页中的行索引（基于0）"
+                },
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义"
+                },
+                "colsMap": {
+                    "type": "Object",
+                    "desc": "列映射（键是列名，值是列对象）"
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "触发表格排序",
+                    "params": {
+                        "col": {
+                            "type": [
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "列名或列定义对象",
+                            "required": true,
+                            "examples": [
+                                "calories"
+                            ]
+                        }
+                    },
+                    "returns": null,
+                    "addedIn": "v1.14.0"
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "（仅当使用所选内容时）是否选中了行？可以直接指定新的布尔值来改变选择状态",
+                    "reactive": true
+                },
+                "expand": {
+                    "type": "Boolean",
+                    "desc": "行是否展开？可以直接分配新的布尔值，从而改变展开状态",
+                    "reactive": true
+                },
+                "color": {
+                    "type": "String",
+                    "desc": "组件的来自Quasar调色板的颜色名称",
+                    "examples": [
+                        "primary",
+                        "teal-10"
+                    ],
+                    "category": "style",
+                    "default": "grey-8",
+                    "addedIn": "v1.14.0"
+                },
+                "dark": {
+                    "type": "Boolean",
+                    "desc": "通知组件背景为深色",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                },
+                "dense": {
+                    "type": "Boolean",
+                    "desc": "密集模式；占用更少的空间",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                },
+                "__trClass": {
+                    "type": "String",
+                    "desc": "传递到QTr的内部属性（如果使用）"
+                }
+            }
+        },
+        "body-cell": {
+            "desc": "定义所有主体单元格显示成什么样的槽；建议：QTd",
+            "scope": {
+                "col": {
+                    "type": "Object",
+                    "desc": "与表格单元格关联的列的列定义"
+                },
+                "value": {
+                    "type": "Any",
+                    "desc": "表格单元格的解析/格式化值"
+                },
+                "key": {
+                    "type": "Any",
+                    "desc": "行的键",
+                    "addedIn": "v1.14.0"
+                },
+                "row": {
+                    "type": "Object",
+                    "desc": "行对象"
+                },
+                "rowIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表格中的行索引（基于0）"
+                },
+                "pageIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表格的当前页中的行索引（基于0）"
+                },
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义",
+                    "addedIn": "v1.14.0"
+                },
+                "colsMap": {
+                    "type": "Object",
+                    "desc": "列映射（键是列名，值是列对象）",
+                    "addedIn": "v1.14.0"
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "触发表格排序",
+                    "params": {
+                        "col": {
+                            "type": [
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "列名或列定义对象",
+                            "required": true,
+                            "examples": [
+                                "calories"
+                            ]
+                        }
+                    },
+                    "returns": null,
+                    "addedIn": "v1.14.0"
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "（仅当使用所选内容时）是否选中了行？可以直接指定新的布尔值来改变选择状态",
+                    "reactive": true
+                },
+                "expand": {
+                    "type": "Boolean",
+                    "desc": "行是否展开？可以直接分配新的布尔值，从而改变展开状态",
+                    "reactive": true
+                },
+                "color": {
+                    "type": "String",
+                    "desc": "组件的来自Quasar调色板的颜色名称",
+                    "examples": [
+                        "primary",
+                        "teal-10"
+                    ],
+                    "category": "style",
+                    "default": "grey-8",
+                    "addedIn": "v1.14.0"
+                },
+                "dark": {
+                    "type": "Boolean",
+                    "desc": "通知组件背景为深色",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                },
+                "dense": {
+                    "type": "Boolean",
+                    "desc": "密集模式；占用更少的空间",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                }
+            }
+        },
+        "body-cell-[name]": {
+            "desc": "定义特定列单元格显示成什么样的插槽；将“[name]”替换为列名（来自列定义对象）",
+            "scope": {
+                "col": {
+                    "type": "Object",
+                    "desc": "与表格单元格关联的列的列定义"
+                },
+                "value": {
+                    "type": "Any",
+                    "desc": "表格单元格的解析/格式化值"
+                },
+                "key": {
+                    "type": "Any",
+                    "desc": "行的键",
+                    "addedIn": "v1.14.0"
+                },
+                "row": {
+                    "type": "Object",
+                    "desc": "行对象"
+                },
+                "rowIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表格中的行索引（基于0）"
+                },
+                "pageIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表格的当前页中的行索引（基于0）"
+                },
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义",
+                    "addedIn": "v1.14.0"
+                },
+                "colsMap": {
+                    "type": "Object",
+                    "desc": "列映射（键是列名，值是列对象）",
+                    "addedIn": "v1.14.0"
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "触发表格排序",
+                    "params": {
+                        "col": {
+                            "type": [
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "列名或列定义对象",
+                            "required": true,
+                            "examples": [
+                                "calories"
+                            ]
+                        }
+                    },
+                    "returns": null,
+                    "addedIn": "v1.14.0"
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "（仅当使用所选内容时）是否选中了行？可以直接指定新的布尔值来改变选择状态",
+                    "reactive": true,
+                    "addedIn": "v1.14.0"
+                },
+                "expand": {
+                    "type": "Boolean",
+                    "desc": "行是否展开？可以直接分配新的布尔值，从而改变展开状态",
+                    "reactive": true,
+                    "addedIn": "v1.14.0"
+                },
+                "color": {
+                    "type": "String",
+                    "desc": "组件的来自Quasar调色板的颜色名称",
+                    "examples": [
+                        "primary",
+                        "teal-10"
+                    ],
+                    "category": "style",
+                    "default": "grey-8",
+                    "addedIn": "v1.14.0"
+                },
+                "dark": {
+                    "type": "Boolean",
+                    "desc": "通知组件背景为深色",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                },
+                "dense": {
+                    "type": "Boolean",
+                    "desc": "密集模式；占用更少的空间",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                }
+            }
+        },
+        "header": {
+            "desc": "来定义头部显示成什么样的插槽；建议：QTr+QTh",
+            "scope": {
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义"
+                },
+                "colsMap": {
+                    "type": "Object",
+                    "desc": "列映射（键是列名，值是列对象）"
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "触发表格排序",
+                    "params": {
+                        "col": {
+                            "type": [
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "列名或列定义对象",
+                            "required": true,
+                            "examples": [
+                                "calories"
+                            ]
+                        }
+                    },
+                    "returns": null
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "（仅当使用所选内容时）是否选中了行？可以直接指定新的布尔值来改变选择状态",
+                    "reactive": true,
+                    "addedIn": "v1.14.0"
+                },
+                "expand": {
+                    "type": "Boolean",
+                    "desc": "行是否展开？可以直接分配新的布尔值，从而改变展开状态",
+                    "reactive": true,
+                    "addedIn": "v1.14.0"
+                },
+                "color": {
+                    "type": "String",
+                    "desc": "组件的来自Quasar调色板的颜色名称",
+                    "examples": [
+                        "primary",
+                        "teal-10"
+                    ],
+                    "category": "style",
+                    "default": "grey-8",
+                    "addedIn": "v1.14.0"
+                },
+                "dark": {
+                    "type": "Boolean",
+                    "desc": "通知组件背景为深色",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                },
+                "dense": {
+                    "type": "Boolean",
+                    "desc": "密集模式；占用更少的空间",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                },
+                "__trClass": {
+                    "type": "String",
+                    "desc": "传递到QTr的内部属性（如果使用）"
+                },
+                "header": {
+                    "type": "Boolean",
+                    "desc": "传递给QTh的内部属性（如果使用）；总是“true”"
+                }
+            }
+        },
+        "header-cell": {
+            "desc": "来定义每个标题单元格显示成什么样的插槽；建议：QTh",
+            "scope": {
+                "col": {
+                    "type": "Object",
+                    "desc": "与标题单元格关联的列定义"
+                },
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义"
+                },
+                "colsMap": {
+                    "type": "Object",
+                    "desc": "列映射（键是列名，值是列对象）"
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "触发表格排序",
+                    "params": {
+                        "col": {
+                            "type": [
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "列名或列定义对象",
+                            "required": true,
+                            "examples": [
+                                "calories"
+                            ]
+                        }
+                    },
+                    "returns": null
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "（仅当使用所选内容时）是否选中了行？可以直接指定新的布尔值来改变选择状态",
+                    "reactive": true,
+                    "addedIn": "v1.14.0"
+                },
+                "expand": {
+                    "type": "Boolean",
+                    "desc": "行是否展开？可以直接分配新的布尔值，从而改变展开状态",
+                    "reactive": true,
+                    "addedIn": "v1.14.0"
+                },
+                "color": {
+                    "type": "String",
+                    "desc": "组件的来自Quasar调色板的颜色名称",
+                    "examples": [
+                        "primary",
+                        "teal-10"
+                    ],
+                    "category": "style",
+                    "default": "grey-8",
+                    "addedIn": "v1.14.0"
+                },
+                "dark": {
+                    "type": "Boolean",
+                    "desc": "通知组件背景为深色",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                },
+                "dense": {
+                    "type": "Boolean",
+                    "desc": "密集模式；占用更少的空间",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                }
+            }
+        },
+        "header-cell-[name]": {
+            "desc": "用于定义特定头部单元格显示成什么样的插槽；将“[name]”替换为列名（来自列定义对象）",
+            "scope": {
+                "col": {
+                    "type": "Object",
+                    "desc": "与标题单元格关联的列定义"
+                },
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义"
+                },
+                "colsMap": {
+                    "type": "Object",
+                    "desc": "列映射（键是列名，值是列对象）"
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "触发表排序",
+                    "params": {
+                        "col": {
+                            "type": [
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "列名或列定义对象",
+                            "required": true,
+                            "examples": [
+                                "calories"
+                            ]
+                        }
+                    },
+                    "returns": null
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "（仅当使用所选内容时）是否选中了行？可以直接指定新的布尔值来改变选择状态",
+                    "reactive": true,
+                    "addedIn": "v1.14.0"
+                },
+                "expand": {
+                    "type": "Boolean",
+                    "desc": "行是否展开？可以直接分配新的布尔值，从而改变展开状态",
+                    "reactive": true,
+                    "addedIn": "v1.14.0"
+                },
+                "color": {
+                    "type": "String",
+                    "desc": "组件的来自Quasar调色板的颜色名称",
+                    "examples": [
+                        "primary",
+                        "teal-10"
+                    ],
+                    "category": "style",
+                    "default": "grey-8",
+                    "addedIn": "v1.14.0"
+                },
+                "dark": {
+                    "type": "Boolean",
+                    "desc": "通知组件背景为深色",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                },
+                "dense": {
+                    "type": "Boolean",
+                    "desc": "密集模式；占用更少的空间",
+                    "category": "style",
+                    "addedIn": "v1.14.0"
+                }
+            },
+            "addedIn": "v1.1.1"
+        },
+        "body-selection": {
+            "desc": "用于定义主体选择列显示成什么样的槽；建议：QCheckbox",
+            "scope": {
+                "key": {
+                    "type": "Any",
+                    "desc": "行的键"
+                },
+                "row": {
+                    "type": "Object",
+                    "desc": "行对象"
+                },
+                "rowIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表中的行索引（基于0）"
+                },
+                "pageIndex": {
+                    "type": "Number",
+                    "desc": "筛选和排序表的当前页中的行索引（基于0）"
+                },
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义"
+                },
+                "colsMap": {
+                    "type": "Object",
+                    "desc": "列映射（键是列名，值是列对象）"
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "触发表格排序",
+                    "params": {
+                        "col": {
+                            "type": [
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "列名或列定义对象",
+                            "required": true,
+                            "examples": [
+                                "calories"
+                            ]
+                        }
+                    },
+                    "returns": null
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "（仅当使用所选内容时）是否选中了行？可以直接指定新的布尔值来改变选择状态",
+                    "reactive": true
+                },
+                "expand": {
+                    "type": "Boolean",
+                    "desc": "行是否展开？可以直接分配新的布尔值，从而改变展开状态",
+                    "reactive": true
+                },
+                "color": {
+                    "type": "String",
+                    "desc": "组件的来自Quasar调色板的颜色名称",
+                    "examples": [
+                        "primary",
+                        "teal-10"
+                    ],
+                    "category": "style",
+                    "default": "grey-8"
+                },
+                "dark": {
+                    "type": "Boolean",
+                    "desc": "通知组件背景为深色",
+                    "category": "style"
+                },
+                "dense": {
+                    "type": "Boolean",
+                    "desc": "密集模式；占用更少的空间",
+                    "category": "style"
+                }
+            },
+            "addedIn": "v1.14.0"
+        },
+        "header-selection": {
+            "desc": "用于定义标题选择列显示成什么样的槽（仅适用于multiple选择模式）；建议：QCheckbox",
+            "scope": {
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义"
+                },
+                "colsMap": {
+                    "type": "Object",
+                    "desc": "列映射（键是列名，值是列对象）"
+                },
+                "sort": {
+                    "type": "Function",
+                    "desc": "触发表格排序",
+                    "params": {
+                        "col": {
+                            "type": [
+                                "String",
+                                "Object"
+                            ],
+                            "desc": "列名或列定义对象",
+                            "required": true,
+                            "examples": [
+                                "calories"
+                            ]
+                        }
+                    },
+                    "returns": null
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "（仅当使用所选内容时）是否选中了行？可以直接指定新的布尔值来改变选择状态",
+                    "reactive": true
+                },
+                "expand": {
+                    "type": "Boolean",
+                    "desc": "行是否展开？可以直接分配新的布尔值，从而改变展开状态",
+                    "reactive": true
+                },
+                "color": {
+                    "type": "String",
+                    "desc": "组件的来自Quasar调色板的颜色名称",
+                    "examples": [
+                        "primary",
+                        "teal-10"
+                    ],
+                    "category": "style",
+                    "default": "grey-8"
+                },
+                "dark": {
+                    "type": "Boolean",
+                    "desc": "通知组件背景为深色",
+                    "category": "style"
+                },
+                "dense": {
+                    "type": "Boolean",
+                    "desc": "密集模式；占用更少的空间",
+                    "category": "style"
+                }
+            },
+            "addedIn": "v1.14.0"
+        },
+        "top-row": {
+            "desc": "定义顶部额外行显示成什么样的插槽",
+            "scope": {
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义"
+                }
+            }
+        },
+        "bottom-row": {
+            "desc": "定义底部额外行显示成什么样的插槽",
+            "scope": {
+                "cols": {
+                    "type": "Object",
+                    "desc": "列定义"
+                }
+            }
+        },
+        "top": {
+            "desc": "定义表格头部显示成什么样的插槽",
+            "scope": {
+                "pagination": {
+                    "type": "Object",
+                    "desc": "分页对象",
+                    "definition": {
+                        "sortBy": {
+                            "type": "String",
+                            "desc": "列名（来自列定义）",
+                            "examples": [
+                                "calories"
+                            ]
+                        },
+                        "descending": {
+                            "type": "Boolean",
+                            "desc": "排序是按降序排列的吗？"
+                        },
+                        "page": {
+                            "type": "Number",
+                            "desc": "页码（基于1）",
+                            "examples": [
+                                3
+                            ]
+                        },
+                        "rowsPerPage": {
+                            "type": "Number",
+                            "desc": "每页多少行？0表示无限",
+                            "examples": [
+                                10
+                            ]
+                        }
+                    }
+                },
+                "pagesNumber": {
+                    "type": "Number",
+                    "desc": "可用页数",
+                    "examples": [
+                        5
+                    ]
+                },
+                "isFirstPage": {
+                    "type": "Boolean",
+                    "desc": "我们在第一页吗？"
+                },
+                "isLastPage": {
+                    "type": "Boolean",
+                    "desc": "我们在最后一页吗？"
+                },
+                "firstPage": {
+                    "type": "Function",
+                    "desc": "导航到第一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "prevPage": {
+                    "type": "Function",
+                    "desc": "导航到上一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "nextPage": {
+                    "type": "Function",
+                    "desc": "导航到下一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "lastPage": {
+                    "type": "Function",
+                    "desc": "导航到最后一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "inFullscreen": {
+                    "type": "Boolean",
+                    "desc": "表格是否处于全屏模式？"
+                },
+                "toggleFullscreen": {
+                    "type": "Function",
+                    "desc": "切换全屏模式",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        },
+        "bottom": {
+            "desc": "用于定义表格底部显示成什么样的插槽",
+            "scope": {
+                "pagination": {
+                    "type": "Object",
+                    "desc": "分页对象",
+                    "definition": {
+                        "sortBy": {
+                            "type": "String",
+                            "desc": "列名（来自列定义）",
+                            "examples": [
+                                "calories"
+                            ]
+                        },
+                        "descending": {
+                            "type": "Boolean",
+                            "desc": "排序是按降序排列的吗？"
+                        },
+                        "page": {
+                            "type": "Number",
+                            "desc": "页码（基于1）",
+                            "examples": [
+                                3
+                            ]
+                        },
+                        "rowsPerPage": {
+                            "type": "Number",
+                            "desc": "每页多少行？0表示无限",
+                            "examples": [
+                                10
+                            ]
+                        }
+                    }
+                },
+                "pagesNumber": {
+                    "type": "Number",
+                    "desc": "可用页数",
+                    "examples": [
+                        5
+                    ]
+                },
+                "isFirstPage": {
+                    "type": "Boolean",
+                    "desc": "我们在第一页吗？"
+                },
+                "isLastPage": {
+                    "type": "Boolean",
+                    "desc": "我们在最后一页吗？"
+                },
+                "firstPage": {
+                    "type": "Function",
+                    "desc": "导航到第一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "prevPage": {
+                    "type": "Function",
+                    "desc": "导航到上一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "nextPage": {
+                    "type": "Function",
+                    "desc": "导航到下一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "lastPage": {
+                    "type": "Function",
+                    "desc": "导航到最后一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "inFullscreen": {
+                    "type": "Boolean",
+                    "desc": "表是否处于全屏模式？"
+                },
+                "toggleFullscreen": {
+                    "type": "Function",
+                    "desc": "切换全屏模式",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        },
+        "pagination": {
+            "desc": "替代默认分页标签和按钮的插槽",
+            "scope": {
+                "pagination": {
+                    "type": "Object",
+                    "desc": "分页对象",
+                    "definition": {
+                        "sortBy": {
+                            "type": "String",
+                            "desc": "列名（来自列定义）",
+                            "examples": [
+                                "calories"
+                            ]
+                        },
+                        "descending": {
+                            "type": "Boolean",
+                            "desc": "排序是按降序排列的吗？"
+                        },
+                        "page": {
+                            "type": "Number",
+                            "desc": "页码（基于1）",
+                            "examples": [
+                                3
+                            ]
+                        },
+                        "rowsPerPage": {
+                            "type": "Number",
+                            "desc": "每页多少行？0表示无限",
+                            "examples": [
+                                10
+                            ]
+                        }
+                    }
+                },
+                "pagesNumber": {
+                    "type": "Number",
+                    "desc": "可用页数",
+                    "examples": [
+                        5
+                    ]
+                },
+                "isFirstPage": {
+                    "type": "Boolean",
+                    "desc": "我们在第一页吗？"
+                },
+                "isLastPage": {
+                    "type": "Boolean",
+                    "desc": "我们在最后一页吗？"
+                },
+                "firstPage": {
+                    "type": "Function",
+                    "desc": "导航到第一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "prevPage": {
+                    "type": "Function",
+                    "desc": "导航到上一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "nextPage": {
+                    "type": "Function",
+                    "desc": "导航到下一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "lastPage": {
+                    "type": "Function",
+                    "desc": "导航到最后一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "inFullscreen": {
+                    "type": "Boolean",
+                    "desc": "表是否处于全屏模式？"
+                },
+                "toggleFullscreen": {
+                    "type": "Function",
+                    "desc": "切换全屏模式",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        },
+        "top-left": {
+            "desc": "来定义头部左侧部分显示成什么样的插槽",
+            "scope": {
+                "pagination": {
+                    "type": "Object",
+                    "desc": "分页对象",
+                    "definition": {
+                        "sortBy": {
+                            "type": "String",
+                            "desc": "列名（来自列定义）",
+                            "examples": [
+                                "calories"
+                            ]
+                        },
+                        "descending": {
+                            "type": "Boolean",
+                            "desc": "排序是按降序排列的吗？"
+                        },
+                        "page": {
+                            "type": "Number",
+                            "desc": "页码（基于1）",
+                            "examples": [
+                                3
+                            ]
+                        },
+                        "rowsPerPage": {
+                            "type": "Number",
+                            "desc": "每页多少行？0表示无限",
+                            "examples": [
+                                10
+                            ]
+                        }
+                    }
+                },
+                "pagesNumber": {
+                    "type": "Number",
+                    "desc": "可用页数",
+                    "examples": [
+                        5
+                    ]
+                },
+                "isFirstPage": {
+                    "type": "Boolean",
+                    "desc": "我们在第一页吗？"
+                },
+                "isLastPage": {
+                    "type": "Boolean",
+                    "desc": "我们在最后一页吗？"
+                },
+                "firstPage": {
+                    "type": "Function",
+                    "desc": "导航到第一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "prevPage": {
+                    "type": "Function",
+                    "desc": "导航到上一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "nextPage": {
+                    "type": "Function",
+                    "desc": "导航到下一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "lastPage": {
+                    "type": "Function",
+                    "desc": "导航到最后一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "inFullscreen": {
+                    "type": "Boolean",
+                    "desc": "表是否处于全屏模式？"
+                },
+                "toggleFullscreen": {
+                    "type": "Function",
+                    "desc": "切换全屏模式",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        },
+        "top-right": {
+            "desc": "来定义头部右侧部分显示成什么样的插槽",
+            "scope": {
+                "pagination": {
+                    "type": "Object",
+                    "desc": "分页对象",
+                    "definition": {
+                        "sortBy": {
+                            "type": "String",
+                            "desc": "列名（来自列定义）",
+                            "examples": [
+                                "calories"
+                            ]
+                        },
+                        "descending": {
+                            "type": "Boolean",
+                            "desc": "排序是按降序排列的吗？"
+                        },
+                        "page": {
+                            "type": "Number",
+                            "desc": "页码（基于1）",
+                            "examples": [
+                                3
+                            ]
+                        },
+                        "rowsPerPage": {
+                            "type": "Number",
+                            "desc": "每页多少行？0表示无限",
+                            "examples": [
+                                10
+                            ]
+                        }
+                    }
+                },
+                "pagesNumber": {
+                    "type": "Number",
+                    "desc": "可用页数",
+                    "examples": [
+                        5
+                    ]
+                },
+                "isFirstPage": {
+                    "type": "Boolean",
+                    "desc": "我们在第一页吗？"
+                },
+                "isLastPage": {
+                    "type": "Boolean",
+                    "desc": "我们在最后一页吗？"
+                },
+                "firstPage": {
+                    "type": "Function",
+                    "desc": "导航到第一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "prevPage": {
+                    "type": "Function",
+                    "desc": "导航到上一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "nextPage": {
+                    "type": "Function",
+                    "desc": "导航到下一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "lastPage": {
+                    "type": "Function",
+                    "desc": "导航到最后一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "inFullscreen": {
+                    "type": "Boolean",
+                    "desc": "表是否处于全屏模式？"
+                },
+                "toggleFullscreen": {
+                    "type": "Function",
+                    "desc": "切换全屏模式",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        },
+        "top-selection": {
+            "desc": "用于定义当用户至少选择了一行时头部表格部分显示成什么样的插槽",
+            "scope": {
+                "pagination": {
+                    "type": "Object",
+                    "desc": "分页对象",
+                    "definition": {
+                        "sortBy": {
+                            "type": "String",
+                            "desc": "列名（来自列定义）",
+                            "examples": [
+                                "calories"
+                            ]
+                        },
+                        "descending": {
+                            "type": "Boolean",
+                            "desc": "排序是按降序排列的吗？"
+                        },
+                        "page": {
+                            "type": "Number",
+                            "desc": "页码（基于1）",
+                            "examples": [
+                                3
+                            ]
+                        },
+                        "rowsPerPage": {
+                            "type": "Number",
+                            "desc": "每页多少行？0表示无限",
+                            "examples": [
+                                10
+                            ]
+                        }
+                    }
+                },
+                "pagesNumber": {
+                    "type": "Number",
+                    "desc": "可用页数",
+                    "examples": [
+                        5
+                    ]
+                },
+                "isFirstPage": {
+                    "type": "Boolean",
+                    "desc": "我们在第一页吗？"
+                },
+                "isLastPage": {
+                    "type": "Boolean",
+                    "desc": "我们在最后一页吗？"
+                },
+                "firstPage": {
+                    "type": "Function",
+                    "desc": "导航到第一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "prevPage": {
+                    "type": "Function",
+                    "desc": "导航到上一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "nextPage": {
+                    "type": "Function",
+                    "desc": "导航到下一页（如果可用）",
+                    "params": null,
+                    "returns": null
+                },
+                "lastPage": {
+                    "type": "Function",
+                    "desc": "导航到最后一页",
+                    "params": null,
+                    "returns": null,
+                    "addedIn": "v1.12.0"
+                },
+                "inFullscreen": {
+                    "type": "Boolean",
+                    "desc": "表是否处于全屏模式？"
+                },
+                "toggleFullscreen": {
+                    "type": "Function",
+                    "desc": "切换全屏模式",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        },
+        "no-data": {
+            "desc": "定义当没有什么可显示时底部显示成什么样的插槽",
+            "scope": {
+                "message": {
+                    "type": "String",
+                    "desc": "建议的消息",
+                    "examples": [
+                        "No data available"
+                    ]
+                },
+                "icon": {
+                    "type": "String",
+                    "desc": "建议的图标名称（遵循Quasar惯例）",
+                    "examples": [
+                        "warning"
+                    ]
+                }
+            }
+        }
+    },
+    "events": {
+        "row-click": {
+            "desc": "当用户点击一行时发出；在使用body/row/item范围的插槽时不发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                },
+                "row": {
+                    "type": "Object",
+                    "desc": "用户单击/点击的行"
+                },
+                "index": {
+                    "type": "Number",
+                    "desc": "当前页中行的索引",
+                    "addedIn": "v1.13.0"
+                }
+            },
+            "addedIn": "v1.2.6"
+        },
+        "row-dblclick": {
+            "desc": "当用户快速双击/轻触一行时发出；在使用body/row/item范围的插槽时不发出；使用前请检查JS dblclick事件支持",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                },
+                "row": {
+                    "type": "Object",
+                    "desc": "用户双击/点击的行"
+                },
+                "index": {
+                    "type": "Number",
+                    "desc": "当前页中行的索引",
+                    "addedIn": "v1.13.0"
+                }
+            },
+            "addedIn": "v1.5.10"
+        },
+        "row-contextmenu": {
+            "desc": "当用户在一行上右击/长按时发出；在使用body/row/item范围的插槽时不发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                },
+                "row": {
+                    "type": "Object",
+                    "desc": "用户已右键单击/长按的行"
+                },
+                "index": {
+                    "type": "Number",
+                    "desc": "当前页中行的索引"
+                }
+            },
+            "addedIn": "v1.15.1"
+        },
+        "request": {
+            "desc": "触发服务器请求时发出",
+            "params": {
+                "requestProp": {
+                    "type": "Object",
+                    "desc": "请求的属性",
+                    "definition": {
+                        "pagination": {
+                            "type": "Object",
+                            "desc": "分页对象",
+                            "definition": {
+                                "sortBy": {
+                                    "type": "String",
+                                    "desc": "列名（来自列定义）",
+                                    "examples": [
+                                        "calories"
+                                    ]
+                                },
+                                "descending": {
+                                    "type": "Boolean",
+                                    "desc": "排序是按降序排列的吗？"
+                                },
+                                "page": {
+                                    "type": "Number",
+                                    "desc": "页码（基于1）",
+                                    "examples": [
+                                        3
+                                    ]
+                                },
+                                "rowsPerPage": {
+                                    "type": "Number",
+                                    "desc": "每页多少行？0表示无限",
+                                    "examples": [
+                                        10
+                                    ]
+                                }
+                            }
+                        },
+                        "filter": {
+                            "type": "Function",
+                            "desc": "过滤方法（“filter-method”属性）",
+                            "params": {
+                                "rows": {
+                                    "type": "Array",
+                                    "desc": "行的数组",
+                                    "required": true
+                                },
+                                "terms": {
+                                    "type": [
+                                        "String",
+                                        "Object"
+                                    ],
+                                    "desc": "过滤条件（本质上是“filter”属性值）",
+                                    "required": true
+                                },
+                                "cols": {
+                                    "type": "Array",
+                                    "desc": "可选列定义"
+                                },
+                                "getCellValue": {
+                                    "type": "Function",
+                                    "desc": "获取单元格值的可选函数",
+                                    "params": {
+                                        "col": {
+                                            "type": "Object",
+                                            "desc": "列定义中的列名"
+                                        },
+                                        "row": {
+                                            "type": "Object",
+                                            "desc": "行对象"
+                                        }
+                                    },
+                                    "returns": {
+                                        "type": "Any",
+                                        "desc": "已分析/处理的单元格值",
+                                        "examples": [
+                                            "Ice Cream Sandwich"
+                                        ]
+                                    }
+                                }
+                            },
+                            "returns": {
+                                "type": "Array",
+                                "desc": "筛选的行"
+                            }
+                        },
+                        "getCellValue": {
+                            "type": "Function",
+                            "desc": "获取单元格值的可选函数",
+                            "params": {
+                                "col": {
+                                    "type": "Object",
+                                    "desc": "列定义中的列名"
+                                },
+                                "row": {
+                                    "type": "Object",
+                                    "desc": "行对象"
+                                }
+                            },
+                            "returns": {
+                                "type": "Any",
+                                "desc": "已分析/处理的单元格值",
+                                "examples": [
+                                    "Ice Cream Sandwich"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "selection": {
+            "desc": "当用户选择/取消选择行时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "选择详细信息",
+                    "definition": {
+                        "rows": {
+                            "type": "Array",
+                            "desc": "选定/未选定的行对象数组"
+                        },
+                        "keys": {
+                            "type": "Array",
+                            "desc": "选定/未选定行的键数组"
+                        },
+                        "added": {
+                            "type": "Boolean",
+                            "desc": "行是添加到选择中（true）还是从选择中删除（false）"
+                        },
+                        "evt": {
+                            "type": "Object",
+                            "desc": "JS事件对象",
+                            "required": true,
+                            "addedIn": "v1.11.2"
+                        }
+                    }
+                }
+            }
+        },
+        "update:pagination": {
+            "desc": "用于Vue的“pagination.sync”属性来更新其值",
+            "params": {
+                "newPagination": {
+                    "type": "Object",
+                    "desc": "更新的分页对象",
+                    "definition": {
+                        "sortBy": {
+                            "type": "String",
+                            "desc": "列名（来自列定义）",
+                            "examples": [
+                                "calories"
+                            ]
+                        },
+                        "descending": {
+                            "type": "Boolean",
+                            "desc": "排序是按降序排列的吗？"
+                        },
+                        "page": {
+                            "type": "Number",
+                            "desc": "页码（基于1）",
+                            "examples": [
+                                3
+                            ]
+                        },
+                        "rowsPerPage": {
+                            "type": "Number",
+                            "desc": "每页多少行？0表示无限",
+                            "examples": [
+                                10
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "update:selected": {
+            "desc": "用于Vue的“selected.sync”来更新其值",
+            "params": {
+                "newSelected": {
+                    "type": "Array",
+                    "desc": "已更新的选定阵列",
+                    "examples": [
+                        "[ { name: 'Frozen Yogurt', calories: 159, fat: 6 } ]"
+                    ]
+                }
+            }
+        },
+        "update:expanded": {
+            "desc": "用于Vue的“expanded.sync”属性来更新其值",
+            "params": {
+                "newExpanded": {
+                    "type": "Array",
+                    "desc": "更新的扩展阵列",
+                    "examples": [
+                        "[ 'row-a', 'row-b' ]"
+                    ]
+                }
+            },
+            "addedIn": "v1.8.3"
+        },
+        "virtual-scroll": {
+            "desc": "如果使用虚拟滚动，则在虚拟滚动发生时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "新滚动位置上的属性对象",
+                    "definition": {
+                        "index": {
+                            "type": "Number",
+                            "desc": "滚动到视图中的列表项的索引（基于0）",
+                            "examples": [
+                                30
+                            ]
+                        },
+                        "from": {
+                            "type": "Number",
+                            "desc": "渲染的第一个列表项的索引（基于0）",
+                            "examples": [
+                                10
+                            ]
+                        },
+                        "to": {
+                            "type": "Number",
+                            "desc": "最后渲染的列表项的索引（基于0）",
+                            "examples": [
+                                50
+                            ]
+                        },
+                        "direction": {
+                            "type": "String",
+                            "desc": "变化方向",
+                            "values": [
+                                "increase",
+                                "decrease"
+                            ]
+                        }
+                    }
+                }
+            },
+            "addedIn": "v1.4.1"
+        }
+    },
+    "methods": {
+        "toggleFullscreen": {
+            "desc": "切换全屏模式"
+        },
+        "setFullscreen": {
+            "desc": "进入全屏视图"
+        },
+        "exitFullscreen": {
+            "desc": "离开全屏视图"
+        },
+        "requestServerInteraction": {
+            "desc": "触发服务器请求（发出“request”事件）",
+            "params": {
+                "props": {
+                    "type": "Object",
+                    "desc": "请求详细信息",
+                    "definition": {
+                        "pagination": {
+                            "type": "Object",
+                            "desc": "可选分页对象",
+                            "definition": {
+                                "sortBy": {
+                                    "type": "String",
+                                    "desc": "列名（来自列定义）",
+                                    "examples": [
+                                        "calories"
+                                    ]
+                                },
+                                "descending": {
+                                    "type": "Boolean",
+                                    "desc": "排序是按降序排列的吗？"
+                                },
+                                "page": {
+                                    "type": "Number",
+                                    "desc": "页码（基于1）",
+                                    "examples": [
+                                        3
+                                    ]
+                                },
+                                "rowsPerPage": {
+                                    "type": "Number",
+                                    "desc": "每页多少行？0表示无限",
+                                    "examples": [
+                                        10
+                                    ]
+                                }
+                            }
+                        },
+                        "filter": {
+                            "type": "Function",
+                            "desc": "过滤方法（“filter-method”属性）",
+                            "params": {
+                                "rows": {
+                                    "type": "Array",
+                                    "desc": "行的数组",
+                                    "required": true
+                                },
+                                "terms": {
+                                    "type": [
+                                        "String",
+                                        "Object"
+                                    ],
+                                    "desc": "过滤条件（本质上是“filter”属性值）",
+                                    "required": true
+                                },
+                                "cols": {
+                                    "type": "Array",
+                                    "desc": "可选列定义"
+                                },
+                                "getCellValue": {
+                                    "type": "Function",
+                                    "desc": "获取单元格值的可选函数",
+                                    "params": {
+                                        "col": {
+                                            "type": "Object",
+                                            "desc": "列定义中的列名"
+                                        },
+                                        "row": {
+                                            "type": "Object",
+                                            "desc": "行对象"
+                                        }
+                                    },
+                                    "returns": {
+                                        "type": "Any",
+                                        "desc": "已分析/处理的单元格值",
+                                        "examples": [
+                                            "Ice Cream Sandwich"
+                                        ]
+                                    }
+                                }
+                            },
+                            "returns": {
+                                "type": "Array",
+                                "desc": "筛选的行"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "setPagination": {
+            "desc": "除非使用外部分页对象（通过“pagination.sync”属性），否则可以使用此方法并强制更改内部分页",
+            "params": {
+                "pagination": {
+                    "type": "Object",
+                    "desc": "分页对象",
+                    "required": true,
+                    "definition": {
+                        "sortBy": {
+                            "type": "String",
+                            "desc": "列名（来自列定义）",
+                            "examples": [
+                                "calories"
+                            ]
+                        },
+                        "descending": {
+                            "type": "Boolean",
+                            "desc": "排序是按降序排列的吗？"
+                        },
+                        "page": {
+                            "type": "Number",
+                            "desc": "页码（基于1）",
+                            "examples": [
+                                3
+                            ]
+                        },
+                        "rowsPerPage": {
+                            "type": "Number",
+                            "desc": "每页多少行？0表示无限",
+                            "examples": [
+                                10
+                            ]
+                        }
+                    }
+                },
+                "forceServerRequest": {
+                    "type": "Boolean",
+                    "desc": "同时强制服务器请求"
+                }
+            }
+        },
+        "firstPage": {
+            "desc": "导航到第一页",
+            "addedIn": "v1.12.0"
+        },
+        "prevPage": {
+            "desc": "导航到上一页（如果可用）"
+        },
+        "nextPage": {
+            "desc": "导航到下一页（如果可用）"
+        },
+        "lastPage": {
+            "desc": "导航到最后一页",
+            "addedIn": "v1.12.0"
+        },
+        "isRowSelected": {
+            "desc": "确定用户是否选择了行",
+            "params": {
+                "key": {
+                    "type": "Any",
+                    "desc": "行键值",
+                    "required": true,
+                    "examples": [
+                        "calories"
+                    ]
+                }
+            },
+            "returns": {
+                "type": "Boolean",
+                "desc": "是否选中行？"
+            }
+        },
+        "clearSelection": {
+            "desc": "清除用户选择（触发带空数组的“update:selected”）"
+        },
+        "isRowExpanded": {
+            "desc": "确定行是否展开",
+            "params": {
+                "key": {
+                    "type": "Any",
+                    "desc": "行键值",
+                    "required": true,
+                    "examples": [
+                        "calories"
+                    ]
+                }
+            },
+            "returns": {
+                "type": "Boolean",
+                "desc": "行是否展开？"
+            },
+            "addedIn": "v1.8.3"
+        },
+        "setExpanded": {
+            "desc": "设置展开的行键数组；特别有用，如果不使用外部'expanded'状态，否则只是触发带值的'update:expanded'",
+            "params": {
+                "expanded": {
+                    "type": "Array",
+                    "desc": "包含展开行的键的数组",
+                    "required": true,
+                    "examples": [
+                        "[ 'row-a', 'row-b' ]"
+                    ]
+                }
+            },
+            "addedIn": "v1.8.3"
+        },
+        "sort": {
+            "desc": "触发表排序",
+            "params": {
+                "col": {
+                    "type": [
+                        "String",
+                        "Object"
+                    ],
+                    "desc": "列名或列定义对象",
+                    "required": true,
+                    "examples": [
+                        "calories"
+                    ]
+                }
+            }
+        },
+        "resetVirtualScroll": {
+            "desc": "重置虚拟滚动（如果使用它）计算；用于定制边缘案例"
+        },
+        "scrollTo": {
+            "desc": "将表格滚动到页中具有指定索引的行（基于0）",
+            "params": {
+                "index": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "页中行的索引（基于0）",
+                    "required": true,
+                    "examples": [
+                        "1",
+                        23
+                    ]
+                },
+                "edge": {
+                    "type": "String",
+                    "desc": "仅适用于虚拟滚动-如果行不可见，则对齐到的边（默认情况下，如果向末尾滚动，则对齐到末尾，否则对齐到开头）；如果使用'-force'版本，则它始终对齐",
+                    "values": [
+                        "start",
+                        "center",
+                        "end",
+                        "start-force",
+                        "center-force",
+                        "end-force"
+                    ],
+                    "addedIn": "v1.14.7"
+                }
+            },
+            "addedIn": "v1.7.2"
+        }
+    }
+}

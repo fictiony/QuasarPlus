@@ -1,0 +1,79 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/layout/page-scroller"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "position": {
+            "type": "String",
+            "desc": "要粘贴的页边/页角",
+            "default": "bottom-right",
+            "values": [
+                "top-right",
+                "top-left",
+                "bottom-right",
+                "bottom-left",
+                "top",
+                "right",
+                "bottom",
+                "left"
+            ],
+            "examples": [
+                "top-right"
+            ],
+            "category": "position"
+        },
+        "offset": {
+            "type": "Array",
+            "desc": "以像素为单位水平和垂直偏移分量的两个数字的数组",
+            "examples": [
+                "[8, 8]",
+                "[5, 10]"
+            ],
+            "category": "content",
+            "default": [
+                18,
+                18
+            ]
+        },
+        "expand": {
+            "type": "Boolean",
+            "desc": "默认情况下，组件缩小到内容的大小；通过使用这个属性，你可以使组件完全展开水平或垂直，基于'position'属性",
+            "category": "content"
+        },
+        "scroll-offset": {
+            "type": "Number",
+            "desc": "滚动偏移量（以像素为单位），从该点开始组件显示在页面上；从页面顶部测量（如果处于“反转”模式，则从底部测量）",
+            "default": 1000,
+            "examples": [
+                550
+            ],
+            "category": "behavior"
+        },
+        "reverse": {
+            "type": "Boolean",
+            "desc": "功能反转（当滚动到页面顶部时显示，当触发时滚动到底部）",
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "duration": {
+            "type": "Number",
+            "desc": "滚动到目标的持续时间（毫秒）",
+            "default": 300,
+            "examples": [
+                500
+            ],
+            "category": "behavior"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}

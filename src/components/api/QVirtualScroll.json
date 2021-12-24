@@ -1,0 +1,299 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/virtual-scroll"
+    },
+    "addedIn": "v1.1.0",
+    "props": {
+        "virtual-scroll-horizontal": {
+            "type": "Boolean",
+            "desc": "使虚拟列表在水平模式下工作",
+            "category": "behavior"
+        },
+        "virtual-scroll-slice-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "要在虚拟列表中渲染的最小项目数",
+            "default": "30",
+            "examples": [
+                "virtual-scroll-slice-size=\"60\""
+            ],
+            "category": "virtual-scroll"
+        },
+        "virtual-scroll-slice-ratio-before": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "可见区域中的项目数与之前渲染的项目数之比",
+            "default": "1",
+            "examples": [
+                "virtual-scroll-slice-ratio-before=\"0.3\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.14.7"
+        },
+        "virtual-scroll-slice-ratio-after": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "可见区域中的项目数与之后渲染的项目数之比",
+            "default": "1",
+            "examples": [
+                "virtual-scroll-slice-ratio-after=\"2\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.14.7"
+        },
+        "virtual-scroll-item-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "项目的默认像素大小（垂直时为高度，水平时为宽度）；此值用于渲染初始列表；尝试使用接近项目最小大小的值",
+            "default": "24",
+            "examples": [
+                "virtual-scroll-item-size=\"48\""
+            ],
+            "category": "virtual-scroll"
+        },
+        "virtual-scroll-sticky-size-start": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "列表开头的粘性部分（如果使用粘性部分）的像素大小（如果垂直，则为高度；如果水平，则为宽度）；正确的值将提高滚动精度",
+            "default": "0",
+            "examples": [
+                "virtual-scroll-sticky-size-start=\"48\""
+            ],
+            "category": "virtual-scroll"
+        },
+        "virtual-scroll-sticky-size-end": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "列表末尾粘性部分（如果使用）的像素大小（如果垂直，则为高度；如果水平，则为宽度）；正确的值将提高滚动精度",
+            "default": "0",
+            "examples": [
+                "virtual-scroll-sticky-size-end=\"48\""
+            ],
+            "category": "virtual-scroll"
+        },
+        "table-colspan": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "表中的列数（如果使用表布局，则需要此值：fixed）",
+            "examples": [
+                "table-colspan=\"12\""
+            ],
+            "category": "virtual-scroll|content",
+            "addedIn": "v1.13.0"
+        },
+        "type": {
+            "type": "String",
+            "desc": "内容类型：list（默认）或table",
+            "default": "list",
+            "values": [
+                "list",
+                "table"
+            ],
+            "category": "content"
+        },
+        "items": {
+            "type": "Array",
+            "desc": "将传递到作用域插槽的可用列表项；为获得最佳性能则冻结项目列表；如果未提供“itemsFn”，则为必需",
+            "default": "[]",
+            "examples": [
+                ":items=\"[ 'BMW', 'Samsung Phone' ]\"",
+                ":items=\"[ { label: 'BMW', value: 'car' }, { label: 'Samsung Phone', value: 'phone' } ]\""
+            ],
+            "category": "content"
+        },
+        "items-size": {
+            "type": "Number",
+            "desc": "列表中可用项目的数量；仅当提供“itemsFn”时才需要和使用",
+            "default": "void 0",
+            "examples": [
+                ":items-size=\"100000\"",
+                ":items-size=\"500\""
+            ],
+            "category": "content"
+        },
+        "items-fn": {
+            "type": "Function",
+            "desc": "函数返回要显示的项目的范围；应该为从“from”索引开始的项目返回一个数组，以表示大小长度；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "from": {
+                    "type": "Number",
+                    "desc": "第一项的索引（基于0）",
+                    "examples": [
+                        15
+                    ]
+                },
+                "size": {
+                    "type": "Number",
+                    "desc": "要退回的项目数",
+                    "examples": [
+                        38
+                    ]
+                }
+            },
+            "returns": {
+                "type": "Array",
+                "desc": "要显示的项的范围列表"
+            },
+            "examples": [
+                ":items-fn=\"(from, size) => { const items = []; for (let i = 0; i < size; i++) { items.push('Item ' + i) }; return items }\""
+            ],
+            "category": "content"
+        },
+        "scroll-target": {
+            "type": [
+                "Element",
+                "String"
+            ],
+            "desc": "CSS选择器或DOM元素用作自定义滚动容器，而不是自动检测到的滚动容器",
+            "examples": [
+                ":scroll-target=\"$refs.scrollTarget\"",
+                "scroll-target=\".scroll-target-class\"",
+                "scroll-target=\"#scroll-target-id\"",
+                "scroll-target=\"body\""
+            ],
+            "category": "behavior",
+            "addedIn": "v1.8.0"
+        }
+    },
+    "slots": {
+        "before": {
+            "desc": "列表前应渲染的元素的模板槽；建议：在表格前面的thead"
+        },
+        "after": {
+            "desc": "列表后应渲染的元素的模板槽；建议：在表格后面的tfoot"
+        }
+    },
+    "scopedSlots": {
+        "default": {
+            "desc": "用于定义列表项的模板槽；建议：QItem",
+            "scope": {
+                "index": {
+                    "type": "Number",
+                    "desc": "选项列表中的项索引",
+                    "examples": [
+                        0
+                    ]
+                },
+                "item": {
+                    "type": "Any",
+                    "desc": "项数据--其值取自“options”属性"
+                }
+            }
+        }
+    },
+    "events": {
+        "virtual-scroll": {
+            "desc": "发生虚拟滚动时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "新滚动位置上的属性对象",
+                    "definition": {
+                        "index": {
+                            "type": "Number",
+                            "desc": "滚动到视图中的列表项的索引（基于0）",
+                            "examples": [
+                                30
+                            ]
+                        },
+                        "from": {
+                            "type": "Number",
+                            "desc": "渲染的第一个列表项的索引（基于0）",
+                            "examples": [
+                                10
+                            ]
+                        },
+                        "to": {
+                            "type": "Number",
+                            "desc": "最后渲染的列表项的索引（基于0）",
+                            "examples": [
+                                50
+                            ]
+                        },
+                        "direction": {
+                            "type": "String",
+                            "desc": "变化方向",
+                            "values": [
+                                "increase",
+                                "decrease"
+                            ]
+                        },
+                        "ref": {
+                            "type": "Object",
+                            "desc": "Vue对触发事件的QVirtualList的引用",
+                            "addedIn": "v1.8.4"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "methods": {
+        "scrollTo": {
+            "desc": "将虚拟滚动列表滚动到具有指定索引的项目（基于0）",
+            "params": {
+                "index": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "列表项的索引（基于0）",
+                    "required": true,
+                    "examples": [
+                        "1",
+                        23
+                    ]
+                },
+                "edge": {
+                    "type": "String",
+                    "desc": "如果项目不可见，则要对齐的边（默认情况下，如果滚动到终点，则对齐到终点，否则对齐到起点）；如果使用'-force'版本，则它始终对齐",
+                    "values": [
+                        "start",
+                        "center",
+                        "end",
+                        "start-force",
+                        "center-force",
+                        "end-force"
+                    ],
+                    "addedIn": "v1.13.0"
+                }
+            }
+        },
+        "reset": {
+            "desc": "重置虚拟滚动计算；用于定制边缘案例"
+        },
+        "refresh": {
+            "desc": "刷新虚拟滚动列表；附加项目后使用",
+            "params": {
+                "index": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "刷新后要滚动到的列表项的索引（基于0）；如果未指定滚动位置，则滚动位置不变；使用负值保持滚动位置",
+                    "examples": [
+                        "1",
+                        23,
+                        -1
+                    ]
+                }
+            },
+            "addedIn": "v1.8.4"
+        }
+    }
+}

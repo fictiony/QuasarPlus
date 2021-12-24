@@ -1,0 +1,98 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/intersection"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "addedIn": "v1.4.0",
+    "props": {
+        "tag": {
+            "type": "String",
+            "desc": "要呈现的HTML标记",
+            "default": "div",
+            "category": "content",
+            "examples": [
+                "div",
+                "span",
+                "blockquote"
+            ],
+            "addedIn": "v1.9.3"
+        },
+        "once": {
+            "type": "Boolean",
+            "desc": "只触发一次",
+            "category": "behavior"
+        },
+        "ssr-prerender": {
+            "type": "Boolean",
+            "desc": "如果使用SSR，则在服务器端预渲染内容（使用它在折叠内容上方预渲染）",
+            "category": "behavior",
+            "addedIn": "v1.9.5"
+        },
+        "root": {
+            "type": "Element",
+            "desc": "[交叉API的root属性]允许您定义可替代视区的元素作为根元素（通过其DOM元素）；必须记住，root必须是被观察元素的祖先",
+            "examples": [
+                "$refs.myTable.$el",
+                "getElementById(\"myTable\")"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.14.2"
+        },
+        "margin": {
+            "type": "String",
+            "desc": "[交叉点API的rootMargin属性]允许您指定根元素的边距，有效地允许您增加或缩小用于交叉点的区域",
+            "examples": [
+                "-20px 0px",
+                "10px 20px 30px 40px"
+            ],
+            "category": "behavior"
+        },
+        "threshold": {
+            "type": [
+                "Array",
+                "Number"
+            ],
+            "desc": "[交叉点API的threshold属性]要触发的阈值，指定为观察元素（可见面积/总面积）的比率或比率列表",
+            "examples": [
+                "[ 0, 0.25, 0.5, 0.75, 1 ]",
+                ":threshold=\"1\""
+            ],
+            "category": "behavior"
+        },
+        "transition": {
+            "type": "String",
+            "desc": "Quasar的嵌入式过渡动画之一",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "禁用可见性可观察性（内容将保持原样，可见或隐藏）",
+            "category": "behavior"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    },
+    "events": {
+        "visibility": {
+            "desc": "可见性更改时激发",
+            "params": {
+                "isVisible": {
+                    "type": "Boolean",
+                    "desc": "可见性状态（真/假）"
+                }
+            }
+        }
+    }
+}

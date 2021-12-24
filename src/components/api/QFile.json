@@ -1,0 +1,629 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/file"
+    },
+    "addedIn": "v1.8.0",
+    "props": {
+        "name": {
+            "type": "String",
+            "desc": "用于指定控件的名称；处理表单时有用；如果未指定，则采用“for”属性的值（如果存在）",
+            "examples": [
+                "car_id",
+                "car_id"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "multiple": {
+            "type": "Boolean",
+            "desc": "允许多个文件上载",
+            "category": "behavior"
+        },
+        "accept": {
+            "type": "String",
+            "desc": "以逗号分隔的唯一文件类型说明符列表。映射到原生输入类型=文件元素的“accept”属性",
+            "examples": [
+                ".jpg, .pdf, image/*",
+                "image/jpeg, .pdf"
+            ],
+            "category": "behavior"
+        },
+        "capture": {
+            "type": "String",
+            "desc": "（可选）指定应捕获新文件，以及应使用哪个设备捕获由“accept”属性定义的类型的新媒体。映射到原生输入类型=文件元素的“capture”属性",
+            "values": [
+                "user",
+                "environment"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.12.6"
+        },
+        "max-file-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "单个文件的最大大小（字节）",
+            "examples": [
+                1024,
+                1048576
+            ],
+            "category": "behavior"
+        },
+        "max-total-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "所有文件的最大大小（以字节为单位）",
+            "examples": [
+                1024,
+                1048576
+            ],
+            "category": "behavior"
+        },
+        "max-files": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "要包含的最大文件数",
+            "examples": [
+                ":max-files=\"5\"",
+                "10"
+            ],
+            "category": "behavior"
+        },
+        "filter": {
+            "type": "Function",
+            "desc": "添加文件的自定义过滤器；只有通过此过滤器的文件才会添加到队列并上载；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "files": {
+                    "type": [
+                        "FileList",
+                        "Array"
+                    ],
+                    "desc": "要添加到队列的候选文件"
+                }
+            },
+            "returns": {
+                "type": "Array",
+                "desc": "要添加到队列的过滤的文件"
+            },
+            "examples": [
+                ":filter=\"files => files.filter(file => file.size === 1024)\""
+            ],
+            "category": "behavior"
+        },
+        "error": {
+            "type": "Boolean",
+            "desc": "字段是否有验证错误？",
+            "category": "behavior"
+        },
+        "error-message": {
+            "type": "String",
+            "desc": "验证错误消息（仅当“error”设置为“true”时显示）",
+            "examples": [
+                "Username must have at least 5 characters"
+            ],
+            "category": "content"
+        },
+        "no-error-icon": {
+            "type": "Boolean",
+            "desc": "出现错误时隐藏错误图标",
+            "category": "content"
+        },
+        "rules": {
+            "type": "Array",
+            "desc": "函数/字符串数组；如果是字符串，则它必须是嵌入式验证规则的其中一个名称",
+            "examples": [
+                ":rules=\"[ val => val.length <= 3 || 'Please use maximum 3 characters' ]\"",
+                ":rules=\"[ 'fulltime' ]\""
+            ],
+            "category": "behavior"
+        },
+        "reactive-rules": {
+            "type": "Boolean",
+            "desc": "默认情况下，在模型更改之前，规则的更改不会触发新的验证；如果设置为true，则规则中的更改将触发验证；有一个性能损失，所以只有当你真的需要它时使用它",
+            "category": "behavior",
+            "addedIn": "v1.11.0"
+        },
+        "lazy-rules": {
+            "type": [
+                "Boolean",
+                "String"
+            ],
+            "desc": "如果设置为布尔真，则只有在字段第一次失去焦点后，它才会根据“rule”检查验证状态；如果设置为“ondemand”，则仅当手动调用组件的validate()方法或当包装器QForm提交自身时才会触发",
+            "values": [
+                "(Boolean) true",
+                "(Boolean) false",
+                "ondemand"
+            ],
+            "category": "behavior"
+        },
+        "label": {
+            "type": "String",
+            "desc": "一种文本标签，一旦字段获得焦点，它将“浮动”到输入字段上方",
+            "examples": [
+                "Username"
+            ],
+            "category": "content"
+        },
+        "stack-label": {
+            "type": "Boolean",
+            "desc": "标签将始终显示在字段上方，而不考虑字段内容（如果有）",
+            "category": "content"
+        },
+        "hint": {
+            "type": "String",
+            "desc": "辅助（提示）文本，放在包装的窗体组件下面",
+            "examples": [
+                "Fill in between 3 and 12 characters"
+            ],
+            "category": "content"
+        },
+        "hide-hint": {
+            "type": "Boolean",
+            "desc": "当字段没有焦点时隐藏辅助（提示）文本",
+            "category": "content"
+        },
+        "prefix": {
+            "type": "String",
+            "desc": "前缀",
+            "examples": [
+                "$"
+            ],
+            "category": "content"
+        },
+        "suffix": {
+            "type": "String",
+            "desc": "后缀",
+            "examples": [
+                "@gmail.com"
+            ],
+            "category": "content"
+        },
+        "label-color": {
+            "type": "String",
+            "desc": "标签的来自Quasar调色板的颜色名称；覆盖“color”属性；与“color”prop的区别在于，标签将始终具有此颜色，即使字段未聚焦",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "addedIn": "v1.7.0"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "bg-color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "loading": {
+            "type": "Boolean",
+            "desc": "通过显示旋转器向用户发出进程正在进行的信号；可以使用“loading”槽自定义转器。",
+            "category": "behavior|content"
+        },
+        "clearable": {
+            "type": "Boolean",
+            "desc": "设置值（非undefined或null）时附加可清除图标；单击时，模型将变为空",
+            "category": "behavior|content"
+        },
+        "clear-icon": {
+            "type": "String",
+            "desc": "与“clearable”属性一起使用时用于清除按钮的自定义图标",
+            "examples": [
+                "close"
+            ],
+            "category": "content"
+        },
+        "filled": {
+            "type": "Boolean",
+            "desc": "对字段使用“填充”设计",
+            "category": "style"
+        },
+        "outlined": {
+            "type": "Boolean",
+            "desc": "对字段使用“轮廓线”设计",
+            "category": "style"
+        },
+        "borderless": {
+            "type": "Boolean",
+            "desc": "对字段采用“无边界”设计",
+            "category": "style"
+        },
+        "standout": {
+            "type": [
+                "Boolean",
+                "String"
+            ],
+            "desc": "对字段采用“突出”设计；指定聚焦时要应用的类（覆盖默认类）",
+            "examples": [
+                "standout",
+                "standout=\"bg-primary text-white\""
+            ],
+            "category": "style"
+        },
+        "label-slot": {
+            "type": "Boolean",
+            "desc": "启用标签槽；如果未设置“label”属性，则需要将其设置为强制使用“label”插槽",
+            "category": "content",
+            "addedIn": "v1.12.9"
+        },
+        "bottom-slots": {
+            "type": "Boolean",
+            "desc": "启用底部插槽（'error'，'hint'，'counter'）",
+            "category": "content"
+        },
+        "hide-bottom-space": {
+            "type": "Boolean",
+            "desc": "不使用error/hint/counter时，不要再为其保留空间；因此，它也会禁用这些对象的动画；它还允许hint/error区域根据其内容进行垂直拉伸",
+            "category": "style"
+        },
+        "counter": {
+            "type": "Boolean",
+            "desc": "在右下角显示自动计数器",
+            "category": "content"
+        },
+        "rounded": {
+            "type": "Boolean",
+            "desc": "为组件的方形应用较小的标准border-radius",
+            "category": "style"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "去除border-radius，使边界为正方形；覆盖“rounded”属性",
+            "category": "style"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "item-aligned": {
+            "type": "Boolean",
+            "desc": "将内部内容对齐方式与QItem匹配",
+            "category": "style"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "readonly": {
+            "type": "Boolean",
+            "desc": "将组件置于只读模式",
+            "category": "state"
+        },
+        "autofocus": {
+            "type": "Boolean",
+            "desc": "初始组件渲染上的聚焦场",
+            "category": "behavior"
+        },
+        "for": {
+            "type": "String",
+            "desc": "用于指定控件的“id”以及包装它的标签的“for”属性；如果没有指定'name'属性，那么它也将用于此属性",
+            "examples": [
+                "myFieldsId"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.4.2"
+        },
+        "value": {
+            "type": [
+                "File",
+                "FileList",
+                "Array"
+            ],
+            "desc": "组件模型；如果使用“multiple”属性，则必须是FileList或Array；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "required": true,
+            "examples": [
+                "v-model=\"myModel\""
+            ],
+            "category": "model"
+        },
+        "append": {
+            "type": "Boolean",
+            "desc": "将文件附加到当前模型，而不是替换它们；仅在使用“multiple”模式时有效",
+            "category": "behavior",
+            "addedIn": "v1.11.3"
+        },
+        "display-value": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "如果不使用“file”或“selected”作用域插槽，并且如果不使用“use-chip”属性，则覆盖默认选择字符串",
+            "examples": [
+                "Options: x, y, z"
+            ],
+            "category": "selection"
+        },
+        "use-chips": {
+            "type": "Boolean",
+            "desc": "使用QChip显示选取的文件",
+            "category": "selection"
+        },
+        "counter-label": {
+            "type": "Function",
+            "desc": "计数器标签；“counter”属性是启用此属性所必需的",
+            "params": {
+                "props": {
+                    "type": "Object",
+                    "desc": "包含计数器标签信息的对象",
+                    "definition": {
+                        "totalSize": {
+                            "type": "String",
+                            "desc": "人类可读格式的文件的总大小",
+                            "examples": [
+                                "1.42MB"
+                            ]
+                        },
+                        "filesNumber": {
+                            "type": "Number",
+                            "desc": "选取的文件数",
+                            "examples": [
+                                5
+                            ]
+                        },
+                        "maxFiles": {
+                            "type": [
+                                "Number",
+                                "String"
+                            ],
+                            "desc": "最大文件数（如果指定，与“max-files”属性相同）；如果未指定“max-files”，则其值为“void 0”",
+                            "examples": [
+                                5
+                            ]
+                        }
+                    }
+                }
+            },
+            "returns": {
+                "type": "String",
+                "desc": "要为计数器标签显示的字符串"
+            },
+            "examples": [
+                ":counter-label=\"counterLabelFn\""
+            ],
+            "category": "behavior"
+        },
+        "tabindex": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "Tabindex HTML属性值",
+            "examples": [
+                "0",
+                "100"
+            ],
+            "category": "general"
+        },
+        "input-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为基础选择容器属性的类定义",
+            "examples": [
+                "my-special-class",
+                ":input-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "input-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为基础选择容器属性的样式定义",
+            "examples": [
+                "background-color: #ff0000",
+                ":input-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "字段主要内容"
+        },
+        "prepend": {
+            "desc": "前置内部字段；建议：QIcon、QBtn"
+        },
+        "append": {
+            "desc": "后置内部字段；建议：QIcon、QBtn"
+        },
+        "before": {
+            "desc": "前置外部字段；建议：QIcon、QBtn"
+        },
+        "after": {
+            "desc": "后置外部字段；建议：QIcon、QBtn"
+        },
+        "label": {
+            "desc": "标签槽；仅当设置了“label-slot”属性或设置了“label”属性时使用；使用时，“label”属性中的文本将被忽略",
+            "addedIn": "v1.12.9"
+        },
+        "error": {
+            "desc": "错误插槽；仅在使用“bottom-slots”属性时启用；建议：<div>"
+        },
+        "hint": {
+            "desc": "提示文本槽；仅在使用“bottom-slots”属性时启用；建议：<div>"
+        },
+        "counter": {
+            "desc": "计数器文本槽；仅在使用“bottom-slots”属性时启用；建议：<div>"
+        },
+        "loading": {
+            "desc": "当组件处于加载模式时重写默认选装器；与“loading”属性一起使用"
+        }
+    },
+    "scopedSlots": {
+        "file": {
+            "desc": "覆盖默认节点以从用户选取的列表渲染文件",
+            "scope": {
+                "index": {
+                    "type": "Number",
+                    "desc": "选择索引",
+                    "examples": [
+                        0
+                    ]
+                },
+                "file": {
+                    "type": "File",
+                    "desc": "文件对象"
+                },
+                "ref": {
+                    "type": "Object",
+                    "desc": "对QFile组件的引用"
+                }
+            }
+        },
+        "selected": {
+            "desc": "覆盖默认选择槽；建议：QChip",
+            "scope": {
+                "files": {
+                    "type": [
+                        "FileList",
+                        "Array"
+                    ],
+                    "desc": "文件对象数组"
+                },
+                "ref": {
+                    "type": "Object",
+                    "desc": "对QFile组件的引用"
+                }
+            }
+        }
+    },
+    "events": {
+        "rejected": {
+            "desc": "选取文件后发出，有些文件未通过验证属性（accept、max-file-size、max-total-size、filter等）",
+            "params": {
+                "rejectedEntries": {
+                    "type": "Array",
+                    "desc": "未通过验证的文件的{failedPropValidation:string，file:file}对象数组"
+                }
+            },
+            "addedIn": "v1.11.2"
+        },
+        "clear": {
+            "desc": "使用“clearable”属性时，单击清除图标时会发出此事件",
+            "addedIn": "v1.1.5",
+            "params": {
+                "value": {
+                    "type": [
+                        "Any"
+                    ],
+                    "desc": "清除之前的值"
+                }
+            }
+        },
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        }
+    },
+    "methods": {
+        "pickFiles": {
+            "desc": "触发文件选取；由于浏览器的安全策略，必须作为用户交互的直接结果调用（例如在单击处理程序中）",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "addFiles": {
+            "desc": "以编程方式添加文件",
+            "params": {
+                "files": {
+                    "type": [
+                        "FileList",
+                        "Array"
+                    ],
+                    "desc": "文件数组（文件实例）",
+                    "required": true
+                }
+            }
+        },
+        "resetValidation": {
+            "desc": "重置验证状态"
+        },
+        "validate": {
+            "desc": "触发验证",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "要验证的可选值"
+                }
+            },
+            "returns": {
+                "type": [
+                    "Boolean",
+                    "Promise<boolean>"
+                ],
+                "desc": "如果没有异步规则，则为True/false，否则为带有结果的Promise（True->验证成功，false->检测到无效模型）",
+                "examples": [
+                    "true",
+                    "validate().then(outcome => { ... })"
+                ]
+            }
+        },
+        "focus": {
+            "desc": "焦点组件"
+        },
+        "blur": {
+            "desc": "模糊组件（失去焦点）"
+        },
+        "removeAtIndex": {
+            "desc": "删除位于模型中特定索引处的文件",
+            "params": {
+                "index": {
+                    "type": "Number",
+                    "desc": "删除所选内容的索引",
+                    "required": true,
+                    "examples": [
+                        0
+                    ]
+                }
+            }
+        },
+        "removeFile": {
+            "desc": "从模型中删除指定的文件",
+            "params": {
+                "file": {
+                    "type": "File",
+                    "desc": "要删除的文件（文件的实例）",
+                    "required": true
+                }
+            }
+        }
+    }
+}

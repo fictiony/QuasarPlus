@@ -1,7 +1,7 @@
 <template>
   <q-model-td
     v-bind="$attrs"
-    v-on="{ ...$listeners, input: undefined }"
+    v-on="{ ...$listeners, input: () => {} }"
     v-model="editValue"
     :inline="inline"
     :auto-save="autoSave"
@@ -22,7 +22,7 @@
         :value="editValue"
         @input="input"
         @blur="inline && (autoSave ? save() : cancel())"
-        @keyup.enter="save"
+        @keyup.native.enter="save"
       />
     </template>
   </q-model-td>
@@ -36,6 +36,7 @@ import mixin2 from './mixin2'
 
 export default {
   name: 'QEditableTd',
+  inheritAttrs: false,
 
   components: {
     QInput,

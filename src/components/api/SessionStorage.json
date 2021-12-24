@@ -1,0 +1,193 @@
+{
+    "type": "plugin",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/quasar-plugins/web-storage"
+    },
+    "injection": "$q.sessionStorage",
+    "methods": {
+        "has": {
+            "desc": "检查存储项是否存在",
+            "params": {
+                "key": {
+                    "type": "String",
+                    "desc": "输入键",
+                    "required": true,
+                    "examples": [
+                        "userId"
+                    ]
+                }
+            },
+            "returns": {
+                "type": "Boolean",
+                "desc": "项目是否存在？"
+            }
+        },
+        "getLength": {
+            "desc": "获取存储条目数",
+            "returns": {
+                "type": "Number",
+                "desc": "条目数",
+                "examples": [
+                    21
+                ]
+            }
+        },
+        "getItem": {
+            "tsType": "WebStorageGetItemMethodType",
+            "desc": "获取存储项值",
+            "params": {
+                "key": {
+                    "type": "String",
+                    "desc": "输入键",
+                    "required": true,
+                    "examples": [
+                        "userId"
+                    ]
+                }
+            },
+            "returns": {
+                "type": [
+                    "Date",
+                    "RegExp",
+                    "Number",
+                    "Boolean",
+                    "Function",
+                    "Object",
+                    "Array",
+                    "String",
+                    "null"
+                ],
+                "desc": "存储项值",
+                "examples": [
+                    "john12",
+                    702
+                ]
+            }
+        },
+        "getIndex": {
+            "tsType": "WebStorageGetIndexMethodType",
+            "desc": "获取特定索引处的存储项值",
+            "params": {
+                "index": {
+                    "type": "Number",
+                    "desc": "条目索引",
+                    "required": true,
+                    "examples": [
+                        5
+                    ]
+                }
+            },
+            "returns": {
+                "type": [
+                    "Number",
+                    "null"
+                ],
+                "desc": "存储项索引",
+                "examples": [
+                    7
+                ]
+            }
+        },
+        "getKey": {
+            "tsType": "WebStorageGetKeyMethodType",
+            "desc": "获取特定索引处的存储键",
+            "params": {
+                "index": {
+                    "type": "Number",
+                    "desc": "条目索引",
+                    "required": true,
+                    "examples": [
+                        5
+                    ]
+                }
+            },
+            "returns": {
+                "type": [
+                    "String",
+                    "null"
+                ],
+                "desc": "存储键",
+                "examples": [
+                    "userId"
+                ]
+            },
+            "addedIn": "v1.9.4"
+        },
+        "getAll": {
+            "desc": "检索存储中的所有项目",
+            "returns": {
+                "type": "Object",
+                "desc": "对象语法：作为对象键的项名称及其值",
+                "examples": [
+                    "{ userId: 'jon12', timesLoggedIn: 14 }"
+                ]
+            }
+        },
+        "getAllKeys": {
+            "tsType": "WebStorageGetAllKeysMethodType",
+            "desc": "检索存储中的所有键",
+            "returns": {
+                "type": "Array",
+                "desc": "存储键（字符串数组）",
+                "examples": [
+                    "['userId', 'password']"
+                ]
+            },
+            "addedIn": "v1.9.4"
+        },
+        "set": {
+            "desc": "在存储中设置项目",
+            "params": {
+                "key": {
+                    "type": "String",
+                    "desc": "输入键",
+                    "required": true,
+                    "examples": [
+                        "userId"
+                    ]
+                },
+                "value": {
+                    "type": [
+                        "Date",
+                        "RegExp",
+                        "Number",
+                        "Boolean",
+                        "Function",
+                        "Object",
+                        "Array",
+                        "String",
+                        "null"
+                    ],
+                    "desc": "输入值",
+                    "required": true,
+                    "examples": [
+                        "john12"
+                    ]
+                }
+            }
+        },
+        "remove": {
+            "desc": "删除存储项",
+            "params": {
+                "key": {
+                    "type": "String",
+                    "desc": "存储键",
+                    "required": true,
+                    "examples": [
+                        "userId"
+                    ]
+                }
+            }
+        },
+        "clear": {
+            "desc": "把所有东西从存储里拿出来"
+        },
+        "isEmpty": {
+            "desc": "确定存储是否有任何项",
+            "returns": {
+                "type": "Boolean",
+                "desc": "指示存储是否为空"
+            }
+        }
+    }
+}

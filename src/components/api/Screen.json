@@ -1,0 +1,208 @@
+{
+    "type": "plugin",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/options/screen-plugin"
+    },
+    "injection": "$q.screen",
+    "props": {
+        "width": {
+            "type": "Number",
+            "desc": "屏幕宽度（像素）",
+            "reactive": true,
+            "examples": [
+                452
+            ]
+        },
+        "height": {
+            "type": "Number",
+            "desc": "屏幕高度（像素）",
+            "reactive": true,
+            "examples": [
+                721
+            ]
+        },
+        "name": {
+            "type": "String",
+            "desc": "告诉当前窗口断点",
+            "values": [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl"
+            ],
+            "reactive": true,
+            "addedIn": "v1.5.2"
+        },
+        "sizes": {
+            "type": "Object",
+            "desc": "断点（像素）",
+            "definition": {
+                "sm": {
+                    "type": "Number",
+                    "desc": "断点宽度大小（最小大小）",
+                    "examples": [
+                        600
+                    ]
+                },
+                "md": {
+                    "type": "Number",
+                    "desc": "断点宽度大小（最小大小）",
+                    "examples": [
+                        1024
+                    ]
+                },
+                "lg": {
+                    "type": "Number",
+                    "desc": "断点宽度大小（最小大小）",
+                    "examples": [
+                        1440
+                    ]
+                },
+                "xl": {
+                    "type": "Number",
+                    "desc": "断点宽度大小（最小大小）",
+                    "examples": [
+                        1920
+                    ]
+                }
+            },
+            "reactive": true,
+            "examples": [
+                "{ sm: 600, md: 1024, lg: 1440, xl: 1920 }"
+            ]
+        },
+        "lt": {
+            "type": "Object",
+            "desc": "指示当前屏幕宽度是否小于断点名称",
+            "reactive": true,
+            "definition": {
+                "sm": {
+                    "type": "Boolean",
+                    "desc": "当前屏幕宽度是否低于此断点的最低限制？"
+                },
+                "md": {
+                    "type": "Boolean",
+                    "desc": "当前屏幕宽度是否低于此断点的最低限制？"
+                },
+                "lg": {
+                    "type": "Boolean",
+                    "desc": "当前屏幕宽度是否低于此断点的最低限制？"
+                },
+                "xl": {
+                    "type": "Boolean",
+                    "desc": "当前屏幕宽度是否低于此断点的最低限制？"
+                }
+            },
+            "examples": [
+                "{ sm: false, md: true, lg: true, xl: true }"
+            ]
+        },
+        "gt": {
+            "type": "Object",
+            "desc": "指示当前屏幕宽度是否大于断点名称",
+            "reactive": true,
+            "definition": {
+                "xs": {
+                    "type": "Boolean",
+                    "desc": "当前屏幕宽度是否大于此断点的最大限制？"
+                },
+                "sm": {
+                    "type": "Boolean",
+                    "desc": "当前屏幕宽度是否大于此断点的最大限制？"
+                },
+                "md": {
+                    "type": "Boolean",
+                    "desc": "当前屏幕宽度是否大于此断点的最大限制？"
+                },
+                "lg": {
+                    "type": "Boolean",
+                    "desc": "当前屏幕宽度是否大于此断点的最大限制？"
+                }
+            },
+            "examples": [
+                "{ xs: true, sm: true, md: false, lg: false, xl: false }"
+            ]
+        },
+        "xs": {
+            "type": "Boolean",
+            "desc": "当前屏幕宽度正好符合“xs”断点",
+            "reactive": true
+        },
+        "sm": {
+            "type": "Boolean",
+            "desc": "当前屏幕宽度正好符合“sm”断点",
+            "reactive": true
+        },
+        "md": {
+            "type": "Boolean",
+            "desc": "当前屏幕宽度正好符合“md”断点",
+            "reactive": true
+        },
+        "lg": {
+            "type": "Boolean",
+            "desc": "当前屏幕宽度正好符合“lg”断点",
+            "reactive": true
+        },
+        "xl": {
+            "type": "Boolean",
+            "desc": "当前屏幕宽度正好符合“xl”断点",
+            "reactive": true
+        }
+    },
+    "methods": {
+        "setSizes": {
+            "desc": "覆盖默认断点大小",
+            "params": {
+                "breakpoints": {
+                    "type": "Object",
+                    "desc": "选择要覆盖的内容",
+                    "definition": {
+                        "sm": {
+                            "type": "Number",
+                            "desc": "断点宽度大小（最小大小）",
+                            "examples": [
+                                600
+                            ]
+                        },
+                        "md": {
+                            "type": "Number",
+                            "desc": "断点宽度大小（最小大小）",
+                            "examples": [
+                                1024
+                            ]
+                        },
+                        "lg": {
+                            "type": "Number",
+                            "desc": "断点宽度大小（最小大小）",
+                            "examples": [
+                                1440
+                            ]
+                        },
+                        "xl": {
+                            "type": "Number",
+                            "desc": "断点宽度大小（最小大小）",
+                            "examples": [
+                                1920
+                            ]
+                        }
+                    },
+                    "required": true
+                }
+            }
+        },
+        "setDebounce": {
+            "desc": "屏幕宽度/高度变化时所有属性的去抖更新",
+            "params": {
+                "amount": {
+                    "type": "Number",
+                    "desc": "毫秒数",
+                    "required": true,
+                    "examples": [
+                        300
+                    ]
+                }
+            }
+        }
+    }
+}

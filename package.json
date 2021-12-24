@@ -1,8 +1,8 @@
 {
   "name": "quasarplus",
-  "version": "0.2.1",
+  "version": "0.3.0",
+  "productName": "Quasar Plus",
   "description": "Quasar 组件扩展",
-  "productName": "QuasarPlus",
   "author": "fictiony <fictiony@qq.com>",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
-    "quasar": "^1.0.0"
+    "quasar": "^1.15.10"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",

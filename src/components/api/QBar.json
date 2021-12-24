@@ -1,0 +1,28 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/bar"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "组件背景颜色使父对象的背景变亮（与默认行为相反，默认行为是使其变暗）；除非为其指定CSS背景色，否则将正常工作",
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}

@@ -1,0 +1,140 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/circular-progress"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称或标准大小名称（xs | sm | md | lg | xl）",
+            "examples": [
+                "16px",
+                "2rem",
+                "xs",
+                "md"
+            ],
+            "category": "style"
+        },
+        "value": {
+            "type": "Number",
+            "default": 0,
+            "desc": "当前进度（必须介于min/max之间）",
+            "examples": [
+                0,
+                100,
+                52.32
+            ],
+            "category": "model"
+        },
+        "min": {
+            "type": "Number",
+            "default": 0,
+            "desc": "定义“无进度”的最小值（必须低于“最大值”）",
+            "examples": [
+                0,
+                100,
+                52.32
+            ],
+            "category": "model"
+        },
+        "max": {
+            "type": "Number",
+            "default": 100,
+            "desc": "定义100%进度的最大值（必须高于“min”）",
+            "examples": [
+                100,
+                52.32
+            ],
+            "category": "model"
+        },
+        "color": {
+            "type": "String",
+            "desc": "弧形进度的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "center-color": {
+            "type": "String",
+            "desc": "组件中心部分的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "track-color": {
+            "type": "String",
+            "desc": "组件轨迹的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "font-size": {
+            "type": "String",
+            "desc": "以CSS单位表示的文本大小，包括单位名称。建议：使用“em”单位与组件大小同步",
+            "default": "0.25em",
+            "examples": [
+                "1em",
+                "16px",
+                "2rem"
+            ],
+            "category": "style"
+        },
+        "thickness": {
+            "type": "Number",
+            "default": 0.2,
+            "desc": "进度弧形的厚度与组件大小之比（0.0<x<1.0）",
+            "examples": [
+                1,
+                0.3
+            ],
+            "category": "style"
+        },
+        "angle": {
+            "type": "Number",
+            "desc": "旋转进度弧形的角度",
+            "default": 0,
+            "examples": [
+                0,
+                40,
+                90
+            ],
+            "category": "content"
+        },
+        "indeterminate": {
+            "type": "Boolean",
+            "desc": "将组件置于“不确定”状态；忽略“value”属性",
+            "category": "behavior"
+        },
+        "show-value": {
+            "type": "Boolean",
+            "desc": "启用默认插槽并使用它（如果可用），否则它会将“value”属性显示为文本；确保文本有足够的空间显示在组件内部",
+            "category": "content|behavior"
+        },
+        "reverse": {
+            "type": "Boolean",
+            "desc": "逆转进度的方向；仅适用于确定状态",
+            "category": "behavior"
+        },
+        "instant-feedback": {
+            "type": "Boolean",
+            "desc": "模型更改时没有动画",
+            "category": "behavior"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "仅当设置了“show-value”属性时才用于组件内容；确保内容有足够的空间显示在组件内部"
+        }
+    }
+}

@@ -23,20 +23,27 @@
           <q-menu auto-close>
             <q-list style="width: 160px">
               <q-item clickable @click="rightOpen = !rightOpen">
-                <q-item-section avatar>
+                <q-item-section class="_icon" avatar>
                   <q-icon :name="rightOpen ? 'check_box' : 'check_box_outline_blank'" />
                 </q-item-section>
                 <q-item-section>属性栏</q-item-section>
               </q-item>
               <q-separator />
-              <q-item clickable @click="$q.dark.toggle()">
-                <q-item-section avatar>
+              <q-item v-for="lang in Object.keys(API_LANG)" :key="lang" clickable @click="setApiLang(lang)">
+                <q-item-section class="_icon" avatar>
+                  <q-icon :name="apiLang === lang ? 'done' : ''" />
+                </q-item-section>
+                <q-item-section>{{ lang }} API</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable @click="toggleDark">
+                <q-item-section class="_icon" avatar>
                   <q-icon :name="!$q.dark.isActive ? 'brightness_2' : 'brightness_5'" />
                 </q-item-section>
                 <q-item-section>{{ !$q.dark.isActive ? '暗色模式' : '亮色模式' }}</q-item-section>
               </q-item>
               <q-item clickable tag="a" href="mailto:ficitony@qq.com">
-                <q-item-section avatar>
+                <q-item-section class="_icon" avatar>
                   <q-icon name="email" />
                 </q-item-section>
                 <q-item-section>联系站长</q-item-section>
@@ -70,18 +77,24 @@
     </my-drawer>
 
     <q-page-container>
-      <ComponentSelector />
-      <router-view ref="page" />
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
 // 【主框架】
-import { pageList, plusList } from 'components/menu.js'
+import { PAGE_LIST, PLUS_LIST, API_LANG } from 'boot/menu.js'
 import MenuPanel from 'pages/MenuPanel.vue'
-import PropPanel from 'pages/PropPanel.vue'
+import { inspect, PropPanel } from 'components/thirdparty/inspect'
+import quasarApi from 'components/api/Quasar.json'
+import * as plusComponents from 'components/plus'
 import cfg from '../../package.json'
+
+const QUASAR_EXTRA_API = {
+  QRibbon: import('@quasar/quasar-ui-qribbon/dist/api/QRibbon.json'),
+  QMarkdown: import('@quasar/quasar-ui-qmarkdown/dist/api/QMarkdown.json')
+}
 
 export default {
   components: {
@@ -90,16 +103,15 @@ export default {
   },
 
   data: () => ({
+    API_LANG,
+    inspect,
     name: cfg.productName,
     title: cfg.description,
     version: cfg.version,
     leftOpen: false,
     rightOpen: false,
     pageTitle: '',
-    inspect: {
-      selecting: false,
-      target: null
-    }
+    apiLang: ''
   }),
 
   computed: {
@@ -114,17 +126,9 @@ export default {
     }
   },
 
-  provide() {
-    return {
-      inspect: this.inspect
-    }
-  },
-
   watch: {
     $route: {
-      handler(val) {
-        this.updateTitle(val)
-      },
+      handler: 'updateTitle',
       immediate: true
     },
 
@@ -136,16 +140,36 @@ export default {
   },
 
   methods: {
+    // 设置API语言
+    setApiLang(lang) {
+      this.apiLang = lang
+      this.$saveConfig('apiLang', lang)
+
+      // 切换API
+      Object.keys(quasarApi)
+        .filter(i => !QUASAR_EXTRA_API[i])
+        .forEach(name => {
+          inspect.extraApi[name] = lang === '中文' ? import('components/api/' + name + '.json') : import('quasar/dist/api/' + name + '.json')
+          delete inspect.apiCache[name]
+        })
+    },
+
+    // 切换暗色模式
+    toggleDark() {
+      this.$q.dark.toggle()
+      this.$saveConfig('dark', this.$q.dark.isActive)
+    },
+
     // 更新标题
     updateTitle(route) {
       if (route.path !== '/') {
-        const page = pageList.find(i => i.to === '/' + route.path.split('/')[1])
+        const page = PAGE_LIST.find(i => i.to === '/' + route.path.split('/')[1])
         if (page) {
           this.pageTitle = page.title
           document.title = `${page.title} | ${this.title}`
           return
         }
-        const plus = plusList.find(i => i.to === route.path)
+        const plus = PLUS_LIST.find(i => i.to === route.path)
         if (plus) {
           this.pageTitle = `${plus.title}（${plus.caption}）`
           document.title = `${plus.caption} | ${this.title}`
@@ -159,12 +183,46 @@ export default {
     // 手动关闭属性栏
     propPanelClose() {
       this.rightOpen = false
-      this.inspect.target = null
+      inspect.target = null
     }
   },
 
   mounted() {
     this._computedWatchers.subTitleShow.update() // 强制重算
+
+    // 读取配置
+    this.apiLang = this.$loadConfig('apiLang') || '中文'
+    this.$q.dark.isActive = this.$loadConfig('dark') || false
+
+    // 定位API网址
+    inspect.getDocUrl = className => {
+      const api = quasarApi[className]
+      if (api && api.doc) {
+        return api.doc.replace('https://quasar.dev', API_LANG[this.apiLang])
+      }
+    }
+
+    // 添加额外API文档
+    Object.assign(inspect.extraApi, {
+      ...Object.fromEntries([
+        ...Object.keys(quasarApi)
+          .filter(i => !QUASAR_EXTRA_API[i])
+          .map(name => [name, this.apiLang === '中文' ? import('components/api/' + name + '.json') : import('quasar/dist/api/' + name + '.json')]),
+        ...Object.keys(plusComponents).map(name => [name, import('components/api/' + name + '.json')])
+      ]),
+      ...QUASAR_EXTRA_API
+    })
+
+    // 不隐藏关闭按钮
+    inspect.hideClose = false
   }
 }
 </script>
+
+<style lang="scss" scoped>
+._icon {
+  min-width: 32px;
+  padding: 0px;
+  margin-left: -2px;
+}
+</style>

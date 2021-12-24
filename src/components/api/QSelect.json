@@ -1,0 +1,1363 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/select"
+    },
+    "props": {
+        "name": {
+            "type": "String",
+            "desc": "用于指定控件的名称；处理表单时有用；如果未指定，则采用“for”属性的值（如果存在）",
+            "examples": [
+                "car_id",
+                "car_id"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "virtual-scroll-horizontal": {
+            "type": "Boolean",
+            "desc": "使虚拟列表在水平模式下工作",
+            "category": "behavior"
+        },
+        "virtual-scroll-slice-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "要在虚拟列表中呈现的最小项目数",
+            "default": "30",
+            "examples": [
+                "virtual-scroll-slice-size=\"60\""
+            ],
+            "category": "virtual-scroll"
+        },
+        "virtual-scroll-slice-ratio-before": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "可见区域中的项目数与之前渲染的项目数之比",
+            "default": "1",
+            "examples": [
+                "virtual-scroll-slice-ratio-before=\"0.3\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.14.7"
+        },
+        "virtual-scroll-slice-ratio-after": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "可见区域中的项目数与之后渲染的项目数之比",
+            "default": "1",
+            "examples": [
+                "virtual-scroll-slice-ratio-after=\"2\""
+            ],
+            "category": "virtual-scroll",
+            "addedIn": "v1.14.7"
+        },
+        "virtual-scroll-item-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "项目的默认像素大小（垂直时为高度，水平时为宽度）；此值用于呈现初始列表；尝试使用接近项目最小大小的值",
+            "default": "24",
+            "examples": [
+                "virtual-scroll-item-size=\"48\""
+            ],
+            "category": "virtual-scroll"
+        },
+        "virtual-scroll-sticky-size-start": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "列表开头的粘性部分（如果使用粘性部分）的像素大小（如果垂直，则为高度；如果水平，则为宽度）；正确的值将提高滚动精度",
+            "default": "0",
+            "examples": [
+                "virtual-scroll-sticky-size-start=\"48\""
+            ],
+            "category": "virtual-scroll"
+        },
+        "virtual-scroll-sticky-size-end": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "列表末尾粘性部分（如果使用）的像素大小（如果垂直，则为高度；如果水平，则为宽度）；正确的值将提高滚动精度",
+            "default": "0",
+            "examples": [
+                "virtual-scroll-sticky-size-end=\"48\""
+            ],
+            "category": "virtual-scroll"
+        },
+        "table-colspan": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "表中的列数（如果使用表布局，则需要此值：fixed）",
+            "examples": [
+                "table-colspan=\"12\""
+            ],
+            "category": "virtual-scroll|content",
+            "addedIn": "v1.13.0"
+        },
+        "error": {
+            "type": "Boolean",
+            "desc": "字段是否有验证错误？",
+            "category": "behavior"
+        },
+        "error-message": {
+            "type": "String",
+            "desc": "验证错误消息（仅当“error”设置为“true”时显示）",
+            "examples": [
+                "Username must have at least 5 characters"
+            ],
+            "category": "content"
+        },
+        "no-error-icon": {
+            "type": "Boolean",
+            "desc": "出现错误时隐藏错误图标",
+            "category": "content"
+        },
+        "rules": {
+            "type": "Array",
+            "desc": "函数/字符串数组；如果是字符串，则它必须是嵌入式验证规则的其中一个名称",
+            "examples": [
+                ":rules=\"[ val => val.length <= 3 || 'Please use maximum 3 characters' ]\"",
+                ":rules=\"[ 'fulltime' ]\""
+            ],
+            "category": "behavior"
+        },
+        "reactive-rules": {
+            "type": "Boolean",
+            "desc": "默认情况下，在模型更改之前，规则的更改不会触发新的验证；如果设置为true，则规则中的更改将触发验证；有性能损失，所以只有当你真的需要它时使用它",
+            "category": "behavior",
+            "addedIn": "v1.11.0"
+        },
+        "lazy-rules": {
+            "type": [
+                "Boolean",
+                "String"
+            ],
+            "desc": "如果设置为布尔真，则只有在字段第一次失去焦点后，它才会根据“rules”检查验证状态；如果设置为“ondemand”，则仅当手动调用组件的validate()方法或当包装器QForm提交自身时才会触发",
+            "values": [
+                "(Boolean) true",
+                "(Boolean) false",
+                "ondemand"
+            ],
+            "category": "behavior"
+        },
+        "label": {
+            "type": "String",
+            "desc": "一种文本标签，一旦字段获得焦点，它将“浮动”到输入字段上方",
+            "examples": [
+                "Username"
+            ],
+            "category": "content"
+        },
+        "stack-label": {
+            "type": "Boolean",
+            "desc": "标签将始终显示在字段上方，而不考虑字段内容（如果有）",
+            "category": "content"
+        },
+        "hint": {
+            "type": "String",
+            "desc": "辅助（提示）文本，放在包装的表单组件下面",
+            "examples": [
+                "Fill in between 3 and 12 characters"
+            ],
+            "category": "content"
+        },
+        "hide-hint": {
+            "type": "Boolean",
+            "desc": "当字段没有焦点时隐藏辅助（提示）文本",
+            "category": "content"
+        },
+        "prefix": {
+            "type": "String",
+            "desc": "前缀",
+            "examples": [
+                "$"
+            ],
+            "category": "content"
+        },
+        "suffix": {
+            "type": "String",
+            "desc": "后缀",
+            "examples": [
+                "@gmail.com"
+            ],
+            "category": "content"
+        },
+        "label-color": {
+            "type": "String",
+            "desc": "标签的来自Quasar调色板的颜色名称；覆盖“color”属性；与“color”属性的区别在于，标签将始终具有此颜色，即使字段未聚焦",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "addedIn": "v1.7.0"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "bg-color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "loading": {
+            "type": "Boolean",
+            "desc": "通过显示旋转器向用户发出进程正在进行的信号；可以使用“loading”槽自定义旋转器。",
+            "category": "behavior|content"
+        },
+        "clearable": {
+            "type": "Boolean",
+            "desc": "设置值（非undefined或null）时附加可清除图标；单击时，模型将变为null",
+            "category": "behavior|content"
+        },
+        "clear-icon": {
+            "type": "String",
+            "desc": "与“clearable”属性一起使用时用于清除按钮的自定义图标",
+            "examples": [
+                "close"
+            ],
+            "category": "content"
+        },
+        "filled": {
+            "type": "Boolean",
+            "desc": "对字段使用“填充”设计",
+            "category": "style"
+        },
+        "outlined": {
+            "type": "Boolean",
+            "desc": "现场使用“轮廓线”设计",
+            "category": "style"
+        },
+        "borderless": {
+            "type": "Boolean",
+            "desc": "现场采用“无边界”设计",
+            "category": "style"
+        },
+        "standout": {
+            "type": [
+                "Boolean",
+                "String"
+            ],
+            "desc": "现场采用“突出”设计；指定聚焦时要应用的类（覆盖默认类）",
+            "examples": [
+                "standout",
+                "standout=\"bg-primary text-white\""
+            ],
+            "category": "style"
+        },
+        "label-slot": {
+            "type": "Boolean",
+            "desc": "启用标签槽；如果未设置“label”属性，则需要将其设置为强制使用“label”插槽",
+            "category": "content",
+            "addedIn": "v1.12.9"
+        },
+        "bottom-slots": {
+            "type": "Boolean",
+            "desc": "启用底部插槽（'error'，'hint'，'counter'）",
+            "category": "content"
+        },
+        "hide-bottom-space": {
+            "type": "Boolean",
+            "desc": "不使用hint/error/counter时，不要再为其保留空间；因此，它也会禁用这些对象的动画；它还允许hint/error区域根据其内容进行垂直拉伸",
+            "category": "style"
+        },
+        "counter": {
+            "type": "Boolean",
+            "desc": "在右下角显示自动计数器",
+            "category": "content"
+        },
+        "rounded": {
+            "type": "Boolean",
+            "desc": "为组件的方形应用较小的标准border-radius",
+            "category": "style"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "去除border-radius半径，使边界为正方形；覆盖“rounded”属性",
+            "category": "style"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "item-aligned": {
+            "type": "Boolean",
+            "desc": "将内部内容对齐方式与QItem匹配",
+            "category": "style"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "readonly": {
+            "type": "Boolean",
+            "desc": "将组件置于只读模式",
+            "category": "state"
+        },
+        "autofocus": {
+            "type": "Boolean",
+            "desc": "初始组件渲染时的聚焦字段",
+            "category": "behavior"
+        },
+        "for": {
+            "type": "String",
+            "desc": "用于指定控件的“id”以及包装它的标签的“for”属性；如果没有指定'name'属性，那么它也将用于此属性",
+            "examples": [
+                "myFieldsId"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.4.2"
+        },
+        "value": {
+            "type": [
+                "Number",
+                "String",
+                "Array"
+            ],
+            "desc": "组件模型；如果使用“multiple”属性，则必须是数组；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "required": true,
+            "examples": [
+                "v-model=\"myModel\""
+            ],
+            "category": "model"
+        },
+        "multiple": {
+            "type": "Boolean",
+            "desc": "允许多选；模型必须是数组",
+            "category": "model|selection"
+        },
+        "display-value": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "如果不使用“selected”插槽/作用域插槽，并且如果不使用“use-chips”属性，则重写默认选择字符串",
+            "examples": [
+                "Options: x, y, z"
+            ],
+            "category": "selection"
+        },
+        "display-value-sanitize": {
+            "type": "Boolean",
+            "default": "false",
+            "desc": "强制使用textContent而不是innerHTML来呈现所选选项；当所选选项可能不安全（来自用户输入）时使用它；使用“selected”或“selected-item”插槽时不适用！",
+            "category": "selection"
+        },
+        "options": {
+            "type": "Array",
+            "desc": "用户可以从中选择的可用选项。为获得最佳性能，请冻结选项列表。",
+            "default": "[]",
+            "examples": [
+                ":options=\"[ 'BMW', 'Samsung Phone' ]\"",
+                ":options=\"[ { label: 'BMW', value: 'car' }, { label: 'Samsung Phone', value: 'phone' } ]\""
+            ],
+            "category": "options"
+        },
+        "option-value": {
+            "type": [
+                "Function",
+                "String"
+            ],
+            "desc": "持有“value”的选项属性；如果使用函数，那么为了获得最佳性能，请从您的范围引用它，而不要内联定义它",
+            "default": "value",
+            "examples": [
+                "option-value=\"modelNumber\"",
+                ":option-value=\"(item) => item === null ? null : item.modelNumber\""
+            ],
+            "category": "options"
+        },
+        "option-label": {
+            "type": [
+                "Function",
+                "String"
+            ],
+            "desc": "持有“label”的选项属性；如果使用函数，那么为了获得最佳性能，请从您的范围引用它，而不要内联定义它",
+            "default": "label",
+            "examples": [
+                "option-label=\"itemName\"",
+                ":option-label=\"(item) => item === null ? 'Null value' : item.itemName\""
+            ],
+            "category": "options"
+        },
+        "option-disable": {
+            "type": [
+                "Function",
+                "String"
+            ],
+            "desc": "表示已禁用的选项的属性；属性的值必须是布尔值；如果使用函数，那么为了获得最佳性能，请从您的范围引用它，而不要内联定义它",
+            "default": "disable",
+            "examples": [
+                "option-disable=\"cannotSelect\"",
+                ":option-disable=\"(item) => item === null ? true : item.cannotSelect\""
+            ],
+            "category": "options"
+        },
+        "hide-selected": {
+            "type": "Boolean",
+            "desc": "隐藏选择；使用基础输入(input)标记来保存所选选项的标签（而不是将其显示在输入的右侧）；仅适用于非“multiple”下拉框",
+            "category": "selection"
+        },
+        "hide-dropdown-icon": {
+            "type": "Boolean",
+            "desc": "隐藏下拉图标",
+            "category": "content|behavior"
+        },
+        "dropdown-icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "max-values": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "允许用户可以进行的最大选择数",
+            "examples": [
+                "5"
+            ],
+            "category": "selection"
+        },
+        "options-dense": {
+            "type": "Boolean",
+            "desc": "选项列表的密集模式；占用更少的空间",
+            "category": "options"
+        },
+        "options-dark": {
+            "type": "Boolean",
+            "desc": "选项菜单将用深色着色",
+            "category": "options"
+        },
+        "options-selected-class": {
+            "type": "String",
+            "desc": "活动/选定选项的CSS类名；将其设置为空字符串以停止应用默认值（即text-*其中*是“color”属性值）",
+            "examples": [
+                "text-orange"
+            ],
+            "category": "options"
+        },
+        "options-sanitize": {
+            "type": "Boolean",
+            "default": "false",
+            "desc": "强制使用textContent而不是innerHTML来呈现选项；当选项可能不安全（来自用户输入）时使用它；使用“option”插槽时不适用！",
+            "category": "options"
+        },
+        "options-cover": {
+            "type": "Boolean",
+            "desc": "展开菜单将覆盖组件（由于明显的原因，不能与“use-input”属性一起工作）",
+            "category": "options"
+        },
+        "menu-shrink": {
+            "type": "Boolean",
+            "desc": "允许选项列表比字段窄（仅在菜单模式下）",
+            "category": "options",
+            "addedIn": "v1.9.2"
+        },
+        "menu-anchor": {
+            "type": "String",
+            "desc": "设置选项列表相对于字段的起始位置或定位点的两个值（仅在菜单模式下）",
+            "values": [
+                "top left",
+                "top middle",
+                "top right",
+                "top start",
+                "top end",
+                "center left",
+                "center middle",
+                "center right",
+                "center start",
+                "center end",
+                "bottom left",
+                "bottom middle",
+                "bottom right",
+                "bottom start",
+                "bottom end"
+            ],
+            "examples": [
+                "top left",
+                "bottom right"
+            ],
+            "category": "position",
+            "addedIn": "v1.9.2"
+        },
+        "menu-self": {
+            "type": "String",
+            "desc": "两个值设置选项列表相对于其目标的自身位置（仅在菜单模式下）",
+            "values": [
+                "top left",
+                "top middle",
+                "top right",
+                "top start",
+                "top end",
+                "center left",
+                "center middle",
+                "center right",
+                "center start",
+                "center end",
+                "bottom left",
+                "bottom middle",
+                "bottom right",
+                "bottom start",
+                "bottom end"
+            ],
+            "examples": [
+                "top left",
+                "bottom right"
+            ],
+            "category": "position",
+            "addedIn": "v1.9.2"
+        },
+        "menu-offset": {
+            "type": "Array",
+            "desc": "两个数字组成的数组，以像素为单位水平和垂直偏移选项列表（仅在菜单模式下）",
+            "examples": [
+                "[8, 8]",
+                "[5, 10]"
+            ],
+            "category": "position",
+            "addedIn": "v1.9.2"
+        },
+        "popup-content-class": {
+            "type": "String",
+            "desc": "作为弹出内容属性的类的定义",
+            "examples": [
+                "my-special-class"
+            ],
+            "category": "style"
+        },
+        "popup-content-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "为弹出内容属性的样式定义",
+            "examples": [
+                "background-color: #ff0000",
+                ":content-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "use-input": {
+            "type": "Boolean",
+            "desc": "使用用户可以键入的输入标记",
+            "category": "content"
+        },
+        "use-chips": {
+            "type": "Boolean",
+            "desc": "使用QChip显示当前选择的内容",
+            "category": "selection"
+        },
+        "fill-input": {
+            "type": "Boolean",
+            "desc": "用当前值填充输入；与“hide-selected”一起使用；不适用于“multiple”选择",
+            "category": "behavior"
+        },
+        "new-value-mode": {
+            "type": "String",
+            "desc": "启用新值的创建并定义添加新值时的行为：“add”表示添加值（即使可能重复），“add-unique”仅添加唯一值，“toggle”添加或删除值（基于值是否存在）；使用此属性时，侦听@new-value将变为可选（仅覆盖“new-value-mode”定义的行为）",
+            "values": [
+                "add",
+                "add-unique",
+                "toggle"
+            ],
+            "category": "behavior"
+        },
+        "map-options": {
+            "type": "Boolean",
+            "desc": "尝试从“options”数组映射模型标签；性能损失较小；如果使用的是emit-value，则可能需要使用map-options在select字段中显示标签文本，而不是值；请参阅上面的“影响模型”章节",
+            "category": "options"
+        },
+        "emit-value": {
+            "type": "Boolean",
+            "desc": "用所选选项的值而不是整个选项的值更新模型",
+            "category": "model"
+        },
+        "input-debounce": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "以毫秒为单位对输入模型更新进行去抖动",
+            "default": 500,
+            "examples": [
+                650
+            ],
+            "category": "content"
+        },
+        "input-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为基础输入标记属性的类定义",
+            "examples": [
+                "my-special-class",
+                ":input-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style",
+            "addedIn": "v1.1.7"
+        },
+        "input-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为基础输入标记属性的样式定义",
+            "examples": [
+                "background-color: #ff0000",
+                ":input-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style",
+            "addedIn": "v1.1.7"
+        },
+        "tabindex": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "Tabindex HTML属性值",
+            "examples": [
+                "0",
+                "100"
+            ],
+            "category": "general"
+        },
+        "autocomplete": {
+            "type": "String",
+            "desc": "字段的自动完成属性",
+            "examples": [
+                "autocomplete=\"country\""
+            ],
+            "category": "behavior",
+            "addedIn": "v1.15.0"
+        },
+        "transition-show": {
+            "type": "String",
+            "desc": "显示菜单/对话框时的转换；Quasar的嵌入式过渡动画之一",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "fade"
+        },
+        "transition-hide": {
+            "type": "String",
+            "desc": "隐藏菜单/对话框时的转换；Quasar的嵌入式过渡动画之一",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "fade"
+        },
+        "behavior": {
+            "type": "String",
+            "desc": "覆盖默认的动态模式，即在桌面上显示菜单，在手机上显示对话框",
+            "values": [
+                "default",
+                "menu",
+                "dialog"
+            ],
+            "default": "default",
+            "category": "behavior",
+            "addedIn": "v1.1.0"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "字段主要内容"
+        },
+        "prepend": {
+            "desc": "前置内部字段；建议：QIcon、QBtn"
+        },
+        "append": {
+            "desc": "后置内部字段；建议：QIcon、QBtn"
+        },
+        "before": {
+            "desc": "前置外部字段；建议：QIcon、QBtn"
+        },
+        "after": {
+            "desc": "后置内部字段；建议：QIcon、QBtn"
+        },
+        "label": {
+            "desc": "标签槽；仅当设置了“label-slot”属性或设置了“label”属性时使用；使用时，“标签”属性中的文本将被忽略",
+            "addedIn": "v1.12.9"
+        },
+        "error": {
+            "desc": "错误插槽；仅在使用“bottom-slots”属性时启用；建议：<div>"
+        },
+        "hint": {
+            "desc": "提示文本槽；仅在使用“bottom-slots”属性时启用；建议：<div>"
+        },
+        "counter": {
+            "desc": "计数器文本槽；仅在使用“bottom-slots”属性时启用；建议：<div>"
+        },
+        "loading": {
+            "desc": "当组件处于加载模式时重写默认旋转器；建议：spinners"
+        },
+        "selected": {
+            "desc": "覆盖默认选择槽；建议：QChip"
+        },
+        "before-options": {
+            "desc": "应在选项列表之前呈现的元素的模板槽",
+            "addedIn": "v1.1.0"
+        },
+        "after-options": {
+            "desc": "应在选项列表之后呈现的元素的模板槽",
+            "addedIn": "v1.1.0"
+        }
+    },
+    "scopedSlots": {
+        "no-option": {
+            "desc": "过滤选项后菜单应该显示什么，不显示任何选项；建议：<div>",
+            "scope": {
+                "inputValue": {
+                    "type": "String",
+                    "desc": "输入textfield值（如果有）（不是QSelect model）",
+                    "examples": [
+                        "typed something"
+                    ]
+                }
+            }
+        },
+        "selected-item": {
+            "desc": "覆盖默认选择槽；建议：QChip",
+            "scope": {
+                "index": {
+                    "type": "Number",
+                    "desc": "选择索引",
+                    "examples": [
+                        0
+                    ]
+                },
+                "opt": {
+                    "type": "Any",
+                    "desc": "所选选项--其值取自模型"
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "始终为真--作为属性传递给QItem（使用QItem时）"
+                },
+                "removeAtIndex": {
+                    "type": "Function",
+                    "desc": "删除位于特定索引处的选定选项",
+                    "params": {
+                        "index": {
+                            "type": "Number",
+                            "desc": "删除所选内容的索引",
+                            "examples": [
+                                0
+                            ]
+                        }
+                    },
+                    "returns": null
+                },
+                "toggleOption": {
+                    "type": "Function",
+                    "desc": "从模型中添加/删除选项",
+                    "params": {
+                        "opt": {
+                            "type": "Any",
+                            "desc": "添加到模型的选项"
+                        }
+                    },
+                    "returns": null
+                },
+                "tabindex": {
+                    "type": "Number",
+                    "desc": "与相应选项关联的Tabindex HTML属性值",
+                    "values": [
+                        0,
+                        -1
+                    ]
+                }
+            }
+        },
+        "option": {
+            "desc": "自定义选项的呈现方式；建议：QItem",
+            "scope": {
+                "index": {
+                    "type": "Number",
+                    "desc": "选项索引",
+                    "examples": [
+                        0
+                    ]
+                },
+                "opt": {
+                    "type": "Any",
+                    "desc": "选项——其值取自“options”属性"
+                },
+                "selected": {
+                    "type": "Boolean",
+                    "desc": "是否选择了选项？"
+                },
+                "focused": {
+                    "type": "Boolean",
+                    "desc": "是否以选项为中心？"
+                },
+                "toggleOption": {
+                    "type": "Function",
+                    "desc": "从模型中添加/删除选项",
+                    "params": {
+                        "opt": {
+                            "type": "Any",
+                            "desc": "添加到模型的选项"
+                        }
+                    },
+                    "returns": null
+                },
+                "setOptionIndex": {
+                    "type": "Function",
+                    "desc": "将菜单中的选项设置为“聚焦”",
+                    "params": {
+                        "index": {
+                            "type": "Number",
+                            "desc": "菜单选项索引",
+                            "examples": [
+                                10
+                            ]
+                        }
+                    },
+                    "returns": null
+                },
+                "itemProps": {
+                    "type": "Object",
+                    "desc": "传递给QItem的计算属性"
+                },
+                "itemEvents": {
+                    "type": "Object",
+                    "desc": "传递给QItem的计算事件"
+                }
+            }
+        }
+    },
+    "events": {
+        "virtual-scroll": {
+            "desc": "发生虚拟滚动时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "新滚动位置上的属性对象",
+                    "definition": {
+                        "index": {
+                            "type": "Number",
+                            "desc": "滚动到视图中的列表项的索引（基于0）",
+                            "examples": [
+                                30
+                            ]
+                        },
+                        "from": {
+                            "type": "Number",
+                            "desc": "呈现的第一个列表项的索引（基于0）",
+                            "examples": [
+                                10
+                            ]
+                        },
+                        "to": {
+                            "type": "Number",
+                            "desc": "最后呈现的列表项的索引（基于0）",
+                            "examples": [
+                                50
+                            ]
+                        },
+                        "direction": {
+                            "type": "String",
+                            "desc": "变化方向",
+                            "values": [
+                                "increase",
+                                "decrease"
+                            ]
+                        },
+                        "ref": {
+                            "type": "Object",
+                            "desc": "Vue对触发事件的QVirtualList的引用",
+                            "addedIn": "v1.8.4"
+                        }
+                    }
+                }
+            }
+        },
+        "clear": {
+            "desc": "使用“clearable”属性时，单击清除图标时会发出此事件",
+            "addedIn": "v1.1.5",
+            "params": {
+                "value": {
+                    "type": [
+                        "Any"
+                    ],
+                    "desc": "清除之前的值"
+                }
+            }
+        },
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        },
+        "input-value": {
+            "desc": "当文本输入中的值更改时发出",
+            "params": {
+                "value": {
+                    "type": "String",
+                    "desc": "新文本值",
+                    "required": true
+                }
+            },
+            "addedIn": "v1.9.9"
+        },
+        "remove": {
+            "desc": "从选择中删除选项时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "删除详细信息",
+                    "definition": {
+                        "index": {
+                            "type": "Number",
+                            "desc": "移除发生时的模型索引",
+                            "examples": [
+                                2
+                            ]
+                        },
+                        "value": {
+                            "type": "Any",
+                            "desc": "删除的实际值"
+                        }
+                    }
+                }
+            }
+        },
+        "add": {
+            "desc": "将选项添加到选择时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "附加详细信息",
+                    "definition": {
+                        "index": {
+                            "type": "Number",
+                            "desc": "添加发生时的模型索引",
+                            "examples": [
+                                2
+                            ]
+                        },
+                        "value": {
+                            "type": "Any",
+                            "desc": "添加的实际值"
+                        }
+                    }
+                }
+            }
+        },
+        "new-value": {
+            "desc": "能够创造新值；创建新值时发出；可以用它重写“'new-value-mode”属性",
+            "params": {
+                "inputValue": {
+                    "type": "String",
+                    "desc": "用户键入的内容",
+                    "examples": [
+                        "phone"
+                    ]
+                },
+                "doneFn": {
+                    "type": "Function",
+                    "desc": "为模型添加（可选）值；在验证新创建的值之后，不要忘记调用它；如果不需要添加任何参数，则调用它",
+                    "params": {
+                        "item": {
+                            "type": "Any",
+                            "desc": "要添加的项目"
+                        },
+                        "mode": {
+                            "type": "String",
+                            "desc": "如果希望，请重写“new-value-mode”（属性）行为",
+                            "values": [
+                                "add",
+                                "add-unique",
+                                "toggle"
+                            ],
+                            "default": "add"
+                        }
+                    },
+                    "returns": null
+                }
+            }
+        },
+        "filter": {
+            "desc": "当用户要筛选值时发出",
+            "params": {
+                "inputValue": {
+                    "type": "String",
+                    "desc": "用户键入的内容",
+                    "examples": [
+                        "phone"
+                    ]
+                },
+                "doneFn": {
+                    "type": "Function",
+                    "desc": "提供一个进行必要更新的函数",
+                    "params": {
+                        "callbackFn": {
+                            "type": "Function",
+                            "desc": "回调以调用以进行实际更新",
+                            "params": null,
+                            "returns": null
+                        },
+                        "afterFn": {
+                            "type": "Function",
+                            "desc": "在QSelect完全处理完更新后，在末尾调用的回调",
+                            "params": {
+                                "ref": {
+                                    "type": "Object",
+                                    "desc": "对触发筛选的QSelect的Vue引用"
+                                }
+                            },
+                            "returns": null,
+                            "addedIn": "v1.7.4"
+                        }
+                    },
+                    "returns": null
+                },
+                "abortFn": {
+                    "type": "Function",
+                    "desc": "如果出现问题，请调用此函数",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        },
+        "filter-abort": {
+            "desc": "过滤中止时发出；可能有人要求换个新的？"
+        },
+        "popup-show": {
+            "desc": "选择的选项菜单或对话框显示时发出。",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象"
+                }
+            },
+            "addedIn": "v1.1.3"
+        },
+        "popup-hide": {
+            "desc": "选择的选项菜单或对话框隐藏时发出。",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象"
+                }
+            },
+            "addedIn": "v1.1.3"
+        }
+    },
+    "methods": {
+        "scrollTo": {
+            "desc": "将虚拟滚动列表滚动到具有指定索引的项目（基于0）",
+            "params": {
+                "index": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "列表项的索引（基于0）",
+                    "required": true,
+                    "examples": [
+                        "1",
+                        23
+                    ]
+                },
+                "edge": {
+                    "type": "String",
+                    "desc": "如果项目不可见，则要对齐的边（默认情况下，如果滚动到终点，则对齐到终点，否则对齐到起点）；如果使用'-force'版本，则它始终对齐",
+                    "values": [
+                        "start",
+                        "center",
+                        "end",
+                        "start-force",
+                        "center-force",
+                        "end-force"
+                    ],
+                    "addedIn": "v1.13.0"
+                }
+            }
+        },
+        "reset": {
+            "desc": "重置虚拟滚动计算；用于定制边缘案例"
+        },
+        "refresh": {
+            "desc": "刷新虚拟滚动列表；附加项目后使用",
+            "params": {
+                "index": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "刷新后要滚动到的列表项的索引（基于0）；如果未指定滚动位置，则滚动位置不变；使用负值保持滚动位置",
+                    "examples": [
+                        "1",
+                        23,
+                        -1
+                    ]
+                }
+            },
+            "addedIn": "v1.8.4"
+        },
+        "resetValidation": {
+            "desc": "重置验证状态"
+        },
+        "validate": {
+            "desc": "触发验证",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "要验证的可选值"
+                }
+            },
+            "returns": {
+                "type": [
+                    "Boolean",
+                    "Promise<boolean>"
+                ],
+                "desc": "如果没有异步规则，则为True/false，否则为带有结果的Promise（True->验证成功，false->检测到无效模型）",
+                "examples": [
+                    "true",
+                    "validate().then(outcome => { ... })"
+                ]
+            }
+        },
+        "focus": {
+            "desc": "聚焦组件"
+        },
+        "showPopup": {
+            "desc": "聚焦并打开弹出窗口"
+        },
+        "hidePopup": {
+            "desc": "隐藏弹出窗口"
+        },
+        "removeAtIndex": {
+            "desc": "删除位于特定索引处的选定选项",
+            "params": {
+                "index": {
+                    "type": "Number",
+                    "desc": "删除所选内容的索引",
+                    "required": true,
+                    "examples": [
+                        0
+                    ]
+                }
+            }
+        },
+        "add": {
+            "desc": "向模型添加选项",
+            "params": {
+                "opt": {
+                    "type": "Any",
+                    "desc": "添加到模型的选项",
+                    "required": true
+                },
+                "unique": {
+                    "type": "Boolean",
+                    "desc": "选项必须唯一"
+                }
+            }
+        },
+        "toggleOption": {
+            "desc": "从模型中添加/删除选项",
+            "params": {
+                "opt": {
+                    "type": "Any",
+                    "desc": "添加到模型的选项",
+                    "required": true
+                },
+                "keepOpen": {
+                    "type": "Boolean",
+                    "desc": "不要关闭菜单，也不要清除过滤器",
+                    "addedIn": "v1.7.4"
+                }
+            }
+        },
+        "setOptionIndex": {
+            "desc": "将菜单中的选项设置为“聚焦”",
+            "params": {
+                "index": {
+                    "type": "Number",
+                    "desc": "菜单选项索引",
+                    "required": true,
+                    "examples": [
+                        10
+                    ]
+                }
+            }
+        },
+        "moveOptionSelection": {
+            "desc": "按索引偏移量从菜单中移动所选选项",
+            "params": {
+                "offset": {
+                    "type": "Number",
+                    "desc": "向上或向下移动的选项数",
+                    "default": 1,
+                    "examples": [
+                        -1,
+                        1,
+                        5
+                    ]
+                },
+                "skipInputValue": {
+                    "type": "Boolean",
+                    "desc": "不设置导航的输入值",
+                    "addedIn": "v1.8.0"
+                }
+            },
+            "addedIn": "v1.7.4"
+        },
+        "filter": {
+            "desc": "筛选选项",
+            "params": {
+                "value": {
+                    "type": "String",
+                    "desc": "要筛选的字符串",
+                    "required": true,
+                    "examples": [
+                        "car"
+                    ]
+                }
+            }
+        },
+        "updateMenuPosition": {
+            "desc": "重新计算菜单位置"
+        },
+        "updateInputValue": {
+            "desc": "如果指定了use-input，则会更新它所保存的值",
+            "params": {
+                "value": {
+                    "type": "String",
+                    "desc": "设置输入值的字符串",
+                    "examples": [
+                        "hotel"
+                    ]
+                },
+                "noFilter": {
+                    "type": "Boolean",
+                    "desc": "如果不希望同时触发筛选器（如果有），请设置为true"
+                }
+            }
+        },
+        "isOptionSelected": {
+            "desc": "指示是否选择了选项",
+            "params": {
+                "opt": {
+                    "type": "Any",
+                    "desc": "选项条目",
+                    "required": true
+                }
+            },
+            "returns": {
+                "type": "Boolean",
+                "desc": "选项是否选中"
+            },
+            "addedIn": "v1.9.5"
+        },
+        "getEmittingOptionValue": {
+            "desc": "获取选择所述选项时QSelect将发出的模型值；如果设置了“emit-value”，也会考虑到这一点",
+            "params": {
+                "opt": {
+                    "type": "Any",
+                    "desc": "选项条目",
+                    "required": true
+                }
+            },
+            "returns": {
+                "type": "Any",
+                "desc": "所述选项的模型值"
+            },
+            "addedIn": "v1.9.5"
+        },
+        "getOptionValue": {
+            "desc": "得到选项的模型值；考虑“option-value”（如果使用），但不像getEmittingOptionValue()那样查找“emit-value”",
+            "params": {
+                "opt": {
+                    "type": "Any",
+                    "desc": "选项条目",
+                    "required": true
+                }
+            },
+            "returns": {
+                "type": "Any",
+                "desc": "所述选项的模型值"
+            },
+            "addedIn": "v1.9.5"
+        },
+        "getOptionLabel": {
+            "desc": "获取选项的标签；考虑“option-label”属性（如果使用）",
+            "params": {
+                "opt": {
+                    "type": "Any",
+                    "desc": "选项分录",
+                    "required": true
+                }
+            },
+            "returns": {
+                "type": "Any",
+                "desc": "所述选项的标签"
+            },
+            "addedIn": "v1.9.5"
+        },
+        "isOptionDisabled": {
+            "desc": "指示是否禁用某个选项；考虑“option-disable”属性（如果使用）",
+            "params": {
+                "opt": {
+                    "type": "Any",
+                    "desc": "选项分录",
+                    "required": true
+                }
+            },
+            "returns": {
+                "type": "Boolean",
+                "desc": "选项是否禁用"
+            },
+            "addedIn": "v1.9.5"
+        }
+    }
+}

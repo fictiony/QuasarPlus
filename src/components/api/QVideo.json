@@ -1,0 +1,36 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/video"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "ratio": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "内容的尺寸；如果值是字符串，则避免使用计算语句（如“16/9”），而是直接指定结果的字符串值（如“1.7777”）",
+            "examples": [
+                ":ratio=\"4/3\"",
+                ":ratio=\"16/9\"",
+                "ratio=\"1\""
+            ],
+            "category": "style",
+            "addedIn": "v1.7.0"
+        },
+        "src": {
+            "type": "String",
+            "desc": "要在iframe中显示的源url",
+            "required": true,
+            "examples": [
+                "src=\"https://www.youtube.com/embed/k3_tw44QsZQ\""
+            ],
+            "category": "model"
+        }
+    }
+}

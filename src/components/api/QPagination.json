@@ -1,0 +1,347 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/pagination"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "value": {
+            "type": "Number",
+            "desc": "当前页（必须介于最小值/最大值之间）",
+            "required": true,
+            "examples": [
+                3
+            ],
+            "category": "model"
+        },
+        "min": {
+            "type": "Number",
+            "desc": "最小页数（必须低于“max”）",
+            "default": 1,
+            "examples": [
+                3
+            ],
+            "category": "model"
+        },
+        "max": {
+            "type": "Number",
+            "desc": "最后一页的页数（必须大于'min'）",
+            "default": 100,
+            "required": true,
+            "examples": [
+                10
+            ],
+            "category": "model"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "default": "primary"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "active-color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "default": "primary",
+            "addedIn": "v1.15.6"
+        },
+        "active-text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "addedIn": "v1.15.6"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景是深色（当您将其与“input”属性一起使用时很有用）",
+            "category": "style",
+            "addedIn": "v1.4.2"
+        },
+        "input-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为输入字段属性的样式定义（如果使用）",
+            "examples": [
+                "background-color: #ff0000",
+                ":input-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "input-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为输入字段属性的类的定义（如果使用）",
+            "examples": [
+                "my-special-class",
+                ":input-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的按钮大小，包括单位名称",
+            "examples": [
+                "20px"
+            ],
+            "category": "style"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "input": {
+            "type": "Boolean",
+            "desc": "使用输入字段而不是按钮",
+            "category": "content"
+        },
+        "icon-prev": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v.1.9.4"
+        },
+        "icon-next": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v.1.9.4"
+        },
+        "icon-first": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v.1.9.4"
+        },
+        "icon-last": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v.1.9.4"
+        },
+        "to-fn": {
+            "type": "Function",
+            "desc": "为页面按钮生成链接；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "page": {
+                    "type": "Number",
+                    "desc": "要导航到的页码",
+                    "examples": [
+                        2
+                    ]
+                }
+            },
+            "returns": {
+                "type": [
+                    "Object",
+                    "String"
+                ],
+                "desc": "可以作为“to”参数传递给<router link>的对象或字符串"
+            },
+            "examples": [
+                ":to-fn=\"page => ({ query: { page } })\""
+            ],
+            "category": "content",
+            "addedIn": "v1.2.6"
+        },
+        "boundary-links": {
+            "type": "Boolean",
+            "desc": "显示边界按钮链接",
+            "category": "content"
+        },
+        "boundary-numbers": {
+            "type": "Boolean",
+            "desc": "始终显示第一页和最后一页按钮（如果不使用“输入”）",
+            "category": "content"
+        },
+        "direction-links": {
+            "type": "Boolean",
+            "desc": "显示方向按钮",
+            "category": "content"
+        },
+        "ellipses": {
+            "type": "Boolean",
+            "desc": "页面可用时显示省略号（…）",
+            "category": "content"
+        },
+        "max-pages": {
+            "type": "Number",
+            "default": 0,
+            "desc": "一次显示的最大页面链接数；0表示无限",
+            "examples": [
+                5
+            ],
+            "category": "model"
+        },
+        "ripple": {
+            "type": [
+                "Boolean",
+                "Object"
+            ],
+            "desc": "配置按钮material波纹（通过将其设置为“false”或提供配置对象来禁用它）；不适用于边界和省略号按钮",
+            "default": true,
+            "examples": [
+                false,
+                "{ early: true, center: true, color: 'teal', keyCodes: [] }"
+            ],
+            "category": "style",
+            "addedIn": "v1.9.11"
+        },
+        "round": {
+            "type": "Boolean",
+            "desc": "为所有按钮制作一个圆形按钮",
+            "category": "style",
+            "addedIn": "v1.15.0"
+        },
+        "rounded": {
+            "type": "Boolean",
+            "desc": "为所有按钮的方形按钮应用更突出的border-radius",
+            "category": "style",
+            "addedIn": "v1.15.0"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "对当前页面按钮使用“平面”设计",
+            "category": "style",
+            "addedIn": "v1.15.6"
+        },
+        "outline": {
+            "type": "Boolean",
+            "desc": "对当前页面按钮使用“轮廓线”设计",
+            "category": "style",
+            "addedIn": "v1.15.0"
+        },
+        "unelevated": {
+            "type": "Boolean",
+            "desc": "删除当前页按钮的阴影",
+            "category": "style",
+            "addedIn": "v1.15.0"
+        },
+        "push": {
+            "type": "Boolean",
+            "desc": "对当前页面按钮使用“推”设计",
+            "category": "style",
+            "addedIn": "v1.15.0"
+        },
+        "glossy": {
+            "type": "Boolean",
+            "desc": "对所有按钮应用光泽效果",
+            "category": "style",
+            "addedIn": "v1.15.0"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style",
+            "addedIn": "v1.15.0"
+        },
+        "padding": {
+            "type": "String",
+            "desc": "应用自定义填充（垂直[水平]）；以CSS单位表示的尺寸，包括单位名称或标准尺寸名称（无| xs | sm | md | lg | xl）；设置时也会删除最小宽度和高度",
+            "examples": [
+                "16px",
+                "10px 5px",
+                "2rem",
+                "xs",
+                "md lg",
+                "2px 2px 5px 7px"
+            ],
+            "category": "style",
+            "addedIn": "v1.15.0"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "String",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        }
+    },
+    "methods": {
+        "set": {
+            "desc": "直接转到指定页面",
+            "params": {
+                "pageNumber": {
+                    "type": "Number",
+                    "desc": "要转到的页码",
+                    "examples": [
+                        3
+                    ]
+                }
+            }
+        },
+        "setByOffset": {
+            "desc": "按偏移量递增/递减当前页",
+            "params": {
+                "offset": {
+                    "type": "Number",
+                    "desc": "偏移页，可以是负数或正数",
+                    "examples": [
+                        3
+                    ]
+                }
+            }
+        }
+    }
+}

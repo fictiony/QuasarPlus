@@ -1,0 +1,86 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/breadcrumbs"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "to": {
+            "type": [
+                "String",
+                "Object"
+            ],
+            "desc": "相当于Vue Router <Router link>的“to”属性",
+            "examples": [
+                "/home/dashboard",
+                ":to=\"{ name: 'my-route-name' }\""
+            ],
+            "category": "behavior"
+        },
+        "exact": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“exact”属性",
+            "category": "behavior"
+        },
+        "append": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“append”属性",
+            "category": "behavior"
+        },
+        "replace": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“replace”属性",
+            "category": "behavior"
+        },
+        "active-class": {
+            "type": "String",
+            "desc": "等效于Vue Router <Router link>的“active class”属性",
+            "examples": [
+                "my-active-class"
+            ],
+            "category": "behavior"
+        },
+        "exact-active-class": {
+            "type": "String",
+            "desc": "等效于Vue Router <Router link>的“exact-active-class”属性",
+            "examples": [
+                "my-exact-active-class"
+            ],
+            "category": "behavior"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "label": {
+            "type": "String",
+            "desc": "面包屑的标签文本",
+            "examples": [
+                "Home",
+                "Index"
+            ],
+            "category": "content"
+        },
+        "icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "这就是自定义内容的所在位置，除非“icon”和“label”属性不够"
+        }
+    }
+}

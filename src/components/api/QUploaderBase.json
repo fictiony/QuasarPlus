@@ -1,0 +1,248 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/uploader"
+    },
+    "props": {
+        "multiple": {
+            "type": "Boolean",
+            "desc": "允许多个文件上传",
+            "category": "behavior"
+        },
+        "accept": {
+            "type": "String",
+            "desc": "以逗号分隔的唯一文件类型说明符列表。映射到原生输入类型=文件元素的“accept”属性",
+            "examples": [
+                ".jpg, .pdf, image/*",
+                "image/jpeg, .pdf"
+            ],
+            "category": "behavior"
+        },
+        "capture": {
+            "type": "String",
+            "desc": "（可选）指定应捕获新文件，以及应使用哪个设备捕获由“accept”属性定义的类型的新媒体。映射到原生输入类型=文件元素的“capture”属性",
+            "values": [
+                "user",
+                "environment"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.12.6"
+        },
+        "max-file-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "单个文件的最大大小（字节）",
+            "examples": [
+                1024,
+                1048576
+            ],
+            "category": "behavior"
+        },
+        "max-total-size": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "所有文件的最大大小（以字节为单位）",
+            "examples": [
+                1024,
+                1048576
+            ],
+            "category": "behavior"
+        },
+        "max-files": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "要包含的最大文件数",
+            "examples": [
+                ":max-files=\"5\"",
+                "10"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.11.2"
+        },
+        "filter": {
+            "type": "Function",
+            "desc": "添加文件的自定义过滤器；只有通过此筛选器的文件才会添加到队列并上传；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "files": {
+                    "type": [
+                        "FileList",
+                        "Array"
+                    ],
+                    "desc": "要添加到队列的候选文件"
+                }
+            },
+            "returns": {
+                "type": "Array",
+                "desc": "要添加到队列的筛选文件"
+            },
+            "examples": [
+                ":filter=\"files => files.filter(file => file.size === 1024)\""
+            ],
+            "category": "behavior"
+        },
+        "label": {
+            "type": "String",
+            "desc": "上传者标签",
+            "examples": [
+                "Upload photo here"
+            ],
+            "category": "content"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "删除border-radius，使边界为正方形",
+            "category": "style"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "应用“平面”设计（无默认阴影）",
+            "category": "style"
+        },
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于组件",
+            "category": "style"
+        },
+        "no-thumbnails": {
+            "type": "Boolean",
+            "desc": "不显示图像文件的缩略图",
+            "category": "content"
+        },
+        "auto-upload": {
+            "type": "Boolean",
+            "desc": "添加后立即上传文件",
+            "category": "behavior"
+        },
+        "hide-upload-btn": {
+            "type": "Boolean",
+            "desc": "不显示上传按钮",
+            "category": "behavior"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "readonly": {
+            "type": "Boolean",
+            "desc": "将组件置于只读模式",
+            "category": "state"
+        }
+    },
+    "scopedSlots": {
+        "header": {
+            "desc": "自定义头部插槽；作用域是QUploader实例本身"
+        },
+        "list": {
+            "desc": "自定义列表插槽；作用域是QUploader实例本身"
+        }
+    },
+    "events": {
+        "rejected": {
+            "desc": "选取文件后发出，有些文件未通过验证道具（accept、max file size、max total size、filter等）",
+            "params": {
+                "rejectedEntries": {
+                    "type": "Array",
+                    "desc": "未通过验证的文件的{ failedPropValidation: string, file: File }对象数组"
+                }
+            },
+            "addedIn": "v1.11.2"
+        },
+        "added": {
+            "desc": "将文件添加到列表时发出",
+            "params": {
+                "files": {
+                    "type": "Array",
+                    "desc": "添加的文件数组"
+                }
+            }
+        },
+        "removed": {
+            "desc": "从列表中删除文件时发出",
+            "params": {
+                "files": {
+                    "type": "Array",
+                    "desc": "已删除的文件数组"
+                }
+            }
+        },
+        "start": {
+            "desc": "开始上传了"
+        },
+        "finish": {
+            "desc": "完成上传（不管成功与否）"
+        }
+    },
+    "methods": {
+        "pickFiles": {
+            "desc": "触发文件选取；由于浏览器的安全策略，必须作为用户交互的直接结果调用（例如在单击处理程序中）",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "addFiles": {
+            "desc": "以编程方式添加文件",
+            "params": {
+                "files": {
+                    "type": [
+                        "FileList",
+                        "Array"
+                    ],
+                    "desc": "文件数组（文件实例）",
+                    "required": true
+                }
+            }
+        },
+        "reset": {
+            "desc": "将上传程序重置为默认值；清空队列，中止当前上传"
+        },
+        "removeUploadedFiles": {
+            "desc": "从列表中删除已上传的文件"
+        },
+        "removeQueuedFiles": {
+            "desc": "删除等待上传开始的文件（与单击左清除按钮相同）"
+        },
+        "removeFile": {
+            "desc": "从队列中删除指定的文件",
+            "params": {
+                "file": {
+                    "type": "Object",
+                    "desc": "要删除的文件（文件的实例）",
+                    "required": true
+                }
+            }
+        }
+    }
+}

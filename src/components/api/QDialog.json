@@ -1,0 +1,241 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/dialog"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "content-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为内容属性的类定义",
+            "examples": [
+                "my-special-class",
+                ":content-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "content-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为内容属性的样式定义",
+            "examples": [
+                "background-color: #ff0000",
+                ":content-style=\"{ color: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "value": {
+            "type": "Boolean",
+            "desc": "定义显示/隐藏状态的组件模型；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model"
+        },
+        "persistent": {
+            "type": "Boolean",
+            "desc": "如果用户在对话框外单击或按ESC键，则不能关闭对话框；此外，应用程序路由更改不会关闭它",
+            "category": "behavior"
+        },
+        "no-esc-dismiss": {
+            "type": "Boolean",
+            "desc": "用户不能按ESC键关闭对话框；如果还设置了“persistent”属性，则无需设置它",
+            "category": "behavior"
+        },
+        "no-backdrop-dismiss": {
+            "type": "Boolean",
+            "desc": "用户不能通过单击对话框外部来关闭对话框；如果还设置了“persistent”属性，则无需设置它",
+            "category": "behavior"
+        },
+        "no-route-dismiss": {
+            "type": "Boolean",
+            "desc": "更改路由应用程序不会关闭对话框；如果还设置了“persistent”属性，则无需设置它",
+            "category": "behavior"
+        },
+        "auto-close": {
+            "type": "Boolean",
+            "desc": "对话框内的任何单击/点击都将关闭它",
+            "category": "behavior"
+        },
+        "seamless": {
+            "type": "Boolean",
+            "desc": "使对话框进入无缝模式；不使用背景，因此用户也可以与页面的其他部分进行交互",
+            "category": "content"
+        },
+        "maximized": {
+            "type": "Boolean",
+            "desc": "将对话框置于最大化模式",
+            "category": "content"
+        },
+        "full-width": {
+            "type": "Boolean",
+            "desc": "对话框将尝试以与窗口相同的宽度进行渲染",
+            "category": "content"
+        },
+        "full-height": {
+            "type": "Boolean",
+            "desc": "对话框将尝试以与窗口相同的高度渲染",
+            "category": "content"
+        },
+        "position": {
+            "type": "String",
+            "desc": "将对话框粘贴到一侧（顶部、右侧、底部或左侧）",
+            "default": "standard",
+            "values": [
+                "standard",
+                "top",
+                "right",
+                "bottom",
+                "left"
+            ],
+            "examples": [
+                "top",
+                "right"
+            ],
+            "category": "content"
+        },
+        "transition-show": {
+            "type": "String",
+            "desc": "Quasar的嵌入式过滤效果之一",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "scale"
+        },
+        "transition-hide": {
+            "type": "String",
+            "desc": "Quasar的嵌入式过滤效果之一",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "scale"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "强制内容具有方形边框",
+            "category": "style"
+        },
+        "no-refocus": {
+            "type": "Boolean",
+            "desc": "（可访问性）当对话框被隐藏时，不要重新聚焦以前有聚焦过的DOM元素",
+            "category": "behavior"
+        },
+        "no-focus": {
+            "type": "Boolean",
+            "desc": "（辅助功能）显示对话框时，不要将焦点切换到该对话框上",
+            "category": "behavior"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "显示/隐藏状态更改时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Boolean",
+                    "desc": "新状态（显示/隐藏）"
+                }
+            }
+        },
+        "show": {
+            "desc": "在组件触发show()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "before-show": {
+            "desc": "在组件触发show()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "hide": {
+            "desc": "在组件触发hide()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "before-hide": {
+            "desc": "在组件触发hide()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "shake": {
+            "desc": "震动对话框以吸引用户的注意力"
+        },
+        "escape-key": {
+            "desc": "按ESC键时发出；如果对话框为“persistent”或未设置“no-esc-key”，则不会发出"
+        }
+    },
+    "methods": {
+        "show": {
+            "desc": "触发组件显示",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "hide": {
+            "desc": "触发组件隐藏",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "toggle": {
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            },
+            "desc": "触发组件在显示/隐藏之间切换"
+        },
+        "focus": {
+            "desc": "聚焦对话框；如果内容具有“自动聚焦”属性，它将直接对其进行聚焦"
+        },
+        "shake": {
+            "desc": "震动对话框"
+        }
+    }
+}

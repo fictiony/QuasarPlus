@@ -1,0 +1,410 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/carousel"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "fullscreen": {
+            "type": "Boolean",
+            "sync": true,
+            "desc": "全屏模式",
+            "examples": [
+                ":fullscreen.sync=\"isFullscreen\""
+            ],
+            "category": "behavior"
+        },
+        "no-route-fullscreen-exit": {
+            "type": "Boolean",
+            "desc": "更改路由应用不会退出全屏",
+            "category": "behavior",
+            "addedIn": "v1.1.7"
+        },
+        "value": {
+            "type": "Any",
+            "desc": "定义当前面板名称的组件模型；如果使用数字，则它不定义面板的索引，而是定义面板的名称，也可以是整数；使用此属性（以及“input”事件的侦听器）或使用v-model指令。",
+            "examples": [
+                "v-model=\"panelName\""
+            ],
+            "category": "model"
+        },
+        "keep-alive": {
+            "type": "Boolean",
+            "desc": "相当于在内容上使用Vue的原生<keep alive>组件",
+            "category": "behavior"
+        },
+        "keep-alive-include": {
+            "type": [
+                "String",
+                "Array",
+                "RegExp"
+            ],
+            "desc": "相当于为<keep alive>使用Vue的原生的include属性；值必须是有效的Vue组件名称",
+            "examples": [
+                "a,b",
+                "/a|b/",
+                "['a', 'b']"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.15.0"
+        },
+        "keep-alive-exclude": {
+            "type": [
+                "String",
+                "Array",
+                "RegExp"
+            ],
+            "desc": "相当于为<keep alive>使用Vue的原生的exclude属性；值必须是有效的Vue组件名称",
+            "examples": [
+                "a,b",
+                "/a|b/",
+                "['a', 'b']"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.15.0"
+        },
+        "keep-alive-max": {
+            "type": "Number",
+            "desc": "相当于为<keep alive>使用Vue的原生的max属性",
+            "examples": [
+                "2"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.15.0"
+        },
+        "animated": {
+            "type": "Boolean",
+            "desc": "启用面板之间的转换（另请参阅“transition-prev”和“transition-next”属性）",
+            "category": "behavior"
+        },
+        "infinite": {
+            "type": "Boolean",
+            "desc": "使组件显示为无限大（当到达最后一个面板时，下一个将成为第一个）",
+            "category": "behavior"
+        },
+        "swipeable": {
+            "type": "Boolean",
+            "desc": "启用滑动事件（可能会干扰内容的触摸/鼠标事件）",
+            "category": "behavior"
+        },
+        "vertical": {
+            "type": "Boolean",
+            "desc": "默认的转换和滑动操作将在垂直轴上",
+            "category": "behavior"
+        },
+        "transition-prev": {
+            "type": "String",
+            "desc": "Quasar的嵌入过渡效果之一（只有设置了“animated”属性才有效）",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "slide-right/slide-down"
+        },
+        "transition-next": {
+            "type": "String",
+            "desc": "Quasar的嵌入过渡效果之一（只有设置了“动画”道具才有效）",
+            "examples": [
+                "fade",
+                "slide-down"
+            ],
+            "category": "behavior",
+            "default": "slide-left/slide-up"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style",
+            "addedIn": "v1.3.0"
+        },
+        "height": {
+            "type": "String",
+            "desc": "转盘的高度（CSS单位），包括单位名称",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "style"
+        },
+        "padding": {
+            "type": "Boolean",
+            "desc": "根据“arrows”和“navigation”属性的用法，对每张幻灯片应用默认填充",
+            "category": "content"
+        },
+        "control-color": {
+            "type": "String",
+            "desc": "QCarousel按钮控件（箭头、导航）的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "control-text-color": {
+            "type": "String",
+            "desc": "QCarousel按钮控件（箭头、导航）的文本颜色的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "addedIn": "v1.9.0"
+        },
+        "control-type": {
+            "type": "String",
+            "desc": "用于控件的按钮类型（箭头、导航）",
+            "values": [
+                "regular",
+                "flat",
+                "outline",
+                "push",
+                "unelevated"
+            ],
+            "category": "style",
+            "addedIn": "v1.9.0"
+        },
+        "autoplay": {
+            "type": [
+                "Number",
+                "Boolean"
+            ],
+            "desc": "以固定的时间间隔跳转到下一张幻灯片（毫秒）；'false'禁用自动播放，'true'每隔5000ms启用一次",
+            "default": false,
+            "examples": [
+                ":autoplay=\"2500\"",
+                true,
+                false
+            ],
+            "category": "behavior"
+        },
+        "arrows": {
+            "type": "Boolean",
+            "desc": "显示导航箭头按钮",
+            "category": "content"
+        },
+        "prev-icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "next-icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "navigation": {
+            "type": "Boolean",
+            "desc": "显示导航点",
+            "category": "content"
+        },
+        "navigation-position": {
+            "type": "String",
+            "desc": "放置导航的侧边",
+            "default": "bottom/right",
+            "values": [
+                "top",
+                "right",
+                "bottom",
+                "left"
+            ],
+            "examples": [
+                "left"
+            ],
+            "category": "content",
+            "addedIn": "v1.9.0"
+        },
+        "navigation-icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "navigation-active-icon": {
+            "type": "String",
+            "desc": "图标名称遵循激活的（当前幻灯片）导航图标的Quasar约定；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v1.13.2"
+        },
+        "thumbnails": {
+            "type": "Boolean",
+            "desc": "显示缩略图",
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "建议：QCarouselSlide"
+        },
+        "control": {
+            "desc": "特定于QCarouselControl的插槽"
+        }
+    },
+    "scopedSlots": {
+        "navigation-icon": {
+            "desc": "导航图标/按钮插槽；建议：QBtn",
+            "scope": {
+                "index": {
+                    "type": "Number",
+                    "desc": "对应幻灯片的从0开始的索引"
+                },
+                "maxIndex": {
+                    "type": "Number",
+                    "desc": "可用幻灯片数"
+                },
+                "name": {
+                    "type": "Any",
+                    "desc": "对应幻灯片的名称"
+                },
+                "active": {
+                    "type": "Boolean",
+                    "desc": "这是当前幻灯片吗？"
+                },
+                "btnProps": {
+                    "type": "Object",
+                    "desc": "可以绑定到您自己的QBtn的默认QBtn属性"
+                },
+                "onClick": {
+                    "type": "Function",
+                    "desc": "单击/点击时的默认触发器",
+                    "params": {
+                        "evt": {
+                            "type": "Object",
+                            "desc": "JS事件对象",
+                            "required": true
+                        }
+                    },
+                    "returns": null
+                }
+            },
+            "addedIn": "v1.13.2"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "组件更改模型时发出；如果模型在外部更改，则不会触发此事件；也用于v-model",
+            "params": {
+                "value": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "新建当前面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                }
+            }
+        },
+        "before-transition": {
+            "desc": "在转换到新面板之前发出",
+            "params": {
+                "newVal": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "正在发生转换到的目标面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                },
+                "oldVal": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "正在发生转换的来源面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                }
+            }
+        },
+        "transition": {
+            "desc": "在组件转换到新面板后发出",
+            "params": {
+                "newVal": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "已发生转换的目标面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                },
+                "oldVal": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "已发生转换的来源面板名称",
+                    "examples": [
+                        "dashboard"
+                    ]
+                }
+            }
+        }
+    },
+    "methods": {
+        "toggleFullscreen": {
+            "desc": "将视图切换为全屏或非全屏"
+        },
+        "setFullscreen": {
+            "desc": "进入全屏视图"
+        },
+        "exitFullscreen": {
+            "desc": "离开全屏视图"
+        },
+        "next": {
+            "desc": "转到下一个面板"
+        },
+        "previous": {
+            "desc": "转到上一面板"
+        },
+        "goTo": {
+            "desc": "转到特定面板",
+            "params": {
+                "panelName": {
+                    "type": [
+                        "String",
+                        "Number"
+                    ],
+                    "desc": "面板名称，可以是字符串或数字；数字不是指面板索引，而是指其名称，名称可以是整数",
+                    "required": true,
+                    "examples": [
+                        "dashboard"
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/slide-transition"
+    },
+    "props": {
+        "appear": {
+            "type": "Boolean",
+            "desc": "如果设置为true，则过渡动画将应用于初始渲染。",
+            "category": "behavior"
+        },
+        "duration": {
+            "type": "Number",
+            "desc": "启用动画滚动的持续时间（毫秒）。",
+            "default": 300,
+            "examples": [
+                500,
+                ":duration=\"500\""
+            ],
+            "category": "behavior"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "这就是内容的所在位置"
+        }
+    },
+    "events": {
+        "show": {
+            "desc": "组件显示动画完成时发出",
+            "addedIn": "v1.9.0"
+        },
+        "hide": {
+            "desc": "组件隐藏动画完成时发出",
+            "addedIn": "v1.9.0"
+        }
+    }
+}

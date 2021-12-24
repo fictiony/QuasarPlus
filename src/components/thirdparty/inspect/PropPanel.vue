@@ -32,8 +32,8 @@
           <q-tooltip>查看基类 {{ superName }} 的 API 文档</q-tooltip>
         </q-btn>
       </q-item-section>
-      <q-item-section side class="_toolbtn">
-        <q-btn flat dense size="sm" icon="close" @click="$emit('close')" />
+      <q-item-section side class="_toolbtn" v-if="!inspect.hideClose">
+        <q-btn flat dense size="sm" icon="close" @click="close" />
       </q-item-section>
     </q-item>
 
@@ -76,14 +76,13 @@
 
 <script>
 // 【属性栏】
-import { debounce, extend } from 'quasar'
-import { plusList } from 'components/menu.js'
-import quasarApi from 'components/api/Quasar.json'
+import Vue from 'vue'
+import { debounce } from 'quasar'
+import { inspect, ComponentSelector } from './index'
+import CustomScroller from './CustomScroller'
+import PropItem from './PropItem'
+import OtherApiItem from './OtherApiItem'
 
-const QUASAR_EXTRA_API = {
-  QRibbon: import('@quasar/quasar-ui-qribbon/dist/api/QRibbon.json'),
-  QMarkdown: import('@quasar/quasar-ui-qmarkdown/dist/api/QMarkdown.json')
-}
 const CATEGORIES = ['injection', 'props', 'events', 'methods', 'slots', 'scopedSlots', 'value', 'arg', 'modifiers', 'quasarConfOptions']
 const NAME_SUFFIX = {
   component: ' 组件',
@@ -92,8 +91,16 @@ const NAME_SUFFIX = {
 }
 
 export default {
+  name: 'PropPanel',
+
+  components: {
+    CustomScroller,
+    PropItem,
+    OtherApiItem
+  },
+
   data: () => ({
-    apiMap: {},
+    inspect,
     component: '',
     showName: '',
     apiDoc: '',
@@ -105,8 +112,6 @@ export default {
     showOthers: false
   }),
 
-  inject: ['inspect'],
-
   computed: {
     filteredPropList() {
       return this.filterProps ? this.propList.filter(i => i.value !== undefined) : this.propList
@@ -114,7 +119,18 @@ export default {
   },
 
   watch: {
-    'inspect.target'(val) {
+    'inspect.selecting'(val) {
+      if (val && !inspect.selector && inspect.selectorHolder) {
+        // 自动创建组件选择器
+        const holder = document.querySelector(inspect.selectorHolder)
+        if (!holder) return
+        const el = document.createElement('div')
+        holder.appendChild(el)
+        new Vue(ComponentSelector).$mount(el)
+      }
+    },
+
+    async 'inspect.target'(val) {
       if (window) {
         window.$c = val // 方便在浏览器内调试
       }
@@ -126,19 +142,20 @@ export default {
           this.component = this.$getName(val.$options)
           this.showName = this.component + NAME_SUFFIX.component
           this.superName = (val.$options.extends && this.$getName(val.$options.extends.options)) || ''
-          api = this.apiMap[this.component] || {}
-          superApi = (this.superName !== this.component && this.apiMap[this.superName]) || {}
+          if (this.superName === this.component) this.superName = ''
+          api = this.component ? await this.loadApi(this.component) : {}
+          superApi = this.superName ? await this.loadApi(this.superName) : {}
           this.propList = this.makePropList(val, api.props, superApi.props)
         } else {
           this.component = ''
           this.showName = val.className + (NAME_SUFFIX[val.category] || NAME_SUFFIX.component)
           this.superName = val.extends || ''
-          api = this.apiMap[val.className] || {}
-          superApi = this.apiMap[this.superName] || {}
+          api = val.className ? await this.loadApi(val.className) : {}
+          superApi = this.superName ? await this.loadApi(this.superName) : {}
           this.propList = []
         }
-        this.apiDoc = api.doc || ''
-        this.superDoc = superApi.doc || ''
+        this.apiDoc = inspect.getDocUrl ? inspect.getDocUrl(this.component || val.className) || '' : ''
+        this.superDoc = inspect.getDocUrl ? inspect.getDocUrl(this.superName) || '' : ''
         this.otherApiList = Object.freeze(CATEGORIES.flatMap(i => this.makeOtherApiList(i, api[i], superApi[i])))
       } else {
         this.component = ''
@@ -156,7 +173,7 @@ export default {
     // 选择组件按钮点击
     selectClick() {
       this.$refs.selectTip.hide() // 解决按钮重绘时，QTooltip无法自动消失的bug
-      this.inspect.selecting = !this.inspect.selecting
+      inspect.selecting = !inspect.selecting
     },
 
     // 筛选属性按钮点击
@@ -169,6 +186,13 @@ export default {
     showOthersClick() {
       this.$refs.showOthersTip.hide()
       this.showOthers = !this.showOthers
+    },
+
+    // 关闭
+    close() {
+      inspect.selecting = false
+      inspect.target = null
+      this.$emit('close')
     },
 
     // 生成属性列表
@@ -233,14 +257,12 @@ export default {
       if (category === 'props' && this.component) {
         return [] // 组件属性不显示在其他接口里
       }
-      return Object.keys(Object.assign({}, api, superApi))
+      return Object.keys({ ...api, ...superApi })
         .map(name => {
           const apiOther = (api && api[name]) || (superApi && superApi[name])
           return this.makeOtherApiInfo(name, category, apiOther)
         })
-        .sort((a, b) => {
-          return a.name < b.name ? -1 : 1
-        })
+        .sortBy('name')
     },
 
     // 生成一条其他接口信息
@@ -369,42 +391,35 @@ export default {
         lines.push(this.makeParamDesc('`@return`', apiFunc.returns, level))
       }
       return lines.join('\n')
-    }
-  },
+    },
 
-  created() {
-    // 加载API表数据
-    const apiMap = {}
-    Promise.all([
-      ...plusList.map(item =>
-        import('components/api/' + item.caption + '.json').then(module => {
-          apiMap[item.caption] = Object.freeze(module.default)
-        })
-      ),
-      ...Object.keys(quasarApi).map(className => {
-        const file = QUASAR_EXTRA_API[className] || import('quasar/dist/api/' + className + '.json')
-        return file.then(module => {
-          const api = module.default
-          const props = {}
-          Object.keys(api.props || {}).forEach(name => {
-            props[this.$toCamelCase(name)] = api.props[name] // 将文档中串式命名的属性名统一成驼峰命名
-          })
-          const apiInfo = extend(true, {}, quasarApi[className])
-          apiInfo.props = extend(true, props, apiInfo.props)
+    // 加载API文档
+    async loadApi(className) {
+      if (!inspect.apiCache[className]) {
+        const file = inspect.extraApi[className] || import('quasar/dist/api/' + className + '.json')
+        let api
+        try {
+          api = (await file).default
           CATEGORIES.forEach(category => {
-            if (!api[category] && !apiInfo[category]) return
+            let info = api[category]
+            if (!info) return
             switch (category) {
-              case 'props':
-                return // 属性前面已处理过
+              case 'props': {
+                const props = {}
+                Object.keys(info).forEach(name => {
+                  props[this.$toCamelCase(name)] = info[name] // 将中划线命名统一改成驼峰命名
+                })
+                info = props
+                break
+              }
               case 'injection':
-                apiInfo.injection = {
-                  [apiInfo.injection || api.injection]: {}
+                info = {
+                  [info]: {}
                 }
-                return
+                break
               case 'quasarConfOptions':
               case 'value':
               case 'arg': {
-                const info = extend(true, {}, api[category], apiInfo[category])
                 if (category === 'quasarConfOptions') {
                   info.desc = [
                     '```js',
@@ -421,24 +436,32 @@ export default {
                 } else {
                   info.directive = 'v-' + this.$toKebabCase(className)
                 }
-                apiInfo[category] = {
+                info = {
                   [info.propName || '']: info
                 }
-                return
+                break
               }
             }
-            apiInfo[category] = extend(true, {}, api[category], apiInfo[category])
+            api[category] = info
           })
-          apiMap[className] = Object.freeze(apiInfo)
-        })
-      })
-    ]).then(() => {
-      this.apiMap = Object.freeze(apiMap)
-    })
+        } catch (e) {
+          api = {}
+        }
+        inspect.apiCache[className] = Object.freeze(api)
+      }
+      return inspect.apiCache[className]
+    }
+  },
+
+  mounted() {
+    inspect.propPanel = this
   },
 
   beforeDestroy() {
     this.unwatchProps()
+    inspect.selecting = false
+    inspect.target = null
+    inspect.propPanel = null
   }
 }
 </script>

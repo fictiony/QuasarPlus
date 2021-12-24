@@ -1,0 +1,213 @@
+{
+    "type": "plugin",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/quasar-plugins/bottom-sheet"
+    },
+    "injection": "$q.bottomSheet",
+    "methods": {
+        "create": {
+            "desc": "创建特定的底部对话框；与调用$q.bottomSheet（…）相同",
+            "params": {
+                "opts": {
+                    "type": "Object",
+                    "required": true,
+                    "definition": {
+                        "class": {
+                            "type": [
+                                "String",
+                                "Array",
+                                "Object"
+                            ],
+                            "desc": "应用于对话框QCard的CSS类名",
+                            "examples": [
+                                "my-class"
+                            ]
+                        },
+                        "style": {
+                            "type": [
+                                "String",
+                                "Array",
+                                "Object"
+                            ],
+                            "desc": "应用于对话框QCard的CSS样式",
+                            "examples": [
+                                "border: 2px solid black"
+                            ]
+                        },
+                        "title": {
+                            "type": "String",
+                            "desc": "标题",
+                            "examples": [
+                                "Share"
+                            ]
+                        },
+                        "message": {
+                            "type": "String",
+                            "desc": "信息",
+                            "examples": [
+                                "Please select how to share"
+                            ]
+                        },
+                        "actions": {
+                            "type": "Array",
+                            "desc": "对象数组，每个对象定义一个操作",
+                            "definition": {
+                                "classes": {
+                                    "type": [
+                                        "String",
+                                        "Array",
+                                        "Object"
+                                    ],
+                                    "desc": "此操作的CSS类",
+                                    "examples": [
+                                        "my-class"
+                                    ]
+                                },
+                                "icon": {
+                                    "type": "String",
+                                    "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+                                    "examples": [
+                                        "map",
+                                        "ion-add",
+                                        "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                                        "img:statics/path/to/some_image.png"
+                                    ],
+                                    "category": "content"
+                                },
+                                "img": {
+                                    "type": "String",
+                                    "desc": "此操作的图像路径",
+                                    "examples": [
+                                        "(statics folder) statics/img/something.png",
+                                        "(relative path format) :src=\"require('./my_img.jpg')\"",
+                                        "(URL) https://some-site.net/some-img.gif"
+                                    ]
+                                },
+                                "avatar": {
+                                    "type": "Boolean",
+                                    "desc": "将img显示为头像（圆形边框）"
+                                },
+                                "label": {
+                                    "type": [
+                                        "String",
+                                        "Number"
+                                    ],
+                                    "desc": "操作标签",
+                                    "examples": [
+                                        "Facebook"
+                                    ]
+                                }
+                            }
+                        },
+                        "grid": {
+                            "type": "Boolean",
+                            "desc": "将操作显示为网格而不是列表"
+                        },
+                        "dark": {
+                            "type": "Boolean",
+                            "desc": "应用暗模式",
+                            "category": "style"
+                        },
+                        "seamless": {
+                            "type": "Boolean",
+                            "desc": "设置底部对话框为seamless模式；不使用背景，因此用户也可以与页面的其他部分进行交互"
+                        },
+                        "persistent": {
+                            "type": "Boolean",
+                            "desc": "如果在底部对话框外单击或按ESC键，则用户无法关闭底部对话框"
+                        }
+                    },
+                    "desc": "底部对话框选项"
+                }
+            },
+            "returns": {
+                "type": "Object",
+                "desc": "可链接对象",
+                "tsType": "DialogChainObject",
+                "definition": {
+                    "onOk": {
+                        "type": "Function",
+                        "desc": "接收一个函数参数，告诉您在按下OK/选择选项时要做什么",
+                        "params": {
+                            "callbackFn": {
+                                "type": "Function",
+                                "desc": "告诉我该怎么做",
+                                "required": true,
+                                "params": null,
+                                "returns": null
+                            }
+                        },
+                        "returns": {
+                            "type": "Object",
+                            "desc": "链式对象",
+                            "tsType": "DialogChainObject"
+                        }
+                    },
+                    "onCancel": {
+                        "type": "Function",
+                        "desc": "接收一个函数作为参数来告诉您当按下Cancel/取消对话框时要做什么",
+                        "params": {
+                            "callbackFn": {
+                                "type": "Function",
+                                "desc": "告诉我该怎么做",
+                                "required": true,
+                                "params": null,
+                                "returns": null
+                            }
+                        },
+                        "returns": {
+                            "type": "Object",
+                            "desc": "链式对象",
+                            "tsType": "DialogChainObject"
+                        }
+                    },
+                    "onDismiss": {
+                        "type": "Function",
+                        "desc": "接收一个函数参数，以指示关闭对话框时要执行的操作",
+                        "params": {
+                            "callbackFn": {
+                                "type": "Function",
+                                "desc": "告诉我该怎么做",
+                                "required": true,
+                                "params": null,
+                                "returns": null
+                            }
+                        },
+                        "returns": {
+                            "type": "Object",
+                            "desc": "链式对象",
+                            "tsType": "DialogChainObject"
+                        }
+                    },
+                    "hide": {
+                        "type": "Function",
+                        "desc": "调用时隐藏对话框",
+                        "params": null,
+                        "returns": {
+                            "type": "Object",
+                            "desc": "链式对象",
+                            "tsType": "DialogChainObject"
+                        }
+                    },
+                    "update": {
+                        "type": "Function",
+                        "desc": "更新除“component”和“parent”（以及不推荐使用的“root”）之外的初始属性（以create()的参数形式提供）",
+                        "params": {
+                            "opts": {
+                                "type": "Object",
+                                "desc": "将覆盖初始create()参数的属性（除了“component”和“parent”）"
+                            }
+                        },
+                        "returns": {
+                            "type": "Object",
+                            "desc": "链式对象",
+                            "tsType": "DialogChainObject"
+                        },
+                        "addedIn": "v1.14.0"
+                    }
+                }
+            },
+            "tsInjectionPoint": true
+        }
+    }
+}

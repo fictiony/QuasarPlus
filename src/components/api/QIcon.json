@@ -1,0 +1,68 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/icon"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "tag": {
+            "type": "String",
+            "desc": "要呈现的HTML标记，除非未提供图标或它是svg图标",
+            "default": "i",
+            "category": "content",
+            "examples": [
+                "div",
+                "i"
+            ],
+            "addedIn": "v1.8.4"
+        },
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称或标准大小名称（xs | sm | md | lg | xl）",
+            "examples": [
+                "16px",
+                "2rem",
+                "xs",
+                "md"
+            ],
+            "category": "style"
+        },
+        "name": {
+            "type": "String",
+            "desc": "图标名称，遵循Quasar惯例",
+            "examples": [
+                "map",
+                "ion-add"
+            ],
+            "category": "model"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "left": {
+            "type": "Boolean",
+            "desc": "如果图标位于某个对象的左侧，则很有用：在图标的右侧应用标准边距",
+            "category": "content"
+        },
+        "right": {
+            "type": "Boolean",
+            "desc": "如果图标位于某个对象的右侧，则很有用：在图标的左侧应用标准边距",
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "建议：QTooltip或QMenu"
+        }
+    }
+}

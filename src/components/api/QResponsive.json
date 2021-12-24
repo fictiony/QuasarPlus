@@ -1,0 +1,32 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/responsive"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "addedIn": "v1.9.0",
+    "props": {
+        "ratio": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "内容的尺寸比；如果值是字符串，则避免使用计算语句（如“16/9”），而是直接指定结果的字符串值（如“1.7777”）",
+            "examples": [
+                ":ratio=\"4/3\"",
+                ":ratio=\"16/9\"",
+                "ratio=\"1\""
+            ],
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}

@@ -1,0 +1,104 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/timeline"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "tag": {
+            "type": "String",
+            "desc": "要使用的标记（如果仅属于“heading”类型）",
+            "default": "h3",
+            "category": "content",
+            "examples": [
+                "h1"
+            ]
+        },
+        "heading": {
+            "type": "Boolean",
+            "desc": "定义头部时间线项",
+            "category": "content"
+        },
+        "side": {
+            "type": "String",
+            "desc": "侧边放置时间线条目；仅当QTimeline布局是loose时有效。",
+            "default": "right",
+            "values": [
+                "left",
+                "right"
+            ],
+            "category": "behavior"
+        },
+        "icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "avatar": {
+            "type": "String",
+            "desc": "头像图片的URL；图标优先使用，所以它取代了头像",
+            "transformAssetUrls": true,
+            "examples": [
+                "(statics folder) src=\"statics/img/my-bg.png\"",
+                "(assets folder) src=\"~assets/my-img.png\"",
+                "(relative path format) :src=\"require('./my_img.jpg')\"",
+                "(URL) src=\"https://placeimg.com/500/300/nature\""
+            ],
+            "category": "content"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "title": {
+            "type": "String",
+            "desc": "时间线条目标题；如果使用“title”槽，则被覆盖",
+            "examples": [
+                "December party"
+            ],
+            "category": "content"
+        },
+        "subtitle": {
+            "type": "String",
+            "desc": "时间线条目的副标题；如果使用“subtitle”槽，则被覆盖",
+            "examples": [
+                "All invited"
+            ],
+            "category": "content"
+        },
+        "body": {
+            "type": "String",
+            "desc": "时间线条目的正文内容；使用此属性或默认插槽",
+            "examples": [
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+            ],
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "时间线条目内容（正文）"
+        },
+        "title": {
+            "desc": "可选的标题槽；使用时，它会覆盖“title”属性"
+        },
+        "subtitle": {
+            "desc": "可选的子标题槽；使用时，它会覆盖“subtitle”属性"
+        }
+    }
+}

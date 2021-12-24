@@ -1,0 +1,291 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/layout/drawer"
+    },
+    "props": {
+        "value": {
+            "type": "Boolean",
+            "desc": "定义显示/隐藏状态的组件模型；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model"
+        },
+        "side": {
+            "type": "String",
+            "desc": "要附加到的一侧",
+            "values": [
+                "left",
+                "right"
+            ],
+            "default": "left",
+            "examples": [
+                "right"
+            ],
+            "category": "behavior"
+        },
+        "overlay": {
+            "type": "Boolean",
+            "desc": "将侧滑菜单置于覆盖模式（不占用屏幕空间，缩小页面）",
+            "category": "behavior"
+        },
+        "width": {
+            "type": "Number",
+            "desc": "侧滑菜单宽度（像素）",
+            "default": 300,
+            "examples": [
+                ":width=\"350\""
+            ],
+            "category": "style"
+        },
+        "mini": {
+            "type": "Boolean",
+            "desc": "将侧滑菜单置于迷你模式",
+            "category": "behavior"
+        },
+        "mini-width": {
+            "type": "Number",
+            "desc": "处于迷你模式时侧滑菜单的宽度（像素）",
+            "default": 60,
+            "examples": [
+                ":mini-width=\"100\""
+            ],
+            "category": "style"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style",
+            "addedIn": "v1.3.0"
+        },
+        "mini-to-overlay": {
+            "type": "Boolean",
+            "desc": "迷你模式将扩展为覆盖",
+            "category": "behavior"
+        },
+        "breakpoint": {
+            "type": "Number",
+            "desc": "使用移动模式的布局宽度的断点（像素）",
+            "default": 1023,
+            "examples": [
+                1200,
+                ":breakpoint=\"1400\""
+            ],
+            "category": "behavior"
+        },
+        "behavior": {
+            "type": "String",
+            "desc": "覆盖将侧滑菜单置于其中的默认动态模式",
+            "values": [
+                "default",
+                "desktop",
+                "mobile"
+            ],
+            "default": "default",
+            "examples": [
+                "mobile"
+            ],
+            "category": "behavior"
+        },
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于组件",
+            "category": "style"
+        },
+        "elevated": {
+            "type": "Boolean",
+            "desc": "向头部添加默认阴影",
+            "category": "style"
+        },
+        "persistent": {
+            "type": "Boolean",
+            "desc": "当应用程序的路由改变时防止侧滑菜单自动关闭",
+            "category": "behavior"
+        },
+        "show-if-above": {
+            "type": "Boolean",
+            "desc": "如果布局宽度高于断点，则强制侧滑菜单在初始渲染时显示在屏幕上，而不考虑v-model；这是初始渲染时客户端接管SSR时的默认行为",
+            "category": "behavior"
+        },
+        "content-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为侧滑菜单属性的类别定义",
+            "examples": [
+                "my-special-class",
+                ":content-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "content-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为侧滑菜单属性的样式定义",
+            "examples": [
+                "background-color: #ff0000",
+                ":content-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "no-swipe-open": {
+            "type": "Boolean",
+            "desc": "禁用侧滑菜单可以滑入视图的默认行为；对于可能干扰Safari“滑动到上一页/下一页”功能的iOS平台非常有用",
+            "category": "behavior"
+        },
+        "no-swipe-close": {
+            "type": "Boolean",
+            "desc": "禁用侧滑菜单可以从视图中滑出的默认行为（仅适用于侧滑菜单内容）；对于可能干扰Safari“滑动到上一页/下一页”功能的iOS平台非常有用",
+            "category": "behavior"
+        },
+        "no-swipe-backdrop": {
+            "type": "Boolean",
+            "desc": "禁用可以滑动侧滑菜单背景的默认行为",
+            "category": "behavior",
+            "addedIn": "v1.1.7"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽（如果已使用且侧滑菜单处于迷你模式，则由“mini”插槽覆盖）"
+        },
+        "mini": {
+            "desc": "处于迷你模式时要显示的内容（覆盖“default”插槽）"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "显示/隐藏状态更改时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Boolean",
+                    "desc": "新状态（显示/隐藏）"
+                }
+            }
+        },
+        "show": {
+            "desc": "在组件触发show()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "before-show": {
+            "desc": "在组件触发show()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "hide": {
+            "desc": "在组件触发hide()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "before-hide": {
+            "desc": "在组件触发hide()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "on-layout": {
+            "desc": "侧滑菜单在占用页面空间与不占用页面空间切换时发出",
+            "params": {
+                "state": {
+                    "type": "Boolean",
+                    "desc": "新州"
+                }
+            }
+        },
+        "click": {
+            "desc": "当用户点击/轻触组件时发出，并且侧滑菜单不处于移动模式；在决定切换迷你模式时非常有用",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "mouseover": {
+            "desc": "当用户将鼠标光标移到组件上并且侧滑菜单不处于移动模式时发出；在决定切换迷你模式时非常有用",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "mouseout": {
+            "desc": "当用户将鼠标光标移出组件并且侧滑菜单不处于移动模式时发出；在决定切换迷你模式时非常有用",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "mini-state": {
+            "desc": "侧滑菜单更改迷你模式状态时发出（有时强制执行）",
+            "params": {
+                "state": {
+                    "type": "Boolean",
+                    "desc": "新州"
+                }
+            },
+            "addedIn": "v1.1.3"
+        }
+    },
+    "methods": {
+        "show": {
+            "desc": "触发组件显示",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "hide": {
+            "desc": "触发组件隐藏",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "toggle": {
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            },
+            "desc": "触发组件在显示/隐藏之间切换"
+        }
+    }
+}

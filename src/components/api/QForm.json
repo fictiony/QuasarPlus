@@ -1,0 +1,110 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/form"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "autofocus": {
+            "type": "Boolean",
+            "desc": "在初始组件渲染时将第一个可聚焦元素聚焦",
+            "category": "behavior"
+        },
+        "no-error-focus": {
+            "type": "Boolean",
+            "desc": "提交表单时不要试图聚焦第一个有验证错误的组件",
+            "category": "behavior"
+        },
+        "no-reset-focus": {
+            "type": "Boolean",
+            "desc": "在重置表单时不要试图聚焦在第一个组件上",
+            "category": "behavior"
+        },
+        "greedy": {
+            "type": "Boolean",
+            "desc": "验证表单中的所有字段（默认情况下，它在通过同步的验证找到第一个无效字段后停止）",
+            "category": "behavior",
+            "addedIn": "v1.1.1"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    },
+    "events": {
+        "submit": {
+            "desc": "当绑定到提交按钮时，所有验证都已通过时发出"
+        },
+        "reset": {
+            "desc": "当绑定到重置按钮时，所有验证都被重置时发出；建议在此处理程序中手动重置包装的组件模型"
+        },
+        "validation-success": {
+            "desc": "在验证被触发并且所有内部Quasar成分模型都有效后发出"
+        },
+        "validation-error": {
+            "desc": "在验证被触发并且至少一个内部Quasar组件模型无效后发出",
+            "params": {
+                "ref": {
+                    "type": "Object",
+                    "desc": "对触发验证错误的第一个组件的Vue引用"
+                }
+            },
+            "addedIn": "v1.9.9"
+        }
+    },
+    "methods": {
+        "focus": {
+            "desc": "关注表单中第一个可聚焦的元素/组件"
+        },
+        "validate": {
+            "desc": "触发所有适用的Quasar内部组件的验证",
+            "params": {
+                "shouldFocus": {
+                    "type": "Boolean",
+                    "desc": "告知是否应该聚焦提交表单时出错的组件；覆盖“no-focus-error”属性（如果指定）"
+                }
+            },
+            "returns": {
+                "type": "Promise<boolean>",
+                "desc": "承诺（Promise）总是兑现并收到结果（true->验证成功，false->检测到无效模型）",
+                "examples": [
+                    "validate().then(outcome => { ... })"
+                ]
+            }
+        },
+        "resetValidation": {
+            "desc": "重置所有适用的Quasar内部组件的验证"
+        },
+        "submit": {
+            "desc": "手动触发表单验证并提交",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "reset": {
+            "desc": "手动触发表单重置",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "getValidationComponents": {
+            "desc": "获取支持验证的子vue组件数组",
+            "returns": {
+                "type": "Array",
+                "desc": "支持Quasar验证API的Vue组件"
+            },
+            "addedIn": "v1.10.0"
+        }
+    }
+}

@@ -1,0 +1,371 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/popup-edit"
+    },
+    "props": {
+        "value": {
+            "desc": "组件模型；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model",
+            "type": "Any",
+            "examples": [
+                "v-model=\"myValue\""
+            ]
+        },
+        "auto-save": {
+            "type": "Boolean",
+            "desc": "当用户在弹出窗口外单击/点击时，自动保存模型（如果更改）；它不适用于ESC键",
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "title": {
+            "type": "String",
+            "desc": "可选标题（除非使用“title”槽）",
+            "examples": [
+                "Calories"
+            ],
+            "category": "content"
+        },
+        "buttons": {
+            "type": "Boolean",
+            "desc": "显示设置和取消按钮",
+            "category": "content"
+        },
+        "label-set": {
+            "type": "String",
+            "desc": "覆盖设置按钮标签",
+            "examples": [
+                "OK"
+            ],
+            "category": "content"
+        },
+        "label-cancel": {
+            "type": "String",
+            "desc": "覆盖取消按钮标签",
+            "examples": [
+                "Cancel"
+            ],
+            "category": "content"
+        },
+        "content-class": {
+            "type": "String",
+            "desc": "作为内容属性的类的定义",
+            "examples": [
+                "my-special-class"
+            ],
+            "category": "style"
+        },
+        "content-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "作为内容属性的样式定义",
+            "examples": [
+                "background-color: #ff0000",
+                ":content-style=\"{ color: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "default": "primary"
+        },
+        "validate": {
+            "type": "Function",
+            "desc": "验证模型，然后触发“save”并关闭弹出窗口；返回布尔值（'true'表示有效，'false'表示中止）；语法：validate(value)；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "要验证的模型",
+                    "examples": [
+                        "My car"
+                    ]
+                }
+            },
+            "returns": {
+                "type": "Boolean",
+                "desc": "模型是否有效？"
+            },
+            "examples": [
+                ":validate=\"myValidation\""
+            ],
+            "category": "model"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "fit": {
+            "type": "Boolean",
+            "desc": "允许菜单至少匹配其目标的全部宽度",
+            "category": "position"
+        },
+        "cover": {
+            "type": "Boolean",
+            "default": true,
+            "desc": "允许菜单覆盖其目标。使用时，“self”和“fit”属性不再有效",
+            "category": "position"
+        },
+        "anchor": {
+            "type": "String",
+            "desc": "设置菜单相对于其目标的起始位置或定位点的两个值",
+            "values": [
+                "top left",
+                "top middle",
+                "top right",
+                "top start",
+                "top end",
+                "center left",
+                "center middle",
+                "center right",
+                "center start",
+                "center end",
+                "bottom left",
+                "bottom middle",
+                "bottom right",
+                "bottom start",
+                "bottom end"
+            ],
+            "examples": [
+                "top left",
+                "bottom right"
+            ],
+            "category": "position"
+        },
+        "self": {
+            "type": "String",
+            "desc": "两个值设置菜单自身相对于目标的位置",
+            "values": [
+                "top left",
+                "top middle",
+                "top right",
+                "top start",
+                "top end",
+                "center left",
+                "center middle",
+                "center right",
+                "center start",
+                "center end",
+                "bottom left",
+                "bottom middle",
+                "bottom right",
+                "bottom start",
+                "bottom end"
+            ],
+            "examples": [
+                "top left",
+                "bottom right"
+            ],
+            "category": "position"
+        },
+        "offset": {
+            "type": "Array",
+            "desc": "以像素为单位水平和垂直偏移菜单的两个数字的数组",
+            "examples": [
+                "[8, 8]",
+                "[5, 10]"
+            ],
+            "category": "style"
+        },
+        "touch-position": {
+            "type": "Boolean",
+            "desc": "当单击或触摸菜单的目标时，允许通过鼠标位置设置目标位置",
+            "category": "behavior"
+        },
+        "persistent": {
+            "type": "Boolean",
+            "desc": "通过按ESC键或在弹出窗口外单击/点击，避免关闭菜单",
+            "category": "behavior"
+        },
+        "separate-close-popup": {
+            "type": "Boolean",
+            "desc": "与父菜单分离，将其标记为v-close-popup的单独关闭点（没有此项，链接菜单将全部关闭）",
+            "category": "behavior"
+        },
+        "square": {
+            "type": "Boolean",
+            "desc": "强制菜单具有方形边框",
+            "category": "style"
+        },
+        "max-height": {
+            "type": "String",
+            "desc": "菜单的最大高度；以CSS单位表示的大小，包括单位名称",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "style"
+        },
+        "max-width": {
+            "type": "String",
+            "desc": "菜单的最大宽度；以CSS单位表示的大小，包括单位名称",
+            "examples": [
+                "16px",
+                "2rem"
+            ],
+            "category": "style"
+        }
+    },
+    "slots": {
+        "title": {
+            "desc": "自定义标题槽（使用时覆盖“title”属性）"
+        }
+    },
+    "scopedSlots": {
+        "default": {
+            "desc": "用于注入表单组件",
+            "scope": {
+                "initialValue": {
+                    "type": "Any",
+                    "desc": "初始值",
+                    "examples": [
+                        0.241,
+                        "Text"
+                    ]
+                },
+                "value": {
+                    "type": "Any",
+                    "desc": "当前值",
+                    "examples": [
+                        0.241,
+                        "Text"
+                    ]
+                },
+                "emitValue": {
+                    "type": "Function",
+                    "desc": "函数，该函数在弹出编辑的上下文中发出@input事件",
+                    "params": {
+                        "value": {
+                            "type": "Any",
+                            "desc": "要发出的值",
+                            "examples": [
+                                0,
+                                "Changed text"
+                            ]
+                        }
+                    },
+                    "returns": null
+                },
+                "validate": {
+                    "type": "Function",
+                    "desc": "检查值是否有效的函数",
+                    "params": {
+                        "value": {
+                            "type": "Any",
+                            "desc": "要检查的值",
+                            "examples": [
+                                0,
+                                "Changed text"
+                            ]
+                        }
+                    },
+                    "returns": {
+                        "type": "Boolean",
+                        "desc": "检查值是否有效"
+                    }
+                },
+                "set": {
+                    "type": "Function",
+                    "desc": "设置值并关闭弹出窗口的函数",
+                    "params": null,
+                    "returns": null
+                },
+                "cancel": {
+                    "type": "Function",
+                    "desc": "取消编辑并将值还原为初始值的函数",
+                    "params": null,
+                    "returns": null
+                }
+            }
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当弹出窗口被取消以将模型重置为其初始值时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        },
+        "before-show": {
+            "desc": "在弹出窗口显示之前发出"
+        },
+        "show": {
+            "desc": "弹出窗口显示后立即发出"
+        },
+        "before-hide": {
+            "desc": "在弹出窗口被解除之前发出"
+        },
+        "hide": {
+            "desc": "在弹出窗口被解除后立即发出"
+        },
+        "save": {
+            "desc": "值已成功验证并应保存时发出",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "要保存的验证值"
+                },
+                "initialValue": {
+                    "type": "Any",
+                    "desc": "初始值，更改前"
+                }
+            }
+        },
+        "cancel": {
+            "desc": "用户取消更改时发出（按ESC键或在弹出窗口外单击或按“取消”按钮）",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "编辑的值"
+                },
+                "initialValue": {
+                    "type": "Any",
+                    "desc": "初始值，更改前"
+                }
+            }
+        }
+    },
+    "methods": {
+        "set": {
+            "desc": "触发模型更新；验证模型（如果是这样，则发出“save”事件），然后关闭弹出窗口"
+        },
+        "cancel": {
+            "desc": "触发模型重置到其初始值（发出“取消”事件），然后关闭弹出窗口"
+        },
+        "show": {
+            "desc": "触发要显示的组件",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            },
+            "addedIn": "v1.12.0"
+        },
+        "hide": {
+            "desc": "触发要隐藏的组件",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            },
+            "addedIn": "v1.12.0"
+        }
+    }
+}

@@ -1,0 +1,197 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/knob"
+    },
+    "props": {
+        "name": {
+            "type": "String",
+            "desc": "用于指定控件的名称；如果处理直接提交到URL的表单，则非常有用",
+            "examples": [
+                "car_id"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称或标准大小名称（xs | sm | md | lg | xl）",
+            "examples": [
+                "16px",
+                "2rem",
+                "xs",
+                "md"
+            ],
+            "category": "style"
+        },
+        "value": {
+            "type": "Number",
+            "desc": "指示旋钮给定值的任意数字。使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "examples": [
+                "v-model=\"myValue\""
+            ],
+            "category": "model"
+        },
+        "min": {
+            "type": "Number",
+            "desc": "模型（旋钮值）应开始的最小值",
+            "examples": [
+                "20",
+                "5"
+            ],
+            "category": "model"
+        },
+        "max": {
+            "type": "Number",
+            "desc": "模型（旋钮值）应达到的最大值",
+            "examples": [
+                "100",
+                "50"
+            ],
+            "category": "model"
+        },
+        "step": {
+            "type": "Number",
+            "default": "1",
+            "desc": "在调整旋钮时，表示模型值的步数",
+            "examples": [
+                "1",
+                "5"
+            ],
+            "category": "model"
+        },
+        "instant-feedback": {
+            "type": "Boolean",
+            "desc": "模型更改时没有动画",
+            "category": "behavior",
+            "addedIn": "v1.11.0"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "center-color": {
+            "type": "String",
+            "desc": "组件中心部分的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "track-color": {
+            "type": "String",
+            "desc": "组件进展的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "font-size": {
+            "type": "String",
+            "desc": "以CSS单位表示的文本大小，包括单位名称。建议：使用“em”单位与组件大小同步",
+            "default": "0.25em",
+            "examples": [
+                "1em",
+                "16px",
+                "2rem"
+            ],
+            "category": "style"
+        },
+        "thickness": {
+            "type": "Number",
+            "default": 0.2,
+            "desc": "进度弧厚度与组件尺寸之比（0.0<x<1.0）",
+            "examples": [
+                1,
+                0.3
+            ],
+            "category": "style"
+        },
+        "angle": {
+            "type": "Number",
+            "desc": "旋转进度弧的角度",
+            "default": 0,
+            "examples": [
+                0,
+                40,
+                90
+            ],
+            "category": "content"
+        },
+        "show-value": {
+            "type": "Boolean",
+            "desc": "启用默认插槽并使用它（如果可用），否则它会将“value”属性显示为文本；确保文本有足够的空间显示在组件内部",
+            "category": "content|behavior"
+        },
+        "tabindex": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "Tabindex HTML属性值",
+            "examples": [
+                "0",
+                "100"
+            ],
+            "category": "general"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "readonly": {
+            "type": "Boolean",
+            "desc": "将组件置于只读模式",
+            "category": "state"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Number",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        },
+        "change": {
+            "desc": "在旋钮调整结束时发出并提供模型的值",
+            "params": {
+                "value": {
+                    "type": "Number",
+                    "desc": "新模型值",
+                    "examples": [
+                        12
+                    ]
+                }
+            }
+        },
+        "drag-value": {
+            "desc": "拖动仍在进行中时模型的值",
+            "params": {
+                "value": {
+                    "type": "Number",
+                    "desc": "新模型值",
+                    "examples": [
+                        12
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -25,31 +25,37 @@
 
 <script>
 // 【组件选择器】
+import { inspect } from './index'
+
 const EMPTY_RECT = { x: 0, y: 0, width: 0, height: 0 }
 
 export default {
+  name: 'ComponentSelector',
+
   data: () => ({
+    inspect,
     mousePos: {},
     boundingRect: {},
     selectingComponents: null,
     listComponents: []
   }),
 
-  inject: ['inspect'],
-
   watch: {
     // 开启/关闭选择时，添加/删除鼠标事件
-    'inspect.selecting'(val) {
-      if (!val) {
-        this.selectingComponents = null
-      }
-      const method = `${val ? 'add' : 'remove'}EventListener`
-      const ignoreEvents = ['mouseenter', 'mouseleave', 'mouseover', 'mouseout', 'mousedown', 'mouseup']
-      window[method]('mouseover', this.elementMouseOver, true)
-      window[method]('click', this.elementClicked, true)
-      ignoreEvents.forEach(event => {
-        window[method](event, this.cancelEvent, true)
-      })
+    'inspect.selecting': {
+      handler(val) {
+        if (!val) {
+          this.selectingComponents = null
+        }
+        const method = `${val ? 'add' : 'remove'}EventListener`
+        const ignoreEvents = ['mouseenter', 'mouseleave', 'mouseover', 'mouseout', 'mousedown', 'mouseup']
+        window[method]('mouseover', this.elementMouseOver, true)
+        window[method]('click', this.elementClicked, true)
+        ignoreEvents.forEach(event => {
+          window[method](event, this.cancelEvent, true)
+        })
+      },
+      immediate: true
     },
 
     // 选中组件时，刷新高亮范围框
@@ -85,8 +91,8 @@ export default {
       // 查找鼠标下的组件
       let component = this.findComponent(e.target)
       if (component) {
-        if (!this.$parent.$el.contains(component.$el)) {
-          // 仅限内页中的组件
+        if (!this.$el.parentNode.contains(component.$el)) {
+          // 仅限同一父节点下的组件
           component = null
         } else {
           // 内外层遍历
@@ -110,12 +116,12 @@ export default {
           this.$refs.menu.show(e)
           return
         } else {
-          this.inspect.target = this.selectingComponents[0].component
+          inspect.target = this.selectingComponents[0].component
         }
       } else {
-        this.inspect.target = null
+        inspect.target = null
       }
-      this.inspect.selecting = false
+      inspect.selecting = false
     },
 
     // 菜单悬停
@@ -125,20 +131,20 @@ export default {
 
     // 菜单选中
     menuSelected(index) {
-      this.inspect.target = this.listComponents[index].component
+      inspect.target = this.listComponents[index].component
       this.listComponents = []
-      this.inspect.selecting = false
+      inspect.selecting = false
     },
 
     // 查找Vue组件
     findComponent(el) {
       while (el && !el.__vue__) {
-        el = el.parentElement
+        el = el.parentNode
       }
       return el && el.__vue__
     },
 
-    // 查找所有外层组件（仅限内页中的组件）
+    // 查找所有外层组件（仅限同一父节点下的组件）
     findOuterComponents(component, level = 0) {
       const outer = []
       while (component) {
@@ -146,7 +152,8 @@ export default {
           outer.push({ component, level })
         }
         component = component.$parent
-        if (component === this.$parent || !this.$parent.$el.contains(component.$el)) break
+        if (!component || component.$el === this.$el.parentNode) break
+        if (!this.$el.parentNode.contains(component.$el)) break
         level--
       }
       return outer
@@ -180,7 +187,7 @@ export default {
 
     // 获取元素范围框
     getBoundingRect(el) {
-      if (!el.getBoundingClientRect) return null
+      if (!el || !el.getBoundingClientRect) return null
       const rect = el.getBoundingClientRect()
       if (rect.width > 0 && rect.height > 0) return rect
 
@@ -221,10 +228,16 @@ export default {
     }
   },
 
+  mounted() {
+    inspect.selector = this
+  },
+
   beforeDestroy() {
     if (this.refreshTimer) {
       clearInterval(this.refreshTimer)
     }
+    inspect.selecting = false
+    inspect.selector = null
   }
 }
 </script>

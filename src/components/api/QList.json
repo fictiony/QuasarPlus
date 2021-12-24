@@ -1,0 +1,43 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/list-and-list-items"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "bordered": {
+            "type": "Boolean",
+            "desc": "将默认边框应用于组件",
+            "category": "style"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "separator": {
+            "type": "Boolean",
+            "desc": "在包含的列表项之间应用分隔符",
+            "category": "content"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "padding": {
+            "type": "Boolean",
+            "desc": "在顶部和底部应用填充（padding，类material设计）",
+            "category": "content"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "这就是内容的所在位置；建议：QItem、QExpansionItem..."
+        }
+    }
+}

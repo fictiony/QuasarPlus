@@ -1,0 +1,489 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/button-dropdown"
+    },
+    "props": {
+        "value": {
+            "type": "Boolean",
+            "desc": "控件菜单的显示/隐藏状态；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model",
+            "examples": [
+                "v-model=\"menuState\""
+            ]
+        },
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称或标准大小名称（xs | sm | md | lg | xl）",
+            "examples": [
+                "16px",
+                "2rem",
+                "xs",
+                "md"
+            ],
+            "category": "style"
+        },
+        "ripple": {
+            "type": [
+                "Boolean",
+                "Object"
+            ],
+            "desc": "配置material波动（通过将其设置为“false”或提供配置对象将其禁用）",
+            "default": true,
+            "examples": [
+                false,
+                "{ early: true, center: true, color: 'teal', keyCodes: [] }"
+            ],
+            "category": "style"
+        },
+        "type": {
+            "type": "String",
+            "desc": "定义按钮HTML DOM类型",
+            "default": "button",
+            "values": [
+                "a",
+                "submit",
+                "button",
+                "reset"
+            ],
+            "examples": [
+                "type=\"a\" href=\"http://some-site.net\" target=\"__blank\""
+            ],
+            "category": "general"
+        },
+        "to": {
+            "type": [
+                "String",
+                "Object"
+            ],
+            "desc": "相当于Vue Router <Router link>的“to”属性",
+            "examples": [
+                "/home/dashboard",
+                ":to=\"{ name: 'my-route-name' }\""
+            ],
+            "category": "router"
+        },
+        "replace": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“replace”属性",
+            "category": "router"
+        },
+        "append": {
+            "type": "Boolean",
+            "desc": "相当于Vue Router <Router link>的“append”属性",
+            "category": "router",
+            "addedIn": "v1.13.0"
+        },
+        "label": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "将显示在按钮上的文本",
+            "examples": [
+                "Button Label"
+            ],
+            "category": "content"
+        },
+        "icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "icon-right": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "outline": {
+            "type": "Boolean",
+            "desc": "使用“轮廓线”设计",
+            "category": "style"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "使用“扁平”设计",
+            "category": "style"
+        },
+        "unelevated": {
+            "type": "Boolean",
+            "desc": "移除阴影",
+            "category": "style"
+        },
+        "rounded": {
+            "type": "Boolean",
+            "desc": "为方形按钮应用更突出的border-radius",
+            "category": "style"
+        },
+        "push": {
+            "type": "Boolean",
+            "desc": "使用“推”设计",
+            "category": "style"
+        },
+        "glossy": {
+            "type": "Boolean",
+            "desc": "应用光泽效果",
+            "category": "style"
+        },
+        "fab": {
+            "type": "Boolean",
+            "desc": "使按钮大小和形状适合浮动操作按钮",
+            "category": "style"
+        },
+        "fab-mini": {
+            "type": "Boolean",
+            "desc": "使按钮的大小和形状适合一个小的浮动动作按钮",
+            "category": "style"
+        },
+        "padding": {
+            "type": "String",
+            "desc": "应用自定义填充（垂直[水平]）；以CSS单位表示的尺寸，包括单位名称或标准尺寸名称（无| xs | sm | md | lg | xl）；设置时也会删除最小宽度和高度",
+            "examples": [
+                "16px",
+                "10px 5px",
+                "2rem",
+                "xs",
+                "md lg",
+                "2px 2px 5px 7px"
+            ],
+            "category": "style",
+            "addedIn": "v1.11.0"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "no-caps": {
+            "type": "Boolean",
+            "desc": "避免将标签文本转换为大写（默认情况下会发生这种情况）",
+            "category": "content"
+        },
+        "no-wrap": {
+            "type": "Boolean",
+            "desc": "避免标签文本换行",
+            "category": "content"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "tabindex": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "Tabindex HTML属性值",
+            "examples": [
+                "0",
+                "100"
+            ],
+            "category": "general"
+        },
+        "align": {
+            "type": "String",
+            "desc": "标签或内容对齐",
+            "default": "center",
+            "values": [
+                "left",
+                "right",
+                "center",
+                "around",
+                "between",
+                "evenly"
+            ],
+            "category": "content"
+        },
+        "stack": {
+            "type": "Boolean",
+            "desc": "垂直堆叠图标和标签，而不是在同一行上（就像默认情况下一样）",
+            "category": "content"
+        },
+        "stretch": {
+            "type": "Boolean",
+            "desc": "当用于flexbox父元素时，按钮将拉伸到父元素的高度",
+            "category": "content"
+        },
+        "loading": {
+            "type": "Boolean",
+            "desc": "将按钮置于加载状态（显示一个QSpinner——可以通过使用“loading”插槽来重写）",
+            "category": "behavior|state"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "split": {
+            "type": "Boolean",
+            "desc": "将下拉图标拆分为自己的按钮",
+            "category": "content|behavior"
+        },
+        "dropdown-icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content",
+            "addedIn": "v1.1.6"
+        },
+        "disable-main-btn": {
+            "type": "Boolean",
+            "desc": "禁用主按钮（与“split”属性一起使用）",
+            "category": "behavior"
+        },
+        "disable-dropdown": {
+            "type": "Boolean",
+            "desc": "禁用下拉（如果使用“split”属性，则使用下拉按钮）",
+            "category": "behavior"
+        },
+        "no-icon-animation": {
+            "type": "Boolean",
+            "desc": "在切换状态时禁用下拉图标的旋转",
+            "category": "style",
+            "addedIn": "v1.12.0"
+        },
+        "content-style": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "设置为菜单属性的样式定义",
+            "examples": [
+                "background-color: #ff0000",
+                ":content-style=\"{ backgroundColor: '#ff0000' }\""
+            ],
+            "category": "style"
+        },
+        "content-class": {
+            "type": [
+                "Array",
+                "String",
+                "Object"
+            ],
+            "desc": "置为菜单属性的类定义",
+            "examples": [
+                "my-special-class",
+                ":content-class=\"{ 'my-special-class': <condition> }\""
+            ],
+            "category": "style"
+        },
+        "cover": {
+            "type": "Boolean",
+            "desc": "允许菜单覆盖按钮。使用时，“menu-self”and“menu-fit”属性不再有效",
+            "category": "position"
+        },
+        "persistent": {
+            "type": "Boolean",
+            "desc": "允许在菜单外单击/轻触或按ESC键时不关闭菜单",
+            "category": "behavior"
+        },
+        "no-route-dismiss": {
+            "type": "Boolean",
+            "desc": "更改路由应用程序不会关闭弹出窗口；如果还设置了“persistent”属性，则无需设置它",
+            "category": "behavior",
+            "addedIn": "v1.13.2"
+        },
+        "auto-close": {
+            "type": "Boolean",
+            "desc": "允许在菜单中单击/轻触以关闭它；而不是将应在单击/点击时关闭菜单的事件附加到每个菜单项",
+            "category": "behavior"
+        },
+        "menu-anchor": {
+            "type": "String",
+            "desc": "设置菜单起始位置或锚点（相对于其目标）的两个值",
+            "values": [
+                "top left",
+                "top middle",
+                "top right",
+                "top start",
+                "top end",
+                "center left",
+                "center middle",
+                "center right",
+                "center start",
+                "center end",
+                "bottom left",
+                "bottom middle",
+                "bottom right",
+                "bottom start",
+                "bottom end"
+            ],
+            "default": "bottom end",
+            "examples": [
+                "top right",
+                "bottom end"
+            ],
+            "category": "position"
+        },
+        "menu-self": {
+            "type": "String",
+            "desc": "设置菜单自身位置（相对于目标)的两个值",
+            "values": [
+                "top left",
+                "top middle",
+                "top right",
+                "top start",
+                "top end",
+                "center left",
+                "center middle",
+                "center right",
+                "center start",
+                "center end",
+                "bottom left",
+                "bottom middle",
+                "bottom right",
+                "bottom start",
+                "bottom end"
+            ],
+            "default": "top end",
+            "examples": [
+                "top right",
+                "bottom end"
+            ],
+            "category": "position"
+        },
+        "menu-offset": {
+            "type": "Array",
+            "desc": "以像素为单位水平和垂直偏移菜单的两个数字数组",
+            "examples": [
+                "[8, 8]",
+                "[5, 10]"
+            ],
+            "category": "position",
+            "addedIn": "v1.9.2"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        },
+        "label": {
+            "desc": "通过此槽自定义主按钮的内容，除非使用“icon”和“label”属性"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "显示/隐藏状态更改时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Boolean",
+                    "desc": "新状态（显示/隐藏）"
+                }
+            }
+        },
+        "show": {
+            "desc": "在组件触发show()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "before-show": {
+            "desc": "在组件触发show()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "hide": {
+            "desc": "在组件触发hide()后发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "before-hide": {
+            "desc": "在组件触发hide()但在完成之前发出",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        },
+        "click": {
+            "desc": "当用户单击/轻触主按钮时发出（如果使用“split”，则不是图标按钮）",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true
+                }
+            }
+        }
+    },
+    "methods": {
+        "show": {
+            "desc": "触发组件显示",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "hide": {
+            "desc": "触发组件隐藏",
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            }
+        },
+        "toggle": {
+            "params": {
+                "evt": {
+                    "type": "Object",
+                    "required": false,
+                    "desc": "JS事件对象"
+                }
+            },
+            "desc": "触发组件在显示/隐藏之间切换"
+        }
+    }
+}

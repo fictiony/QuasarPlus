@@ -1,10 +1,11 @@
 <template>
   <q-model-td
     v-bind="$attrs"
-    v-on="{ ...$listeners, input: undefined }"
+    v-on="{ ...$listeners, input: () => {} }"
     v-model="editValue"
     :inline="inline"
     :auto-save="autoSave"
+    :disable="disable"
     @edit-start="onEditStart"
     @edit-finish="onEditFinish"
     @edit-cancel="onEditCancel"
@@ -21,9 +22,10 @@
         options-dense
         v-bind="$attrs"
         :value="editValue"
+        :disable="disable || initalDisable"
         @input="input($event) || (inline && save())"
         @blur="inline && (autoSave ? save() : cancel())"
-        @keyup.enter="save"
+        @keyup.native.enter="save"
         @click.native.stop
       />
     </template>
@@ -38,6 +40,7 @@ import mixin2 from './mixin2'
 
 export default {
   name: 'QSelectableTd',
+  inheritAttrs: false,
 
   components: {
     QSelect,
@@ -46,10 +49,22 @@ export default {
 
   mixins: [mixin, mixin2],
 
+  data: () => ({
+    initalDisable: true // 初始禁用编辑（用于修复初始会莫名其妙激活菜单的bug）
+  }),
+
+  props: {
+    disable: Boolean // 禁用编辑
+  },
+
   methods: {
     onEditStart() {
       setTimeout(() => this.$nextTick(this.$refs.select.showPopup))
     }
+  },
+
+  mounted() {
+    this.initalDisable = false
   }
 }
 </script>

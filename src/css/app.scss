@@ -1,4 +1,99 @@
-// 调整文档样式
+// app global css in SCSS form
+
+.base-font {
+  font-size: 10pt;
+}
+
+.title-font {
+  font-size: 12pt;
+}
+
+.toggle-off {
+  opacity: 0.3;
+}
+
+.sticky {
+  position: sticky;
+  z-index: 1;
+}
+.sticky-top {
+  @extend .sticky;
+  top: 0;
+}
+.sticky-bottom {
+  @extend .sticky;
+  bottom: 0;
+}
+.sticky-thead tr > *,
+.sticky-tfoot tr > * {
+  @extend .sticky;
+}
+.sticky-thead tr:last-child > * {
+  top: 0;
+}
+.sticky-tfoot tr:first-child > * {
+  bottom: 0;
+}
+
+td.q-space {
+  max-width: 1px;
+}
+
+.narrow {
+  tr,
+  th,
+  td {
+    padding: 0px 8px !important;
+    height: 23px !important;
+  }
+  td {
+    height: 26px !important;
+  }
+  th:first-child,
+  td:first-child {
+    padding-left: 10px !important;
+  }
+  th:last-child,
+  td:last-child {
+    padding-right: 10px !important;
+  }
+  .q-field {
+    &__native,
+    &__prefix,
+    &__suffix {
+      line-height: 1.5;
+    }
+    &__control {
+      padding: 0px 8px;
+      height: 34px;
+      &-container {
+        padding: 0px;
+      }
+    }
+    &__marginal {
+      padding: 0px 2px;
+      height: 34px;
+    }
+    &--standout.q-field--highlighted {
+      .q-field__control {
+        background: $blue-grey-6;
+        box-shadow: $shadow-0;
+      }
+      .q-field__native, .q-field__prefix, .q-field__suffix, .q-field__prepend, .q-field__append, .q-field__input {
+        color: #fff
+      }
+    }
+  }
+  textarea.q-field__native {
+    padding-top: 8px !important;
+  }
+  .q-textarea--autogrow .q-field__control {
+    height: auto;
+    min-height: 34px;
+  }
+}
+
+// 文档样式
 .doc {
   padding: 15px 50px;
   margin: auto;
@@ -66,9 +161,3 @@ kbd {
   margin: 0 .2em;
 }
 
-// 吸附顶部
-.sticky {
-  position: sticky;
-  z-index: 1;
-  top: 0;
-}

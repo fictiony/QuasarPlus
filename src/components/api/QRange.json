@@ -1,0 +1,276 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/range"
+    },
+    "props": {
+        "name": {
+            "type": "String",
+            "desc": "用于指定控件的名称；如果处理直接提交到URL的表单，则非常有用",
+            "examples": [
+                "car_id"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "value": {
+            "type": "Object",
+            "desc": "{min，max}类型的组件的模型（两个值必须介于全局最小值/最大值之间）；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "definition": {
+                "min": {
+                    "type": "Number",
+                    "desc": "左圆点的模型值",
+                    "examples": [
+                        2
+                    ]
+                },
+                "max": {
+                    "type": "Number",
+                    "desc": "右圆点的模型值",
+                    "examples": [
+                        12
+                    ]
+                }
+            },
+            "examples": [
+                "v-model=\"positionModel\""
+            ],
+            "category": "model"
+        },
+        "min": {
+            "type": "Number",
+            "desc": "模型的最小值",
+            "default": 0,
+            "examples": [
+                ":min=\"0\""
+            ],
+            "category": "model"
+        },
+        "max": {
+            "type": "Number",
+            "desc": "模型的最大值",
+            "default": 100,
+            "examples": [
+                ":max=\"100\""
+            ],
+            "category": "model"
+        },
+        "step": {
+            "type": "Number",
+            "desc": "指定有效值之间的步长（>0.0）；当步长等于0时，它定义了无限粒度",
+            "default": 1,
+            "examples": [
+                ":step=\"1\""
+            ],
+            "category": "model"
+        },
+        "reverse": {
+            "type": "Boolean",
+            "desc": "功能反转（改变方向）",
+            "category": "behavior",
+            "addedIn": "v1.5.0"
+        },
+        "vertical": {
+            "type": "Boolean",
+            "desc": "垂直方向显示",
+            "category": "behavior",
+            "addedIn": "v1.10.0"
+        },
+        "drag-range": {
+            "type": "Boolean",
+            "desc": "用户可以拖动范围，而不只是两个圆点",
+            "category": "content"
+        },
+        "drag-only-range": {
+            "type": "Boolean",
+            "desc": "用户只能拖动范围，而不能拖动两个圆点",
+            "category": "content"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "label": {
+            "type": "Boolean",
+            "desc": "当用户单击/轻触滑块圆点并移动它时，弹出标签（用于左圆点和右圆点）",
+            "category": "labels"
+        },
+        "label-color": {
+            "type": "String",
+            "desc": "标签背景的来自Quasar调色板的颜色名称；适用于两个标签，除非使用特定的标签颜色属性",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "labels"
+        },
+        "label-text-color": {
+            "type": "String",
+            "desc": "标签文本的来自Quasar调色板的颜色名称；应用于两个标签，除非使用特定的标签文本颜色属性",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "labels",
+            "addedIn": "v1.1.0"
+        },
+        "left-label-color": {
+            "type": "String",
+            "desc": "左标签背景的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "labels"
+        },
+        "left-label-text-color": {
+            "type": "String",
+            "desc": "左标签文本的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "labels",
+            "addedIn": "v1.1.0"
+        },
+        "right-label-color": {
+            "type": "String",
+            "desc": "右标签背景的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "labels"
+        },
+        "right-label-text-color": {
+            "type": "String",
+            "desc": "右标签文本的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "labels",
+            "addedIn": "v1.1.0"
+        },
+        "left-label-value": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "替代最小值的默认标签",
+            "examples": [
+                ":left-label-value=\"model.min + 'px'\""
+            ],
+            "category": "labels"
+        },
+        "right-label-value": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "替代最大值的默认标签",
+            "examples": [
+                ":right-label-value=\"model.max + 'px'\""
+            ],
+            "category": "labels"
+        },
+        "label-always": {
+            "type": "Boolean",
+            "desc": "始终显示标签",
+            "category": "labels"
+        },
+        "markers": {
+            "type": "Boolean",
+            "desc": "在轨迹上显示标记，模型的每个可能值对应一个标记",
+            "category": "content"
+        },
+        "snap": {
+            "type": "Boolean",
+            "desc": "在有效值上捕捉圆点，而不是自由滑动；建议：与“step”属性一起使用",
+            "category": "content"
+        },
+        "thumb-path": {
+            "type": "String",
+            "desc": "设置自定义圆点svg路径",
+            "default": "M 4, 10 a 6,6 0 1,0 12,0 a 6,6 0 1,0 -12,0",
+            "examples": [
+                "M5 5 h10 v10 h-10 v-10"
+            ],
+            "category": "style",
+            "addedIn": "v1.5.10"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "readonly": {
+            "type": "Boolean",
+            "desc": "将组件置于只读模式",
+            "category": "state"
+        },
+        "tabindex": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "Tabindex HTML属性值",
+            "examples": [
+                "0",
+                "100"
+            ],
+            "category": "general"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        },
+        "change": {
+            "desc": "在延迟模型值更改时发出（在用户滑动之后释放圆点）",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        },
+        "pan": {
+            "desc": "当用户开始平移组件时触发",
+            "params": {
+                "phase": {
+                    "type": "String",
+                    "desc": "平移阶段",
+                    "values": [
+                        "start",
+                        "end"
+                    ]
+                }
+            },
+            "addedIn": "v1.14.0"
+        }
+    }
+}

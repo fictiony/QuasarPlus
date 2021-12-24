@@ -1,0 +1,136 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/chat"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "sent": {
+            "type": "Boolean",
+            "desc": "呈现为已发送消息（因此来自当前用户）",
+            "category": "content"
+        },
+        "label": {
+            "type": "String",
+            "desc": "仅呈现标签的标题/部分",
+            "examples": [
+                "Friday, 18th"
+            ],
+            "category": "content"
+        },
+        "bg-color": {
+            "type": "String",
+            "desc": "聊天气泡背景的颜色名称（来自Quasar调色板）",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "聊天气泡文本的颜色名称（来自Quasar调色板）",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "name": {
+            "type": "String",
+            "desc": "作者姓名",
+            "examples": [
+                "John Doe"
+            ],
+            "category": "content"
+        },
+        "avatar": {
+            "type": "String",
+            "desc": "作者头像的URL",
+            "transformAssetUrls": true,
+            "examples": [
+                "(statics folder) src=\"statics/boy-avatar.png\"",
+                "(assets folder) src=\"~assets/boy-avatar.png\"",
+                "(relative path format) :src=\"require('./my_img.jpg')\"",
+                "(URL) src=\"https://placeimg.com/500/300/nature\""
+            ],
+            "category": "content"
+        },
+        "text": {
+            "type": "Array",
+            "desc": "作为消息正文的字符串数组。字符串未经过安全处理（请参阅文档中的详细信息）",
+            "examples": [
+                ":text=\"['How are you?']\"",
+                ":text=\"['I\\'m good, thank you!', 'And you?']\""
+            ],
+            "category": "content"
+        },
+        "stamp": {
+            "type": "String",
+            "desc": "创建时间戳",
+            "examples": [
+                "13:55",
+                "Yesterday at 13:51"
+            ],
+            "category": "content"
+        },
+        "size": {
+            "type": "String",
+            "desc": "第1-12列，共12列（与col-*相同）",
+            "examples": [
+                "4",
+                "6",
+                "12"
+            ],
+            "category": "style"
+        },
+        "label-sanitize": {
+            "type": "Boolean",
+            "default": "false",
+            "desc": "强制使用文本内容而不是innerHTML来呈现标签；当标签可能不安全时使用它（来自用户输入）",
+            "category": "behavior"
+        },
+        "name-sanitize": {
+            "type": "Boolean",
+            "default": "false",
+            "desc": "强制使用文本内容而不是innerHTML来呈现名称；当名称可能不安全时使用它（来自用户输入）",
+            "category": "behavior"
+        },
+        "text-sanitize": {
+            "type": "Boolean",
+            "default": "false",
+            "desc": "强制使用文本内容而不是innerHTML来呈现文本；当文本可能不安全时使用它（来自用户输入）",
+            "category": "behavior"
+        },
+        "stamp-sanitize": {
+            "type": "Boolean",
+            "default": "false",
+            "desc": "强制使用文本内容而不是innerHTML来呈现戳记；当时间戳可能不安全时使用它（来自用户输入）",
+            "category": "behavior"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "您可以使用此插槽定义自定义消息（覆盖属性）"
+        },
+        "avatar": {
+            "desc": "头像插槽；建议：QAvatar，img"
+        },
+        "name": {
+          "desc": "名称插槽；覆盖“name”属性",
+          "addedIn": "v1.15.14"
+        },
+        "stamp": {
+          "desc": "时间戳插槽；覆盖“stamp”属性",
+          "addedIn": "v1.15.14"
+        },
+        "label": {
+          "desc": "标签插槽；覆盖“label”属性",
+          "addedIn": "v1.15.15"
+        }
+    }
+}

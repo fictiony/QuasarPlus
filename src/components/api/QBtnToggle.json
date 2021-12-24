@@ -1,0 +1,259 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/button-toggle"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "name": {
+            "type": "String",
+            "desc": "用于指定控件的名称；如果处理直接提交到URL的表单，则非常有用",
+            "examples": [
+                "car_id"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "ripple": {
+            "type": [
+                "Boolean",
+                "Object"
+            ],
+            "desc": "配置material波动（通过将其设置为“false”或提供配置对象将其禁用）",
+            "default": true,
+            "examples": [
+                false,
+                "{ early: true, center: true, color: 'teal', keyCodes: [] }"
+            ],
+            "category": "style"
+        },
+        "value": {
+            "type": "Any",
+            "desc": "组件模型；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "examples": [
+                "v-model=\"selected\""
+            ],
+            "category": "model"
+        },
+        "options": {
+            "type": "Array",
+            "desc": "定义每个选项的对象数组",
+            "required": true,
+            "definition": {
+                "attrs": {
+                    "type": "Object",
+                    "desc": "要在按钮上设置的属性的键值",
+                    "examples": [
+                        "{ 'aria-label': 'Button label' }"
+                    ],
+                    "addedIn": "v1.13.0"
+                },
+                "label": {
+                    "type": "String",
+                    "desc": "选项按钮标签；使用此属性和/或“icon”，但至少需要一个",
+                    "examples": [
+                        "Option 1"
+                    ]
+                },
+                "icon": {
+                    "type": "String",
+                    "desc": "选项按钮图标；使用此道具和/或“label”，但至少需要一个",
+                    "examples": [
+                        "map",
+                        "ion-add",
+                        "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                        "img:statics/path/to/some_image.png"
+                    ],
+                    "category": "content"
+                },
+                "value": {
+                    "type": "Any",
+                    "desc": "组件模型将使用的选项的值",
+                    "required": true
+                },
+                "slot": {
+                    "type": "String",
+                    "desc": "用于此按钮内容的插槽名称；用于自定义内容甚至添加工具提示",
+                    "examples": [
+                        "mySlot"
+                    ]
+                },
+                "...props": {
+                    "type": "Any",
+                    "desc": "任何其他QBtn属性（包括类和样式）"
+                }
+            },
+            "examples": [
+                "[ {label: 'One', value: 'one'}, {label: 'Two', value: 'two'} ]"
+            ],
+            "category": "model"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "toggle-color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "default": "primary"
+        },
+        "toggle-text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "spread": {
+            "type": "Boolean",
+            "desc": "水平扩展到所有可用空间",
+            "category": "content"
+        },
+        "outline": {
+            "type": "Boolean",
+            "desc": "使用“轮廓线”设计",
+            "category": "style"
+        },
+        "flat": {
+            "type": "Boolean",
+            "desc": "使用“扁平”设计",
+            "category": "style"
+        },
+        "unelevated": {
+            "type": "Boolean",
+            "desc": "移除阴影",
+            "category": "style"
+        },
+        "rounded": {
+            "type": "Boolean",
+            "desc": "为方形按钮应用更突出的border-radius",
+            "category": "style"
+        },
+        "push": {
+            "type": "Boolean",
+            "desc": "使用“推”设计",
+            "category": "style"
+        },
+        "glossy": {
+            "type": "Boolean",
+            "desc": "应用光泽效果",
+            "category": "style"
+        },
+        "size": {
+            "type": "String",
+            "desc": "按钮大小名称或包含单元名称的CSS单元",
+            "examples": [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+                "25px",
+                "2rem"
+            ],
+            "category": "style"
+        },
+        "padding": {
+            "type": "String",
+            "desc": "应用自定义填充（垂直[水平]）；以CSS单位表示的尺寸，包括单位名称或标准尺寸名称（none | xs | sm | md | lg | xl）；设置时也会删除最小宽度和高度",
+            "examples": [
+                "16px",
+                "10px 5px",
+                "2rem",
+                "xs",
+                "md lg",
+                "2px 2px 5px 7px"
+            ],
+            "category": "style",
+            "addedIn": "v1.13.0"
+        },
+        "no-caps": {
+            "type": "Boolean",
+            "desc": "避免将标签文本转换为大写（默认情况下会发生这种情况）",
+            "category": "content"
+        },
+        "no-wrap": {
+            "type": "Boolean",
+            "desc": "避免标签文本换行",
+            "category": "content"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "readonly": {
+            "type": "Boolean",
+            "desc": "将组件置于只读模式",
+            "category": "state"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "stack": {
+            "type": "Boolean",
+            "desc": "垂直堆叠图标和标签，而不是在同一行上（就像默认情况下一样）",
+            "category": "content"
+        },
+        "stretch": {
+            "type": "Boolean",
+            "desc": "当用于flexbox父元素时，按钮将拉伸到父元素的高度",
+            "category": "content"
+        },
+        "clearable": {
+            "type": "Boolean",
+            "desc": "单击清除已选择按钮的模型",
+            "category": "model",
+            "addedIn": "v1.4.4"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "建议：QTooltip，QBadge",
+            "addedIn": "v1.13.2"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                }
+            }
+        },
+        "clear": {
+            "desc": "使用“clearable”属性时，单击已选择的按钮时会发出此事件",
+            "addedIn": "v1.4.4"
+        }
+    }
+}

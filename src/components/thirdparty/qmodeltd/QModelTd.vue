@@ -22,6 +22,7 @@ import mixin from './mixin'
 
 export default {
   name: 'QModelTd',
+  inheritAttrs: false,
 
   components: {
     QTd,

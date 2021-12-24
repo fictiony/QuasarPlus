@@ -59,6 +59,8 @@ const CATEGORY_NAME = {
 }
 
 export default {
+  name: 'OtherApiItem',
+
   data: () => ({
     pinTooltip: false
   }),

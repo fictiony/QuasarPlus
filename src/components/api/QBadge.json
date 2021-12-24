@@ -1,0 +1,85 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/badge"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "text-color": {
+            "type": "String",
+            "desc": "覆盖文本颜色（如果需要）；来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "floating": {
+            "type": "Boolean",
+            "desc": "告诉QBadge它是否应该浮动到相对定位的父元素的右上方",
+            "category": "content"
+        },
+        "transparent": {
+            "type": "Boolean",
+            "desc": "应用0.8不透明度；特别适用于浮动QBadge",
+            "category": "content"
+        },
+        "multi-line": {
+            "type": "Boolean",
+            "desc": "内容可以换行到多行",
+            "category": "content"
+        },
+        "label": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "QBadge内容为字符串；如果指定，则覆盖默认插槽",
+            "examples": [
+                "John Doe",
+                22
+            ],
+            "category": "content"
+        },
+        "align": {
+            "type": "String",
+            "desc": "设置vertical-align CSS属性",
+            "values": [
+                "top",
+                "middle",
+                "bottom"
+            ],
+            "category": "content"
+        },
+        "outline": {
+            "type": "Boolean",
+            "desc": "使用“outline”设计（仅彩色文本和边框）",
+            "category": "content",
+            "addedIn": "v1.4.5"
+        },
+        "rounded": {
+            "type": "Boolean",
+            "desc": "做一个圆形的QBadge",
+            "category": "style",
+            "addedIn": "v1.15.2"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "如果不使用“label”属性，这就是QBadge内容放置的地方"
+        }
+    }
+}

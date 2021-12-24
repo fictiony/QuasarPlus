@@ -1,5 +1,5 @@
 // 主页链接列表
-export const linkList = [
+export const LINK_LIST = [
   {
     title: 'Quasar Plus 代码仓库',
     caption: 'https://gitee.com/fictiony/quasar-plus',
@@ -27,7 +27,7 @@ export const linkList = [
 ]
 
 // 页面列表
-export const pageList = [
+export const PAGE_LIST = [
   {
     title: '返回主页',
     icon: 'home',
@@ -41,7 +41,7 @@ export const pageList = [
 ]
 
 // 扩展组件列表
-export const plusList = [
+export const PLUS_LIST = [
   {
     title: '扩展分隔条',
     caption: 'MySplitter',
@@ -55,3 +55,9 @@ export const plusList = [
     to: '/MyDrawer'
   }
 ]
+
+// API不同语种域名表
+export const API_LANG = {
+  中文: 'http://www.quasarchs.com',
+  English: 'https://v1.quasar.dev'
+}

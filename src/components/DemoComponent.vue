@@ -130,7 +130,7 @@ export default {
         }
 
         // 添加属性绑定
-        const binds = Object.assign({}, info.demoBinds, frameBinds, customBinds)
+        const binds = { ...info.demoBinds, ...frameBinds, ...customBinds }
         const bindProps = Object.keys(binds)
         if (bindProps.length > 0) {
           component.watch = {}
@@ -195,7 +195,7 @@ export default {
         customBinds = this.demo.demoBinds
       }
       const params = quasar.extend(true, {}, info.demoProps, frameProps, customProps)
-      const binds = Object.assign({}, info.demoBinds, frameBinds, customBinds)
+      const binds = { ...info.demoBinds, ...frameBinds, ...customBinds }
 
       // 遍历属性定义表，查找必填属性，并自动设置初始值
       const component = this.getQuasarComponent(info.className)
@@ -245,7 +245,7 @@ export default {
 
       // 若有指定插槽模板，则采用插槽模板生成插槽内容组件
       if (demoSlots || frameSlots || customSlots) {
-        const slots = Object.assign({}, demoSlots, frameSlots, customSlots)
+        const slots = { ...demoSlots, ...frameSlots, ...customSlots }
 
         Object.keys(slots).forEach(name => {
           let templates = slots[name]

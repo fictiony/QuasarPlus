@@ -1,0 +1,215 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/slide-item"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "left-color": {
+            "type": "String",
+            "desc": "左侧背景的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "right-color": {
+            "type": "String",
+            "desc": "右侧背景的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "top-color": {
+            "type": "String",
+            "desc": "顶部背景的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "addedIn": "v1.1.3"
+        },
+        "bottom-color": {
+            "type": "String",
+            "desc": "底部背景的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "addedIn": "v1.1.3"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style",
+            "addedIn": "v1.4.1"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "这是滑动项的所在位置；建议：QItemSection"
+        },
+        "left": {
+            "desc": "滑动时左侧内容"
+        },
+        "right": {
+            "desc": "滑动时右侧内容"
+        },
+        "top": {
+            "desc": "滑动时的顶部内容",
+            "addedIn": "v1.1.3"
+        },
+        "bottom": {
+            "desc": "滑动时底部内容",
+            "addedIn": "v1.1.3"
+        }
+    },
+    "events": {
+        "left": {
+            "desc": "当用户完成向左滑动项目时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "详情",
+                    "definition": {
+                        "reset": {
+                            "type": "Function",
+                            "desc": "调用时，它会将组件重置为其初始非滑动状态",
+                            "params": null,
+                            "returns": null
+                        }
+                    }
+                }
+            }
+        },
+        "right": {
+            "desc": "当用户完成向右滑动项目时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "详情",
+                    "definition": {
+                        "reset": {
+                            "type": "Function",
+                            "desc": "调用时，它会将组件重置为其初始非滑动状态",
+                            "params": null,
+                            "returns": null
+                        }
+                    }
+                }
+            }
+        },
+        "top": {
+            "desc": "当用户完成向上滑动项目时发出",
+            "addedIn": "v1.1.3",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "详情",
+                    "definition": {
+                        "reset": {
+                            "type": "Function",
+                            "desc": "调用时，它会将组件重置为其初始非滑动状态",
+                            "params": null,
+                            "returns": null
+                        }
+                    }
+                }
+            }
+        },
+        "bottom": {
+            "desc": "当用户完成向下滑动项目时发出",
+            "addedIn": "v1.1.3",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "详情",
+                    "definition": {
+                        "reset": {
+                            "type": "Function",
+                            "desc": "调用时，它会将组件重置为其初始非滑动状态",
+                            "params": null,
+                            "returns": null
+                        }
+                    }
+                }
+            }
+        },
+        "slide": {
+            "desc": "当用户将项目滑动到可用的一侧时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "详情",
+                    "definition": {
+                        "side": {
+                            "type": "String",
+                            "desc": "滑动生效的一侧",
+                            "values": [
+                                "left",
+                                "right",
+                                "top",
+                                "bottom"
+                            ]
+                        },
+                        "ratio": {
+                            "type": "Number",
+                            "desc": "滑动所需滑片的比例（0..1）",
+                            "examples": [
+                                0,
+                                0.5,
+                                1
+                            ]
+                        },
+                        "isReset": {
+                            "type": "Boolean",
+                            "desc": "比率已重置"
+                        }
+                    }
+                }
+            },
+            "addedIn": "v1.15.2"
+        },
+        "action": {
+            "desc": "当用户完成将项目滑动到两侧时发出",
+            "params": {
+                "details": {
+                    "type": "Object",
+                    "desc": "详情",
+                    "definition": {
+                        "side": {
+                            "type": "String",
+                            "desc": "滑动已生效的一侧",
+                            "values": [
+                                "left",
+                                "right",
+                                "top",
+                                "bottom"
+                            ]
+                        },
+                        "reset": {
+                            "type": "Function",
+                            "desc": "调用时，它会将组件重置为其初始非滑动状态",
+                            "params": null,
+                            "returns": null
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "methods": {
+        "reset": {
+            "desc": "重置到初始状态（不刷到任何一边）"
+        }
+    }
+}

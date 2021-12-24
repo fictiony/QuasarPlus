@@ -1,0 +1,51 @@
+{
+    "type": "plugin",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/quasar-plugins/dark"
+    },
+    "injection": "$q.dark",
+    "addedIn": "v1.3.0",
+    "props": {
+        "isActive": {
+            "type": "Boolean",
+            "desc": "暗模式是否激活？",
+            "reactive": true
+        },
+        "mode": {
+            "type": [
+                "Boolean",
+                "String"
+            ],
+            "desc": "暗模式配置（非状态）",
+            "values": [
+                "auto",
+                "(Boolean) true",
+                "(Boolean) false"
+            ],
+            "reactive": true
+        }
+    },
+    "methods": {
+        "set": {
+            "desc": "设置暗模式状态",
+            "params": {
+                "status": {
+                    "type": [
+                        "Boolean",
+                        "String"
+                    ],
+                    "desc": "暗模式状态",
+                    "values": [
+                        "(Boolean) true",
+                        "(Boolean) false",
+                        "auto"
+                    ],
+                    "required": true
+                }
+            }
+        },
+        "toggle": {
+            "desc": "切换暗模式状态"
+        }
+    }
+}

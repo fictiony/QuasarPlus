@@ -1,0 +1,241 @@
+{
+    "type": "plugin",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/quasar-plugins/loading"
+    },
+    "injection": "$q.loading",
+    "quasarConfOptions": {
+        "propName": "loading",
+        "definition": {
+            "delay": {
+                "type": "Number",
+                "desc": "在显示前等待的毫秒数；例如，显示100毫秒然后隐藏显然没有必要，所以请等到您确定这是一个需要相当长时间的过程的时候再显示",
+                "examples": [
+                    400
+                ]
+            },
+            "message": {
+                "type": "String",
+                "desc": "要显示的消息",
+                "examples": [
+                    "Processing your request"
+                ]
+            },
+            "sanitize": {
+                "type": "Boolean",
+                "default": "false",
+                "desc": "强制使用文本内容而不是innerHTML来呈现消息；当消息可能不安全时使用它（来自用户输入）",
+                "category": "behavior"
+            },
+            "spinnerSize": {
+                "type": "Number",
+                "desc": "旋转器大小（像素）",
+                "examples": [
+                    60
+                ]
+            },
+            "spinnerColor": {
+                "type": "String",
+                "desc": "旋转器的来自Quasar调色板的颜色名称",
+                "examples": [
+                    "primary",
+                    "teal-10"
+                ],
+                "category": "style"
+            },
+            "messageColor": {
+                "type": "String",
+                "desc": "文本的来自Quasar调色板的颜色名称",
+                "examples": [
+                    "primary",
+                    "teal-10"
+                ],
+                "category": "style"
+            },
+            "backgroundColor": {
+                "type": "String",
+                "desc": "背景的来自Quasar调色板的颜色名称",
+                "examples": [
+                    "primary",
+                    "teal-10"
+                ],
+                "category": "style"
+            },
+            "spinner": {
+                "type": "Component",
+                "desc": "所有QSpinner组件中的一个"
+            },
+            "customClass": {
+                "type": "String",
+                "desc": "添加CSS类以方便地自定义组件",
+                "examples": [
+                    "my-class"
+                ]
+            }
+        }
+    },
+    "props": {
+        "isActive": {
+            "type": "Boolean",
+            "desc": "加载栏激活了吗？",
+            "reactive": true
+        }
+    },
+    "methods": {
+        "show": {
+            "desc": "激活并显示",
+            "params": {
+                "opts": {
+                    "type": "Object",
+                    "desc": "所有属性都是可选的",
+                    "definition": {
+                        "delay": {
+                            "type": "Number",
+                            "desc": "在显示前等待的毫秒数；例如，显示100毫秒然后隐藏显然没有必要，所以请等到您确定这是一个需要相当长时间的过程的时候再显示",
+                            "examples": [
+                                400
+                            ]
+                        },
+                        "message": {
+                            "type": "String",
+                            "desc": "要显示的消息",
+                            "examples": [
+                                "Processing your request"
+                            ]
+                        },
+                        "sanitize": {
+                            "type": "Boolean",
+                            "default": "false",
+                            "desc": "强制使用文本内容而不是innerHTML来呈现消息；当消息可能不安全时使用它（来自用户输入）",
+                            "category": "behavior"
+                        },
+                        "spinnerSize": {
+                            "type": "Number",
+                            "desc": "旋转器大小（像素）",
+                            "examples": [
+                                60
+                            ]
+                        },
+                        "spinnerColor": {
+                            "type": "String",
+                            "desc": "旋转器的Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "messageColor": {
+                            "type": "String",
+                            "desc": "文本的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "backgroundColor": {
+                            "type": "String",
+                            "desc": "背景的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "spinner": {
+                            "type": "Component",
+                            "desc": "所有QSpinner组件中的一个"
+                        },
+                        "customClass": {
+                            "type": "String",
+                            "desc": "添加CSS类以方便地自定义组件",
+                            "examples": [
+                                "my-class"
+                            ]
+                        },
+                        "ignoreDefaults": {
+                            "type": "Boolean",
+                            "desc": "仅忽略此实例的默认配置（由setDefaults()设置）",
+                            "addedIn": "v1.1.0"
+                        }
+                    }
+                }
+            }
+        },
+        "hide": {
+            "desc": "把它隐藏起来"
+        },
+        "setDefaults": {
+            "desc": "将选项合并到默认选项中",
+            "params": {
+                "opts": {
+                    "type": "Object",
+                    "desc": "选择要定义的子映射",
+                    "required": true,
+                    "definition": {
+                        "delay": {
+                            "type": "Number",
+                            "desc": "在显示前等待的毫秒数；例如，显示100毫秒然后隐藏显然没有必要，所以请等到您确定这是一个需要相当长时间的过程的时候再显示",
+                            "examples": [
+                                400
+                            ]
+                        },
+                        "message": {
+                            "type": "String",
+                            "desc": "要显示的消息",
+                            "examples": [
+                                "Processing your request"
+                            ]
+                        },
+                        "spinnerSize": {
+                            "type": "Number",
+                            "desc": "旋转器大小（像素）",
+                            "examples": [
+                                60
+                            ]
+                        },
+                        "spinnerColor": {
+                            "type": "String",
+                            "desc": "微调器的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "messageColor": {
+                            "type": "String",
+                            "desc": "文本的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "backgroundColor": {
+                            "type": "String",
+                            "desc": "背景的来自Quasar调色板的颜色名称",
+                            "examples": [
+                                "primary",
+                                "teal-10"
+                            ],
+                            "category": "style"
+                        },
+                        "spinner": {
+                            "type": "Component",
+                            "desc": "所有QSpinner组件中的一个"
+                        },
+                        "customClass": {
+                            "type": "String",
+                            "desc": "添加CSS类以方便地自定义组件",
+                            "examples": [
+                                "my-class"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/timeline"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "side": {
+            "type": "String",
+            "desc": "侧面以dense和comfortable的布局放置时间线条目；对于loose布局，它会被QTimelineEntry的side属性覆盖",
+            "default": "right",
+            "values": [
+                "left",
+                "right"
+            ],
+            "category": "behavior"
+        },
+        "layout": {
+            "type": "String",
+            "desc": "时间线的布局。dense将内容和标签放在一边。comfortable保持内容在一边，标签在另一边。loose将内容放在两边。",
+            "default": "dense",
+            "values": [
+                "dense",
+                "comfortable",
+                "loose"
+            ],
+            "category": "behavior"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "用于组件内容"
+        }
+    }
+}

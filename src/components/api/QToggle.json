@@ -1,0 +1,224 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/toggle"
+    },
+    "props": {
+        "name": {
+            "type": "String",
+            "desc": "用于指定控件的名称；如果处理直接提交到URL的表单，则非常有用",
+            "examples": [
+                "car_id"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.9.0"
+        },
+        "size": {
+            "type": "String",
+            "desc": "以CSS单位表示的大小，包括单位名称或标准大小名称（xs | sm | md | lg | xl）",
+            "examples": [
+                "16px",
+                "2rem",
+                "xs",
+                "md"
+            ],
+            "category": "style",
+            "addedIn": "v1.8.0"
+        },
+        "value": {
+            "desc": "组件模型；使用此属性（以及“input”事件的侦听器）或使用v-model指令",
+            "category": "model",
+            "required": true,
+            "type": [
+                "Any",
+                "Array"
+            ],
+            "examples": [
+                "false",
+                "['car', 'building']"
+            ]
+        },
+        "val": {
+            "type": "Any",
+            "desc": "当model（'value'）是数组时工作。它告诉组件在勾选/取消勾选时应该添加/删除哪个值",
+            "examples": [
+                "car"
+            ],
+            "category": "model"
+        },
+        "true-value": {
+            "type": "Any",
+            "desc": "什么模型值应被视为选中/勾选/启用？",
+            "default": true,
+            "examples": [
+                "Agreed"
+            ],
+            "category": "model"
+        },
+        "false-value": {
+            "type": "Any",
+            "desc": "什么模型值应被视为未选中/未选中/关闭？",
+            "default": false,
+            "examples": [
+                "Disagree"
+            ],
+            "category": "model"
+        },
+        "indeterminate-value": {
+            "type": "Any",
+            "desc": "什么模型值应被视为“不确定”？",
+            "default": null,
+            "examples": [
+                0,
+                "not_answered"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.8.0"
+        },
+        "toggle-order": {
+            "type": "String",
+            "desc": "确定两种状态的切换顺序（“t”表示真状态，“f”表示假状态）；如果“toggle indeterminate”为true，则顺序为：indet->first state->second state->indet（并重复），否则：indet->first state->second state->first state->second state->...",
+            "default": "tf",
+            "values": [
+                "tf",
+                "ft"
+            ],
+            "category": "behavior",
+            "addedIn": "v1.12.0"
+        },
+        "toggle-indeterminate": {
+            "type": "Boolean",
+            "desc": "当用户点击组件时，我们是否也应该切换到不确定状态？",
+            "category": "behavior",
+            "addedIn": "v1.8.0"
+        },
+        "label": {
+            "type": "String",
+            "desc": "沿组件显示的标签（或使用默认插槽而不是此属性）",
+            "examples": [
+                "I agree with the Terms and Conditions"
+            ],
+            "category": "label"
+        },
+        "left-label": {
+            "type": "Boolean",
+            "desc": "标签（如有指定）应显示在组件的左侧",
+            "category": "label"
+        },
+        "color": {
+            "type": "String",
+            "desc": "组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style"
+        },
+        "keep-color": {
+            "type": "Boolean",
+            "desc": "当组件松开/关闭时，是否应保留颜色（如有规定）？",
+            "category": "behavior"
+        },
+        "dark": {
+            "type": "Boolean",
+            "desc": "通知组件背景为深色",
+            "category": "style"
+        },
+        "dense": {
+            "type": "Boolean",
+            "desc": "密集模式；占用更少的空间",
+            "category": "style"
+        },
+        "disable": {
+            "type": "Boolean",
+            "desc": "将组件置于禁用模式",
+            "category": "state"
+        },
+        "tabindex": {
+            "type": [
+                "Number",
+                "String"
+            ],
+            "desc": "Tabindex HTML属性值",
+            "examples": [
+                "0",
+                "100"
+            ],
+            "category": "general"
+        },
+        "icon": {
+            "type": "String",
+            "desc": "遵循Quasar惯例的图标名称；请确保已安装图标库，除非使用“img:”前缀",
+            "examples": [
+                "map",
+                "ion-add",
+                "img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg",
+                "img:statics/path/to/some_image.png"
+            ],
+            "category": "content"
+        },
+        "checked-icon": {
+            "type": "String",
+            "desc": "打开切换时要使用的图标",
+            "examples": [
+                "visibility"
+            ],
+            "category": "content"
+        },
+        "unchecked-icon": {
+            "type": "String",
+            "desc": "关闭切换时使用的图标",
+            "examples": [
+                "visibility_off"
+            ],
+            "category": "content"
+        },
+        "indeterminate-icon": {
+            "type": "String",
+            "desc": "模型不确定时要使用的图标",
+            "examples": [
+                "help"
+            ],
+            "category": "content",
+            "addedIn": "v1.8.0"
+        },
+        "icon-color": {
+            "type": "String",
+            "desc": "覆盖默认图标颜色（仅适用于truthy状态）；组件的来自Quasar调色板的颜色名称",
+            "examples": [
+                "primary",
+                "teal-10"
+            ],
+            "category": "style",
+            "addedIn": "v1.8.0"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "可以用作标签的默认插槽，除非指定了“label”属性；建议：字符串"
+        }
+    },
+    "events": {
+        "input": {
+            "desc": "当组件需要更改模型时发出；也用于v-model",
+            "params": {
+                "value": {
+                    "type": "Any",
+                    "desc": "新模型值",
+                    "required": true
+                },
+                "evt": {
+                    "type": "Object",
+                    "desc": "JS事件对象",
+                    "required": true,
+                    "addedIn": "v1.11.2"
+                }
+            }
+        }
+    },
+    "methods": {
+        "toggle": {
+            "desc": "切换（模型的）状态"
+        }
+    }
+}

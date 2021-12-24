@@ -1,0 +1,93 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/parallax"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "src": {
+            "type": "String",
+            "desc": "图像路径（除非使用“media”插槽）",
+            "transformAssetUrls": true,
+            "examples": [
+                "(statics folder) src=\"statics/img/something.png\"",
+                "(assets folder) src=\"~assets/my-img.png\"",
+                "(relative path format) :src=\"require('./my_img.jpg')\"",
+                "(URL) src=\"https://some-site.net/some-img.jpg\""
+            ],
+            "category": "model"
+        },
+        "height": {
+            "type": "Number",
+            "desc": "组件高度（像素）",
+            "default": 500,
+            "examples": [
+                ":height=\"1000\""
+            ],
+            "category": "style"
+        },
+        "speed": {
+            "type": "Number",
+            "desc": "视差效应速度（0.0<x<1.0）",
+            "examples": [
+                ":speed=\"0.24\""
+            ],
+            "category": "behavior"
+        },
+        "scroll-target": {
+            "type": [
+                "Element",
+                "String"
+            ],
+            "desc": "CSS选择器或DOM元素用作自定义滚动容器，而不是自动检测到的滚动容器",
+            "examples": [
+                ":scroll-target=\"$refs.scrollTarget\"",
+                "scroll-target=\".scroll-target-class\"",
+                "scroll-target=\"#scroll-target-id\"",
+                "scroll-target=\"body\""
+            ],
+            "category": "behavior",
+            "addedIn": "v1.8.0"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "默认槽可用于显示在组件顶部的内容"
+        },
+        "media": {
+            "desc": "用于描述<img>或<video>标签的插槽"
+        }
+    },
+    "scopedSlots": {
+        "content": {
+            "desc": "用于描述显示在组件顶部的内容的作用域槽；如果指定，它将覆盖默认插槽",
+            "scope": {
+                "percentScrolled": {
+                    "type": "Number",
+                    "desc": "相对于QParallax的滚动百分比（0.0<x<1.0）",
+                    "examples": [
+                        0.241
+                    ]
+                }
+            }
+        }
+    },
+    "events": {
+        "scroll": {
+            "desc": "发生滚动时发出",
+            "params": {
+                "percentage": {
+                    "type": "Number",
+                    "desc": "介于0.0和1.0之间的数字，定义组件的滚动百分比",
+                    "examples": [
+                        0.234
+                    ]
+                }
+            }
+        }
+    }
+}

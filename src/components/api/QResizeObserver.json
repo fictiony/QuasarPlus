@@ -1,0 +1,59 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/resize-observer"
+    },
+    "props": {
+        "debounce": {
+            "type": [
+                "String",
+                "Number"
+            ],
+            "desc": "去抖量（毫秒）",
+            "default": 100,
+            "examples": [
+                "0",
+                "530"
+            ],
+            "category": "behavior"
+        }
+    },
+    "events": {
+        "resize": {
+            "desc": "父元素已调整大小（宽度或高度已更改）",
+            "params": {
+                "size": {
+                    "type": "Object",
+                    "desc": "新尺寸",
+                    "definition": {
+                        "height": {
+                            "type": "Number",
+                            "desc": "布局高度",
+                            "examples": [
+                                822
+                            ]
+                        },
+                        "width": {
+                            "type": "Number",
+                            "desc": "布局宽度",
+                            "examples": [
+                                822
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "methods": {
+        "trigger": {
+            "desc": "发出“resize”事件",
+            "params": {
+                "immediately": {
+                    "type": "Boolean",
+                    "desc": "跳过去抖量"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/layout/page"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "padding": {
+            "type": "Boolean",
+            "desc": "应用默认的响应页面填充",
+            "category": "content"
+        },
+        "style-fn": {
+            "type": "Function",
+            "desc": "覆盖应用于组件的默认CSS样式（设置最小高度）；函数（offset:Number）=>CSS props/value:Object；为了获得最佳性能，请从您的范围中引用它，而不要内联定义它",
+            "params": {
+                "offset": {
+                    "type": "Number",
+                    "desc": "页眉+页脚高度（像素）",
+                    "examples": [
+                        152
+                    ]
+                },
+                "height": {
+                    "type": "Number",
+                    "desc": "以像素表示的容器高度值（如果是容器化的）或窗口高度值",
+                    "examples": [
+                        1200
+                    ],
+                    "addedIn": "v1.7.4"
+                }
+            },
+            "returns": {
+                "type": "Object",
+                "desc": "对象的CSS属性应用于页面DOM元素"
+            },
+            "default": "(see source code)",
+            "examples": [
+                "(see source code)"
+            ],
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}

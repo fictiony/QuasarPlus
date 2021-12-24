@@ -1,0 +1,32 @@
+{
+    "type": "component",
+    "meta": {
+        "docsUrl": "https://v1.quasar.dev/vue-components/table"
+    },
+    "behavior": {
+        "$listeners": {
+            "desc": "正在传播的所有原生事件（不需要“.native”修饰符）"
+        }
+    },
+    "props": {
+        "props": {
+            "type": "Object",
+            "desc": "QTable的row scoped的插槽属性",
+            "examples": [
+                ":props=\"props\""
+            ],
+            "category": "general"
+        },
+        "no-hover": {
+            "type": "Boolean",
+            "desc": "禁用悬停效果",
+            "addedIn": "v1.5.9",
+            "category": "style"
+        }
+    },
+    "slots": {
+        "default": {
+            "desc": "组件的devland unslotted内容中的默认插槽"
+        }
+    }
+}
