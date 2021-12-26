@@ -399,7 +399,7 @@ export default {
         const file = inspect.extraApi[className] || import('quasar/dist/api/' + className + '.json')
         let api
         try {
-          api = (await file).default
+          api = this.$clone((await file).default)
           CATEGORIES.forEach(category => {
             let info = api[category]
             if (!info) return
@@ -445,6 +445,7 @@ export default {
             api[category] = info
           })
         } catch (e) {
+          console.log(e)
           api = {}
         }
         inspect.apiCache[className] = Object.freeze(api)

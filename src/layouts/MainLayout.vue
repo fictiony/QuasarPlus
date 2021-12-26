@@ -152,6 +152,9 @@ export default {
           inspect.extraApi[name] = lang === '中文' ? import('components/api/' + name + '.json') : import('quasar/dist/api/' + name + '.json')
           delete inspect.apiCache[name]
         })
+
+      // 清除监视器当前目标，不然语言不会刷新
+      inspect.target = null
     },
 
     // 切换暗色模式

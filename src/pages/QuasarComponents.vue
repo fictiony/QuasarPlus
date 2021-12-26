@@ -67,9 +67,19 @@
         </q-toolbar>
       </template>
 
-      <template #body-cell-api="props">
-        <q-td class="text-center" style="max-width: 40px; padding: 0px" v-bind="props">
-          <q-btn round flat dense text-color="primary" icon="menu_book" type="a" target="_blank" :href="props.row.doc" v-if="props.row.doc" />
+      <template #body-cell-api="{ row }">
+        <q-td class="text-center" style="max-width: 40px; padding: 0px">
+          <q-btn
+            round
+            flat
+            dense
+            text-color="primary"
+            icon="menu_book"
+            type="a"
+            target="_blank"
+            :href="(inspect.getDocUrl && inspect.getDocUrl(row.className)) || row.doc"
+            v-if="row.doc"
+          />
           <template v-else>无</template>
         </q-td>
       </template>
@@ -160,6 +170,8 @@ const CATEGORIES = [
 
 export default {
   data: vm => ({
+    inspect,
+
     searchWord: null,
     searchMenu: false,
 
