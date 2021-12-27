@@ -31,9 +31,9 @@
 
       <div class="row items-center no-wrap text-no-wrap text-primary" v-if="selectedIcon">
         <q-separator spaced vertical />
-        <q-icon :name="selectedIcon.name" :size="iconSize + 'px'" />
+        <q-icon :name="selectedIcon.name" size="40px" />
         <q-separator spaced vertical />
-        <div>
+        <div style="line-height: 1.4">
           <b class="text-grey" style="font-size: 9px">{{ selectedIcon.iconSet }}</b>
           <br />
           {{ selectedIcon.name }}
@@ -48,6 +48,8 @@
         {{ iconSize }}px
       </div>
     </q-toolbar>
+
+    <q-option-group class="q-gutter-x-md q-gutter-y-sm q-mb-sm" inline dense type="checkbox" color="primary" :options="tags" v-model="selectedTags" />
 
     <q-virtual-scroll
       class="full-width q-space"
@@ -64,7 +66,7 @@
           <td v-for="i in rowIconNum" :key="i" class="text-center" style="padding: 6px; height: 1px">
             <IconPreview
               :name="item[i - 1].name"
-              :icon-set="iconSet ? '' : item[i - 1].iconSet"
+              :icon-set="iconSet === 'all' ? item[i - 1].iconSet : ''"
               :size="iconSize"
               v-if="item[i - 1]"
               @click="onSelect(item[i - 1])"
@@ -103,6 +105,7 @@ export default {
     iconSize: 40, // 当前图标大小
     rowWidth: 100, // 行宽度
     rowIconNum: 10, // 一行中的图标数量
+    selectedTags: [], // 当前选中的标签列表
     selectedIcon: null // 当前选中的图标信息
   }),
 
@@ -111,41 +114,62 @@ export default {
     iconSetOptions() {
       let allOption = null
       const allIcons = []
+      const allTags = {}
       const options = ICON_SETS.map(info => {
         const option = { ...info }
         let icons = []
-        if (info.value !== 'all') {
+        const tags = {}
+        if (info.value === 'all') {
+          allOption = option
+        } else {
           try {
             icons = require('components/icon-set/' + info.value + '.js').default.icons.map(i => ({
               name: (i.prefix ? i.prefix + ' ' : '') + i.name,
+              tags: i.tags || [],
               iconSet: info.value
             }))
           } catch (e) {
             console.error(`load icon set '${info.value}' fail: ${e}`)
           }
+          icons.forEach(i =>
+            i.tags.forEach(j => {
+              if (j in tags) return
+              tags[j] = { label: j, value: j }
+              if (j in allTags) return
+              allTags[j] = tags[j]
+            })
+          )
           allIcons.push(...icons)
           option.icons = Object.freeze(icons.sortBy('name'))
-        } else {
-          allOption = option
+          option.tags = Object.freeze(Object.values(tags).sortBy('label'))
         }
         return option
       })
       if (allOption) {
         allOption.icons = Object.freeze(allIcons.sortBy('name'))
+        allOption.tags = Object.freeze(Object.values(allTags).sortBy('label'))
       }
       return options
     },
 
+    // 当前图标集选项
+    iconSetOption() {
+      return this.iconSetOptions.find(i => i.value === this.iconSet)
+    },
+
     // 当前图标集标题
     iconSetLabel() {
-      const iconSet = ICON_SETS.find(i => i.value === this.iconSet)
-      return (iconSet && iconSet.label) || '未知'
+      return (this.iconSetOption && this.iconSetOption.label) || '未知'
+    },
+
+    // 当前标签列表
+    tags() {
+      return (this.iconSetOption && this.iconSetOption.tags) || []
     },
 
     // 当前图标列表
     icons() {
-      const iconSet = this.iconSetOptions.find(i => i.value === this.iconSet)
-      return iconSet && iconSet.icons
+      return (this.iconSetOption && this.iconSetOption.icons) || []
     },
 
     // 筛选后的图标列表
@@ -192,12 +216,16 @@ export default {
       if (iconSet !== (this.$route.params.iconSet || '')) {
         this.$router.replace(`/QuasarIconSets/${iconSet}`)
       }
+      this.selectedTags = []
     },
 
     // 判断是否满足筛选条件
     matchFilter(info) {
       if (this.realSearchWord) {
-        return info.name.toLowerCase().includes(this.realSearchWord)
+        if (!info.name.toLowerCase().includes(this.realSearchWord)) return false
+      }
+      if (this.selectedTags.length > 0) {
+        if (!this.selectedTags.find(i => info.tags.includes(i))) return false
       }
       return true
     },
