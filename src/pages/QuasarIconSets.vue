@@ -82,7 +82,7 @@
 
 // 图标集
 const ICON_SETS = [
-  { label: '所有图标', value: '' },
+  { label: '所有图标', value: 'all' },
   { label: 'Material 填充图标集', value: 'material-icons' },
   { label: 'Material 描边图标集', value: 'material-icons-outlined' },
   { label: 'Material 圆角图标集', value: 'material-icons-round' },
@@ -114,7 +114,7 @@ export default {
       const options = ICON_SETS.map(info => {
         const option = { ...info }
         let icons = []
-        if (info.value) {
+        if (info.value !== 'all') {
           try {
             icons = require('components/icon-set/' + info.value + '.js').default.icons.map(i => ({
               name: (i.prefix ? i.prefix + ' ' : '') + i.name,
@@ -183,7 +183,7 @@ export default {
     // 获取当前路由图标集
     getRouteIconSet() {
       const iconSet = ICON_SETS.find(i => i.value === this.$route.params.iconSet)
-      return iconSet ? iconSet.value : ''
+      return iconSet ? iconSet.value : 'material-icons'
     },
 
     // 选择图标集

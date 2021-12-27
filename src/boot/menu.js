@@ -41,7 +41,7 @@ export const PAGE_LIST = [
   {
     title: 'Quasar 图标集',
     icon: 'widgets',
-    to: '/QuasarIconSets/material-icons'
+    to: '/QuasarIconSets'
   }
 ]
 
