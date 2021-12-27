@@ -37,6 +37,11 @@ export const PAGE_LIST = [
     title: 'Quasar 组件清单',
     icon: 'widgets',
     to: '/QuasarComponents'
+  },
+  {
+    title: 'Quasar 图标集',
+    icon: 'widgets',
+    to: '/QuasarIconSets/material-icons'
   }
 ]
 

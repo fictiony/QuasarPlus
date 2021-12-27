@@ -73,7 +73,7 @@
     </my-drawer>
 
     <my-drawer ref="rightDrawer" v-model="rightOpen" side="right" show-if-above :breakpoint="720" bordered :width="300" :limits="[200, 500]">
-      <PropPanel @close="propPanelClose" />
+      <PropPanel @close="propPanelClose" v-if="rightOpen" />
     </my-drawer>
 
     <q-page-container>
@@ -195,7 +195,9 @@ export default {
 
     // 读取配置
     this.apiLang = this.$loadConfig('apiLang') || '中文'
-    this.$q.dark.isActive = this.$loadConfig('dark') || false
+    if (this.$q.dark.isActive !== !!this.$loadConfig('dark')) {
+      this.$q.dark.toggle()
+    }
 
     // 定位API网址
     inspect.getDocUrl = className => {

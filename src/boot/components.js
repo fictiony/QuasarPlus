@@ -7,6 +7,7 @@ import CustomScroller from 'components/thirdparty/inspect/CustomScroller'
 
 // 功能组件
 import EssentialLink from 'components/EssentialLink.vue'
+import IconPreview from 'components/IconPreview.vue'
 import DemoComponent from 'components/DemoComponent.vue'
 import DemoExample from 'components/DemoExample.vue'
 import DemoPage from 'components/DemoPage.vue'
@@ -19,6 +20,7 @@ const components = {
   CustomScroller,
 
   EssentialLink,
+  IconPreview,
   DemoComponent,
   DemoExample,
   DemoPage

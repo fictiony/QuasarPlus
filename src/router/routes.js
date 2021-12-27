@@ -11,6 +11,10 @@ const routes = [
         path: '/QuasarComponents/:category?',
         component: () => import('pages/QuasarComponents.vue')
       },
+      {
+        path: '/QuasarIconSets/:iconSet?',
+        component: () => import('pages/QuasarIconSets.vue')
+      },
       ...PLUS_LIST.map((item, index) => ({
         path: item.to,
         component: () =>

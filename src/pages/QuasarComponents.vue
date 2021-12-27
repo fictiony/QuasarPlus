@@ -1,7 +1,7 @@
 <template>
   <q-page padding class="column">
     <q-toolbar class="q-pa-none" style="padding-bottom: 10px">
-      <q-btn-dropdown class="q-mr-sm" glossy auto-close color="primary" :label="categoryOptions.find(i => i.value === category).label">
+      <q-btn-dropdown class="q-mr-sm" style="width: 120px" glossy auto-close color="primary" align="between" :label="categoryLabel">
         <q-list dense>
           <q-item v-for="(option, index) in categoryOptions" :key="index" clickable @click="selectCategory(option.value)">
             <q-item-section>{{ option.label }}</q-item-section>
@@ -35,6 +35,7 @@
       </q-menu>
 
       <q-space />
+
       <q-toggle style="min-width: 90px" label="范例" v-model="showDemos" />
       <q-btn style="margin-right: -10px" flat round icon="fullscreen" color="primary" @click="fullscreen = true">
         <q-tooltip>全屏显示</q-tooltip>
@@ -157,6 +158,7 @@
 import quasarApi from 'components/api/Quasar.json'
 import { inspect } from 'components/thirdparty/inspect'
 
+// 分类
 const CATEGORIES = [
   { label: '所有组件', value: '' },
   { label: '基本组件', name: '基本', value: 'basic' },
@@ -172,15 +174,16 @@ export default {
   data: vm => ({
     inspect,
 
-    searchWord: null,
-    searchMenu: false,
+    searchWord: null, // 搜索词
+    searchMenu: false, // 搜索提示菜单是否显示
 
-    categoryOptions: CATEGORIES,
-    category: vm.getRouteCategory(),
+    categoryOptions: CATEGORIES, // 分类选项表
+    category: vm.getRouteCategory(), // 当前分类
 
-    showDemos: true,
-    fullscreen: false,
+    showDemos: true, // 是否显示范例
+    fullscreen: false, // 是否全屏
 
+    // 表格列定义
     tableColumns: [
       {
         name: 'category',
@@ -242,6 +245,12 @@ export default {
   },
 
   computed: {
+    // 当前分类标题
+    categoryLabel() {
+      const category = CATEGORIES.find(i => i.value === this.category)
+      return (category && category.label) || '未知'
+    },
+
     // 筛选后的组件信息列表
     filteredComponents() {
       return Object.freeze(this.quasarComponents.filter(info => this.matchFilter(info)).sortBy('className'))
@@ -309,8 +318,8 @@ export default {
     },
 
     // 筛选组件列表
-    filterComponents(rows) {
-      return rows.filter(info => this.matchFilter(info))
+    filterComponents(list) {
+      return list.filter(info => this.matchFilter(info))
     },
 
     // 获取范例名称
